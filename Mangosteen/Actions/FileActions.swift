@@ -32,8 +32,8 @@ enum FileActions {
         panel.canChooseDirectories = true
         panel.canCreateDirectories = true
         panel.allowsMultipleSelection = false
-        panel.prompt = "Переместить"
-        panel.message = "Куда переместить: \(WheelView.filesLabel(urls.count))"
+        panel.prompt = String(localized: "Переместить")
+        panel.message = String(localized: "Куда переместить: \(WheelView.filesLabel(urls.count))")
         panel.directoryURL = urls.first?.deletingLastPathComponent()
         guard panel.runModal() == .OK, let destination = panel.url else { return }
 
@@ -49,7 +49,7 @@ enum FileActions {
                 failures.append((url, error))
             }
         }
-        Feedback.finished("Перемещение", outputs: moved, failures: failures)
+        Feedback.finished(String(localized: "Перемещение"), outputs: moved, failures: failures)
     }
 
     /// Opens each folder (or a file's containing folder) in the chosen terminal app.
@@ -68,7 +68,7 @@ enum FileActions {
         }
         workspace.open(folders, withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration()) { _, error in
             if let error {
-                DispatchQueue.main.async { Feedback.showError("Терминал", error) }
+                DispatchQueue.main.async { Feedback.showError(String(localized: "Терминал"), error) }
             }
         }
     }

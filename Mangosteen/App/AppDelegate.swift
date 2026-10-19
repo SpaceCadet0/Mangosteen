@@ -45,7 +45,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     @objc func showWelcome() {
-        ToolWindow.present(title: "Как пользоваться Mangosteen") { WelcomeView(close: $0) }
+        ToolWindow.present(title: String(localized: "Как пользоваться Mangosteen")) { WelcomeView(close: $0) }
     }
 
     #if DEBUG
@@ -124,7 +124,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = kind == .actions
         panel.canChooseFiles = true
-        panel.prompt = "Выбрать"
+        panel.prompt = String(localized: "Выбрать")
         guard panel.runModal() == .OK, !panel.urls.isEmpty else { return }
         let urls = panel.urls
         DispatchQueue.main.async { [weak self] in
@@ -135,7 +135,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     @objc func showSettings() {
         if settingsWindow == nil {
             let window = NSWindow(contentViewController: NSHostingController(rootView: SettingsView().tint(Brand.color)))
-            window.title = "Настройки Mangosteen"
+            window.title = String(localized: "Настройки Mangosteen")
             window.styleMask = [.titled, .closable, .miniaturizable]
             window.isReleasedWhenClosed = false
             window.delegate = self
@@ -170,30 +170,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let main = NSMenu()
 
         let app = NSMenu(title: "Mangosteen")
-        app.addItem(item("О Mangosteen", #selector(NSApplication.orderFrontStandardAboutPanel(_:))))
+        app.addItem(item(String(localized: "О Mangosteen"), #selector(NSApplication.orderFrontStandardAboutPanel(_:))))
         app.addItem(.separator())
-        let settings = item("Настройки…", #selector(showSettings), ",")
+        let settings = item(String(localized: "Настройки…"), #selector(showSettings), ",")
         settings.target = self
         app.addItem(settings)
         app.addItem(.separator())
-        app.addItem(item("Скрыть Mangosteen", #selector(NSApplication.hide(_:)), "h"))
-        app.addItem(item("Выйти из Mangosteen", #selector(NSApplication.terminate(_:)), "q"))
+        app.addItem(item(String(localized: "Скрыть Mangosteen"), #selector(NSApplication.hide(_:)), "h"))
+        app.addItem(item(String(localized: "Выйти из Mangosteen"), #selector(NSApplication.terminate(_:)), "q"))
 
-        let edit = NSMenu(title: "Правка")
-        edit.addItem(item("Отменить", Selector(("undo:")), "z"))
-        edit.addItem(item("Повторить", Selector(("redo:")), "z", [.command, .shift]))
+        let edit = NSMenu(title: String(localized: "Правка"))
+        edit.addItem(item(String(localized: "Отменить"), Selector(("undo:")), "z"))
+        edit.addItem(item(String(localized: "Повторить"), Selector(("redo:")), "z", [.command, .shift]))
         edit.addItem(.separator())
-        edit.addItem(item("Вырезать", #selector(NSText.cut(_:)), "x"))
-        edit.addItem(item("Копировать", #selector(NSText.copy(_:)), "c"))
-        edit.addItem(item("Вставить", #selector(NSText.paste(_:)), "v"))
-        edit.addItem(item("Выделить всё", #selector(NSText.selectAll(_:)), "a"))
+        edit.addItem(item(String(localized: "Вырезать"), #selector(NSText.cut(_:)), "x"))
+        edit.addItem(item(String(localized: "Копировать"), #selector(NSText.copy(_:)), "c"))
+        edit.addItem(item(String(localized: "Вставить"), #selector(NSText.paste(_:)), "v"))
+        edit.addItem(item(String(localized: "Выделить всё"), #selector(NSText.selectAll(_:)), "a"))
 
-        let window = NSMenu(title: "Окно")
-        window.addItem(item("Свернуть", #selector(NSWindow.performMiniaturize(_:)), "m"))
-        window.addItem(item("Масштаб", #selector(NSWindow.performZoom(_:))))
-        window.addItem(item("Закрыть", #selector(NSWindow.performClose(_:)), "w"))
+        let window = NSMenu(title: String(localized: "Окно"))
+        window.addItem(item(String(localized: "Свернуть"), #selector(NSWindow.performMiniaturize(_:)), "m"))
+        window.addItem(item(String(localized: "Масштаб"), #selector(NSWindow.performZoom(_:))))
+        window.addItem(item(String(localized: "Закрыть"), #selector(NSWindow.performClose(_:)), "w"))
         window.addItem(.separator())
-        window.addItem(item("Все окна на передний план", #selector(NSApplication.arrangeInFront(_:))))
+        window.addItem(item(String(localized: "Все окна на передний план"), #selector(NSApplication.arrangeInFront(_:))))
 
         for submenu in [app, edit, window] {
             let holder = NSMenuItem(title: submenu.title, action: nil, keyEquivalent: "")

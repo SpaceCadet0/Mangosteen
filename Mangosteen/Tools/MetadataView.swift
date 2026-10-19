@@ -55,7 +55,7 @@ struct MetadataView: View {
                 editor
                 inspector
             }
-            ToolFooter(fileCount: images.count, actionTitle: "Сохранить копию",
+            ToolFooter(fileCount: images.count, actionTitle: String(localized: "Сохранить копию"),
                        actionDisabled: images.isEmpty || changes.isEmpty || (changeLocation && coordinates == nil && !removeLocation),
                        cancel: close, action: run)
         }
@@ -66,40 +66,40 @@ struct MetadataView: View {
     private var editor: some View {
         Form {
             Section {
-                Toggle("Удалить все метаданные", isOn: $removeAll)
-                Toggle("Удалить геопозицию", isOn: $removeLocation)
+                Toggle(String(localized: "Удалить все метаданные"), isOn: $removeAll)
+                Toggle(String(localized: "Удалить геопозицию"), isOn: $removeLocation)
                     .disabled(removeAll || !hasLocation && !changeLocation)
             } footer: {
                 if images.count > 1 {
-                    Text("Изменения применятся ко всем \(WheelView.filesLabel(images.count)). Справа показаны данные первого.")
+                    Text(String(localized: "Изменения применятся ко всем \(WheelView.filesLabel(images.count)). Справа показаны данные первого."))
                 }
             }
 
-            Section("Поля") {
+            Section(String(localized: "Поля")) {
                 ForEach(MetadataField.allCases) { field in
                     TextField(field.title, text: Binding(
                         get: { texts[field, default: ""] },
                         set: { texts[field] = $0 }
-                    ), prompt: Text("не задано"))
+                    ), prompt: Text(String(localized: "не задано")))
                 }
             }
             .disabled(removeAll)
 
-            Section("Дата съёмки") {
-                Toggle("Изменить дату", isOn: $changeDate)
+            Section(String(localized: "Дата съёмки")) {
+                Toggle(String(localized: "Изменить дату"), isOn: $changeDate)
                 if changeDate {
-                    DatePicker("Дата", selection: $date)
+                    DatePicker(String(localized: "Дата"), selection: $date)
                 }
             }
             .disabled(removeAll)
 
-            Section("Геопозиция") {
-                Toggle("Задать координаты", isOn: $changeLocation)
+            Section(String(localized: "Геопозиция")) {
+                Toggle(String(localized: "Задать координаты"), isOn: $changeLocation)
                 if changeLocation {
-                    TextField("Широта (−90…90)", text: $latitudeText)
-                    TextField("Долгота (−180…180)", text: $longitudeText)
+                    TextField(String(localized: "Широта (−90…90)"), text: $latitudeText)
+                    TextField(String(localized: "Долгота (−180…180)"), text: $longitudeText)
                     if coordinates == nil {
-                        Text("Введите координаты в градусах, например 55.7558 и 37.6173")
+                        Text(String(localized: "Введите координаты в градусах, например 55.7558 и 37.6173"))
                             .font(.caption)
                             .foregroundStyle(.orange)
                     }
@@ -118,7 +118,7 @@ struct MetadataView: View {
         }
         let groups = Dictionary(grouping: filtered, by: \.group).sorted { $0.key < $1.key }
         return VStack(alignment: .leading, spacing: 8) {
-            TextField("Поиск по полям", text: $search)
+            TextField(String(localized: "Поиск по полям"), text: $search)
                 .textFieldStyle(.roundedBorder)
             List {
                 ForEach(groups, id: \.key) { group, items in
@@ -138,7 +138,7 @@ struct MetadataView: View {
             }
             .overlay {
                 if filtered.isEmpty {
-                    Text(entries.isEmpty ? "Метаданных нет" : "Ничего не найдено").foregroundStyle(.secondary)
+                    Text(entries.isEmpty ? String(localized: "Метаданных нет") : String(localized: "Ничего не найдено")).foregroundStyle(.secondary)
                 }
             }
         }
@@ -165,7 +165,7 @@ struct MetadataView: View {
 
     private func run() {
         let changes = changes
-        ConversionService.shared.runEach("Метаданные", inputs: images) {
+        ConversionService.shared.runEach(String(localized: "Метаданные"), inputs: images) {
             try MetadataEditor.apply(changes, to: $0)
         }
         close()

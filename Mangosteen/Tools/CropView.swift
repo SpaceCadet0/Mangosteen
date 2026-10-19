@@ -13,8 +13,8 @@ struct CropView: View {
 
         var title: String {
             switch self {
-            case .free: "Свободно"
-            case .original: "Как у оригинала"
+            case .free: String(localized: "Свободно")
+            case .original: String(localized: "Как у оригинала")
             case .square: "1:1"
             case .r4x3: "4:3"
             case .r3x2: "3:2"
@@ -23,7 +23,7 @@ struct CropView: View {
             case .r3x4: "3:4"
             case .r2x3: "2:3"
             case .r4x5: "4:5"
-            case .exact: "Точный размер…"
+            case .exact: String(localized: "Точный размер…")
             }
         }
 
@@ -72,7 +72,7 @@ struct CropView: View {
                 .frame(minWidth: 620, minHeight: 420)
                 .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
             controls
-            ToolFooter(fileCount: images.count, actionTitle: "Обрезать",
+            ToolFooter(fileCount: images.count, actionTitle: String(localized: "Обрезать"),
                        actionDisabled: displayImage == nil, cancel: close, action: run)
         }
         .padding(20)
@@ -92,16 +92,16 @@ struct CropView: View {
 
     private var controls: some View {
         HStack(spacing: 12) {
-            Picker("Пропорции", selection: $aspectChoice) {
+            Picker(String(localized: "Пропорции"), selection: $aspectChoice) {
                 ForEach(AspectChoice.allCases) { Text($0.title).tag($0) }
             }
             .frame(width: 260)
 
             if aspectChoice == .exact {
-                TextField("Ширина", value: $exactWidth, format: .number.grouping(.never))
+                TextField(String(localized: "Ширина"), value: $exactWidth, format: .number.grouping(.never))
                     .frame(width: 70)
                 Text("×")
-                TextField("Высота", value: $exactHeight, format: .number.grouping(.never))
+                TextField(String(localized: "Высота"), value: $exactHeight, format: .number.grouping(.never))
                     .frame(width: 70)
                 Text("px").foregroundStyle(.secondary)
             }
@@ -112,7 +112,7 @@ struct CropView: View {
             Text(verbatim: "\(Int(pixels.width)) × \(Int(pixels.height)) px")
                 .monospacedDigit()
                 .foregroundStyle(.secondary)
-            Button("Сбросить") {
+            Button(String(localized: "Сбросить")) {
                 aspectChoice = .free
                 rect = CGRect(x: 0, y: 0, width: 1, height: 1)
             }
@@ -128,7 +128,7 @@ struct CropView: View {
 
     private func load() async {
         guard let first = images.first else {
-            loadError = "Нет изображений"
+            loadError = String(localized: "Нет изображений")
             return
         }
         let result = await Task.detached(priority: .userInitiated) {
@@ -150,7 +150,7 @@ struct CropView: View {
         let exact = CGSize(width: exactWidth, height: exactHeight)
         let outputSize: CGSize? = choice == .exact ? exact : nil
         let options = AppSettings.shared.conversionOptions
-        ConversionService.shared.runEach("Обрезка", inputs: images) { url in
+        ConversionService.shared.runEach(String(localized: "Обрезка"), inputs: images) { url in
             var cropRect = firstRect
             if url != first, choice != .free {
                 let size = try ImageCropper.uprightSize(url)

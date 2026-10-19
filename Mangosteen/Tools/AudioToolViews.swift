@@ -85,10 +85,10 @@ struct NormalizeView: View {
         var id: String { rawValue }
         var title: String {
             switch self {
-            case .streaming: "Стриминг −14"
-            case .podcast: "Подкаст −16"
-            case .broadcast: "ТВ и радио −23"
-            case .custom: "Своя"
+            case .streaming: String(localized: "Стриминг −14")
+            case .podcast: String(localized: "Подкаст −16")
+            case .broadcast: String(localized: "ТВ и радио −23")
+            case .custom: String(localized: "Своя")
             }
         }
         var loudness: Double? {
@@ -110,20 +110,20 @@ struct NormalizeView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Picker("Цель", selection: $preset) {
+            Picker(String(localized: "Цель"), selection: $preset) {
                 ForEach(Preset.allCases) { Text($0.title).tag($0) }
             }
             .pickerStyle(.segmented)
             .labelsHidden()
 
             VStack(alignment: .leading, spacing: 10) {
-                row("Громкость", value: $target.integrated, range: -30...(-5), unit: "LUFS")
-                row("Максимальный пик", value: $target.truePeak, range: -6...0, unit: "dBTP")
-                row("Динамический диапазон", value: $target.range, range: 3...20, unit: "LU")
+                row(String(localized: "Громкость"), value: $target.integrated, range: -30...(-5), unit: "LUFS")
+                row(String(localized: "Максимальный пик"), value: $target.truePeak, range: -6...0, unit: "dBTP")
+                row(String(localized: "Динамический диапазон"), value: $target.range, range: 3...20, unit: "LU")
             }
 
             levels
-            ToolFooter(fileCount: files.count, actionTitle: "Нормализовать", actionDisabled: files.isEmpty,
+            ToolFooter(fileCount: files.count, actionTitle: String(localized: "Нормализовать"), actionDisabled: files.isEmpty,
                        cancel: close, action: run)
         }
         .padding(20)
@@ -155,28 +155,28 @@ struct NormalizeView: View {
             Grid(alignment: .leading, horizontalSpacing: 24, verticalSpacing: 4) {
                 GridRow {
                     Text("")
-                    Text("Громкость").foregroundStyle(.secondary)
-                    Text("Пик").foregroundStyle(.secondary)
-                    Text("Диапазон").foregroundStyle(.secondary)
+                    Text(String(localized: "Громкость")).foregroundStyle(.secondary)
+                    Text(String(localized: "Пик")).foregroundStyle(.secondary)
+                    Text(String(localized: "Диапазон")).foregroundStyle(.secondary)
                 }
                 GridRow {
-                    Text("Сейчас").foregroundStyle(.secondary)
+                    Text(String(localized: "Сейчас")).foregroundStyle(.secondary)
                     if let measurement {
                         Text(String(format: "%.1f LUFS", measurement.integrated))
                         Text(String(format: "%.1f dBTP", measurement.truePeak))
                         Text(String(format: "%.1f LU", measurement.range))
                     } else if measureError {
-                        Text("не удалось измерить").foregroundStyle(.orange).gridCellColumns(3)
+                        Text(String(localized: "не удалось измерить")).foregroundStyle(.orange).gridCellColumns(3)
                     } else {
                         HStack(spacing: 6) {
                             ProgressView().controlSize(.small)
-                            Text("Измеряю…").foregroundStyle(.secondary)
+                            Text(String(localized: "Измеряю…")).foregroundStyle(.secondary)
                         }
                         .gridCellColumns(3)
                     }
                 }
                 GridRow {
-                    Text("Станет").foregroundStyle(.secondary)
+                    Text(String(localized: "Станет")).foregroundStyle(.secondary)
                     Text(String(format: "%.1f LUFS", target.integrated)).fontWeight(.semibold)
                     Text(String(format: "≤ %.1f dBTP", target.truePeak))
                     Text(String(format: "≤ %.1f LU", target.range))
@@ -198,7 +198,7 @@ struct NormalizeView: View {
 
     private func run() {
         let target = target
-        ConversionService.shared.runEach("Громкость", inputs: files, maxConcurrent: 2) { url, progress, cancellation in
+        ConversionService.shared.runEach(String(localized: "Громкость"), inputs: files, maxConcurrent: 2) { url, progress, cancellation in
             try AudioTools.normalize(url, target: target, progress: progress, cancellation: cancellation)
         }
         close()
@@ -224,52 +224,52 @@ struct ChannelsView: View {
         VStack(alignment: .leading, spacing: 14) {
             Text(input.lastPathComponent).font(.callout.weight(.medium)).lineLimit(1).truncationMode(.middle)
             VStack(spacing: 6) {
-                channelRow("Л", leftWave)
-                channelRow("П", rightWave)
+                channelRow(String(localized: "Л"), leftWave)
+                channelRow(String(localized: "П"), rightWave)
             }
             .padding(10)
             .background(RoundedRectangle(cornerRadius: 10).fill(Color.primary.opacity(0.05)))
             if sourceChannels < 2 {
-                Text("Исходная запись моно: оба канала получают один и тот же звук.")
+                Text(String(localized: "Исходная запись моно: оба канала получают один и тот же звук."))
                     .font(.caption).foregroundStyle(.secondary)
             }
 
             HStack(spacing: 10) {
-                Text("Результат")
-                Picker("Результат", selection: $settings.layout) {
+                Text(String(localized: "Результат"))
+                Picker(String(localized: "Результат"), selection: $settings.layout) {
                     ForEach(AudioTools.ChannelSettings.Layout.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
                 .fixedSize()
                 Spacer()
-                Toggle("Поменять каналы местами", isOn: $settings.swap)
+                Toggle(String(localized: "Поменять каналы местами"), isOn: $settings.swap)
                     .disabled(sourceChannels < 2)
             }
-            volumeRow("Левый канал", $settings.left)
-            volumeRow("Правый канал", $settings.right)
+            volumeRow(String(localized: "Левый канал"), $settings.left)
+            volumeRow(String(localized: "Правый канал"), $settings.right)
 
             HStack(spacing: 8) {
-                ListenButton(listener: listener, label: "result", title: "Результат") {
+                ListenButton(listener: listener, label: "result", title: String(localized: "Результат")) {
                     let filter = filter
                     listener.play("result") { try AudioTools.renderPreview(input, filter: filter, to: $0, cancellation: $1) }
                 }
                 if settings.layout == .stereo {
-                    ListenButton(listener: listener, label: "left", title: "Только левый") {
+                    ListenButton(listener: listener, label: "left", title: String(localized: "Только левый")) {
                         let filter = filter + ",pan=stereo|c0=c0|c1=c0"
                         listener.play("left") { try AudioTools.renderPreview(input, filter: filter, to: $0, cancellation: $1) }
                     }
-                    ListenButton(listener: listener, label: "right", title: "Только правый") {
+                    ListenButton(listener: listener, label: "right", title: String(localized: "Только правый")) {
                         let filter = filter + ",pan=stereo|c0=c1|c1=c1"
                         listener.play("right") { try AudioTools.renderPreview(input, filter: filter, to: $0, cancellation: $1) }
                     }
                 }
-                ListenButton(listener: listener, label: "original", title: "Оригинал") {
+                ListenButton(listener: listener, label: "original", title: String(localized: "Оригинал")) {
                     listener.play("original") { try AudioTools.renderPreview(input, to: $0, cancellation: $1) }
                 }
                 if listener.isRendering { ProgressView().controlSize(.small) }
             }
-            ToolFooter(fileCount: 1, actionTitle: "Сохранить", cancel: close, action: run)
+            ToolFooter(fileCount: 1, actionTitle: String(localized: "Сохранить"), cancel: close, action: run)
         }
         .padding(20)
         .frame(width: 620)
@@ -315,7 +315,7 @@ struct ChannelsView: View {
     private func run() {
         listener.stop()
         let settings = settings
-        ConversionService.shared.runEach("Каналы", inputs: [input], maxConcurrent: 1) { url, progress, cancellation in
+        ConversionService.shared.runEach(String(localized: "Каналы"), inputs: [input], maxConcurrent: 1) { url, progress, cancellation in
             try AudioTools.convertChannels(url, settings: settings, progress: progress, cancellation: cancellation)
         }
         close()
@@ -361,42 +361,42 @@ struct BleepView: View {
             BleepStrip(model: model, ranges: $ranges, selected: $selected)
             HStack(spacing: 10) {
                 TransportBar(model: model, onPlay: playBleeped, isBusy: rendering)
-                Text(model.isPlaying ? (version == .bleeped ? "с пиками" : "оригинал") : "")
+                Text(model.isPlaying ? (version == .bleeped ? String(localized: "с пиками") : String(localized: "оригинал")) : "")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .frame(width: 70, alignment: .leading)
                 Spacer(minLength: 12)
-                Button { addBleep() } label: { Label("Пик по курсору", systemImage: "plus") }
+                Button { addBleep() } label: { Label(String(localized: "Пик по курсору"), systemImage: "plus") }
                     .keyboardShortcut(.return, modifiers: [])
-                Button { removeSelected() } label: { Label("Удалить пик", systemImage: "minus") }
+                Button { removeSelected() } label: { Label(String(localized: "Удалить пик"), systemImage: "minus") }
                     .disabled(selected == nil)
             }
             .disabled(!model.isLoaded)
             HStack(spacing: 12) {
-                Text("Тон")
-                Picker("Тон", selection: $frequency) {
-                    Text("800 Гц").tag(800.0)
-                    Text("1000 Гц").tag(1000.0)
-                    Text("1500 Гц").tag(1500.0)
+                Text(String(localized: "Тон"))
+                Picker(String(localized: "Тон"), selection: $frequency) {
+                    Text(String(localized: "800 Гц")).tag(800.0)
+                    Text(String(localized: "1000 Гц")).tag(1000.0)
+                    Text(String(localized: "1500 Гц")).tag(1500.0)
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
                 .fixedSize()
-                Text("Громкость")
+                Text(String(localized: "Громкость"))
                 Slider(value: $volume, in: 0.05...1).frame(width: 120)
                 Spacer()
                 Button(action: playOriginal) {
-                    Label("Оригинал", systemImage: model.isPlaying && version == .original ? "stop.fill" : "play.fill")
+                    Label(String(localized: "Оригинал"), systemImage: model.isPlaying && version == .original ? "stop.fill" : "play.fill")
                 }
                 .disabled(!model.isLoaded || rendering)
             }
             HStack {
-                Text(notice.isEmpty ? "Пробел — прослушать с пиками, ⏎ — пик по курсору." : notice)
+                Text(notice.isEmpty ? String(localized: "Пробел — прослушать с пиками, ⏎ — пик по курсору.") : notice)
                     .font(.caption)
                     .foregroundStyle(notice.isEmpty ? Color.secondary : Color.orange)
                 Spacer()
             }
-            ToolFooter(fileCount: 1, actionTitle: ranges.count > 1 ? "Запикать (\(ranges.count))" : "Запикать",
+            ToolFooter(fileCount: 1, actionTitle: ranges.count > 1 ? String(localized: "Запикать (\(ranges.count))") : String(localized: "Запикать"),
                        actionDisabled: ranges.isEmpty, cancel: close, action: run)
         }
         .padding(20)
@@ -498,13 +498,13 @@ struct BleepView: View {
         let start = model.currentTime
         if let existing = ranges.firstIndex(where: { $0.contains(start) }) {
             selected = existing
-            notice = "Здесь уже есть пик — он выделен."
+            notice = String(localized: "Здесь уже есть пик — он выделен.")
             return
         }
         let next = ranges.map(\.lowerBound).filter { $0 > start }.min() ?? model.duration
         let end = min(start + 0.6, next, model.duration)
         guard end - start >= 0.05 else {
-            notice = "Слишком близко к соседнему пику."
+            notice = String(localized: "Слишком близко к соседнему пику.")
             return
         }
         ranges.append(start...end)
@@ -523,7 +523,7 @@ struct BleepView: View {
         let ranges = ranges
         let frequency = frequency
         let volume = volume
-        ConversionService.shared.runEach("Запикивание", inputs: [model.url], maxConcurrent: 1) { url, progress, cancellation in
+        ConversionService.shared.runEach(String(localized: "Запикивание"), inputs: [model.url], maxConcurrent: 1) { url, progress, cancellation in
             try AudioTools.bleep(url, ranges: ranges, frequency: frequency, volume: volume,
                                  progress: progress, cancellation: cancellation)
         }
@@ -627,7 +627,7 @@ struct VisualizerView: View {
                 .frame(width: 420, height: 420)
                 controls.frame(width: 300)
             }
-            ToolFooter(fileCount: files.count, actionTitle: "Создать видео", actionDisabled: files.isEmpty,
+            ToolFooter(fileCount: files.count, actionTitle: String(localized: "Создать видео"), actionDisabled: files.isEmpty,
                        cancel: close, action: run)
         }
         .padding(20)
@@ -637,32 +637,32 @@ struct VisualizerView: View {
     private var controls: some View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("Стиль").font(.callout)
-                Picker("Стиль", selection: $settings.style) {
+                Text(String(localized: "Стиль")).font(.callout)
+                Picker(String(localized: "Стиль"), selection: $settings.style) {
                     ForEach(AudioTools.VisualizerSettings.Style.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
             }
             VStack(alignment: .leading, spacing: 6) {
-                Text("Формат видео").font(.callout)
-                Picker("Формат видео", selection: $settings.orientation) {
+                Text(String(localized: "Формат видео")).font(.callout)
+                Picker(String(localized: "Формат видео"), selection: $settings.orientation) {
                     ForEach(AudioTools.VisualizerSettings.Orientation.allCases) { Text($0.title).tag($0) }
                 }
                 .labelsHidden()
             }
-            ColorPicker("Цвет волны", selection: Binding(get: { settings.waveColor.cgColor },
+            ColorPicker(String(localized: "Цвет волны"), selection: Binding(get: { settings.waveColor.cgColor },
                                                          set: { settings.waveColor = RGBAColor($0) }),
                         supportsOpacity: false)
                 .disabled(settings.style == .still)
-            ColorPicker("Цвет фона", selection: Binding(get: { settings.background.cgColor },
+            ColorPicker(String(localized: "Цвет фона"), selection: Binding(get: { settings.background.cgColor },
                                                         set: { settings.background = RGBAColor($0) }),
                         supportsOpacity: false)
                 .disabled(settings.image != nil)
             VStack(alignment: .leading, spacing: 6) {
-                Text("Фоновое изображение").font(.callout)
+                Text(String(localized: "Фоновое изображение")).font(.callout)
                 HStack {
-                    Button(settings.image?.lastPathComponent ?? "Выбрать…", action: chooseImage)
+                    Button(settings.image?.lastPathComponent ?? String(localized: "Выбрать…"), action: chooseImage)
                         .lineLimit(1)
                         .truncationMode(.middle)
                     if settings.image != nil {
@@ -673,7 +673,7 @@ struct VisualizerView: View {
                 }
             }
             Spacer()
-            Text("Видео MP4 той же длительности, что и запись.")
+            Text(String(localized: "Видео MP4 той же длительности, что и запись."))
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -706,7 +706,7 @@ struct VisualizerView: View {
 
     private func run() {
         let settings = settings
-        ConversionService.shared.runEach("Визуализация", inputs: files, maxConcurrent: 1) { url, progress, cancellation in
+        ConversionService.shared.runEach(String(localized: "Визуализация"), inputs: files, maxConcurrent: 1) { url, progress, cancellation in
             try AudioTools.visualize(url, settings: settings, progress: progress, cancellation: cancellation)
         }
         close()

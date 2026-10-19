@@ -31,16 +31,16 @@ enum AnnotationTool: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .select: "Выбор"
-        case .arrow: "Стрелка"
-        case .rectangle: "Прямоугольник"
-        case .ellipse: "Овал"
-        case .text: "Текст"
-        case .number: "Номер"
-        case .pen: "Карандаш"
-        case .highlight: "Маркер"
-        case .magnifier: "Лупа"
-        case .image: "Картинка"
+        case .select: String(localized: "Выбор")
+        case .arrow: String(localized: "Стрелка")
+        case .rectangle: String(localized: "Прямоугольник")
+        case .ellipse: String(localized: "Овал")
+        case .text: String(localized: "Текст")
+        case .number: String(localized: "Номер")
+        case .pen: String(localized: "Карандаш")
+        case .highlight: String(localized: "Маркер")
+        case .magnifier: String(localized: "Лупа")
+        case .image: String(localized: "Картинка")
         }
     }
 
@@ -328,7 +328,7 @@ enum AnnotationRenderer {
         let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (пометки)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (пометки)"),
             pathExtension: target.fileExtension
         ) { url in
             try ImageConverter.write(result, as: target, to: url, options: options,

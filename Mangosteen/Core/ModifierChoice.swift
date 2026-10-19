@@ -10,9 +10,9 @@ enum WheelKind: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .convert: "Конвертация"
-        case .tools: "Инструменты"
-        case .actions: "Действия"
+        case .convert: String(localized: "Конвертация")
+        case .tools: String(localized: "Инструменты")
+        case .actions: String(localized: "Действия")
         }
     }
 }
@@ -51,7 +51,7 @@ enum ModifierChoice: String, CaseIterable, Identifiable {
         case .command: "⌘ Command"
         case .control: "⌃ Control"
         case .option: "⌥ Option"
-        case .none: "Выключено"
+        case .none: String(localized: "Выключено")
         }
     }
 }

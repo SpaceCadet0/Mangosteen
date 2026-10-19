@@ -7,10 +7,10 @@ struct CollageSettings: Equatable {
         var id: String { rawValue }
         var title: String {
             switch self {
-            case .grid: "Сетка"
-            case .row: "Ряд"
-            case .column: "Колонка"
-            case .featured: "Главное фото"
+            case .grid: String(localized: "Сетка")
+            case .row: String(localized: "Ряд")
+            case .column: String(localized: "Колонка")
+            case .featured: String(localized: "Главное фото")
             }
         }
     }
@@ -154,7 +154,7 @@ enum CollageComposer {
         let images = try loadImages(urls, maxPixelSize: settings.width)
         let result = try compose(images, settings: settings)
         return try OutputNaming.writeAtomically(
-            directory: first.deletingLastPathComponent(), baseName: "Коллаж", pathExtension: settings.format.fileExtension
+            directory: first.deletingLastPathComponent(), baseName: String(localized: "Коллаж"), pathExtension: settings.format.fileExtension
         ) { url in
             try ImageConverter.write(result, as: settings.format, to: url, options: options)
         }

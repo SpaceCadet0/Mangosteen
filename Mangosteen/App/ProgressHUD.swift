@@ -50,9 +50,9 @@ final class ProgressHUD {
         indicator.isIndeterminate = false
         indicator.minValue = 0
         indicator.maxValue = 1
-        cancelButton.image = NSImage(systemSymbolName: "xmark.circle.fill", accessibilityDescription: "Остановить")
+        cancelButton.image = NSImage(systemSymbolName: "xmark.circle.fill", accessibilityDescription: String(localized: "Остановить"))
         cancelButton.isBordered = false
-        cancelButton.toolTip = "Остановить"
+        cancelButton.toolTip = String(localized: "Остановить")
         cancelButton.target = self
         cancelButton.action = #selector(cancelTapped)
 
@@ -127,7 +127,7 @@ final class ProgressHUD {
     @objc private func cancelTapped() {
         for id in jobs.keys where jobs[id]?.cancel != nil {
             jobs[id]?.cancel?()
-            jobs[id]?.title = "Останавливаю…"
+            jobs[id]?.title = String(localized: "Останавливаю…")
         }
         refresh()
     }
@@ -145,8 +145,8 @@ final class ProgressHUD {
         let done = jobs.values.reduce(0) { $0 + $1.done }
         let running = jobs.values.reduce(0.0) { sum, job in sum + job.partial.values.filter { $0 >= 0 }.reduce(0, +) }
         let fraction = total == 0 ? 0 : min((Double(done) + running) / Double(total), 1)
-        titleLabel.stringValue = jobs.count == 1 ? (jobs.values.first?.title ?? "") : "Задач: \(jobs.count)"
-        detailLabel.stringValue = "\(done) из \(total) · \(Int((fraction * 100).rounded()))%"
+        titleLabel.stringValue = jobs.count == 1 ? (jobs.values.first?.title ?? "") : String(localized: "Задач: \(jobs.count)")
+        detailLabel.stringValue = String(localized: "\(done) из \(total) · \(Int((fraction * 100).rounded()))%")
         indicator.doubleValue = fraction
         // Hidden, not removed, so the bar keeps its length.
         cancelButton.alphaValue = jobs.values.contains { $0.cancel != nil } ? 1 : 0

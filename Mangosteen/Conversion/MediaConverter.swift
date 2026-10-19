@@ -21,8 +21,8 @@ enum MediaError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .noAudio(let url): "В «\(url.lastPathComponent)» нет звуковой дорожки."
-        case .noVideo(let url): "В «\(url.lastPathComponent)» нет видео."
+        case .noAudio(let url): String(localized: "В «\(url.lastPathComponent)» нет звуковой дорожки.")
+        case .noVideo(let url): String(localized: "В «\(url.lastPathComponent)» нет видео.")
         }
     }
 }

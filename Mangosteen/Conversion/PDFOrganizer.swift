@@ -36,7 +36,7 @@ enum PDFOrganizer {
         let document = try build(items, from: documents)
         return try OutputNaming.writeAtomically(
             directory: url.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: url)) (страницы)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: url)) (страницы)"),
             pathExtension: "pdf"
         ) { output in
             guard document.write(to: output) else { throw PDFToolError.writeFailed }

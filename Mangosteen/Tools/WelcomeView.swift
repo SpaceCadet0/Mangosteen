@@ -14,38 +14,38 @@ struct WelcomeView: View {
                     .resizable()
                     .frame(width: 72, height: 72)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Добро пожаловать в Mangosteen").font(.title2.weight(.semibold))
-                    Text("Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений.")
+                    Text(String(localized: "Добро пожаловать в Mangosteen")).font(.title2.weight(.semibold))
+                    Text(String(localized: "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений."))
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
 
             VStack(alignment: .leading, spacing: 10) {
-                step(1, "Начните тащить файл — из Finder, с рабочего стола или из любого приложения.")
-                step(2, "Не отпуская кнопку, коротко нажмите клавишу — у курсора откроется колесо.")
-                step(3, "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом, оригинал не меняется.")
+                step(1, String(localized: "Начните тащить файл — из Finder, с рабочего стола или из любого приложения."))
+                step(2, String(localized: "Не отпуская кнопку, коротко нажмите клавишу — у курсора откроется колесо."))
+                step(3, String(localized: "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом, оригинал не меняется."))
             }
 
             HStack(alignment: .top, spacing: 12) {
-                card(settings.convertModifier, "Конвертация",
-                     "Изображения, PDF, документы, видео, аудио, субтитры, таблицы и архивы в другие форматы.")
-                card(settings.toolsModifier, "Инструменты",
-                     "Сжатие, обрезка, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое.")
-                card(settings.actionsModifier, "Действия",
-                     "Полка Float, AirDrop, копирование, перемещение, путь к файлу, терминал.")
+                card(settings.convertModifier, String(localized: "Конвертация"),
+                     String(localized: "Изображения, PDF, документы, видео, аудио, субтитры, таблицы и архивы в другие форматы."))
+                card(settings.toolsModifier, String(localized: "Инструменты"),
+                     String(localized: "Сжатие, обрезка, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое."))
+                card(settings.actionsModifier, String(localized: "Действия"),
+                     String(localized: "Полка Float, AirDrop, копирование, перемещение, путь к файлу, терминал."))
             }
 
-            Label("Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках.",
+            Label(String(localized: "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках."),
                   systemImage: "lightbulb")
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
             HStack {
-                Toggle("Запускать Mangosteen при входе в систему", isOn: $settings.launchAtLogin)
+                Toggle(String(localized: "Запускать Mangosteen при входе в систему"), isOn: $settings.launchAtLogin)
                 Spacer()
-                Button("Начать", action: close)
+                Button(String(localized: "Начать"), action: close)
                     .keyboardShortcut(.defaultAction)
             }
         }

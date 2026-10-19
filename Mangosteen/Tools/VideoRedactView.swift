@@ -43,9 +43,9 @@ struct VideoRedactView: View {
                     Text("\(MediaTools.timecode(regions[index].start)) – \(MediaTools.timecode(regions[index].end))")
                         .font(.callout.monospacedDigit())
                         .foregroundStyle(.secondary)
-                    Button("Начало = курсор") { setStart(model.currentTime) }
-                    Button("Конец = курсор") { setEnd(model.currentTime) }
-                    Button("Весь ролик") {
+                    Button(String(localized: "Начало = курсор")) { setStart(model.currentTime) }
+                    Button(String(localized: "Конец = курсор")) { setEnd(model.currentTime) }
+                    Button(String(localized: "Весь ролик")) {
                         regions[index].start = 0
                         regions[index].end = model.duration
                     }
@@ -54,13 +54,13 @@ struct VideoRedactView: View {
             .disabled(!model.isLoaded)
             HStack {
                 Text(message.isEmpty
-                     ? "Тяните по видео, чтобы добавить область. Время выбранной области — жёлтый диапазон на таймлайне."
+                     ? String(localized: "Тяните по видео, чтобы добавить область. Время выбранной области — жёлтый диапазон на таймлайне.")
                      : message)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
             }
-            ToolFooter(fileCount: 1, actionTitle: regions.count > 1 ? "Скрыть на видео (\(regions.count))" : "Скрыть на видео",
+            ToolFooter(fileCount: 1, actionTitle: regions.count > 1 ? String(localized: "Скрыть на видео (\(regions.count))") : String(localized: "Скрыть на видео"),
                        actionDisabled: regions.isEmpty, cancel: close, action: run)
         }
         .padding(20)
@@ -76,22 +76,22 @@ struct VideoRedactView: View {
 
     private var toolbar: some View {
         HStack(spacing: 8) {
-            Button { detect(.faces) } label: { Label("Найти лица", systemImage: "person.crop.square") }
-            Button { detect(.text) } label: { Label("Найти текст", systemImage: "text.viewfinder") }
-            Button(action: deleteSelected) { Label("Удалить", systemImage: "trash") }
+            Button { detect(.faces) } label: { Label(String(localized: "Найти лица"), systemImage: "person.crop.square") }
+            Button { detect(.text) } label: { Label(String(localized: "Найти текст"), systemImage: "text.viewfinder") }
+            Button(action: deleteSelected) { Label(String(localized: "Удалить"), systemImage: "trash") }
                 .disabled(selected == nil)
-            Button(action: checkFrame) { Label("Проверить кадр", systemImage: "eye") }
+            Button(action: checkFrame) { Label(String(localized: "Проверить кадр"), systemImage: "eye") }
                 .disabled(regions.isEmpty)
             if busy { ProgressView().controlSize(.small) }
             Spacer()
-            Picker("Стиль", selection: $style) {
+            Picker(String(localized: "Стиль"), selection: $style) {
                 ForEach(RedactionStyle.allCases) { Text($0.title).tag($0) }
             }
             .pickerStyle(.segmented)
             .labelsHidden()
             .fixedSize()
             if style == .solid {
-                ColorPicker("Цвет", selection: Binding(get: { color.cgColor }, set: { color = RGBAColor($0) }),
+                ColorPicker(String(localized: "Цвет"), selection: Binding(get: { color.cgColor }, set: { color = RGBAColor($0) }),
                             supportsOpacity: false)
                     .labelsHidden()
             }
@@ -312,8 +312,8 @@ struct VideoRedactView: View {
                 let found = boxes.map { VideoRedactor.Region(rect: $0, start: start, end: end) }
                 regions += found
                 selected = found.last?.id ?? selected
-                message = found.isEmpty ? (kind == .faces ? "Лица на этом кадре не найдены." : "Текст на этом кадре не найден.")
-                    : "Найдено областей: \(found.count). Проверьте их время на таймлайне."
+                message = found.isEmpty ? (kind == .faces ? String(localized: "Лица на этом кадре не найдены.") : String(localized: "Текст на этом кадре не найден."))
+                    : String(localized: "Найдено областей: \(found.count). Проверьте их время на таймлайне.")
             case .failure(let error):
                 message = error.localizedDescription
             }
@@ -335,7 +335,7 @@ struct VideoRedactView: View {
             }.value
             busy = false
             checkedFrame = image
-            message = image == nil ? "Не удалось построить кадр." : "Так будет выглядеть этот кадр. Кадр сбросится при перемотке."
+            message = image == nil ? String(localized: "Не удалось построить кадр.") : String(localized: "Так будет выглядеть этот кадр. Кадр сбросится при перемотке.")
         }
     }
 
@@ -363,7 +363,7 @@ struct VideoRedactView: View {
         let regions = regions
         let style = style
         let color = color
-        ConversionService.shared.runEach("Скрытие на видео", inputs: [model.url], maxConcurrent: 1) { url, progress, cancellation in
+        ConversionService.shared.runEach(String(localized: "Скрытие на видео"), inputs: [model.url], maxConcurrent: 1) { url, progress, cancellation in
             try VideoRedactor.redact(url, regions: regions, style: style, color: color,
                                      progress: progress, cancellation: cancellation)
         }

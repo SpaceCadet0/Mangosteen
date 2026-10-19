@@ -67,7 +67,7 @@ enum MediaTools {
         let format = outputFormat(for: source)
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (обрезано)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (обрезано)"),
             pathExtension: format.fileExtension
         ) { output in
             try cut(input, info: info, format: format, start: start, end: end, fast: fast, to: output,
@@ -93,7 +93,7 @@ enum MediaTools {
         let baseName = OutputNaming.baseName(of: input)
         let digits = String(bounds.count - 1).count
         return try OutputNaming.writeAtomically(
-            directory: input.deletingLastPathComponent(), baseName: "\(baseName) (части)", pathExtension: ""
+            directory: input.deletingLastPathComponent(), baseName: String(localized: "\(baseName) (части)"), pathExtension: ""
         ) { folder in
             try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
             for index in 0..<(bounds.count - 1) {
@@ -133,7 +133,7 @@ enum MediaTools {
         guard !sorted.isEmpty else { throw PDFToolError.nothingToDo }
         let baseName = OutputNaming.baseName(of: input)
         func name(_ time: Double) -> String {
-            "\(baseName) кадр \(timecode(time).replacingOccurrences(of: ":", with: "-"))"
+            String(localized: "\(baseName) кадр \(timecode(time).replacingOccurrences(of: ":", with: "-"))")
         }
         if sorted.count == 1 {
             return try OutputNaming.writeAtomically(
@@ -141,7 +141,7 @@ enum MediaTools {
             ) { try frameData(input, at: sorted[0]).write(to: $0) }
         }
         return try OutputNaming.writeAtomically(
-            directory: input.deletingLastPathComponent(), baseName: "\(baseName) (кадры)", pathExtension: ""
+            directory: input.deletingLastPathComponent(), baseName: String(localized: "\(baseName) (кадры)"), pathExtension: ""
         ) { folder in
             try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
             for time in sorted {

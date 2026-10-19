@@ -39,12 +39,12 @@ struct PDFOrganizeView: View {
                 if let loadError { Text(loadError).foregroundStyle(.secondary) }
             }
             HStack {
-                Text("Клик — выбрать, ⌘-клик — добавить к выбору, перетаскивание — порядок, ⌫ — удалить.")
+                Text(String(localized: "Клик — выбрать, ⌘-клик — добавить к выбору, перетаскивание — порядок, ⌫ — удалить."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
             }
-            ToolFooter(fileCount: pdfs.count, actionTitle: "Сохранить PDF", actionDisabled: items.isEmpty,
+            ToolFooter(fileCount: pdfs.count, actionTitle: String(localized: "Сохранить PDF"), actionDisabled: items.isEmpty,
                        cancel: close, action: run)
         }
         .padding(20)
@@ -54,15 +54,15 @@ struct PDFOrganizeView: View {
 
     private var toolbar: some View {
         HStack(spacing: 8) {
-            Button { rotate(-90) } label: { Label("Влево", systemImage: "rotate.left") }
-            Button { rotate(90) } label: { Label("Вправо", systemImage: "rotate.right") }
-            Button(action: duplicateSelected) { Label("Дублировать", systemImage: "plus.square.on.square") }
-            Button(action: deleteSelected) { Label("Удалить", systemImage: "trash") }
+            Button { rotate(-90) } label: { Label(String(localized: "Влево"), systemImage: "rotate.left") }
+            Button { rotate(90) } label: { Label(String(localized: "Вправо"), systemImage: "rotate.right") }
+            Button(action: duplicateSelected) { Label(String(localized: "Дублировать"), systemImage: "plus.square.on.square") }
+            Button(action: deleteSelected) { Label(String(localized: "Удалить"), systemImage: "trash") }
             Spacer()
-            Button(selection.count == items.count ? "Снять выделение" : "Выделить все") {
+            Button(selection.count == items.count ? String(localized: "Снять выделение") : String(localized: "Выделить все")) {
                 selection = selection.count == items.count ? [] : Set(items.map(\.id))
             }
-            Text("\(items.count) стр.").monospacedDigit().foregroundStyle(.secondary)
+            Text(String(localized: "\(items.count) стр.")).monospacedDigit().foregroundStyle(.secondary)
         }
         .disabled(items.isEmpty)
     }
@@ -131,11 +131,11 @@ struct PDFOrganizeView: View {
     private func load() async {
         let loaded = pdfs.compactMap { PDFDocument(url: $0) }
         guard !loaded.isEmpty, loaded.count == pdfs.count else {
-            loadError = "Не удалось открыть PDF"
+            loadError = String(localized: "Не удалось открыть PDF")
             return
         }
         if loaded.contains(where: \.isLocked) {
-            loadError = "PDF защищён паролем"
+            loadError = String(localized: "PDF защищён паролем")
             return
         }
         documents = loaded
@@ -154,7 +154,7 @@ struct PDFOrganizeView: View {
         guard let first = pdfs.first else { return }
         let items = items
         let documents = documents
-        ConversionService.shared.runBatch("Страницы PDF", inputs: [first]) { _ in
+        ConversionService.shared.runBatch(String(localized: "Страницы PDF"), inputs: [first]) { _ in
             [try PDFOrganizer.save(items, from: documents, nextTo: first)]
         }
         close()

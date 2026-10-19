@@ -70,7 +70,7 @@ enum VideoRedactor {
         if format == .mp4 { arguments += ["-movflags", "+faststart"] }
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (скрыто)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (скрыто)"),
             pathExtension: format.fileExtension
         ) { output in
             try MediaConverter.runFFmpeg(arguments, output: output, duration: info.duration,

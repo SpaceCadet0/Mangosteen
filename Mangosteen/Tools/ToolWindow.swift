@@ -36,7 +36,7 @@ final class ToolWindow: NSObject, NSWindowDelegate {
 
     private static func subtitle(for files: [URL]) -> String {
         guard let first = files.first else { return "" }
-        return files.count > 1 ? "\(first.lastPathComponent) и ещё \(files.count - 1)" : first.lastPathComponent
+        return files.count > 1 ? String(localized: "\(first.lastPathComponent) и ещё \(files.count - 1)") : first.lastPathComponent
     }
 
     /// Shrinks the window to the visible area of the screen under the cursor and centres it there.
@@ -110,7 +110,7 @@ struct ToolFooter: View {
             Text(WheelView.filesLabel(fileCount))
                 .foregroundStyle(.secondary)
             Spacer()
-            Button("Отмена", action: cancel)
+            Button(String(localized: "Отмена"), action: cancel)
                 .keyboardShortcut(.cancelAction)
             Button(actionTitle, action: action)
                 .keyboardShortcut(.defaultAction)

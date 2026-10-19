@@ -150,8 +150,8 @@ final class WheelView: NSView {
         let primary: String
         let secondary: String
         if items.isEmpty {
-            primary = "Нет вариантов"
-            secondary = "для этих файлов"
+            primary = String(localized: "Нет вариантов")
+            secondary = String(localized: "для этих файлов")
         } else {
             primary = kind.title
             secondary = Self.filesLabel(fileCount)
@@ -168,18 +168,24 @@ final class WheelView: NSView {
         secondaryText.draw(at: NSPoint(x: ringCenter.x - secondarySize.width / 2, y: ringCenter.y - secondarySize.height - 1))
     }
 
+    /// "5 файлов" / "5 files" / "5 archivos": each language has its own plural rule.
     static func filesLabel(_ count: Int) -> String {
+        switch Bundle.main.preferredLocalizations.first {
+        case "en": return count == 1 ? "1 file" : "\(count) files"
+        case "es": return count == 1 ? "1 archivo" : "\(count) archivos"
+        default: break
+        }
         let lastTwo = count % 100
         let last = count % 10
         let noun: String
         if (11...14).contains(lastTwo) {
-            noun = "файлов"
+            noun = String(localized: "файлов")
         } else if last == 1 {
-            noun = "файл"
+            noun = String(localized: "файл")
         } else if (2...4).contains(last) {
-            noun = "файла"
+            noun = String(localized: "файла")
         } else {
-            noun = "файлов"
+            noun = String(localized: "файлов")
         }
         return "\(count) \(noun)"
     }

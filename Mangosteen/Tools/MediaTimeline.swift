@@ -63,7 +63,7 @@ final class MediaPlayerModel: ObservableObject {
         let url = url
         let info = await Task.detached(priority: .userInitiated) { try? MediaConverter.probe(url) }.value
         guard let info, let duration = info.duration, duration > 0 else {
-            loadError = "Не удалось прочитать файл"
+            loadError = String(localized: "Не удалось прочитать файл")
             return
         }
         self.duration = duration
@@ -488,7 +488,7 @@ struct TimelineFrame<Overlay: View>: View {
             .padding(.vertical, 5)
             HStack(spacing: 8) {
                 Spacer()
-                Text("Масштаб: щипок, ⌘ или ⌥ + колёсико; прокрутка — сдвиг")
+                Text(String(localized: "Масштаб: щипок, ⌘ или ⌥ + колёсико; прокрутка — сдвиг"))
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
                 ZoomBar(model: model)
@@ -566,7 +566,7 @@ struct ZoomBar: View {
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
                 .frame(width: 36, alignment: .leading)
-            Button("Весь файл") { model.setZoom(1) }
+            Button(String(localized: "Весь файл")) { model.setZoom(1) }
                 .controlSize(.small)
                 .opacity(model.zoom > 1 ? 1 : 0)
                 .disabled(model.zoom <= 1)
@@ -665,12 +665,12 @@ struct TransportBar: View {
             }
             .keyboardShortcut(.space, modifiers: [])
             .disabled(onPlay == nil && model.player == nil)
-            .help(onPlay == nil && model.player == nil ? "Этот формат можно просматривать только по кадрам" : "Воспроизведение (пробел)")
+            .help(onPlay == nil && model.player == nil ? String(localized: "Этот формат можно просматривать только по кадрам") : String(localized: "Воспроизведение (пробел)"))
             if model.isVideo {
                 Button { model.step(frames: -1) } label: { Image(systemName: "backward.frame.fill") }
-                    .help("Кадр назад")
+                    .help(String(localized: "Кадр назад"))
                 Button { model.step(frames: 1) } label: { Image(systemName: "forward.frame.fill") }
-                    .help("Кадр вперёд")
+                    .help(String(localized: "Кадр вперёд"))
             }
             Text("\(MediaTools.timecode(model.currentTime)) / \(MediaTools.timecode(model.duration))")
                 .font(.callout.monospacedDigit())

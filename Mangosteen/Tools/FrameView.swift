@@ -27,7 +27,7 @@ struct FrameView: View {
                 .frame(minWidth: 460, idealWidth: 560, minHeight: 380, idealHeight: 480)
                 controls
             }
-            ToolFooter(fileCount: images.count, actionTitle: "Сохранить", actionDisabled: photo == nil,
+            ToolFooter(fileCount: images.count, actionTitle: String(localized: "Сохранить"), actionDisabled: photo == nil,
                        cancel: close, action: run)
         }
         .padding(20)
@@ -41,33 +41,33 @@ struct FrameView: View {
 
     private var controls: some View {
         Form {
-            Picker("Фон", selection: $settings.background) {
+            Picker(String(localized: "Фон"), selection: $settings.background) {
                 ForEach(FrameSettings.Background.allCases) { Text($0.title).tag($0) }
             }
             switch settings.background {
             case .color:
-                ColorPicker("Цвет", selection: color(\.color), supportsOpacity: false)
+                ColorPicker(String(localized: "Цвет"), selection: color(\.color), supportsOpacity: false)
             case .gradient:
-                ColorPicker("Начало", selection: color(\.gradientStart), supportsOpacity: false)
-                ColorPicker("Конец", selection: color(\.gradientEnd), supportsOpacity: false)
-                labeledSlider("Угол", value: $settings.gradientAngle, range: 0...360, format: "%.0f°")
+                ColorPicker(String(localized: "Начало"), selection: color(\.gradientStart), supportsOpacity: false)
+                ColorPicker(String(localized: "Конец"), selection: color(\.gradientEnd), supportsOpacity: false)
+                labeledSlider(String(localized: "Угол"), value: $settings.gradientAngle, range: 0...360, format: "%.0f°")
             case .image:
-                LabeledContent("Изображение") {
-                    Button(settings.backgroundImage?.lastPathComponent ?? "Выбрать…", action: chooseBackground)
+                LabeledContent(String(localized: "Изображение")) {
+                    Button(settings.backgroundImage?.lastPathComponent ?? String(localized: "Выбрать…"), action: chooseBackground)
                 }
-                labeledSlider("Размытие", value: $settings.blur, range: 0...1)
+                labeledSlider(String(localized: "Размытие"), value: $settings.blur, range: 0...1)
             case .blur:
-                labeledSlider("Размытие", value: $settings.blur, range: 0...1)
+                labeledSlider(String(localized: "Размытие"), value: $settings.blur, range: 0...1)
             }
 
-            Picker("Пропорции", selection: $settings.aspect) {
+            Picker(String(localized: "Пропорции"), selection: $settings.aspect) {
                 ForEach(CanvasAspect.allCases) { aspect in
-                    Text(aspect == .auto ? "Как у фото" : aspect.title).tag(aspect)
+                    Text(aspect == .auto ? String(localized: "Как у фото") : aspect.title).tag(aspect)
                 }
             }
-            labeledSlider("Отступ", value: $settings.padding, range: 0...0.4)
-            labeledSlider("Скругление", value: $settings.cornerRadius, range: 0...0.25)
-            labeledSlider("Тень", value: $settings.shadow, range: 0...1)
+            labeledSlider(String(localized: "Отступ"), value: $settings.padding, range: 0...0.4)
+            labeledSlider(String(localized: "Скругление"), value: $settings.cornerRadius, range: 0...0.25)
+            labeledSlider(String(localized: "Тень"), value: $settings.shadow, range: 0...1)
         }
         .formStyle(.grouped)
         .frame(width: 340)
@@ -118,7 +118,7 @@ struct FrameView: View {
     private func run() {
         let settings = settings
         let options = AppSettings.shared.conversionOptions
-        ConversionService.shared.runEach("Фон", inputs: images) {
+        ConversionService.shared.runEach(String(localized: "Фон"), inputs: images) {
             try FrameComposer.composeFile($0, settings: settings, options: options)
         }
         close()

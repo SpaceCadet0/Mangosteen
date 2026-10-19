@@ -38,28 +38,28 @@ struct RedactView: View {
                 .frame(minWidth: 620, idealWidth: 760, minHeight: 400, idealHeight: 520)
                 .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
             HStack(spacing: 12) {
-                Text("Стиль")
+                Text(String(localized: "Стиль"))
                     .fixedSize()
-                Picker("Стиль", selection: $style) {
+                Picker(String(localized: "Стиль"), selection: $style) {
                     ForEach(RedactionStyle.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
                 .fixedSize()
                 if style == .solid {
-                    ColorPicker("Цвет", selection: Binding(get: { color.cgColor }, set: { color = RGBAColor($0) }),
+                    ColorPicker(String(localized: "Цвет"), selection: Binding(get: { color.cgColor }, set: { color = RGBAColor($0) }),
                                 supportsOpacity: false)
                         .fixedSize()
                 }
                 Spacer(minLength: 12)
-                Text(message.isEmpty ? "Тяните по фото, чтобы добавить область. Метаданные в результате удаляются." : message)
+                Text(message.isEmpty ? String(localized: "Тяните по фото, чтобы добавить область. Метаданные в результате удаляются.") : message)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
                     .multilineTextAlignment(.trailing)
                     .layoutPriority(-1)
             }
-            ToolFooter(fileCount: imagesWithRegions.count, actionTitle: "Сохранить",
+            ToolFooter(fileCount: imagesWithRegions.count, actionTitle: String(localized: "Сохранить"),
                        actionDisabled: imagesWithRegions.isEmpty, cancel: close, action: run)
         }
         .padding(20)
@@ -73,20 +73,20 @@ struct RedactView: View {
 
     private var toolbar: some View {
         HStack(spacing: 8) {
-            Button { detect(.faces) } label: { Label("Найти лица", systemImage: "person.crop.square") }
-            Button { detect(.text) } label: { Label("Найти текст", systemImage: "text.viewfinder") }
+            Button { detect(.faces) } label: { Label(String(localized: "Найти лица"), systemImage: "person.crop.square") }
+            Button { detect(.text) } label: { Label(String(localized: "Найти текст"), systemImage: "text.viewfinder") }
             if detecting {
                 ProgressView().controlSize(.small)
             }
-            Button(action: deleteSelected) { Label("Удалить область", systemImage: "trash") }
+            Button(action: deleteSelected) { Label(String(localized: "Удалить область"), systemImage: "trash") }
                 .disabled(selected == nil)
-            Button("Очистить") { setRegions([]) }
+            Button(String(localized: "Очистить")) { setRegions([]) }
                 .disabled(currentRegions.isEmpty)
             Spacer()
             if images.count > 1 {
                 Button { index -= 1 } label: { Image(systemName: "chevron.left") }
                     .disabled(index == 0)
-                Text("\(index + 1) из \(images.count)").monospacedDigit()
+                Text(String(localized: "\(index + 1) из \(images.count)")).monospacedDigit()
                 Button { index += 1 } label: { Image(systemName: "chevron.right") }
                     .disabled(index >= images.count - 1)
             }
@@ -251,8 +251,8 @@ struct RedactView: View {
             switch result {
             case .success(let boxes):
                 setRegions(currentRegions + boxes.map { RedactionRegion(rect: $0) })
-                message = boxes.isEmpty ? (kind == .faces ? "Лица не найдены" : "Текст не найден")
-                    : "Найдено областей: \(boxes.count)"
+                message = boxes.isEmpty ? (kind == .faces ? String(localized: "Лица не найдены") : String(localized: "Текст не найден"))
+                    : String(localized: "Найдено областей: \(boxes.count)")
             case .failure(let error):
                 message = error.localizedDescription
             }
@@ -289,7 +289,7 @@ struct RedactView: View {
         let style = style
         let color = color
         let options = AppSettings.shared.conversionOptions
-        ConversionService.shared.runEach("Скрытие", inputs: jobs.map(\.0)) { url in
+        ConversionService.shared.runEach(String(localized: "Скрытие"), inputs: jobs.map(\.0)) { url in
             try Redactor.applyFile(url, regions: lookup[url] ?? [], style: style, color: color, options: options)
         }
         close()

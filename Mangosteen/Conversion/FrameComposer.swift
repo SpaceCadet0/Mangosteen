@@ -40,7 +40,7 @@ enum CanvasAspect: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .auto: "Авто"
+        case .auto: String(localized: "Авто")
         case .square: "1:1"
         case .r4x5: "4:5"
         case .r5x4: "5:4"
@@ -75,10 +75,10 @@ struct FrameSettings: Equatable {
         var id: String { rawValue }
         var title: String {
             switch self {
-            case .color: "Цвет"
-            case .gradient: "Градиент"
-            case .image: "Изображение"
-            case .blur: "Исходное изображение"
+            case .color: String(localized: "Цвет")
+            case .gradient: String(localized: "Градиент")
+            case .image: String(localized: "Изображение")
+            case .blur: String(localized: "Исходное изображение")
             }
         }
     }
@@ -209,7 +209,7 @@ enum FrameComposer {
         let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (фон)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (фон)"),
             pathExtension: target.fileExtension
         ) { url in
             try ImageConverter.write(result, as: target, to: url, options: options,

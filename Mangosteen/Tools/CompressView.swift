@@ -7,8 +7,9 @@ struct CompressView: View {
     let close: () -> Void
 
     private enum SizeUnit: String, CaseIterable, Identifiable {
-        case kb = "КБ", mb = "МБ"
+        case kb, mb
         var id: String { rawValue }
+        var title: String { self == .kb ? String(localized: "КБ") : String(localized: "МБ") }
         var bytes: Double { self == .kb ? 1_000 : 1_000_000 }
     }
 
@@ -36,7 +37,7 @@ struct CompressView: View {
                 }
                 controls
             }
-            ToolFooter(fileCount: images.count + pdfs.count, actionTitle: "Сжать",
+            ToolFooter(fileCount: images.count + pdfs.count, actionTitle: String(localized: "Сжать"),
                        actionDisabled: images.isEmpty && pdfs.isEmpty, cancel: close, action: run)
         }
         .padding(20)
@@ -74,14 +75,14 @@ struct CompressView: View {
 
     private var controls: some View {
         Form {
-            Picker("Способ", selection: $settings.mode) {
+            Picker(String(localized: "Способ"), selection: $settings.mode) {
                 ForEach(CompressionSettings.Mode.allCases) { Text($0.title).tag($0) }
             }
             .pickerStyle(.segmented)
 
             switch settings.mode {
             case .preset:
-                Picker("Пресет", selection: $settings.preset) {
+                Picker(String(localized: "Пресет"), selection: $settings.preset) {
                     ForEach(CompressionSettings.Preset.allCases) { preset in
                         VStack(alignment: .leading) {
                             Text(preset.title)
@@ -92,7 +93,7 @@ struct CompressView: View {
                 }
                 .pickerStyle(.radioGroup)
             case .quality:
-                LabeledContent("Качество") {
+                LabeledContent(String(localized: "Качество")) {
                     HStack {
                         Slider(value: $settings.quality, in: 0.05...1)
                         Text("\(Int((settings.quality * 100).rounded()))%")
@@ -101,12 +102,12 @@ struct CompressView: View {
                     }
                 }
             case .targetSize:
-                LabeledContent("Не больше") {
+                LabeledContent(String(localized: "Не больше")) {
                     HStack {
                         TextField("", value: $targetValue, format: .number)
                             .frame(width: 80)
                         Picker("", selection: $targetUnit) {
-                            ForEach(SizeUnit.allCases) { Text($0.rawValue).tag($0) }
+                            ForEach(SizeUnit.allCases) { Text($0.title).tag($0) }
                         }
                         .labelsHidden()
                         .frame(width: 70)
@@ -114,25 +115,25 @@ struct CompressView: View {
                 }
             }
 
-            Picker("Длинная сторона", selection: $settings.maxPixelSize) {
-                Text("Без изменений").tag(Int?.none)
+            Picker(String(localized: "Длинная сторона"), selection: $settings.maxPixelSize) {
+                Text(String(localized: "Без изменений")).tag(Int?.none)
                 ForEach(Self.sizeLimits, id: \.self) { Text("\($0) px").tag(Optional($0)) }
             }
             .disabled(settings.mode == .preset && settings.preset.maxPixelSize != nil)
 
-            Picker("Формат", selection: $settings.format) {
-                Text("Как у оригинала").tag(FileFormat?.none)
+            Picker(String(localized: "Формат"), selection: $settings.format) {
+                Text(String(localized: "Как у оригинала")).tag(FileFormat?.none)
                 ForEach(CompressionSettings.selectableFormats) { Text($0.displayName).tag(Optional($0)) }
             }
-            Toggle("Сохранять метаданные", isOn: $settings.preserveMetadata)
+            Toggle(String(localized: "Сохранять метаданные"), isOn: $settings.preserveMetadata)
 
             if !pdfs.isEmpty {
-                Text("В PDF изображения будут пережаты в JPEG экранного разрешения.")
+                Text(String(localized: "В PDF изображения будут пережаты в JPEG экранного разрешения."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             if images.contains(where: { FileFormat.detect($0)?.isLossy == false }) && settings.format == nil {
-                Text("PNG, TIFF и другие форматы без потерь будут сохранены как \(ImageCompression.defaultLossyFormat.displayName).")
+                Text(String(localized: "PNG, TIFF и другие форматы без потерь будут сохранены как \(ImageCompression.defaultLossyFormat.displayName)."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -173,7 +174,7 @@ struct CompressView: View {
 
     private func run() {
         let settings = settings
-        ConversionService.shared.runEach("Сжатие", inputs: images + pdfs) {
+        ConversionService.shared.runEach(String(localized: "Сжатие"), inputs: images + pdfs) {
             try ImageCompression.compressFile($0, settings: settings)
         }
         close()

@@ -8,8 +8,8 @@ enum CompressionError: LocalizedError {
         switch self {
         case .notSmaller(let original, let result):
             let formatter = ByteCountFormatter()
-            return "Сжатый файл (\(formatter.string(fromByteCount: result))) не меньше оригинала "
-                + "(\(formatter.string(fromByteCount: original))). Выберите другой формат или меньший размер."
+            return String(localized: "Сжатый файл (\(formatter.string(fromByteCount: result))) не меньше оригинала ")
+                + String(localized: "(\(formatter.string(fromByteCount: original))). Выберите другой формат или меньший размер.")
         }
     }
 }
@@ -20,9 +20,9 @@ struct CompressionSettings: Equatable {
         var id: String { rawValue }
         var title: String {
             switch self {
-            case .preset: "Пресет"
-            case .quality: "Качество"
-            case .targetSize: "Размер файла"
+            case .preset: String(localized: "Пресет")
+            case .quality: String(localized: "Качество")
+            case .targetSize: String(localized: "Размер файла")
             }
         }
     }
@@ -32,16 +32,16 @@ struct CompressionSettings: Equatable {
         var id: String { rawValue }
         var title: String {
             switch self {
-            case .high: "Высокое качество"
-            case .balanced: "Сбалансированно"
-            case .small: "Минимальный размер"
+            case .high: String(localized: "Высокое качество")
+            case .balanced: String(localized: "Сбалансированно")
+            case .small: String(localized: "Минимальный размер")
             }
         }
         var detail: String {
             switch self {
-            case .high: "Лучшее качество при умеренной экономии"
-            case .balanced: "Заметно меньше файл, почти без видимых потерь"
-            case .small: "Самые маленькие файлы, потери качества заметнее"
+            case .high: String(localized: "Лучшее качество при умеренной экономии")
+            case .balanced: String(localized: "Заметно меньше файл, почти без видимых потерь")
+            case .small: String(localized: "Самые маленькие файлы, потери качества заметнее")
             }
         }
         var quality: Double {
@@ -161,7 +161,7 @@ enum ImageCompression {
         }
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (сжатый)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (сжатый)"),
             pathExtension: format.fileExtension
         ) { try data.write(to: $0) }
     }
@@ -171,7 +171,7 @@ enum ImageCompression {
         guard let document = PDFDocument(url: input) else { throw ConversionError.unreadable(input) }
         let output = try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (сжатый)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (сжатый)"),
             pathExtension: "pdf"
         ) { url in
             let options: [PDFDocumentWriteOption: Any] = [.saveImagesAsJPEGOption: true, .optimizeImagesForScreenOption: true]

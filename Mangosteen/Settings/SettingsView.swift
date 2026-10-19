@@ -2,26 +2,45 @@ import SwiftUI
 
 struct SettingsView: View {
     @ObservedObject private var settings = AppSettings.shared
+    @State private var language = AppLanguage.current
+    private let launchLanguage = AppLanguage.current
 
     var body: some View {
         Form {
             Section {
-                modifierPicker("Конвертация", selection: $settings.convertModifier)
-                modifierPicker("Инструменты", selection: $settings.toolsModifier)
-                modifierPicker("Действия", selection: $settings.actionsModifier)
+                modifierPicker(String(localized: "Конвертация"), selection: $settings.convertModifier)
+                modifierPicker(String(localized: "Инструменты"), selection: $settings.toolsModifier)
+                modifierPicker(String(localized: "Действия"), selection: $settings.actionsModifier)
             } header: {
-                Text("Колёса")
+                Text(String(localized: "Колёса"))
             } footer: {
-                Text("Начните перетаскивать файл и коротко нажмите клавишу. Колесо останется открытым, пока вы не отпустите файл.")
+                Text(String(localized: "Начните перетаскивать файл и коротко нажмите клавишу. Колесо останется открытым, пока вы не отпустите файл."))
             }
 
-            Section("Отклик") {
-                Toggle("Звуки", isOn: $settings.playSounds)
-                Toggle("Тактильный отклик трекпада", isOn: $settings.haptics)
-                Toggle("Показывать результат в Finder", isOn: $settings.revealInFinder)
+            Section {
+                Picker(String(localized: "Язык"), selection: $language) {
+                    ForEach(AppLanguage.allCases) { Text($0.title).tag($0) }
+                }
+                .onChange(of: language) { $0.apply() }
+                if language != launchLanguage {
+                    HStack {
+                        Text(String(localized: "Язык изменится после перезапуска."))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button(String(localized: "Перезапустить")) { AppLanguage.relaunch() }
+                    }
+                }
+            } header: {
+                Text(verbatim: "Язык · Language · Idioma")
             }
 
-            Section("Качество изображений") {
+            Section(String(localized: "Отклик")) {
+                Toggle(String(localized: "Звуки"), isOn: $settings.playSounds)
+                Toggle(String(localized: "Тактильный отклик трекпада"), isOn: $settings.haptics)
+                Toggle(String(localized: "Показывать результат в Finder"), isOn: $settings.revealInFinder)
+            }
+
+            Section(String(localized: "Качество изображений")) {
                 qualitySlider("JPG", value: $settings.jpegQuality)
                 qualitySlider("HEIC", value: $settings.heicQuality)
                 qualitySlider("AVIF", value: $settings.avifQuality)
@@ -29,14 +48,14 @@ struct SettingsView: View {
                     get: { Double(settings.webpQuality) / 100 },
                     set: { settings.webpQuality = Int(($0 * 100).rounded()) }
                 ))
-                Toggle("Сохранять метаданные (EXIF, GPS, цветовой профиль)", isOn: $settings.preserveMetadata)
+                Toggle(String(localized: "Сохранять метаданные (EXIF, GPS, цветовой профиль)"), isOn: $settings.preserveMetadata)
             }
 
-            Section("Система") {
-                Picker("Терминал", selection: $settings.terminalApp) {
+            Section(String(localized: "Система")) {
+                Picker(String(localized: "Терминал"), selection: $settings.terminalApp) {
                     ForEach(TerminalChoice.allCases) { Text($0.title).tag($0) }
                 }
-                Toggle("Запускать при входе в систему", isOn: $settings.launchAtLogin)
+                Toggle(String(localized: "Запускать при входе в систему"), isOn: $settings.launchAtLogin)
             }
 
             Section {
@@ -45,13 +64,13 @@ struct SettingsView: View {
                         if let path = ExternalTool.locate(tool)?.path {
                             Text(path).foregroundStyle(.secondary)
                         } else {
-                            Text("не найдено — brew install \(ExternalTool.Missing.formula(for: tool))")
+                            Text(String(localized: "не найдено — brew install \(ExternalTool.Missing.formula(for: tool))"))
                                 .foregroundStyle(.orange)
                         }
                     }
                 }
             } header: {
-                Text("Утилиты")
+                Text(String(localized: "Утилиты"))
             }
         }
         .formStyle(.grouped)

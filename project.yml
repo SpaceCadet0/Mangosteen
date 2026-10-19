@@ -1,6 +1,7 @@
 name: Mangosteen
 options:
   bundleIdPrefix: dev.mangosteen
+  developmentLanguage: ru
   deploymentTarget:
     macOS: "14.0"
   createIntermediateGroups: true
@@ -8,6 +9,7 @@ settings:
   base:
     SWIFT_VERSION: "5.0"
     MACOSX_DEPLOYMENT_TARGET: "14.0"
+    SWIFT_EMIT_LOC_STRINGS: YES
     CODE_SIGN_IDENTITY: "-"
     CODE_SIGN_STYLE: Manual
     DEVELOPMENT_TEAM: ""

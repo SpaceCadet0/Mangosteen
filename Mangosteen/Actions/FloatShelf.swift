@@ -93,7 +93,7 @@ final class FloatShelf {
 private final class FloatShelfView: NSVisualEffectView {
     private let titleLabel = NSTextField(labelWithString: "Float")
     private let stack = NSStackView()
-    private let emptyLabel = NSTextField(wrappingLabelWithString: "Перетащите сюда файлы или бросьте их на «Float» в колесе ⌃")
+    private let emptyLabel = NSTextField(wrappingLabelWithString: String(localized: "Перетащите сюда файлы или бросьте их на «Float» в колесе ⌃"))
     private let allItemsRow = FloatItemView(urls: [])
 
     override init(frame frameRect: NSRect) {
@@ -114,17 +114,17 @@ private final class FloatShelfView: NSVisualEffectView {
 
     private func build() {
         titleLabel.font = .systemFont(ofSize: 13, weight: .semibold)
-        let clear = headerButton("trash", "Очистить", #selector(clearTapped))
-        let close = headerButton("xmark", "Закрыть Float (файлы не удаляются)", #selector(closeTapped))
+        let clear = headerButton("trash", String(localized: "Очистить"), #selector(clearTapped))
+        let close = headerButton("xmark", String(localized: "Закрыть Float (файлы не удаляются)"), #selector(closeTapped))
         let header = NSStackView(views: [titleLabel, NSView(), clear, close])
 
-        let mode = NSSegmentedControl(labels: ["Копировать", "Переместить"], trackingMode: .selectOne,
+        let mode = NSSegmentedControl(labels: [String(localized: "Копировать"), String(localized: "Переместить")], trackingMode: .selectOne,
                                       target: self, action: #selector(modeChanged(_:)))
         mode.selectedSegment = AppSettings.shared.floatMovesFiles ? 1 : 0
         mode.controlSize = .small
         mode.segmentDistribution = .fillEqually
-        mode.setToolTip("Файл остаётся в исходной папке, в другое место попадает копия", forSegment: 0)
-        mode.setToolTip("Файл переносится из исходной папки туда, куда его перетащили", forSegment: 1)
+        mode.setToolTip(String(localized: "Файл остаётся в исходной папке, в другое место попадает копия"), forSegment: 0)
+        mode.setToolTip(String(localized: "Файл переносится из исходной папки туда, куда его перетащили"), forSegment: 1)
         header.orientation = .horizontal
         header.spacing = 6
 
@@ -272,11 +272,11 @@ private final class FloatItemView: NSView, NSDraggingSource {
         iconView.imageScaling = .scaleProportionallyUpOrDown
         nameLabel.lineBreakMode = .byTruncatingMiddle
         nameLabel.font = .systemFont(ofSize: 12)
-        removeButton.image = NSImage(systemSymbolName: "xmark.circle.fill", accessibilityDescription: "Убрать из Float")
+        removeButton.image = NSImage(systemSymbolName: "xmark.circle.fill", accessibilityDescription: String(localized: "Убрать из Float"))
         removeButton.isBordered = false
         removeButton.target = self
         removeButton.action = #selector(removeTapped)
-        removeButton.toolTip = "Убрать из Float"
+        removeButton.toolTip = String(localized: "Убрать из Float")
 
         let row = NSStackView(views: [iconView, nameLabel, removeButton])
         row.orientation = .horizontal
@@ -304,17 +304,17 @@ private final class FloatItemView: NSView, NSDraggingSource {
         if isGroup {
             iconView.image = NSImage(systemSymbolName: "square.stack.3d.up.fill", accessibilityDescription: nil)
             let available = urls.filter { FileManager.default.fileExists(atPath: $0.path) }.count
-            nameLabel.stringValue = "Перетащить все (\(available))"
+            nameLabel.stringValue = String(localized: "Перетащить все (\(available))")
             nameLabel.font = .systemFont(ofSize: 12, weight: .semibold)
             removeButton.isHidden = true
             layer?.backgroundColor = NSColor.labelColor.withAlphaComponent(0.06).cgColor
         } else if let url = urls.first {
             let exists = FileManager.default.fileExists(atPath: url.path)
             iconView.image = NSWorkspace.shared.icon(forFile: url.path)
-            nameLabel.stringValue = exists ? url.lastPathComponent : "\(url.lastPathComponent) — перемещён"
+            nameLabel.stringValue = exists ? url.lastPathComponent : String(localized: "\(url.lastPathComponent) — перемещён")
             nameLabel.textColor = exists ? .labelColor : .tertiaryLabelColor
             iconView.alphaValue = exists ? 1 : 0.4
-            toolTip = exists ? url.path : "Файла больше нет по адресу \(url.path)"
+            toolTip = exists ? url.path : String(localized: "Файла больше нет по адресу \(url.path)")
         }
     }
 
@@ -350,9 +350,9 @@ private final class FloatItemView: NSView, NSDraggingSource {
     override func rightMouseDown(with event: NSEvent) {
         guard !isGroup else { return }
         let menu = NSMenu()
-        menu.addItem(withTitle: "Открыть", action: #selector(openTapped), keyEquivalent: "").target = self
-        menu.addItem(withTitle: "Показать в Finder", action: #selector(revealTapped), keyEquivalent: "").target = self
-        menu.addItem(withTitle: "Убрать из Float", action: #selector(removeTapped), keyEquivalent: "").target = self
+        menu.addItem(withTitle: String(localized: "Открыть"), action: #selector(openTapped), keyEquivalent: "").target = self
+        menu.addItem(withTitle: String(localized: "Показать в Finder"), action: #selector(revealTapped), keyEquivalent: "").target = self
+        menu.addItem(withTitle: String(localized: "Убрать из Float"), action: #selector(removeTapped), keyEquivalent: "").target = self
         NSMenu.popUpContextMenu(menu, with: event, for: self)
     }
 

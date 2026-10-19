@@ -10,15 +10,15 @@ struct PhotoAdjustments: Equatable {
 
         var title: String {
             switch self {
-            case .none: "Нет"
-            case .mono: "Моно"
-            case .noir: "Нуар"
-            case .tonal: "Тональный"
-            case .chrome: "Хром"
-            case .fade: "Выцветание"
-            case .instant: "Моментальный"
-            case .process: "Процесс"
-            case .transfer: "Перенос"
+            case .none: String(localized: "Нет")
+            case .mono: String(localized: "Моно")
+            case .noir: String(localized: "Нуар")
+            case .tonal: String(localized: "Тональный")
+            case .chrome: String(localized: "Хром")
+            case .fade: String(localized: "Выцветание")
+            case .instant: String(localized: "Моментальный")
+            case .process: String(localized: "Процесс")
+            case .transfer: String(localized: "Перенос")
             }
         }
 
@@ -173,7 +173,7 @@ enum PhotoEditor {
         let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (изменено)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (изменено)"),
             pathExtension: target.fileExtension
         ) { url in
             try ImageConverter.write(result, as: target, to: url, options: options,

@@ -1,0 +1,1646 @@
+{
+ "\n…и ещё %lld": {
+  "en": "\n…and %lld more",
+  "es": "\n…y %lld más"
+ },
+ " (свёрнуто)": {
+  "en": " (minimized)",
+  "es": " (minimizada)"
+ },
+ " — не меньше оригинала, файл не будет сохранён": {
+  "en": " — not smaller than the original, the file will not be saved",
+  "es": " — no es más pequeño que el original, el archivo no se guardará"
+ },
+ "%@ (визуализация)": {
+  "en": "%@ (visualizer)",
+  "es": "%@ (visualización)"
+ },
+ "%@ (изменено)": {
+  "en": "%@ (edited)",
+  "es": "%@ (editado)"
+ },
+ "%@ (кадрирование)": {
+  "en": "%@ (cropped video)",
+  "es": "%@ (encuadrado)"
+ },
+ "%@ (кадры)": {
+  "en": "%@ (frames)",
+  "es": "%@ (fotogramas)"
+ },
+ "%@ (метаданные)": {
+  "en": "%@ (metadata)",
+  "es": "%@ (metadatos)"
+ },
+ "%@ (обрезано)": {
+  "en": "%@ (trimmed)",
+  "es": "%@ (recortado)"
+ },
+ "%@ (пометки)": {
+  "en": "%@ (annotated)",
+  "es": "%@ (anotado)"
+ },
+ "%@ (сжатый)": {
+  "en": "%@ (compressed)",
+  "es": "%@ (comprimido)"
+ },
+ "%@ (скорость %@)": {
+  "en": "%@ (speed %@)",
+  "es": "%@ (velocidad %@)"
+ },
+ "%@ (скрыто)": {
+  "en": "%@ (redacted)",
+  "es": "%@ (oculto)"
+ },
+ "%@ (страницы)": {
+  "en": "%@ (pages)",
+  "es": "%@ (páginas)"
+ },
+ "%@ (фон)": {
+  "en": "%@ (background)",
+  "es": "%@ (fondo)"
+ },
+ "%@ (части)": {
+  "en": "%@ (parts)",
+  "es": "%@ (partes)"
+ },
+ "%@ завершился с кодом %d": {
+  "en": "%@ exited with code %d",
+  "es": "%@ terminó con el código %d"
+ },
+ "%@ и ещё %lld": {
+  "en": "%@ and %lld more",
+  "es": "%@ y %lld más"
+ },
+ "%@ кадр %@": {
+  "en": "%@ frame %@",
+  "es": "%@ fotograma %@"
+ },
+ "%@ — перемещён": {
+  "en": "%@ — moved",
+  "es": "%@ — movido"
+ },
+ "%@: не удалось обработать %@": {
+  "en": "%@: could not process %@",
+  "es": "%@: no se pudo procesar %@"
+ },
+ "%lld байт": {
+  "en": "%lld bytes",
+  "es": "%lld bytes"
+ },
+ "%lld из %lld": {
+  "en": "%lld of %lld",
+  "es": "%lld de %lld"
+ },
+ "%lld из %lld · %lld%%": {
+  "en": "%lld of %lld · %lld%%",
+  "es": "%lld de %lld · %lld%%"
+ },
+ "%lld полей": {
+  "en": "%lld fields",
+  "es": "%lld campos"
+ },
+ "%lld стр.": {
+  "en": "%lld pages",
+  "es": "%lld págs."
+ },
+ "(%@). Выберите другой формат или меньший размер.": {
+  "en": "(%@). Choose another format or a smaller size.",
+  "es": "(%@). Elige otro formato o un tamaño menor."
+ },
+ "1000 Гц": {
+  "en": "1000 Hz",
+  "es": "1000 Hz"
+ },
+ "1500 Гц": {
+  "en": "1500 Hz",
+  "es": "1500 Hz"
+ },
+ "800 Гц": {
+  "en": "800 Hz",
+  "es": "800 Hz"
+ },
+ "HEVC (H.265) — меньше файл, сжатие дольше": {
+  "en": "HEVC (H.265) — smaller file, slower to compress",
+  "es": "HEVC (H.265) — archivo más pequeño, compresión más lenta"
+ },
+ "PDF защищён паролем": {
+  "en": "The PDF is password protected",
+  "es": "El PDF está protegido con contraseña"
+ },
+ "PDF из фото": {
+  "en": "PDF from photos",
+  "es": "PDF de fotos"
+ },
+ "PNG, TIFF и другие форматы без потерь будут сохранены как %@.": {
+  "en": "PNG, TIFF and other lossless formats will be saved as %@.",
+  "es": "PNG, TIFF y otros formatos sin pérdida se guardarán como %@."
+ },
+ "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате.": {
+  "en": "WAV, FLAC and AIFF are saved as M4A (AAC); other formats stay as they are.",
+  "es": "WAV, FLAC y AIFF se guardan como M4A (AAC); el resto mantiene su formato."
+ },
+ "«%@» защищён паролем.": {
+  "en": "“%@” is password protected.",
+  "es": "«%@» está protegido con contraseña."
+ },
+ "Авто": {
+  "en": "Auto",
+  "es": "Auto"
+ },
+ "Автозапуск": {
+  "en": "Launch at login",
+  "es": "Inicio automático"
+ },
+ "Автор": {
+  "en": "Author",
+  "es": "Autor"
+ },
+ "Авторские права": {
+  "en": "Copyright",
+  "es": "Derechos de autor"
+ },
+ "Альбомная 16:9": {
+  "en": "Landscape 16:9",
+  "es": "Horizontal 16:9"
+ },
+ "Без изменений": {
+  "en": "Unchanged",
+  "es": "Sin cambios"
+ },
+ "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках.": {
+  "en": "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.",
+  "es": "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes."
+ },
+ "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом, оригинал не меняется.": {
+  "en": "Drop the file on a segment. The result appears next to the original; the original is not changed.",
+  "es": "Suelta el archivo en un segmento. El resultado aparece junto al original; el original no cambia."
+ },
+ "Быстро, без перекодирования": {
+  "en": "Fast, without re-encoding",
+  "es": "Rápido, sin recodificar"
+ },
+ "Быстро, без перекодирования (разрез по ближайшему ключевому кадру)": {
+  "en": "Fast, without re-encoding (cut at the nearest keyframe)",
+  "es": "Rápido, sin recodificar (corte en el fotograma clave más cercano)"
+ },
+ "В PDF изображения будут пережаты в JPEG экранного разрешения.": {
+  "en": "Images inside PDFs will be re-encoded as screen-resolution JPEG.",
+  "es": "Las imágenes de los PDF se recomprimirán en JPEG a resolución de pantalla."
+ },
+ "В «%@» нет видео.": {
+  "en": "“%@” has no video.",
+  "es": "«%@» no tiene vídeo."
+ },
+ "В «%@» нет звуковой дорожки.": {
+  "en": "“%@” has no audio track.",
+  "es": "«%@» no tiene pista de audio."
+ },
+ "Введите координаты в градусах, например 55.7558 и 37.6173": {
+  "en": "Enter coordinates in degrees, e.g. 55.7558 and 37.6173",
+  "es": "Introduce las coordenadas en grados, p. ej. 55.7558 y 37.6173"
+ },
+ "Вертикальная 9:16": {
+  "en": "Portrait 9:16",
+  "es": "Vertical 9:16"
+ },
+ "Весь ролик": {
+  "en": "Whole clip",
+  "es": "Todo el vídeo"
+ },
+ "Весь файл": {
+  "en": "Whole file",
+  "es": "Archivo completo"
+ },
+ "Видео MP4 той же длительности, что и запись.": {
+  "en": "An MP4 video as long as the recording.",
+  "es": "Un vídeo MP4 con la misma duración que la grabación."
+ },
+ "Видео сохраняется в MP4 (MOV и MKV остаются в своём формате).": {
+  "en": "Video is saved as MP4 (MOV and MKV keep their format).",
+  "es": "El vídeo se guarda como MP4 (MOV y MKV mantienen su formato)."
+ },
+ "Визуализатор": {
+  "en": "Visualizer",
+  "es": "Visualizador"
+ },
+ "Визуализация": {
+  "en": "Visualizer",
+  "es": "Visualización"
+ },
+ "Виньетка": {
+  "en": "Vignette",
+  "es": "Viñeta"
+ },
+ "Влево": {
+  "en": "Left",
+  "es": "Izquierda"
+ },
+ "Волна": {
+  "en": "Waveform",
+  "es": "Onda"
+ },
+ "Воспроизведение (пробел)": {
+  "en": "Play (Space)",
+  "es": "Reproducir (espacio)"
+ },
+ "Вправо": {
+  "en": "Right",
+  "es": "Derecha"
+ },
+ "Все окна на передний план": {
+  "en": "Bring All to Front",
+  "es": "Traer todo al frente"
+ },
+ "Вставить": {
+  "en": "Paste",
+  "es": "Pegar"
+ },
+ "Выбор": {
+  "en": "Select",
+  "es": "Seleccionar"
+ },
+ "Выбрать": {
+  "en": "Choose",
+  "es": "Elegir"
+ },
+ "Выбрать…": {
+  "en": "Choose…",
+  "es": "Elegir…"
+ },
+ "Выделить все": {
+  "en": "Select All",
+  "es": "Seleccionar todo"
+ },
+ "Выделить всё": {
+  "en": "Select All",
+  "es": "Seleccionar todo"
+ },
+ "Выйти из Mangosteen": {
+  "en": "Quit Mangosteen",
+  "es": "Salir de Mangosteen"
+ },
+ "Выключено": {
+  "en": "Off",
+  "es": "Desactivado"
+ },
+ "Вырезать": {
+  "en": "Cut",
+  "es": "Cortar"
+ },
+ "Высокое качество": {
+  "en": "High quality",
+  "es": "Alta calidad"
+ },
+ "Высота": {
+  "en": "Height",
+  "es": "Alto"
+ },
+ "Высота кадра": {
+  "en": "Frame height",
+  "es": "Altura del fotograma"
+ },
+ "Выцветание": {
+  "en": "Fade",
+  "es": "Desvanecido"
+ },
+ "Геопозиция": {
+  "en": "Location",
+  "es": "Ubicación"
+ },
+ "Главное фото": {
+  "en": "Featured",
+  "es": "Foto principal"
+ },
+ "Голос звучит естественно при любой скорости.": {
+  "en": "Voices sound natural at any speed.",
+  "es": "La voz suena natural a cualquier velocidad."
+ },
+ "Градиент": {
+  "en": "Gradient",
+  "es": "Degradado"
+ },
+ "Громкость": {
+  "en": "Loudness",
+  "es": "Volumen"
+ },
+ "Дата": {
+  "en": "Date",
+  "es": "Fecha"
+ },
+ "Дата съёмки": {
+  "en": "Date taken",
+  "es": "Fecha de captura"
+ },
+ "Двойной клик по ползунку сбрасывает его, повторный — возвращает изменённое значение.": {
+  "en": "Double-click a slider to reset it; double-click again to bring back your change.",
+  "es": "Haz doble clic en un control para restablecerlo; otro doble clic recupera tu cambio."
+ },
+ "Действия": {
+  "en": "Actions",
+  "es": "Acciones"
+ },
+ "Детали": {
+  "en": "Detail",
+  "es": "Detalle"
+ },
+ "Диапазон": {
+  "en": "Range",
+  "es": "Rango"
+ },
+ "Динамический диапазон": {
+  "en": "Loudness range",
+  "es": "Rango dinámico"
+ },
+ "Длинная сторона": {
+  "en": "Longer side",
+  "es": "Lado mayor"
+ },
+ "Добавить кадр": {
+  "en": "Add frame",
+  "es": "Añadir fotograma"
+ },
+ "Добро пожаловать в Mangosteen": {
+  "en": "Welcome to Mangosteen",
+  "es": "Bienvenido a Mangosteen"
+ },
+ "Долгота (−180…180)": {
+  "en": "Longitude (−180…180)",
+  "es": "Longitud (−180…180)"
+ },
+ "Другой цвет": {
+  "en": "Other colour",
+  "es": "Otro color"
+ },
+ "Дублировать": {
+  "en": "Duplicate",
+  "es": "Duplicar"
+ },
+ "Задать координаты": {
+  "en": "Set coordinates",
+  "es": "Definir coordenadas"
+ },
+ "Задач: %lld": {
+  "en": "Jobs: %lld",
+  "es": "Tareas: %lld"
+ },
+ "Закрыть": {
+  "en": "Close",
+  "es": "Cerrar"
+ },
+ "Закрыть Float (файлы не удаляются)": {
+  "en": "Close Float (files are not deleted)",
+  "es": "Cerrar Float (los archivos no se eliminan)"
+ },
+ "Заливка": {
+  "en": "Fill",
+  "es": "Relleno"
+ },
+ "Заметно меньше файл, почти без видимых потерь": {
+  "en": "Much smaller file with hardly visible loss",
+  "es": "Archivo mucho más pequeño casi sin pérdida visible"
+ },
+ "Запикать": {
+  "en": "Bleep",
+  "es": "Pitido"
+ },
+ "Запикать (%lld)": {
+  "en": "Bleep (%lld)",
+  "es": "Pitido (%lld)"
+ },
+ "Запикивание": {
+  "en": "Bleeping",
+  "es": "Censurando con pitido"
+ },
+ "Запускать Mangosteen при входе в систему": {
+  "en": "Open Mangosteen at login",
+  "es": "Abrir Mangosteen al iniciar sesión"
+ },
+ "Запускать при входе в систему": {
+  "en": "Open at login",
+  "es": "Abrir al iniciar sesión"
+ },
+ "Звуки": {
+  "en": "Sounds",
+  "es": "Sonidos"
+ },
+ "Здесь уже есть пик — он выделен.": {
+  "en": "There is already a bleep here — it is selected.",
+  "es": "Aquí ya hay un pitido; está seleccionado."
+ },
+ "Зерно": {
+  "en": "Grain",
+  "es": "Grano"
+ },
+ "Изменения применятся ко всем %@. Справа показаны данные первого.": {
+  "en": "Changes apply to all %@. The first one is shown on the right.",
+  "es": "Los cambios se aplican a los %@. A la derecha se muestran los datos del primero."
+ },
+ "Изменить дату": {
+  "en": "Change date",
+  "es": "Cambiar fecha"
+ },
+ "Изменить скорость": {
+  "en": "Change speed",
+  "es": "Cambiar velocidad"
+ },
+ "Измеряю…": {
+  "en": "Measuring…",
+  "es": "Midiendo…"
+ },
+ "Изображение": {
+  "en": "Image",
+  "es": "Imagen"
+ },
+ "Изображения, PDF, документы, видео, аудио, субтитры, таблицы и архивы в другие форматы.": {
+  "en": "Images, PDF, documents, video, audio, subtitles, spreadsheets and archives into other formats.",
+  "es": "Imágenes, PDF, documentos, vídeo, audio, subtítulos, tablas y archivos comprimidos a otros formatos."
+ },
+ "Инструменты": {
+  "en": "Tools",
+  "es": "Herramientas"
+ },
+ "Исходная запись моно: оба канала получают один и тот же звук.": {
+  "en": "The source is mono: both channels get the same sound.",
+  "es": "La grabación original es mono: ambos canales reciben el mismo sonido."
+ },
+ "Исходное изображение": {
+  "en": "Original image",
+  "es": "Imagen original"
+ },
+ "Итого: %@": {
+  "en": "Total: %@",
+  "es": "Total: %@"
+ },
+ "КБ": {
+  "en": "KB",
+  "es": "KB"
+ },
+ "Кадр вперёд": {
+  "en": "Next frame",
+  "es": "Fotograma siguiente"
+ },
+ "Кадр для предпросмотра": {
+  "en": "Preview frame",
+  "es": "Fotograma de vista previa"
+ },
+ "Кадр назад": {
+  "en": "Previous frame",
+  "es": "Fotograma anterior"
+ },
+ "Кадрирование видео": {
+  "en": "Crop Video",
+  "es": "Encuadrar vídeo"
+ },
+ "Кадрировать": {
+  "en": "Crop video",
+  "es": "Encuadrar"
+ },
+ "Кадры": {
+  "en": "Frames",
+  "es": "Fotogramas"
+ },
+ "Кадры из видео": {
+  "en": "Frames from Video",
+  "es": "Fotogramas del vídeo"
+ },
+ "Как на плёнке: ускорение повышает тон, замедление понижает.": {
+  "en": "Like tape: faster raises the pitch, slower lowers it.",
+  "es": "Como en cinta: acelerar sube el tono y ralentizar lo baja."
+ },
+ "Как пользоваться Mangosteen": {
+  "en": "How to Use Mangosteen",
+  "es": "Cómo usar Mangosteen"
+ },
+ "Как пользоваться…": {
+  "en": "How to Use…",
+  "es": "Cómo usar…"
+ },
+ "Как у оригинала": {
+  "en": "Same as original",
+  "es": "Como el original"
+ },
+ "Как у фото": {
+  "en": "Same as photo",
+  "es": "Como la foto"
+ },
+ "Каналы": {
+  "en": "Channels",
+  "es": "Canales"
+ },
+ "Карандаш": {
+  "en": "Pen",
+  "es": "Lápiz"
+ },
+ "Картинка": {
+  "en": "Picture",
+  "es": "Imagen fija"
+ },
+ "Качество": {
+  "en": "Quality",
+  "es": "Calidad"
+ },
+ "Качество изображений": {
+  "en": "Image quality",
+  "es": "Calidad de imagen"
+ },
+ "Квадрат": {
+  "en": "Square",
+  "es": "Cuadrado"
+ },
+ "Клик — выбрать, ⌘-клик — добавить к выбору, перетаскивание — порядок, ⌫ — удалить.": {
+  "en": "Click — select, ⌘-click — add to selection, drag — reorder, ⌫ — delete.",
+  "es": "Clic: seleccionar; ⌘-clic: añadir a la selección; arrastrar: reordenar; ⌫: eliminar."
+ },
+ "Коллаж": {
+  "en": "Collage",
+  "es": "Collage"
+ },
+ "Колонка": {
+  "en": "Column",
+  "es": "Columna"
+ },
+ "Колонки: %lld": {
+  "en": "Columns: %lld",
+  "es": "Columnas: %lld"
+ },
+ "Колонки: авто": {
+  "en": "Columns: auto",
+  "es": "Columnas: auto"
+ },
+ "Колёса": {
+  "en": "Wheels",
+  "es": "Ruedas"
+ },
+ "Конвертация": {
+  "en": "Convert",
+  "es": "Convertir"
+ },
+ "Конвертация %@ → %@ не поддерживается.": {
+  "en": "Converting %@ → %@ is not supported.",
+  "es": "La conversión %@ → %@ no está disponible."
+ },
+ "Конвертация в %@": {
+  "en": "Converting to %@",
+  "es": "Convirtiendo a %@"
+ },
+ "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений.": {
+  "en": "Converting and file tools right while you drag. Everything runs on this Mac, with no limits.",
+  "es": "Conversión y herramientas para archivos mientras los arrastras. Todo funciona en este Mac, sin límites."
+ },
+ "Конец": {
+  "en": "End",
+  "es": "Fin"
+ },
+ "Конец = курсор": {
+  "en": "End = playhead",
+  "es": "Fin = cursor"
+ },
+ "Конец = положение курсора": {
+  "en": "End = playhead position",
+  "es": "Fin = posición del cursor"
+ },
+ "Контраст": {
+  "en": "Contrast",
+  "es": "Contraste"
+ },
+ "Копировать": {
+  "en": "Copy",
+  "es": "Copiar"
+ },
+ "Куда переместить: %@": {
+  "en": "Move %@ to:",
+  "es": "Mover %@ a:"
+ },
+ "Л": {
+  "en": "L",
+  "es": "I"
+ },
+ "Левый канал": {
+  "en": "Left channel",
+  "es": "Canal izquierdo"
+ },
+ "Линия": {
+  "en": "Line",
+  "es": "Línea"
+ },
+ "Лица на этом кадре не найдены.": {
+  "en": "No faces found in this frame.",
+  "es": "No se encontraron caras en este fotograma."
+ },
+ "Лица не найдены": {
+  "en": "No faces found",
+  "es": "No se encontraron caras"
+ },
+ "Лупа": {
+  "en": "Magnifier",
+  "es": "Lupa"
+ },
+ "Лучшее качество при умеренной экономии": {
+  "en": "Best quality with moderate savings",
+  "es": "La mejor calidad con un ahorro moderado"
+ },
+ "МБ": {
+  "en": "MB",
+  "es": "MB"
+ },
+ "Максимальный пик": {
+  "en": "Maximum peak",
+  "es": "Pico máximo"
+ },
+ "Маркер": {
+  "en": "Highlighter",
+  "es": "Marcador"
+ },
+ "Масштаб": {
+  "en": "Zoom",
+  "es": "Zoom"
+ },
+ "Масштаб: щипок, ⌘ или ⌥ + колёсико; прокрутка — сдвиг": {
+  "en": "Zoom: pinch, ⌘ or ⌥ + scroll wheel; scroll to move",
+  "es": "Zoom: pellizca, ⌘ o ⌥ + rueda; desplaza para moverte"
+ },
+ "Метаданные": {
+  "en": "Metadata",
+  "es": "Metadatos"
+ },
+ "Метаданных нет": {
+  "en": "No metadata",
+  "es": "Sin metadatos"
+ },
+ "Минимальный размер": {
+  "en": "Smallest size",
+  "es": "Tamaño mínimo"
+ },
+ "Модель камеры": {
+  "en": "Camera model",
+  "es": "Modelo de cámara"
+ },
+ "Моментальный": {
+  "en": "Instant",
+  "es": "Instantánea"
+ },
+ "Моно": {
+  "en": "Mono",
+  "es": "Mono"
+ },
+ "Найдено областей: %lld": {
+  "en": "Areas found: %lld",
+  "es": "Áreas encontradas: %lld"
+ },
+ "Найдено областей: %lld. Проверьте их время на таймлайне.": {
+  "en": "Areas found: %lld. Check their timing on the timeline.",
+  "es": "Áreas encontradas: %lld. Revisa su tiempo en la línea de tiempo."
+ },
+ "Найдите кадр (пробел — воспроизведение, ⏎ — добавить, кнопки ◀︎▶︎ — по одному кадру).": {
+  "en": "Find the frame (Space — play, ⏎ — add, ◀︎▶︎ buttons — one frame at a time).",
+  "es": "Busca el fotograma (espacio: reproducir, ⏎: añadir, botones ◀︎▶︎: de uno en uno)."
+ },
+ "Найти лица": {
+  "en": "Find faces",
+  "es": "Buscar caras"
+ },
+ "Найти текст": {
+  "en": "Find text",
+  "es": "Buscar texto"
+ },
+ "Настройки Mangosteen": {
+  "en": "Mangosteen Settings",
+  "es": "Ajustes de Mangosteen"
+ },
+ "Настройки…": {
+  "en": "Settings…",
+  "es": "Ajustes…"
+ },
+ "Насыщенность": {
+  "en": "Saturation",
+  "es": "Saturación"
+ },
+ "Начало": {
+  "en": "Start",
+  "es": "Inicio"
+ },
+ "Начало = курсор": {
+  "en": "Start = playhead",
+  "es": "Inicio = cursor"
+ },
+ "Начало = положение курсора": {
+  "en": "Start = playhead position",
+  "es": "Inicio = posición del cursor"
+ },
+ "Начать": {
+  "en": "Start",
+  "es": "Empezar"
+ },
+ "Начните перетаскивать файл и коротко нажмите клавишу. Колесо останется открытым, пока вы не отпустите файл.": {
+  "en": "Start dragging a file and briefly press a key. The wheel stays open until you drop the file.",
+  "es": "Empieza a arrastrar un archivo y pulsa brevemente una tecla. La rueda queda abierta hasta que sueltes el archivo."
+ },
+ "Начните тащить файл — из Finder, с рабочего стола или из любого приложения.": {
+  "en": "Start dragging a file — from Finder, the desktop or any app.",
+  "es": "Empieza a arrastrar un archivo desde el Finder, el escritorio o cualquier app."
+ },
+ "Не больше": {
+  "en": "At most",
+  "es": "Como máximo"
+ },
+ "Не найдена утилита «%@». Установите её: brew install %@": {
+  "en": "The tool “%@” was not found. Install it with: brew install %@",
+  "es": "No se encontró la herramienta «%@». Instálala con: brew install %@"
+ },
+ "Не отпуская кнопку, коротко нажмите клавишу — у курсора откроется колесо.": {
+  "en": "Without releasing the button, briefly press a key — a wheel opens at the pointer.",
+  "es": "Sin soltar el botón, pulsa brevemente una tecla: se abrirá una rueda junto al puntero."
+ },
+ "Не удалось открыть PDF": {
+  "en": "Could not open the PDF",
+  "es": "No se pudo abrir el PDF"
+ },
+ "Не удалось открыть «%@».": {
+  "en": "Could not open “%@”.",
+  "es": "No se pudo abrir «%@»."
+ },
+ "Не удалось построить кадр.": {
+  "en": "Could not render the frame.",
+  "es": "No se pudo generar el fotograma."
+ },
+ "Не удалось прочитать «%@».": {
+  "en": "Could not read “%@”.",
+  "es": "No se pudo leer «%@»."
+ },
+ "Не удалось прочитать видео": {
+  "en": "Could not read the video",
+  "es": "No se pudo leer el vídeo"
+ },
+ "Не удалось прочитать файл": {
+  "en": "Could not read the file",
+  "es": "No se pudo leer el archivo"
+ },
+ "Не удалось сохранить PDF.": {
+  "en": "Could not save the PDF.",
+  "es": "No se pudo guardar el PDF."
+ },
+ "Не удалось сохранить файл в формате %@.": {
+  "en": "Could not save the file as %@.",
+  "es": "No se pudo guardar el archivo en formato %@."
+ },
+ "Неизвестный формат файла «%@».": {
+  "en": "Unknown file format: “%@”.",
+  "es": "Formato de archivo desconocido: «%@»."
+ },
+ "Нет": {
+  "en": "None",
+  "es": "Ninguno"
+ },
+ "Нет вариантов": {
+  "en": "No options",
+  "es": "Sin opciones"
+ },
+ "Нет видео": {
+  "en": "No video",
+  "es": "No hay vídeo"
+ },
+ "Нет изображений": {
+  "en": "No images",
+  "es": "No hay imágenes"
+ },
+ "Нет подходящих файлов.": {
+  "en": "No suitable files.",
+  "es": "No hay archivos adecuados."
+ },
+ "Ничего не найдено": {
+  "en": "Nothing found",
+  "es": "No se encontró nada"
+ },
+ "Номер": {
+  "en": "Number",
+  "es": "Número"
+ },
+ "Нормализовать": {
+  "en": "Normalize",
+  "es": "Normalizar"
+ },
+ "Нуар": {
+  "en": "Noir",
+  "es": "Noir"
+ },
+ "О Mangosteen": {
+  "en": "About Mangosteen",
+  "es": "Acerca de Mangosteen"
+ },
+ "Обрезать": {
+  "en": "Trim",
+  "es": "Recortar"
+ },
+ "Обрезка": {
+  "en": "Trim",
+  "es": "Recorte"
+ },
+ "Объединение PDF": {
+  "en": "Merging PDFs",
+  "es": "Combinando PDF"
+ },
+ "Объединено": {
+  "en": "Merged",
+  "es": "Combinado"
+ },
+ "Объединить": {
+  "en": "Merge",
+  "es": "Combinar"
+ },
+ "Овал": {
+  "en": "Ellipse",
+  "es": "Óvalo"
+ },
+ "Окно": {
+  "en": "Window",
+  "es": "Ventana"
+ },
+ "Описание": {
+  "en": "Description",
+  "es": "Descripción"
+ },
+ "Оригинал": {
+  "en": "Original",
+  "es": "Original"
+ },
+ "Основное": {
+  "en": "General",
+  "es": "General"
+ },
+ "Останавливаю…": {
+  "en": "Stopping…",
+  "es": "Deteniendo…"
+ },
+ "Останется: %@": {
+  "en": "Remaining: %@",
+  "es": "Quedará: %@"
+ },
+ "Остановить": {
+  "en": "Stop",
+  "es": "Detener"
+ },
+ "Отклик": {
+  "en": "Feedback",
+  "es": "Respuesta"
+ },
+ "Открытые окна": {
+  "en": "Open windows",
+  "es": "Ventanas abiertas"
+ },
+ "Открыть": {
+  "en": "Open",
+  "es": "Abrir"
+ },
+ "Отмена": {
+  "en": "Cancel",
+  "es": "Cancelar"
+ },
+ "Отменить": {
+  "en": "Undo",
+  "es": "Deshacer"
+ },
+ "Отступ": {
+  "en": "Margin",
+  "es": "Margen"
+ },
+ "Оттенок": {
+  "en": "Tint",
+  "es": "Matiz"
+ },
+ "Оцениваю размер…": {
+  "en": "Estimating size…",
+  "es": "Calculando tamaño…"
+ },
+ "Оценка для первого файла.": {
+  "en": "Estimate for the first file.",
+  "es": "Estimación para el primer archivo."
+ },
+ "Очистить": {
+  "en": "Clear",
+  "es": "Borrar"
+ },
+ "П": {
+  "en": "R",
+  "es": "D"
+ },
+ "Переместить": {
+  "en": "Move",
+  "es": "Mover"
+ },
+ "Перемещение": {
+  "en": "Moving",
+  "es": "Moviendo"
+ },
+ "Перенос": {
+  "en": "Transfer",
+  "es": "Transferencia"
+ },
+ "Перетащите сюда файлы или бросьте их на «Float» в колесе ⌃": {
+  "en": "Drag files here or drop them on “Float” in the ⌃ wheel",
+  "es": "Arrastra archivos aquí o suéltalos en «Float» en la rueda ⌃"
+ },
+ "Перетащить все (%lld)": {
+  "en": "Drag all (%lld)",
+  "es": "Arrastrar todo (%lld)"
+ },
+ "Пик": {
+  "en": "Peak",
+  "es": "Pico"
+ },
+ "Пик по курсору": {
+  "en": "Bleep at playhead",
+  "es": "Pitido en el cursor"
+ },
+ "Пиксели": {
+  "en": "Pixelate",
+  "es": "Píxeles"
+ },
+ "По курсору": {
+  "en": "At playhead",
+  "es": "En el cursor"
+ },
+ "Повторить": {
+  "en": "Redo",
+  "es": "Rehacer"
+ },
+ "Подкаст −16": {
+  "en": "Podcast −16",
+  "es": "Pódcast −16"
+ },
+ "Поиск по полям": {
+  "en": "Search fields",
+  "es": "Buscar campos"
+ },
+ "Показать в Finder": {
+  "en": "Show in Finder",
+  "es": "Mostrar en el Finder"
+ },
+ "Показать или скрыть Float": {
+  "en": "Show or Hide Float",
+  "es": "Mostrar u ocultar Float"
+ },
+ "Показывать результат в Finder": {
+  "en": "Show the result in Finder",
+  "es": "Mostrar el resultado en el Finder"
+ },
+ "Полка Float, AirDrop, копирование, перемещение, путь к файлу, терминал.": {
+  "en": "Float shelf, AirDrop, copy, move, file path, Terminal.",
+  "es": "Estante Float, AirDrop, copiar, mover, ruta del archivo, Terminal."
+ },
+ "Поля": {
+  "en": "Fields",
+  "es": "Campos"
+ },
+ "Поменять каналы местами": {
+  "en": "Swap channels",
+  "es": "Intercambiar canales"
+ },
+ "Пометки": {
+  "en": "Annotate",
+  "es": "Anotar"
+ },
+ "Пометки добавляются к первому изображению. ": {
+  "en": "Annotations are added to the first image. ",
+  "es": "Las anotaciones se añaden a la primera imagen. "
+ },
+ "Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, ": {
+  "en": "Clip order — drag the rows. Frame size and rate come from the first clip, ",
+  "es": "Orden de los clips: arrastra las filas. El tamaño y la frecuencia se toman del primer clip, "
+ },
+ "Порядок — перетаскивайте строки": {
+  "en": "Order — drag the rows",
+  "es": "Orden: arrastra las filas"
+ },
+ "Правка": {
+  "en": "Edit",
+  "es": "Edición"
+ },
+ "Правый канал": {
+  "en": "Right channel",
+  "es": "Canal derecho"
+ },
+ "Пресет": {
+  "en": "Preset",
+  "es": "Preajuste"
+ },
+ "Пробел — прослушать с пиками, ⏎ — пик по курсору.": {
+  "en": "Space — listen with bleeps, ⏎ — bleep at playhead.",
+  "es": "Espacio: escuchar con pitidos; ⏎: pitido en el cursor."
+ },
+ "Проверить кадр": {
+  "en": "Check frame",
+  "es": "Comprobar fotograma"
+ },
+ "Проверка": {
+  "en": "Check",
+  "es": "Prueba"
+ },
+ "Производитель камеры": {
+  "en": "Camera make",
+  "es": "Fabricante de la cámara"
+ },
+ "Промежутки": {
+  "en": "Spacing",
+  "es": "Separación"
+ },
+ "Пропорции": {
+  "en": "Aspect ratio",
+  "es": "Proporción"
+ },
+ "Процесс": {
+  "en": "Process",
+  "es": "Proceso"
+ },
+ "Прямоугольник": {
+  "en": "Rectangle",
+  "es": "Rectángulo"
+ },
+ "Путь": {
+  "en": "Path",
+  "es": "Ruta"
+ },
+ "Равных частей: %lld": {
+  "en": "Equal parts: %lld",
+  "es": "Partes iguales: %lld"
+ },
+ "Разделение": {
+  "en": "Split",
+  "es": "División"
+ },
+ "Разделить": {
+  "en": "Split",
+  "es": "Dividir"
+ },
+ "Разделить на %lld": {
+  "en": "Split into %lld",
+  "es": "Dividir en %lld"
+ },
+ "Разделить поровну": {
+  "en": "Split evenly",
+  "es": "Dividir en partes iguales"
+ },
+ "Размер текста и номеров": {
+  "en": "Text and number size",
+  "es": "Tamaño del texto y los números"
+ },
+ "Размер файла": {
+  "en": "File size",
+  "es": "Tamaño de archivo"
+ },
+ "Размытие": {
+  "en": "Blur",
+  "es": "Desenfoque"
+ },
+ "Разрез по курсору": {
+  "en": "Cut at playhead",
+  "es": "Cortar en el cursor"
+ },
+ "Раскладка": {
+  "en": "Layout",
+  "es": "Disposición"
+ },
+ "Распаковать": {
+  "en": "Extract",
+  "es": "Descomprimir"
+ },
+ "Распаковка": {
+  "en": "Extracting",
+  "es": "Descomprimiendo"
+ },
+ "Редактирование": {
+  "en": "Editing",
+  "es": "Editando"
+ },
+ "Редактор": {
+  "en": "Editor",
+  "es": "Editor"
+ },
+ "Редактор фото": {
+  "en": "Photo Editor",
+  "es": "Editor de fotos"
+ },
+ "Резкость": {
+  "en": "Sharpness",
+  "es": "Nitidez"
+ },
+ "Результат": {
+  "en": "Result",
+  "es": "Resultado"
+ },
+ "Ряд": {
+  "en": "Row",
+  "es": "Fila"
+ },
+ "Самые маленькие файлы, потери качества заметнее": {
+  "en": "Smallest files, more visible quality loss",
+  "es": "Archivos más pequeños, pérdida de calidad más visible"
+ },
+ "Сбалансированно": {
+  "en": "Balanced",
+  "es": "Equilibrado"
+ },
+ "Сбросить": {
+  "en": "Reset",
+  "es": "Restablecer"
+ },
+ "Сбросить всё": {
+  "en": "Reset All",
+  "es": "Restablecer todo"
+ },
+ "Свернуть": {
+  "en": "Minimize",
+  "es": "Minimizar"
+ },
+ "Свет": {
+  "en": "Light",
+  "es": "Luz"
+ },
+ "Светлые участки": {
+  "en": "Highlights",
+  "es": "Luces"
+ },
+ "Свободно": {
+  "en": "Free",
+  "es": "Libre"
+ },
+ "Своя": {
+  "en": "Custom",
+  "es": "Personalizado"
+ },
+ "Сейчас": {
+  "en": "Now",
+  "es": "Ahora"
+ },
+ "Сетка": {
+  "en": "Grid",
+  "es": "Cuadrícula"
+ },
+ "Сжатие": {
+  "en": "Compress",
+  "es": "Compresión"
+ },
+ "Сжатие, обрезка, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое.": {
+  "en": "Compress, crop, photo editor, annotate, redact, collage; for video and audio — trim, speed, loudness and more.",
+  "es": "Comprimir, recortar, editor de fotos, anotar, ocultar, collage; para vídeo y audio: recortar, velocidad, volumen y más."
+ },
+ "Сжатый файл (%@) не меньше оригинала ": {
+  "en": "The compressed file (%@) is not smaller than the original ",
+  "es": "El archivo comprimido (%@) no es más pequeño que el original "
+ },
+ "Сжать": {
+  "en": "Compress",
+  "es": "Comprimir"
+ },
+ "Система": {
+  "en": "System",
+  "es": "Sistema"
+ },
+ "Склеить": {
+  "en": "Join",
+  "es": "Unir"
+ },
+ "Склейка видео": {
+  "en": "Join Videos",
+  "es": "Unir vídeos"
+ },
+ "Скорость": {
+  "en": "Speed",
+  "es": "Velocidad"
+ },
+ "Скорость %@": {
+  "en": "Speed %@",
+  "es": "Velocidad %@"
+ },
+ "Скругление": {
+  "en": "Corner radius",
+  "es": "Redondeo"
+ },
+ "Скрытие": {
+  "en": "Redacting",
+  "es": "Ocultando"
+ },
+ "Скрытие на видео": {
+  "en": "Redacting video",
+  "es": "Ocultando en el vídeo"
+ },
+ "Скрыть": {
+  "en": "Redact",
+  "es": "Ocultar"
+ },
+ "Скрыть Mangosteen": {
+  "en": "Hide Mangosteen",
+  "es": "Ocultar Mangosteen"
+ },
+ "Скрыть лица и текст": {
+  "en": "Redact Faces and Text",
+  "es": "Ocultar caras y texto"
+ },
+ "Скрыть на видео": {
+  "en": "Redact Video",
+  "es": "Ocultar en el vídeo"
+ },
+ "Скрыть на видео (%lld)": {
+  "en": "Redact video (%lld)",
+  "es": "Ocultar en el vídeo (%lld)"
+ },
+ "Слишком близко к соседнему пику.": {
+  "en": "Too close to the next bleep.",
+  "es": "Demasiado cerca del pitido siguiente."
+ },
+ "Снять выделение": {
+  "en": "Deselect All",
+  "es": "Deseleccionar todo"
+ },
+ "Создание PDF": {
+  "en": "Creating PDF",
+  "es": "Creando PDF"
+ },
+ "Создать видео": {
+  "en": "Create Video",
+  "es": "Crear vídeo"
+ },
+ "Создать коллаж": {
+  "en": "Create Collage",
+  "es": "Crear collage"
+ },
+ "Сохранение кадров": {
+  "en": "Saving frames",
+  "es": "Guardando fotogramas"
+ },
+ "Сохранить": {
+  "en": "Save",
+  "es": "Guardar"
+ },
+ "Сохранить PDF": {
+  "en": "Save PDF",
+  "es": "Guardar PDF"
+ },
+ "Сохранить кадр": {
+  "en": "Save Frame",
+  "es": "Guardar fotograma"
+ },
+ "Сохранить кадры (%lld)": {
+  "en": "Save Frames (%lld)",
+  "es": "Guardar fotogramas (%lld)"
+ },
+ "Сохранить копию": {
+  "en": "Save a Copy",
+  "es": "Guardar una copia"
+ },
+ "Сохранять высоту звука": {
+  "en": "Preserve pitch",
+  "es": "Mantener el tono"
+ },
+ "Сохранять метаданные": {
+  "en": "Keep metadata",
+  "es": "Conservar metadatos"
+ },
+ "Сохранять метаданные (EXIF, GPS, цветовой профиль)": {
+  "en": "Keep metadata (EXIF, GPS, colour profile)",
+  "es": "Conservar metadatos (EXIF, GPS, perfil de color)"
+ },
+ "Сочность": {
+  "en": "Vibrance",
+  "es": "Intensidad"
+ },
+ "Спектр": {
+  "en": "Spectrum",
+  "es": "Espectro"
+ },
+ "Способ": {
+  "en": "Method",
+  "es": "Método"
+ },
+ "Средняя": {
+  "en": "Medium",
+  "es": "Media"
+ },
+ "Станет": {
+  "en": "Target",
+  "es": "Objetivo"
+ },
+ "Стерео": {
+  "en": "Stereo",
+  "es": "Estéreo"
+ },
+ "Стиль": {
+  "en": "Style",
+  "es": "Estilo"
+ },
+ "Страницы": {
+  "en": "Pages",
+  "es": "Páginas"
+ },
+ "Страницы PDF": {
+  "en": "PDF Pages",
+  "es": "Páginas del PDF"
+ },
+ "Стрелка": {
+  "en": "Arrow",
+  "es": "Flecha"
+ },
+ "Стриминг −14": {
+  "en": "Streaming −14",
+  "es": "Streaming −14"
+ },
+ "ТВ и радио −23": {
+  "en": "TV and radio −23",
+  "es": "TV y radio −23"
+ },
+ "Так будет выглядеть этот кадр. Кадр сбросится при перемотке.": {
+  "en": "This is how the frame will look. It resets when you move the playhead.",
+  "es": "Así se verá este fotograma. Se restablece al mover el cursor."
+ },
+ "Тактильный отклик трекпада": {
+  "en": "Trackpad haptic feedback",
+  "es": "Respuesta háptica del trackpad"
+ },
+ "Тащите файл и нажмите %@": {
+  "en": "Drag a file and press %@",
+  "es": "Arrastra un archivo y pulsa %@"
+ },
+ "Текст": {
+  "en": "Text",
+  "es": "Texto"
+ },
+ "Текст на этом кадре не найден.": {
+  "en": "No text found in this frame.",
+  "es": "No se encontró texto en este fotograma."
+ },
+ "Текст не найден": {
+  "en": "No text found",
+  "es": "No se encontró texto"
+ },
+ "Температура": {
+  "en": "Temperature",
+  "es": "Temperatura"
+ },
+ "Тени": {
+  "en": "Shadows",
+  "es": "Sombras"
+ },
+ "Тень": {
+  "en": "Shadow",
+  "es": "Sombra"
+ },
+ "Терминал": {
+  "en": "Terminal",
+  "es": "Terminal"
+ },
+ "Толстая": {
+  "en": "Thick",
+  "es": "Gruesa"
+ },
+ "Только левый": {
+  "en": "Left only",
+  "es": "Solo izquierdo"
+ },
+ "Только правый": {
+  "en": "Right only",
+  "es": "Solo derecho"
+ },
+ "Тон": {
+  "en": "Tone",
+  "es": "Tono"
+ },
+ "Тональный": {
+  "en": "Tonal",
+  "es": "Tonal"
+ },
+ "Тонкая": {
+  "en": "Thin",
+  "es": "Fina"
+ },
+ "Точный размер…": {
+  "en": "Exact size…",
+  "es": "Tamaño exacto…"
+ },
+ "Тяните по видео, чтобы добавить область. Время выбранной области — жёлтый диапазон на таймлайне.": {
+  "en": "Drag on the video to add an area. The selected area's time is the yellow range on the timeline.",
+  "es": "Arrastra sobre el vídeo para añadir un área. El tiempo del área seleccionada es el rango amarillo de la línea de tiempo."
+ },
+ "Тяните по фото, чтобы добавить область. Метаданные в результате удаляются.": {
+  "en": "Drag on the photo to add an area. Metadata is removed from the result.",
+  "es": "Arrastra sobre la foto para añadir un área. Los metadatos se eliminan del resultado."
+ },
+ "Убрать ближайший": {
+  "en": "Remove nearest",
+  "es": "Quitar el más cercano"
+ },
+ "Убрать дымку": {
+  "en": "Dehaze",
+  "es": "Quitar neblina"
+ },
+ "Убрать из Float": {
+  "en": "Remove from Float",
+  "es": "Quitar de Float"
+ },
+ "Угол": {
+  "en": "Angle",
+  "es": "Ángulo"
+ },
+ "Удалить": {
+  "en": "Delete",
+  "es": "Eliminar"
+ },
+ "Удалить все метаданные": {
+  "en": "Remove all metadata",
+  "es": "Eliminar todos los metadatos"
+ },
+ "Удалить геопозицию": {
+  "en": "Remove location",
+  "es": "Eliminar ubicación"
+ },
+ "Удалить область": {
+  "en": "Delete area",
+  "es": "Eliminar área"
+ },
+ "Удалить пик": {
+  "en": "Delete bleep",
+  "es": "Eliminar pitido"
+ },
+ "Удерживайте, чтобы сравнить с оригиналом": {
+  "en": "Hold to compare with the original",
+  "es": "Mantén pulsado para comparar con el original"
+ },
+ "Уложиться в размер файла": {
+  "en": "Fit a file size",
+  "es": "Ajustar a un tamaño de archivo"
+ },
+ "Утилиты": {
+  "en": "Tools",
+  "es": "Utilidades"
+ },
+ "Файл остаётся в исходной папке, в другое место попадает копия": {
+  "en": "The file stays in its folder; a copy goes to the destination",
+  "es": "El archivo se queda en su carpeta; al destino va una copia"
+ },
+ "Файл переносится из исходной папки туда, куда его перетащили": {
+  "en": "The file is moved from its folder to where you drop it",
+  "es": "El archivo se mueve de su carpeta al lugar donde lo sueltes"
+ },
+ "Файла больше нет по адресу %@": {
+  "en": "The file is no longer at %@",
+  "es": "El archivo ya no está en %@"
+ },
+ "Фильтр": {
+  "en": "Filter",
+  "es": "Filtro"
+ },
+ "Фон": {
+  "en": "Background",
+  "es": "Fondo"
+ },
+ "Фоновое изображение": {
+  "en": "Background image",
+  "es": "Imagen de fondo"
+ },
+ "Формат": {
+  "en": "Format",
+  "es": "Formato"
+ },
+ "Формат видео": {
+  "en": "Video format",
+  "es": "Formato de vídeo"
+ },
+ "Хром": {
+  "en": "Chrome",
+  "es": "Cromo"
+ },
+ "Цвет": {
+  "en": "Colour",
+  "es": "Color"
+ },
+ "Цвет волны": {
+  "en": "Wave colour",
+  "es": "Color de la onda"
+ },
+ "Цвет фона": {
+  "en": "Background colour",
+  "es": "Color de fondo"
+ },
+ "Цель": {
+  "en": "Target",
+  "es": "Objetivo"
+ },
+ "Часть %lld": {
+  "en": "Part %lld",
+  "es": "Parte %lld"
+ },
+ "Чтобы передвинуть или изменить пометку, выберите инструмент «Выбор». ⌫ удаляет выделенное, ⌘Z — отмена.": {
+  "en": "To move or change a mark, choose the Select tool. ⌫ deletes the selection, ⌘Z undoes.",
+  "es": "Para mover o cambiar una anotación, elige la herramienta Seleccionar. ⌫ elimina la selección, ⌘Z deshace."
+ },
+ "Чёткость": {
+  "en": "Clarity",
+  "es": "Claridad"
+ },
+ "Ширина": {
+  "en": "Width",
+  "es": "Ancho"
+ },
+ "Широта (−90…90)": {
+  "en": "Latitude (−90…90)",
+  "es": "Latitud (−90…90)"
+ },
+ "Шумоподавление": {
+  "en": "Noise reduction",
+  "es": "Reducción de ruido"
+ },
+ "Экспозиция": {
+  "en": "Exposure",
+  "es": "Exposición"
+ },
+ "Этот формат можно просматривать только по кадрам": {
+  "en": "This format can only be viewed frame by frame",
+  "es": "Este formato solo puede verse fotograma a fotograma"
+ },
+ "Эффекты": {
+  "en": "Effects",
+  "es": "Efectos"
+ },
+ "Яркость": {
+  "en": "Brightness",
+  "es": "Brillo"
+ },
+ "без звука": {
+  "en": "no sound",
+  "es": "sin sonido"
+ },
+ "громкость": {
+  "en": "loudness",
+  "es": "volumen"
+ },
+ "для этих файлов": {
+  "en": "for these files",
+  "es": "para estos archivos"
+ },
+ "до %lld px": {
+  "en": "up to %lld px",
+  "es": "hasta %lld px"
+ },
+ "запикано": {
+  "en": "bleeped",
+  "es": "con pitido"
+ },
+ "каналы": {
+  "en": "channels",
+  "es": "canales"
+ },
+ "не задано": {
+  "en": "not set",
+  "es": "sin definir"
+ },
+ "не найдено — brew install %@": {
+  "en": "not found — brew install %@",
+  "es": "no encontrado: brew install %@"
+ },
+ "не удалось измерить": {
+  "en": "could not measure",
+  "es": "no se pudo medir"
+ },
+ "оригинал": {
+  "en": "original",
+  "es": "original"
+ },
+ "остальные вписываются в него с полями.": {
+  "en": "the others are fitted inside it with bars.",
+  "es": "los demás se ajustan dentro con bandas."
+ },
+ "с пиками": {
+  "en": "with bleeps",
+  "es": "con pitidos"
+ },
+ "файл": {
+  "en": "file",
+  "es": "archivo"
+ },
+ "файла": {
+  "en": "files",
+  "es": "archivos"
+ },
+ "файлов": {
+  "en": "files",
+  "es": "archivos"
+ },
+ "холст": {
+  "en": "canvas",
+  "es": "lienzo"
+ },
+ "Как в системе": {
+  "en": "System default",
+  "es": "Como en el sistema"
+ },
+ "Язык": {
+  "en": "Language",
+  "es": "Idioma"
+ },
+ "Язык изменится после перезапуска.": {
+  "en": "The language changes after a restart.",
+  "es": "El idioma cambiará al reiniciar."
+ },
+ "Перезапустить": {
+  "en": "Restart",
+  "es": "Reiniciar"
+ }
+}

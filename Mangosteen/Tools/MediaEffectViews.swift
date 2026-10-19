@@ -23,7 +23,7 @@ struct SpeedView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Скорость").font(.headline)
+            Text(String(localized: "Скорость")).font(.headline)
             HStack(spacing: 6) {
                 ForEach(Self.presets, id: \.self) { preset in
                     if abs(factor - preset) < 0.001 {
@@ -40,9 +40,9 @@ struct SpeedView: View {
                     .frame(width: 56, alignment: .trailing)
             }
             VStack(alignment: .leading, spacing: 4) {
-                Toggle("Сохранять высоту звука", isOn: $preservePitch)
-                Text(preservePitch ? "Голос звучит естественно при любой скорости."
-                                   : "Как на плёнке: ускорение повышает тон, замедление понижает.")
+                Toggle(String(localized: "Сохранять высоту звука"), isOn: $preservePitch)
+                Text(preservePitch ? String(localized: "Голос звучит естественно при любой скорости.")
+                                   : String(localized: "Как на плёнке: ускорение повышает тон, замедление понижает."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -51,7 +51,7 @@ struct SpeedView: View {
                     .font(.callout.monospacedDigit())
                     .foregroundStyle(.secondary)
             }
-            ToolFooter(fileCount: media(urls).count, actionTitle: "Изменить скорость",
+            ToolFooter(fileCount: media(urls).count, actionTitle: String(localized: "Изменить скорость"),
                        actionDisabled: abs(factor - 1) < 0.01 || media(urls).isEmpty, cancel: close, action: run)
         }
         .padding(20)
@@ -65,7 +65,7 @@ struct SpeedView: View {
     private func run() {
         let factor = (factor * 100).rounded() / 100
         let preservePitch = preservePitch
-        ConversionService.shared.runEach("Скорость \(MediaEffects.speedLabel(factor))", inputs: media(urls),
+        ConversionService.shared.runEach(String(localized: "Скорость \(MediaEffects.speedLabel(factor))"), inputs: media(urls),
                                          maxConcurrent: 2) { url, progress, cancellation in
             try MediaEffects.changeSpeed(url, factor: factor, preservePitch: preservePitch,
                                          progress: progress, cancellation: cancellation)
@@ -89,8 +89,8 @@ struct JoinView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, "
-                 + "остальные вписываются в него с полями.")
+            Text(String(localized: "Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, ")
+                 + String(localized: "остальные вписываются в него с полями."))
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -110,7 +110,7 @@ struct JoinView: View {
                         }
                         Spacer()
                         if url == order.first {
-                            Text("холст").font(.caption).padding(.horizontal, 6).padding(.vertical, 2)
+                            Text(String(localized: "холст")).font(.caption).padding(.horizontal, 6).padding(.vertical, 2)
                                 .background(Capsule().fill(Brand.color.opacity(0.25)))
                         }
                     }
@@ -120,12 +120,12 @@ struct JoinView: View {
             }
             .frame(minHeight: 260)
             HStack {
-                Text("Итого: \(MediaTools.timecode(total))").font(.callout.monospacedDigit())
+                Text(String(localized: "Итого: \(MediaTools.timecode(total))")).font(.callout.monospacedDigit())
                 if let first = order.first, let width = infos[first]?.width, let height = infos[first]?.height {
                     Text(verbatim: "· \(width)×\(height) · MP4").font(.callout).foregroundStyle(.secondary)
                 }
             }
-            ToolFooter(fileCount: order.count, actionTitle: "Объединить", actionDisabled: order.count < 2,
+            ToolFooter(fileCount: order.count, actionTitle: String(localized: "Объединить"), actionDisabled: order.count < 2,
                        cancel: close, action: run)
         }
         .padding(20)
@@ -137,7 +137,7 @@ struct JoinView: View {
         guard let info = infos[url] else { return "…" }
         var parts = [MediaTools.timecode(info.duration ?? 0)]
         if let width = info.width, let height = info.height { parts.append("\(width)×\(height)") }
-        if !info.hasAudio { parts.append("без звука") }
+        if !info.hasAudio { parts.append(String(localized: "без звука")) }
         return parts.joined(separator: " · ")
     }
 
@@ -157,7 +157,7 @@ struct JoinView: View {
     private func run() {
         let order = order
         guard let first = order.first else { return }
-        ConversionService.shared.runEach("Склейка видео", inputs: [first], maxConcurrent: 1) { _, progress, cancellation in
+        ConversionService.shared.runEach(String(localized: "Склейка видео"), inputs: [first], maxConcurrent: 1) { _, progress, cancellation in
             try MediaEffects.join(order, progress: progress, cancellation: cancellation)
         }
         close()
@@ -203,20 +203,20 @@ struct VideoCropView: View {
                 .frame(minWidth: 620, idealWidth: 720, minHeight: 380, idealHeight: 460)
                 .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
             HStack(spacing: 8) {
-                Text("Кадр для предпросмотра").foregroundStyle(.secondary).fixedSize()
+                Text(String(localized: "Кадр для предпросмотра")).foregroundStyle(.secondary).fixedSize()
                 Slider(value: $previewTime, in: 0...max(duration, 0.1))
                 Text(MediaTools.timecode(previewTime)).font(.callout.monospacedDigit()).foregroundStyle(.secondary)
             }
             .disabled(duration == 0)
             HStack(spacing: 12) {
-                Picker("Пропорции", selection: $aspectChoice) {
+                Picker(String(localized: "Пропорции"), selection: $aspectChoice) {
                     ForEach(CropView.AspectChoice.allCases) { Text($0.title).tag($0) }
                 }
                 .frame(width: 260)
                 if aspectChoice == .exact {
-                    TextField("Ширина", value: $exactWidth, format: .number.grouping(.never)).frame(width: 70)
+                    TextField(String(localized: "Ширина"), value: $exactWidth, format: .number.grouping(.never)).frame(width: 70)
                     Text("×")
-                    TextField("Высота", value: $exactHeight, format: .number.grouping(.never)).frame(width: 70)
+                    TextField(String(localized: "Высота"), value: $exactHeight, format: .number.grouping(.never)).frame(width: 70)
                     Text("px").foregroundStyle(.secondary)
                 }
                 Spacer()
@@ -224,12 +224,12 @@ struct VideoCropView: View {
                 Text(verbatim: "\(Int(pixels.width) / 2 * 2) × \(Int(pixels.height) / 2 * 2) px")
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
-                Button("Сбросить") {
+                Button(String(localized: "Сбросить")) {
                     aspectChoice = .free
                     rect = CGRect(x: 0, y: 0, width: 1, height: 1)
                 }
             }
-            ToolFooter(fileCount: clips.count, actionTitle: "Кадрировать", actionDisabled: frame == nil,
+            ToolFooter(fileCount: clips.count, actionTitle: String(localized: "Кадрировать"), actionDisabled: frame == nil,
                        cancel: close, action: run)
         }
         .padding(20)
@@ -247,7 +247,7 @@ struct VideoCropView: View {
 
     private func load() async {
         guard let first = clips.first else {
-            loadError = "Нет видео"
+            loadError = String(localized: "Нет видео")
             return
         }
         let result = await Task.detached(priority: .userInitiated) { () -> (Double, CGImage)? in
@@ -256,7 +256,7 @@ struct VideoCropView: View {
             return (duration, image)
         }.value
         guard let (duration, image) = result else {
-            loadError = "Не удалось прочитать видео"
+            loadError = String(localized: "Не удалось прочитать видео")
             return
         }
         self.duration = duration
@@ -283,7 +283,7 @@ struct VideoCropView: View {
         let choice = aspectChoice
         let exact = CGSize(width: exactWidth, height: exactHeight)
         let outputSize: CGSize? = choice == .exact ? exact : nil
-        ConversionService.shared.runEach("Кадрирование видео", inputs: clips, maxConcurrent: 1) { url, progress, cancellation in
+        ConversionService.shared.runEach(String(localized: "Кадрирование видео"), inputs: clips, maxConcurrent: 1) { url, progress, cancellation in
             var cropRect = firstRect
             if url != first, choice != .free {
                 let image = try MediaTools.frame(url, at: 0)
@@ -323,26 +323,26 @@ struct MediaCompressView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(alignment: .leading, spacing: 14) {
-                Picker("Качество", selection: $settings.quality) {
+                Picker(String(localized: "Качество"), selection: $settings.quality) {
                     ForEach(MediaEffects.CompressionSettings.Quality.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.radioGroup)
                 .disabled(settings.useTargetSize)
                 if hasVideo {
-                    Picker("Высота кадра", selection: $settings.maxHeight) {
+                    Picker(String(localized: "Высота кадра"), selection: $settings.maxHeight) {
                         ForEach(Self.heights, id: \.self) { height in
-                            Text(height.map { "до \($0) px" } ?? "Без изменений").tag(height)
+                            Text(height.map { String(localized: "до \($0) px") } ?? String(localized: "Без изменений")).tag(height)
                         }
                     }
                     .fixedSize()
-                    Toggle("HEVC (H.265) — меньше файл, сжатие дольше", isOn: $settings.hevc)
+                    Toggle(String(localized: "HEVC (H.265) — меньше файл, сжатие дольше"), isOn: $settings.hevc)
                 }
-                Toggle("Уложиться в размер файла", isOn: $settings.useTargetSize)
+                Toggle(String(localized: "Уложиться в размер файла"), isOn: $settings.useTargetSize)
                 if settings.useTargetSize {
                     HStack {
-                        Text("Не больше")
+                        Text(String(localized: "Не больше"))
                         TextField("", value: $targetMegabytes, format: .number).frame(width: 80)
-                        Text("МБ")
+                        Text(String(localized: "МБ"))
                     }
                 }
             }
@@ -361,7 +361,7 @@ struct MediaCompressView: View {
                     HStack(spacing: 6) {
                         if estimating {
                             ProgressView().controlSize(.small)
-                            Text("Оцениваю размер…").font(.callout).foregroundStyle(.secondary)
+                            Text(String(localized: "Оцениваю размер…")).font(.callout).foregroundStyle(.secondary)
                         } else if !estimate.isEmpty {
                             Text(verbatim: estimate)
                                 .font(.callout.monospacedDigit().weight(.semibold))
@@ -370,15 +370,15 @@ struct MediaCompressView: View {
                     }
                     .frame(height: 18)
                     if files.count > 1 {
-                        Text("Оценка для первого файла.").font(.caption).foregroundStyle(.secondary)
+                        Text(String(localized: "Оценка для первого файла.")).font(.caption).foregroundStyle(.secondary)
                     }
                 }
             }
-            Text(hasVideo ? "Видео сохраняется в MP4 (MOV и MKV остаются в своём формате)."
-                          : "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате.")
+            Text(hasVideo ? String(localized: "Видео сохраняется в MP4 (MOV и MKV остаются в своём формате).")
+                          : String(localized: "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате."))
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            ToolFooter(fileCount: files.count, actionTitle: "Сжать", actionDisabled: files.isEmpty,
+            ToolFooter(fileCount: files.count, actionTitle: String(localized: "Сжать"), actionDisabled: files.isEmpty,
                        cancel: close, action: run)
         }
         .padding(20)
@@ -424,7 +424,7 @@ struct MediaCompressView: View {
             estimate = "\(formatter.string(fromByteCount: original)) → \(prefix) \(formatter.string(fromByteCount: bytes)) (\(sign)\(abs(change))%)"
             estimateIsWarning = bytes >= original
             if estimateIsWarning {
-                estimate += " — не меньше оригинала, файл не будет сохранён"
+                estimate += String(localized: " — не меньше оригинала, файл не будет сохранён")
             }
         case .failure:
             estimate = ""
@@ -433,7 +433,7 @@ struct MediaCompressView: View {
 
     private func run() {
         let settings = settings
-        ConversionService.shared.runEach("Сжатие", inputs: files, maxConcurrent: hasVideo ? 1 : 2) { url, progress, cancellation in
+        ConversionService.shared.runEach(String(localized: "Сжатие"), inputs: files, maxConcurrent: hasVideo ? 1 : 2) { url, progress, cancellation in
             try MediaEffects.compress(url, settings: settings, progress: progress, cancellation: cancellation)
         }
         close()

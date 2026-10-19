@@ -15,9 +15,9 @@ enum RedactionStyle: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .solid: "Заливка"
-        case .blur: "Размытие"
-        case .pixelate: "Пиксели"
+        case .solid: String(localized: "Заливка")
+        case .blur: String(localized: "Размытие")
+        case .pixelate: String(localized: "Пиксели")
         }
     }
 }
@@ -92,7 +92,7 @@ enum Redactor {
         let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (скрыто)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (скрыто)"),
             pathExtension: target.fileExtension
         ) { url in
             try ImageConverter.write(result, as: target, to: url, options: options, metadata: nil)

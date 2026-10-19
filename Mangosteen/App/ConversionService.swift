@@ -10,7 +10,7 @@ final class ConversionService {
         let options = AppSettings.shared.conversionOptions
         // ffmpeg already uses every core; two at a time keeps the Mac responsive.
         let hasMedia = urls.contains { FileFormat.detect($0)?.category.isMedia == true }
-        runEach("Конвертация в \(target.displayName)", inputs: urls, maxConcurrent: hasMedia ? 2 : nil) { url, progress, cancellation in
+        runEach(String(localized: "Конвертация в \(target.displayName)"), inputs: urls, maxConcurrent: hasMedia ? 2 : nil) { url, progress, cancellation in
             try Converter.convert(url, to: target, options: options, progress: progress, cancellation: cancellation)
         }
     }
@@ -127,10 +127,10 @@ enum Feedback {
         let lines = failures.prefix(6).map { url, error in
             "• \(url.lastPathComponent): \(error.localizedDescription)"
         }
-        let more = failures.count > 6 ? "\n…и ещё \(failures.count - 6)" : ""
+        let more = failures.count > 6 ? String(localized: "\n…и ещё \(failures.count - 6)") : ""
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.messageText = "\(title): не удалось обработать \(WheelView.filesLabel(failures.count))"
+        alert.messageText = String(localized: "\(title): не удалось обработать \(WheelView.filesLabel(failures.count))")
         alert.informativeText = lines.joined(separator: "\n") + more
         NSApp.activate(ignoringOtherApps: true)
         alert.runModal()

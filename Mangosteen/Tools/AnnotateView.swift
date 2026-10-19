@@ -20,9 +20,9 @@ struct AnnotateView: View {
         var id: String { rawValue }
         var title: String {
             switch self {
-            case .thin: "Тонкая"
-            case .medium: "Средняя"
-            case .thick: "Толстая"
+            case .thin: String(localized: "Тонкая")
+            case .medium: String(localized: "Средняя")
+            case .thick: String(localized: "Толстая")
             }
         }
         /// Fraction of the image's longer side.
@@ -75,7 +75,7 @@ struct AnnotateView: View {
                 inspector
                     .frame(width: 250)
             }
-            ToolFooter(fileCount: image == nil ? 0 : 1, actionTitle: "Сохранить",
+            ToolFooter(fileCount: image == nil ? 0 : 1, actionTitle: String(localized: "Сохранить"),
                        actionDisabled: annotations.isEmpty, cancel: close, action: run)
         }
         .padding(20)
@@ -288,7 +288,7 @@ struct AnnotateView: View {
         switch tool {
         case .text:
             pushHistory()
-            let annotation = Annotation(shape: .text(point, "Текст"), color: color, lineWidth: lineWidth, fontSize: fontSize)
+            let annotation = Annotation(shape: .text(point, String(localized: "Текст")), color: color, lineWidth: lineWidth, fontSize: fontSize)
             annotations.append(annotation)
             selected = annotation.id
             textFieldFocused = true
@@ -347,7 +347,7 @@ struct AnnotateView: View {
             Text(tool.title).font(.headline)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Цвет").font(.callout)
+                Text(String(localized: "Цвет")).font(.callout)
                 HStack(spacing: 6) {
                     ForEach(Array(Self.palette.enumerated()), id: \.offset) { _, swatch in
                         Circle()
@@ -358,13 +358,13 @@ struct AnnotateView: View {
                             .onTapGesture { color = swatch }
                     }
                 }
-                ColorPicker("Другой цвет", selection: Binding(get: { color.cgColor }, set: { color = RGBAColor($0) }),
+                ColorPicker(String(localized: "Другой цвет"), selection: Binding(get: { color.cgColor }, set: { color = RGBAColor($0) }),
                             supportsOpacity: false)
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Линия").font(.callout)
-                Picker("Линия", selection: $stroke) {
+                Text(String(localized: "Линия")).font(.callout)
+                Picker(String(localized: "Линия"), selection: $stroke) {
                     ForEach(StrokePreset.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
@@ -372,12 +372,12 @@ struct AnnotateView: View {
             }
 
             VStack(alignment: .leading, spacing: 2) {
-                Text("Размер текста и номеров").font(.callout)
+                Text(String(localized: "Размер текста и номеров")).font(.callout)
                 Slider(value: $textScale, in: 0.015...0.15)
             }
 
             if let annotation = selectedAnnotation, case .text(_, let string) = annotation.shape {
-                TextField("Текст", text: Binding(get: { string }, set: { newValue in
+                TextField(String(localized: "Текст"), text: Binding(get: { string }, set: { newValue in
                     replace(annotation.id) { item in
                         if case .text(let origin, _) = item.shape { item.shape = .text(origin, newValue) }
                     }
@@ -387,12 +387,12 @@ struct AnnotateView: View {
             }
 
             HStack {
-                Button("Отменить") { undo() }
+                Button(String(localized: "Отменить")) { undo() }
                     .keyboardShortcut("z", modifiers: .command)
                     .disabled(history.isEmpty)
-                Button("Удалить", action: deleteSelected)
+                Button(String(localized: "Удалить"), action: deleteSelected)
                     .disabled(selected == nil)
-                Button("Очистить") {
+                Button(String(localized: "Очистить")) {
                     pushHistory()
                     annotations = []
                     selected = nil
@@ -400,8 +400,8 @@ struct AnnotateView: View {
                 .disabled(annotations.isEmpty)
             }
             Spacer()
-            Text((urls.count > 1 ? "Пометки добавляются к первому изображению. " : "")
-                 + "Чтобы передвинуть или изменить пометку, выберите инструмент «Выбор». ⌫ удаляет выделенное, ⌘Z — отмена.")
+            Text((urls.count > 1 ? String(localized: "Пометки добавляются к первому изображению. ") : "")
+                 + String(localized: "Чтобы передвинуть или изменить пометку, выберите инструмент «Выбор». ⌫ удаляет выделенное, ⌘Z — отмена."))
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -474,7 +474,7 @@ struct AnnotateView: View {
         annotations = [
             arrow,
             make(.rectangle(CGRect(x: w * 0.55, y: h * 0.2, width: w * 0.3, height: h * 0.3)), Self.palette[4]),
-            make(.text(CGPoint(x: w * 0.1, y: h * 0.7), "Проверка"), Self.palette[2]),
+            make(.text(CGPoint(x: w * 0.1, y: h * 0.7), String(localized: "Проверка")), Self.palette[2]),
             make(.number(CGPoint(x: w * 0.8, y: h * 0.75), 1), Self.palette[0]),
             make(.magnifier(CGPoint(x: w * 0.5, y: h * 0.75), longest * 0.08), Self.palette[3]),
         ]
@@ -499,7 +499,7 @@ struct AnnotateView: View {
         let annotations = annotations
         let pictures = pictures
         let options = AppSettings.shared.conversionOptions
-        ConversionService.shared.runEach("Пометки", inputs: [image]) {
+        ConversionService.shared.runEach(String(localized: "Пометки"), inputs: [image]) {
             try AnnotationRenderer.applyFile($0, annotations: annotations, images: pictures, options: options)
         }
         close()

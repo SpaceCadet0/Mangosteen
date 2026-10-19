@@ -121,7 +121,7 @@ enum AudioTools {
             + ":offset=\(number(measured.offset)):linear=true"
             // loudnorm works at 192 kHz internally; return to the source rate.
             + ",aresample=\(sampleRate)"
-        return try processAudio(input, suffix: "громкость", filter: filter, progress: progress, cancellation: cancellation)
+        return try processAudio(input, suffix: String(localized: "громкость"), filter: filter, progress: progress, cancellation: cancellation)
     }
 
     // MARK: - Channels
@@ -130,7 +130,7 @@ enum AudioTools {
         enum Layout: String, CaseIterable, Identifiable {
             case stereo, mono
             var id: String { rawValue }
-            var title: String { self == .stereo ? "Стерео" : "Моно" }
+            var title: String { self == .stereo ? String(localized: "Стерео") : String(localized: "Моно") }
         }
 
         var layout = Layout.stereo
@@ -158,7 +158,7 @@ enum AudioTools {
     static func convertChannels(_ input: URL, settings: ChannelSettings,
                                 progress: ((Double) -> Void)? = nil, cancellation: CancellationToken? = nil) throws -> URL {
         let channels = try MediaConverter.probe(input).audioChannels ?? 2
-        return try processAudio(input, suffix: "каналы", filter: channelFilter(settings, sourceChannels: channels),
+        return try processAudio(input, suffix: String(localized: "каналы"), filter: channelFilter(settings, sourceChannels: channels),
                                 progress: progress, cancellation: cancellation)
     }
 
@@ -179,7 +179,7 @@ enum AudioTools {
                       progress: ((Double) -> Void)? = nil, cancellation: CancellationToken? = nil) throws -> URL {
         guard !ranges.isEmpty else { throw PDFToolError.nothingToDo }
         let duration = try MediaConverter.probe(input).duration ?? 0
-        return try processAudio(input, suffix: "запикано",
+        return try processAudio(input, suffix: String(localized: "запикано"),
                                 graph: bleepGraph(ranges: ranges, frequency: frequency, volume: volume, duration: duration),
                                 progress: progress, cancellation: cancellation)
     }
@@ -192,9 +192,9 @@ enum AudioTools {
             var id: String { rawValue }
             var title: String {
                 switch self {
-                case .waveform: "Волна"
-                case .spectrum: "Спектр"
-                case .still: "Картинка"
+                case .waveform: String(localized: "Волна")
+                case .spectrum: String(localized: "Спектр")
+                case .still: String(localized: "Картинка")
                 }
             }
         }
@@ -204,9 +204,9 @@ enum AudioTools {
             var id: String { rawValue }
             var title: String {
                 switch self {
-                case .landscape: "Альбомная 16:9"
-                case .portrait: "Вертикальная 9:16"
-                case .square: "Квадрат"
+                case .landscape: String(localized: "Альбомная 16:9")
+                case .portrait: String(localized: "Вертикальная 9:16")
+                case .square: String(localized: "Квадрат")
                 }
             }
             var size: (width: Int, height: Int) {
@@ -277,7 +277,7 @@ enum AudioTools {
         ]
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (визуализация)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (визуализация)"),
             pathExtension: "mp4"
         ) { output in
             try MediaConverter.runFFmpeg(arguments, output: output, duration: duration,

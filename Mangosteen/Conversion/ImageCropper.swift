@@ -100,7 +100,7 @@ enum ImageCropper {
         let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (обрезано)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (обрезано)"),
             pathExtension: target.fileExtension
         ) { url in
             try ImageConverter.write(cropped, as: target, to: url, options: options,

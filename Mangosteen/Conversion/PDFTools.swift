@@ -9,10 +9,10 @@ enum PDFToolError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .unreadable(let url): "Не удалось открыть «\(url.lastPathComponent)»."
-        case .locked(let url): "«\(url.lastPathComponent)» защищён паролем."
-        case .nothingToDo: "Нет подходящих файлов."
-        case .writeFailed: "Не удалось сохранить PDF."
+        case .unreadable(let url): String(localized: "Не удалось открыть «\(url.lastPathComponent)».")
+        case .locked(let url): String(localized: "«\(url.lastPathComponent)» защищён паролем.")
+        case .nothingToDo: String(localized: "Нет подходящих файлов.")
+        case .writeFailed: String(localized: "Не удалось сохранить PDF.")
         }
     }
 }

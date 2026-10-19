@@ -98,11 +98,11 @@ struct PhotoEditView: View {
                 .frame(width: 330)
             }
             HStack {
-                Button("Сбросить всё") { adjustments = PhotoAdjustments() }
+                Button(String(localized: "Сбросить всё")) { adjustments = PhotoAdjustments() }
                     .disabled(adjustments.isIdentity)
                 Spacer()
             }
-            ToolFooter(fileCount: images.count, actionTitle: "Сохранить",
+            ToolFooter(fileCount: images.count, actionTitle: String(localized: "Сохранить"),
                        actionDisabled: adjustments.isIdentity || base == nil, cancel: close, action: run)
         }
         .padding(20)
@@ -125,7 +125,7 @@ struct PhotoEditView: View {
             }
             VStack {
                 Spacer()
-                Text(showOriginal ? "Оригинал" : "Удерживайте, чтобы сравнить с оригиналом")
+                Text(showOriginal ? String(localized: "Оригинал") : String(localized: "Удерживайте, чтобы сравнить с оригиналом"))
                     .font(.caption)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
@@ -142,33 +142,33 @@ struct PhotoEditView: View {
 
     private var controls: some View {
         VStack(alignment: .leading, spacing: 14) {
-            section("Свет") {
-                slider("Экспозиция", \.exposure, -2...2)
-                slider("Яркость", \.brightness, -1...1)
-                slider("Контраст", \.contrast, -1...1)
-                slider("Светлые участки", \.highlights, -1...0)
-                slider("Тени", \.shadows, 0...1)
+            section(String(localized: "Свет")) {
+                slider(String(localized: "Экспозиция"), \.exposure, -2...2)
+                slider(String(localized: "Яркость"), \.brightness, -1...1)
+                slider(String(localized: "Контраст"), \.contrast, -1...1)
+                slider(String(localized: "Светлые участки"), \.highlights, -1...0)
+                slider(String(localized: "Тени"), \.shadows, 0...1)
             }
-            section("Цвет") {
-                slider("Температура", \.temperature, -1...1)
-                slider("Оттенок", \.tint, -1...1)
-                slider("Насыщенность", \.saturation, -1...1)
-                slider("Сочность", \.vibrance, -1...1)
+            section(String(localized: "Цвет")) {
+                slider(String(localized: "Температура"), \.temperature, -1...1)
+                slider(String(localized: "Оттенок"), \.tint, -1...1)
+                slider(String(localized: "Насыщенность"), \.saturation, -1...1)
+                slider(String(localized: "Сочность"), \.vibrance, -1...1)
             }
-            section("Детали") {
-                slider("Резкость", \.sharpness, 0...1)
-                slider("Чёткость", \.clarity, 0...1)
-                slider("Шумоподавление", \.noiseReduction, 0...1)
-                slider("Убрать дымку", \.dehaze, 0...1)
+            section(String(localized: "Детали")) {
+                slider(String(localized: "Резкость"), \.sharpness, 0...1)
+                slider(String(localized: "Чёткость"), \.clarity, 0...1)
+                slider(String(localized: "Шумоподавление"), \.noiseReduction, 0...1)
+                slider(String(localized: "Убрать дымку"), \.dehaze, 0...1)
             }
-            section("Эффекты") {
-                Picker("Фильтр", selection: $adjustments.effect) {
+            section(String(localized: "Эффекты")) {
+                Picker(String(localized: "Фильтр"), selection: $adjustments.effect) {
                     ForEach(PhotoAdjustments.Effect.allCases) { Text($0.title).tag($0) }
                 }
-                slider("Виньетка", \.vignette, 0...1)
-                slider("Зерно", \.grain, 0...1)
+                slider(String(localized: "Виньетка"), \.vignette, 0...1)
+                slider(String(localized: "Зерно"), \.grain, 0...1)
             }
-            Text("Двойной клик по ползунку сбрасывает его, повторный — возвращает изменённое значение.")
+            Text(String(localized: "Двойной клик по ползунку сбрасывает его, повторный — возвращает изменённое значение."))
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -199,7 +199,7 @@ struct PhotoEditView: View {
 
     private func load() async {
         guard let first = images.first else {
-            loadError = "Нет изображений"
+            loadError = String(localized: "Нет изображений")
             return
         }
         let result = await Task.detached(priority: .userInitiated) {
@@ -233,7 +233,7 @@ struct PhotoEditView: View {
     private func run() {
         let adjustments = adjustments
         let options = AppSettings.shared.conversionOptions
-        ConversionService.shared.runEach("Редактирование", inputs: images) {
+        ConversionService.shared.runEach(String(localized: "Редактирование"), inputs: images) {
             try PhotoEditor.applyFile($0, adjustments: adjustments, options: options)
         }
         close()

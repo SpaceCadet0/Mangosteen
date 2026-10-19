@@ -11,14 +11,14 @@ enum ExternalTool {
 
         var errorDescription: String? {
             let details = output.trimmingCharacters(in: .whitespacesAndNewlines)
-            return "\(tool) завершился с кодом \(status)" + (details.isEmpty ? "" : ": \(details)")
+            return String(localized: "\(tool) завершился с кодом \(status)") + (details.isEmpty ? "" : ": \(details)")
         }
     }
 
     struct Missing: LocalizedError {
         let tool: String
         var errorDescription: String? {
-            "Не найдена утилита «\(tool)». Установите её: brew install \(Self.formula(for: tool))"
+            String(localized: "Не найдена утилита «\(tool)». Установите её: brew install \(Self.formula(for: tool))")
         }
 
         static func formula(for tool: String) -> String {

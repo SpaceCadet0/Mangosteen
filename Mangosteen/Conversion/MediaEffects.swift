@@ -44,7 +44,7 @@ enum MediaEffects {
                                                        videoFilters: videoFilters, audioFilters: audioFilters)
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (скорость \(speedLabel(factor)))",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (скорость \(speedLabel(factor)))"),
             pathExtension: format.fileExtension
         ) { output in
             try MediaConverter.run(input: input, output: output, codecArguments: arguments,
@@ -94,7 +94,7 @@ enum MediaEffects {
         ]
         let total = infos.compactMap(\.duration).reduce(0, +)
         return try OutputNaming.writeAtomically(
-            directory: inputs[0].deletingLastPathComponent(), baseName: "Объединено", pathExtension: "mp4"
+            directory: inputs[0].deletingLastPathComponent(), baseName: String(localized: "Объединено"), pathExtension: "mp4"
         ) { output in
             try MediaConverter.runFFmpeg(arguments, output: output, duration: total,
                                          progress: progress, cancellation: cancellation)
@@ -123,7 +123,7 @@ enum MediaEffects {
         let arguments = MediaConverter.encodeArguments(for: format, info: info, videoFilters: filters)
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (кадрирование)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (кадрирование)"),
             pathExtension: format.fileExtension
         ) { output in
             try MediaConverter.run(input: input, output: output, codecArguments: arguments, duration: info.duration,
@@ -139,9 +139,9 @@ enum MediaEffects {
             var id: String { rawValue }
             var title: String {
                 switch self {
-                case .high: "Высокое качество"
-                case .balanced: "Сбалансированно"
-                case .small: "Минимальный размер"
+                case .high: String(localized: "Высокое качество")
+                case .balanced: String(localized: "Сбалансированно")
+                case .small: String(localized: "Минимальный размер")
                 }
             }
             var h264CRF: Int { switch self { case .high: 23; case .balanced: 27; case .small: 31 } }
@@ -243,7 +243,7 @@ enum MediaEffects {
         let format = compressedFormat(for: source)
         let output = try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (сжатый)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (сжатый)"),
             pathExtension: format.fileExtension
         ) { output in
             try MediaConverter.run(input: input, output: output,

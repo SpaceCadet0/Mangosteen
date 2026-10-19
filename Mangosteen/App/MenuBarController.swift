@@ -28,18 +28,18 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             item.representedObject = kind.rawValue
             menu.addItem(item)
         }
-        let float = NSMenuItem(title: "Показать или скрыть Float", action: #selector(floatSelected), keyEquivalent: "")
+        let float = NSMenuItem(title: String(localized: "Показать или скрыть Float"), action: #selector(floatSelected), keyEquivalent: "")
         float.target = self
         menu.addItem(float)
         menu.addItem(.separator())
-        let welcome = NSMenuItem(title: "Как пользоваться…", action: #selector(welcomeSelected), keyEquivalent: "")
+        let welcome = NSMenuItem(title: String(localized: "Как пользоваться…"), action: #selector(welcomeSelected), keyEquivalent: "")
         welcome.target = self
         menu.addItem(welcome)
-        let settings = NSMenuItem(title: "Настройки…", action: #selector(settingsSelected), keyEquivalent: ",")
+        let settings = NSMenuItem(title: String(localized: "Настройки…"), action: #selector(settingsSelected), keyEquivalent: ",")
         settings.target = self
         menu.addItem(settings)
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Выйти из Mangosteen", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: String(localized: "Выйти из Mangosteen"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         statusItem.menu = menu
     }
 
@@ -51,11 +51,11 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         windowItems.removeAll()
         let windows = AppPresence.windows
         guard !windows.isEmpty else { return }
-        var items = [NSMenuItem(title: "Открытые окна", action: nil, keyEquivalent: "")]
+        var items = [NSMenuItem(title: String(localized: "Открытые окна"), action: nil, keyEquivalent: "")]
         items[0].isEnabled = false
         for window in windows {
             let title = window.subtitle.isEmpty ? window.title : "\(window.title) — \(window.subtitle)"
-            let item = NSMenuItem(title: title + (window.isMiniaturized ? " (свёрнуто)" : ""),
+            let item = NSMenuItem(title: title + (window.isMiniaturized ? String(localized: " (свёрнуто)") : ""),
                                   action: #selector(windowSelected(_:)), keyEquivalent: "")
             item.target = self
             item.representedObject = window
@@ -81,7 +81,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             .filter { $0 != .none }
             .map(\.symbol)
             .joined(separator: " ")
-        hintItem.title = "Тащите файл и нажмите \(keys)"
+        hintItem.title = String(localized: "Тащите файл и нажмите \(keys)")
     }
 
     @objc private func openFilesSelected(_ sender: NSMenuItem) {

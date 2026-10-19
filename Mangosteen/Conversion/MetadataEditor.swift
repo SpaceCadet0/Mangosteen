@@ -9,11 +9,11 @@ enum MetadataField: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .description: "Описание"
-        case .author: "Автор"
-        case .copyright: "Авторские права"
-        case .make: "Производитель камеры"
-        case .model: "Модель камеры"
+        case .description: String(localized: "Описание")
+        case .author: String(localized: "Автор")
+        case .copyright: String(localized: "Авторские права")
+        case .make: String(localized: "Производитель камеры")
+        case .model: String(localized: "Модель камеры")
         }
     }
 
@@ -68,7 +68,7 @@ enum MetadataEditor {
                     entries.append(Entry(group: group, key: nestedKey as String, value: describe(nestedValue)))
                 }
             } else {
-                entries.append(Entry(group: "Основное", key: key as String, value: describe(value)))
+                entries.append(Entry(group: String(localized: "Основное"), key: key as String, value: describe(value)))
             }
         }
         return entries.sorted { ($0.group, $0.key) < ($1.group, $1.key) }
@@ -77,8 +77,8 @@ enum MetadataEditor {
     private static func describe(_ value: Any) -> String {
         switch value {
         case let array as [Any]: array.map(describe).joined(separator: ", ")
-        case let dictionary as [AnyHashable: Any]: "\(dictionary.count) полей"
-        case let data as Data: "\(data.count) байт"
+        case let dictionary as [AnyHashable: Any]: String(localized: "\(dictionary.count) полей")
+        case let data as Data: String(localized: "\(data.count) байт")
         default: "\(value)"
         }
     }
@@ -160,7 +160,7 @@ enum MetadataEditor {
 
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
-            baseName: "\(OutputNaming.baseName(of: input)) (метаданные)",
+            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (метаданные)"),
             pathExtension: format.fileExtension
         ) { output in
             guard let destination = CGImageDestinationCreateWithURL(output as CFURL, type, 1, nil) else {

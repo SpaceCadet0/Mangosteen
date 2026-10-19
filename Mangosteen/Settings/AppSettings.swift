@@ -1,6 +1,45 @@
 import AppKit
 import ServiceManagement
 
+/// The interface language. Applied by writing AppleLanguages for this app; takes effect after a relaunch.
+enum AppLanguage: String, CaseIterable, Identifiable {
+    case system, ru, en, es
+
+    var id: String { rawValue }
+
+    /// Each language is named in itself, so it can be found whatever the current language is.
+    var title: String {
+        switch self {
+        case .system: String(localized: "Как в системе")
+        case .ru: "Русский"
+        case .en: "English"
+        case .es: "Español"
+        }
+    }
+
+    static var current: AppLanguage {
+        let stored = UserDefaults.standard.persistentDomain(forName: Bundle.main.bundleIdentifier ?? "")?["AppleLanguages"] as? [String]
+        return stored?.first.flatMap { code in allCases.first { code.hasPrefix($0.rawValue) && $0 != .system } } ?? .system
+    }
+
+    func apply() {
+        if self == .system {
+            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+        } else {
+            UserDefaults.standard.set([rawValue], forKey: "AppleLanguages")
+        }
+    }
+
+    /// Starts a fresh copy of the app and quits this one.
+    static func relaunch() {
+        let task = Process()
+        task.executableURL = URL(fileURLWithPath: "/bin/sh")
+        task.arguments = ["-c", "sleep 0.8; /usr/bin/open \"$0\"", Bundle.main.bundlePath]
+        try? task.run()
+        NSApp.terminate(nil)
+    }
+}
+
 enum TerminalChoice: String, CaseIterable, Identifiable {
     case terminal, iterm
 
@@ -68,7 +107,7 @@ final class AppSettings: ObservableObject {
                     try SMAppService.mainApp.unregister()
                 }
             } catch {
-                Feedback.showError("Автозапуск", error)
+                Feedback.showError(String(localized: "Автозапуск"), error)
             }
         }
     }

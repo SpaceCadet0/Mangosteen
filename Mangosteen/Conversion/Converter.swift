@@ -30,10 +30,10 @@ enum ConversionError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .unrecognized(let url): "Неизвестный формат файла «\(url.lastPathComponent)»."
-        case .unsupported(let from, let to): "Конвертация \(from) → \(to.displayName) не поддерживается."
-        case .unreadable(let url): "Не удалось прочитать «\(url.lastPathComponent)»."
-        case .encodeFailed(let format): "Не удалось сохранить файл в формате \(format.displayName)."
+        case .unrecognized(let url): String(localized: "Неизвестный формат файла «\(url.lastPathComponent)».")
+        case .unsupported(let from, let to): String(localized: "Конвертация \(from) → \(to.displayName) не поддерживается.")
+        case .unreadable(let url): String(localized: "Не удалось прочитать «\(url.lastPathComponent)».")
+        case .encodeFailed(let format): String(localized: "Не удалось сохранить файл в формате \(format.displayName).")
         }
     }
 }

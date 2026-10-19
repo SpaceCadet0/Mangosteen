@@ -37,7 +37,7 @@ struct CollageView: View {
                 }
                 .frame(width: 340)
             }
-            ToolFooter(fileCount: order.count, actionTitle: "Создать коллаж", actionDisabled: order.count < 2,
+            ToolFooter(fileCount: order.count, actionTitle: String(localized: "Создать коллаж"), actionDisabled: order.count < 2,
                        cancel: close, action: run)
         }
         .padding(20)
@@ -47,26 +47,26 @@ struct CollageView: View {
 
     private var controls: some View {
         Form {
-            Picker("Раскладка", selection: $settings.layout) {
+            Picker(String(localized: "Раскладка"), selection: $settings.layout) {
                 ForEach(CollageSettings.Layout.allCases) { Text($0.title).tag($0) }
             }
             if settings.layout == .grid {
                 Stepper(value: $settings.columns, in: 0...max(order.count, 1)) {
-                    Text(settings.columns == 0 ? "Колонки: авто" : "Колонки: \(settings.columns)")
+                    Text(settings.columns == 0 ? String(localized: "Колонки: авто") : String(localized: "Колонки: \(settings.columns)"))
                 }
             }
-            Picker("Пропорции", selection: $settings.aspect) {
+            Picker(String(localized: "Пропорции"), selection: $settings.aspect) {
                 ForEach(CanvasAspect.allCases) { Text($0.title).tag($0) }
             }
-            Picker("Ширина", selection: $settings.width) {
+            Picker(String(localized: "Ширина"), selection: $settings.width) {
                 ForEach(Self.widths, id: \.self) { Text("\($0) px").tag($0) }
             }
-            slider("Промежутки", value: $settings.spacing, range: 0...0.06)
-            slider("Скругление", value: $settings.cornerRadius, range: 0...0.25)
-            ColorPicker("Фон", selection: Binding(get: { settings.background.cgColor },
+            slider(String(localized: "Промежутки"), value: $settings.spacing, range: 0...0.06)
+            slider(String(localized: "Скругление"), value: $settings.cornerRadius, range: 0...0.25)
+            ColorPicker(String(localized: "Фон"), selection: Binding(get: { settings.background.cgColor },
                                                    set: { settings.background = RGBAColor($0) }),
                         supportsOpacity: false)
-            Picker("Формат", selection: $settings.format) {
+            Picker(String(localized: "Формат"), selection: $settings.format) {
                 ForEach(Self.formats) { Text($0.displayName).tag($0) }
             }
         }
@@ -83,7 +83,7 @@ struct CollageView: View {
 
     private var orderList: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Порядок — перетаскивайте строки").font(.caption).foregroundStyle(.secondary)
+            Text(String(localized: "Порядок — перетаскивайте строки")).font(.caption).foregroundStyle(.secondary)
             List {
                 ForEach(order, id: \.self) { url in
                     HStack {
@@ -132,7 +132,7 @@ struct CollageView: View {
     private func run() {
         let settings = settings
         let options = AppSettings.shared.conversionOptions
-        ConversionService.shared.runBatch("Коллаж", inputs: order) {
+        ConversionService.shared.runBatch(String(localized: "Коллаж"), inputs: order) {
             [try CollageComposer.composeFile($0, settings: settings, options: options)]
         }
         close()
