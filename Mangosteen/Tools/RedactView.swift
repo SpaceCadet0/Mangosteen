@@ -38,19 +38,26 @@ struct RedactView: View {
                 .frame(minWidth: 620, idealWidth: 760, minHeight: 400, idealHeight: 520)
                 .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
             HStack(spacing: 12) {
+                Text("Стиль")
+                    .fixedSize()
                 Picker("Стиль", selection: $style) {
                     ForEach(RedactionStyle.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
-                .frame(width: 280)
+                .labelsHidden()
+                .fixedSize()
                 if style == .solid {
                     ColorPicker("Цвет", selection: Binding(get: { color.cgColor }, set: { color = RGBAColor($0) }),
                                 supportsOpacity: false)
+                        .fixedSize()
                 }
-                Spacer()
+                Spacer(minLength: 12)
                 Text(message.isEmpty ? "Тяните по фото, чтобы добавить область. Метаданные в результате удаляются." : message)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.trailing)
+                    .layoutPriority(-1)
             }
             ToolFooter(fileCount: imagesWithRegions.count, actionTitle: "Сохранить",
                        actionDisabled: imagesWithRegions.isEmpty, cancel: close, action: run)
