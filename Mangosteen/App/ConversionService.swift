@@ -15,6 +15,7 @@ final class ConversionService {
 
     /// Runs `work` for every input in parallel. `work` returns the produced file, or nil when skipped.
     func runEach(_ title: String, inputs: [URL], work: @escaping (URL) throws -> URL?) {
+        let progress = ProgressHUD.shared.begin(title, total: inputs.count)
         queue.async {
             let lock = NSLock()
             var outputs: [URL] = []
@@ -27,8 +28,10 @@ final class ConversionService {
                 } catch {
                     lock.withLock { failures.append((input, error)) }
                 }
+                DispatchQueue.main.async { ProgressHUD.shared.step(progress) }
             }
             DispatchQueue.main.async {
+                ProgressHUD.shared.end(progress)
                 Feedback.finished(title, outputs: outputs, failures: failures)
             }
         }
@@ -36,9 +39,11 @@ final class ConversionService {
 
     /// Runs one job that consumes all inputs at once (merge, collage…).
     func runBatch(_ title: String, inputs: [URL], work: @escaping ([URL]) throws -> [URL]) {
+        let progress = ProgressHUD.shared.begin(title, total: 1)
         queue.async {
             let result = Result { try work(inputs) }
             DispatchQueue.main.async {
+                ProgressHUD.shared.end(progress)
                 switch result {
                 case .success(let outputs):
                     Feedback.finished(title, outputs: outputs, failures: [])

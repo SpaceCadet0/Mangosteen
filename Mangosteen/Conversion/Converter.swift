@@ -8,6 +8,8 @@ struct ConversionOptions {
     /// 0…100 for cwebp.
     var webpQuality = 80
     var preserveMetadata = true
+    /// Resolution used when rendering PDF pages to images.
+    var pdfRenderDPI: CGFloat = 300
 
     func quality(for format: FileFormat) -> Double? {
         switch format {
@@ -22,14 +24,14 @@ struct ConversionOptions {
 
 enum ConversionError: LocalizedError {
     case unrecognized(URL)
-    case unsupported(from: FileFormat, to: FileFormat)
+    case unsupported(from: String, to: FileFormat)
     case unreadable(URL)
     case encodeFailed(FileFormat)
 
     var errorDescription: String? {
         switch self {
         case .unrecognized(let url): "Неизвестный формат файла «\(url.lastPathComponent)»."
-        case .unsupported(let from, let to): "Конвертация \(from.displayName) → \(to.displayName) не поддерживается."
+        case .unsupported(let from, let to): "Конвертация \(from) → \(to.displayName) не поддерживается."
         case .unreadable(let url): "Не удалось прочитать «\(url.lastPathComponent)»."
         case .encodeFailed(let format): "Не удалось сохранить файл в формате \(format.displayName)."
         }
@@ -40,21 +42,46 @@ enum ConversionError: LocalizedError {
 enum Converter {
     /// Converts `input` to `target`. Returns `nil` when the file already has the target format.
     static func convert(_ input: URL, to target: FileFormat, options: ConversionOptions) throws -> URL? {
-        guard let source = FileFormat.detect(input) else { throw ConversionError.unrecognized(input) }
+        let (source, targets) = FormatCatalog.conversion(for: input)
         if source == target { return nil }
-        guard FormatCatalog.targets(for: source).contains(target) else {
-            throw ConversionError.unsupported(from: source, to: target)
+        guard targets.contains(target) else {
+            if let source {
+                throw ConversionError.unsupported(from: source.displayName, to: target)
+            }
+            throw ConversionError.unrecognized(input)
         }
+        let directory = input.deletingLastPathComponent()
+        let baseName = OutputNaming.baseName(of: input)
+
+        // Several PDF pages become a folder of images.
+        if source == .pdf, target.category == .image, try PDFConverter.pageCount(input) > 1 {
+            return try OutputNaming.writeAtomically(
+                directory: directory, baseName: "\(baseName) (\(target.displayName))", pathExtension: ""
+            ) { folder in
+                try PDFConverter.renderPages(input, as: target, into: folder, baseName: baseName, options: options)
+            }
+        }
+
         return try OutputNaming.writeAtomically(
-            directory: input.deletingLastPathComponent(),
-            baseName: OutputNaming.baseName(of: input),
-            pathExtension: target.fileExtension
+            directory: directory, baseName: baseName, pathExtension: target.fileExtension
         ) { output in
+            guard let source else {
+                try ArchiveConverter.pack(input, as: target, to: output)
+                return
+            }
             switch source.category {
             case .image:
                 try ImageConverter.convert(input, to: target, output: output, options: options)
             case .pdf:
-                throw ConversionError.unsupported(from: source, to: target)
+                try PDFConverter.convert(input, to: target, output: output, options: options)
+            case .document:
+                try DocumentConverter.convert(input, from: source, to: target, output: output)
+            case .subtitle:
+                try SubtitleConverter.convert(input, to: target, output: output)
+            case .table:
+                try TableConverter.convert(input, from: source, to: target, output: output)
+            case .archive:
+                try ArchiveConverter.repack(input, from: source, as: target, to: output)
             }
         }
     }

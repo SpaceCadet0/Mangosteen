@@ -1,0 +1,113 @@
+import AppKit
+
+/// A small floating panel in the top-right corner that shows progress of running jobs.
+/// It appears only when work takes longer than `showDelay`, so quick conversions stay silent.
+final class ProgressHUD {
+    static let shared = ProgressHUD()
+
+    private struct Job {
+        var title: String
+        var total: Int
+        var done = 0
+    }
+
+    private let showDelay: TimeInterval = 0.5
+    private let panel: NSPanel
+    private let titleLabel = NSTextField(labelWithString: "")
+    private let detailLabel = NSTextField(labelWithString: "")
+    private let indicator = NSProgressIndicator()
+    private var jobs: [UUID: Job] = [:]
+    private var pendingShow: DispatchWorkItem?
+
+    private init() {
+        panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 300, height: 68),
+                        styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: true)
+        panel.level = .statusBar
+        panel.isFloatingPanel = true
+        panel.backgroundColor = .clear
+        panel.isOpaque = false
+        panel.hasShadow = true
+        panel.hidesOnDeactivate = false
+        panel.isReleasedWhenClosed = false
+        panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .ignoresCycle]
+
+        let background = NSVisualEffectView(frame: panel.contentRect(forFrameRect: panel.frame))
+        background.material = .hudWindow
+        background.state = .active
+        background.wantsLayer = true
+        background.layer?.cornerRadius = 12
+        background.layer?.masksToBounds = true
+
+        titleLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        titleLabel.lineBreakMode = .byTruncatingTail
+        detailLabel.font = .monospacedDigitSystemFont(ofSize: 11, weight: .regular)
+        detailLabel.textColor = .secondaryLabelColor
+        indicator.style = .bar
+        indicator.isIndeterminate = false
+        indicator.minValue = 0
+        indicator.maxValue = 1
+
+        let stack = NSStackView(views: [titleLabel, indicator, detailLabel])
+        stack.orientation = .vertical
+        stack.alignment = .leading
+        stack.spacing = 4
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        background.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 14),
+            stack.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -14),
+            stack.centerYAnchor.constraint(equalTo: background.centerYAnchor),
+            indicator.widthAnchor.constraint(equalTo: stack.widthAnchor),
+        ])
+        panel.contentView = background
+    }
+
+    // All methods are called on the main thread.
+
+    func begin(_ title: String, total: Int) -> UUID {
+        let id = UUID()
+        jobs[id] = Job(title: title, total: max(total, 1))
+        if !panel.isVisible, pendingShow == nil {
+            let work = DispatchWorkItem { [weak self] in
+                self?.pendingShow = nil
+                self?.present()
+            }
+            pendingShow = work
+            DispatchQueue.main.asyncAfter(deadline: .now() + showDelay, execute: work)
+        }
+        refresh()
+        return id
+    }
+
+    func step(_ id: UUID) {
+        jobs[id]?.done += 1
+        refresh()
+    }
+
+    func end(_ id: UUID) {
+        jobs[id] = nil
+        guard jobs.isEmpty else {
+            refresh()
+            return
+        }
+        pendingShow?.cancel()
+        pendingShow = nil
+        panel.orderOut(nil)
+    }
+
+    private func present() {
+        guard !jobs.isEmpty, let screen = NSScreen.main else { return }
+        let visible = screen.visibleFrame
+        panel.setFrameOrigin(NSPoint(x: visible.maxX - panel.frame.width - 16, y: visible.maxY - panel.frame.height - 16))
+        refresh()
+        panel.orderFrontRegardless()
+    }
+
+    private func refresh() {
+        let total = jobs.values.reduce(0) { $0 + $1.total }
+        let done = jobs.values.reduce(0) { $0 + $1.done }
+        titleLabel.stringValue = jobs.count == 1 ? (jobs.values.first?.title ?? "") : "Задач: \(jobs.count)"
+        detailLabel.stringValue = "\(done) из \(total)"
+        indicator.doubleValue = total == 0 ? 0 : Double(done) / Double(total)
+    }
+}

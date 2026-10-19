@@ -3,12 +3,14 @@ import PDFKit
 
 enum PDFToolError: LocalizedError {
     case unreadable(URL)
+    case locked(URL)
     case nothingToDo
     case writeFailed
 
     var errorDescription: String? {
         switch self {
         case .unreadable(let url): "Не удалось открыть «\(url.lastPathComponent)»."
+        case .locked(let url): "«\(url.lastPathComponent)» защищён паролем."
         case .nothingToDo: "Нет подходящих файлов."
         case .writeFailed: "Не удалось сохранить PDF."
         }
@@ -19,7 +21,7 @@ enum PDFToolError: LocalizedError {
 enum PDFTools {
     /// One page per image, page size equal to the image size in points (72 dpi).
     static func createPDF(fromImages urls: [URL]) throws -> URL {
-        let images = urls.filter { FileFormat.detect($0)?.category == .image }
+        let images = urls.filter { FileFormat.detect($0)?.category == .image && FileFormat.detect($0) != .svg }
         guard let first = images.first else { throw PDFToolError.nothingToDo }
         let document = PDFDocument()
         for url in images {

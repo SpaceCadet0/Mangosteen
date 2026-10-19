@@ -1,20 +1,28 @@
-import CoreGraphics
-import Foundation
+import AppKit
 import ImageIO
 
 /// Image → image conversion via ImageIO, with WebP encoding delegated to `cwebp`.
 enum ImageConverter {
     static func convert(_ input: URL, to target: FileFormat, output: URL, options: ConversionOptions) throws {
+        if FileFormat.detect(input) == .svg {
+            try convertSVG(input, to: target, output: output, options: options)
+            return
+        }
         guard let source = CGImageSourceCreateWithURL(input as CFURL, nil),
               CGImageSourceGetCount(source) > 0 else {
             throw ConversionError.unreadable(input)
         }
+        let count = CGImageSourceGetCount(source)
         if target == .webp {
-            try encodeWebP(source, input: input, output: output, options: options)
+            if count > 1, FileFormat.detect(input) == .gif, ExternalTool.isAvailable("gif2webp") {
+                try ExternalTool.run("gif2webp", ["-quiet", "-mixed", "-q", String(options.webpQuality),
+                                                  input.path, "-o", output.path])
+            } else {
+                try encodeWebP(source, input: input, output: output, options: options)
+            }
             return
         }
 
-        let count = CGImageSourceGetCount(source)
         // Keep every frame/page where the target can hold several (animated GIF, multi-page TIFF/PDF).
         let keepsAllFrames = [.gif, .tiff, .pdf].contains(target) && count > 1
         let indices = keepsAllFrames ? Array(0..<count) : [CGImageSourceGetPrimaryImageIndex(source)]
@@ -43,6 +51,75 @@ enum ImageConverter {
         guard CGImageDestinationFinalize(destination) else {
             throw ConversionError.encodeFailed(target)
         }
+    }
+
+    /// Encodes a single already-decoded image (used for rendered PDF pages and SVG).
+    static func write(_ image: CGImage, as target: FileFormat, to output: URL, options: ConversionOptions) throws {
+        guard let destination = CGImageDestinationCreateWithURL(
+            output as CFURL, target.utType.identifier as CFString, 1, nil
+        ) else {
+            throw ConversionError.encodeFailed(target)
+        }
+        let pixels = !target.supportsAlpha && image.hasAlpha ? try flattened(image) : image
+        var properties: [CFString: Any] = [:]
+        if let quality = options.quality(for: target), target.isLossy {
+            properties[kCGImageDestinationLossyCompressionQuality] = quality
+        }
+        CGImageDestinationAddImage(destination, pixels, properties as CFDictionary)
+        guard CGImageDestinationFinalize(destination) else { throw ConversionError.encodeFailed(target) }
+    }
+
+    // MARK: - SVG
+
+    /// SVG has no pixel size of its own; it is rasterised so the longer side is at least this many pixels.
+    static let svgMinimumPixelSize: CGFloat = 2048
+
+    private static func convertSVG(_ input: URL, to target: FileFormat, output: URL,
+                                   options: ConversionOptions) throws {
+        guard let image = NSImage(contentsOf: input), image.size.width > 0, image.size.height > 0 else {
+            throw ConversionError.unreadable(input)
+        }
+        if target == .pdf {
+            // Keep vectors: draw straight into a PDF page.
+            var mediaBox = CGRect(origin: .zero, size: image.size)
+            guard let context = CGContext(output as CFURL, mediaBox: &mediaBox, nil) else {
+                throw ConversionError.encodeFailed(.pdf)
+            }
+            context.beginPDFPage(nil)
+            drawImage(image, in: context, rect: mediaBox)
+            context.endPDFPage()
+            context.closePDF()
+            return
+        }
+
+        let scale = max(1, svgMinimumPixelSize / max(image.size.width, image.size.height))
+        let width = Int((image.size.width * scale).rounded())
+        let height = Int((image.size.height * scale).rounded())
+        guard let context = CGContext(
+            data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0,
+            space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else {
+            throw ConversionError.encodeFailed(target)
+        }
+        drawImage(image, in: context, rect: CGRect(x: 0, y: 0, width: width, height: height))
+        guard let raster = context.makeImage() else { throw ConversionError.encodeFailed(target) }
+
+        if target == .webp {
+            let intermediate = FileManager.default.temporaryDirectory
+                .appendingPathComponent("mangosteen-\(UUID().uuidString).png")
+            defer { try? FileManager.default.removeItem(at: intermediate) }
+            try write(raster, as: .png, to: intermediate, options: options)
+            try convert(intermediate, to: .webp, output: output, options: options)
+        } else {
+            try write(raster, as: target, to: output, options: options)
+        }
+    }
+
+    private static func drawImage(_ image: NSImage, in context: CGContext, rect: CGRect) {
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(cgContext: context, flipped: false)
+        image.draw(in: rect)
+        NSGraphicsContext.restoreGraphicsState()
     }
 
     // MARK: - Pixels

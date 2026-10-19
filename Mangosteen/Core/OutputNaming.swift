@@ -18,7 +18,11 @@ enum OutputNaming {
     }
 
     static func baseName(of url: URL) -> String {
-        url.deletingPathExtension().lastPathComponent
+        let name = url.lastPathComponent
+        for doubleExtension in [".tar.gz", ".tar.bz2", ".tar.xz"] where name.lowercased().hasSuffix(doubleExtension) {
+            return String(name.dropLast(doubleExtension.count))
+        }
+        return url.deletingPathExtension().lastPathComponent
     }
 
     /// Runs `produce` against a hidden temporary file in `directory`, then moves the result to a unique
@@ -27,8 +31,10 @@ enum OutputNaming {
     static func writeAtomically(directory: URL, baseName: String, pathExtension: String,
                                 fileManager: FileManager = .default,
                                 produce: (URL) throws -> Void) throws -> URL {
-        let temp = directory.appendingPathComponent(".mangosteen-\(UUID().uuidString)")
-            .appendingPathExtension(pathExtension)
+        var temp = directory.appendingPathComponent(".mangosteen-\(UUID().uuidString)")
+        if !pathExtension.isEmpty {
+            temp.appendPathExtension(pathExtension)
+        }
         defer { try? fileManager.removeItem(at: temp) }
         try produce(temp)
         guard fileManager.fileExists(atPath: temp.path) else {
