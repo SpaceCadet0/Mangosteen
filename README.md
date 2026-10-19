@@ -39,7 +39,7 @@ segment and the result appears next to the original. No windows to open, no save
 The keys can be changed in Settings. Without dragging, the same wheels are in the menu bar menu: pick the files,
 then click a segment.
 
-## ✨ Highlights
+## Highlights
 
 - **Zero clicks.** The wheel shows only what makes sense for the files you are holding.
 - **Never touches the original.** Results are written next to the source; names never clash.
@@ -49,23 +49,23 @@ then click a segment.
 - **Native.** SwiftUI and AppKit, ImageIO, PDFKit, Core Image and Vision.
 - **Three languages.** English, Spanish and Russian, switchable in Settings.
 
-## 🔄 Convert
+## Convert
 
 | Kind | Formats |
 |---|---|
-| 🖼 Images | PNG, JPG, WebP, HEIC, TIFF, AVIF, BMP, GIF, PDF · also reads SVG, PSD, ICO and more |
-| 📄 PDF | to images, text or DOCX |
-| 📝 Documents | DOCX, ODT, RTF, RTFD, TXT, Markdown, HTML — into each other and into PDF |
-| 🎬 Video | MP4, MOV, MKV, WebM, AVI, WMV — into each other, GIF and MP3 |
-| 🎵 Audio | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA |
-| 💬 Subtitles | SRT ⇄ VTT |
-| 📊 Tables | CSV ⇄ TSV |
-| 🗜 Archives | ZIP, TAR, TAR.GZ — and folders into archives |
+| Images | PNG, JPG, WebP, HEIC, TIFF, AVIF, BMP, GIF, PDF · also reads SVG, PSD, ICO and more |
+| PDF | to images, text or DOCX |
+| Documents | DOCX, ODT, RTF, RTFD, TXT, Markdown, HTML — into each other and into PDF |
+| Video | MP4, MOV, MKV, WebM, AVI, WMV — into each other, GIF and MP3 |
+| Audio | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA |
+| Subtitles | SRT ⇄ VTT |
+| Tables | CSV ⇄ TSV |
+| Archives | ZIP, TAR, TAR.GZ — and folders into archives |
 
 When the target container accepts the original streams, video is copied without re-encoding, so it is instant and
 lossless.
 
-## 🛠 Tools
+## Tools
 
 Every tool opens a small window with a live preview. Close it and nothing is changed.
 
@@ -114,13 +114,13 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 
 - **Extract** archives next to the original.
 
-## 📥 Actions
+## Actions
 
 - **AirDrop** the files straight away.
 - **Float** — a floating shelf that holds files until you drag them somewhere else, in copy or move mode.
 - **Copy** or **Move** to a folder, **copy the path**, **open in Terminal** or iTerm2.
 
-## 👋 First launch
+## First launch
 
 <p align="center">
   <img src="docs/images/en/welcome.png" width="560" alt="Welcome window">
@@ -128,7 +128,7 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 
 The welcome window explains the three wheels. You can reopen it any time from the menu bar icon.
 
-## 📦 Install
+## Install
 
 Requirements: macOS 14 or later, Xcode 26 or later, [XcodeGen](https://github.com/yonaskolb/XcodeGen), and the
 Homebrew tools that get bundled into the app:
@@ -146,7 +146,7 @@ scripts/release.sh --install
 
 Without `--install`, the app stays in `build.noindex/release/Build/Products/Release/Mangosteen.app`.
 
-## 🧑‍💻 Development
+## Development
 
 ```bash
 xcodegen generate
