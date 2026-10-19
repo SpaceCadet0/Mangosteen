@@ -28,9 +28,9 @@ final class FloatShelf {
         panel?.orderOut(nil)
     }
 
-    /// Drops entries whose files were moved away (e.g. dragged out with a move operation).
-    func pruneMissing() {
-        urls.removeAll { !FileManager.default.fileExists(atPath: $0.path) }
+    /// Redraws rows so files that were moved away show as unavailable. Entries are only ever
+    /// removed by the user.
+    func refresh() {
         reload()
     }
 
@@ -107,6 +107,14 @@ private final class FloatShelfView: NSVisualEffectView {
         let clear = headerButton("trash", "Очистить", #selector(clearTapped))
         let close = headerButton("xmark", "Закрыть Float (файлы не удаляются)", #selector(closeTapped))
         let header = NSStackView(views: [titleLabel, NSView(), clear, close])
+
+        let mode = NSSegmentedControl(labels: ["Копировать", "Переместить"], trackingMode: .selectOne,
+                                      target: self, action: #selector(modeChanged(_:)))
+        mode.selectedSegment = AppSettings.shared.floatMovesFiles ? 1 : 0
+        mode.controlSize = .small
+        mode.segmentDistribution = .fillEqually
+        mode.setToolTip("Файл остаётся в исходной папке, в другое место попадает копия", forSegment: 0)
+        mode.setToolTip("Файл переносится из исходной папки туда, куда его перетащили", forSegment: 1)
         header.orientation = .horizontal
         header.spacing = 6
 
@@ -127,7 +135,7 @@ private final class FloatShelfView: NSVisualEffectView {
         emptyLabel.textColor = .secondaryLabelColor
         emptyLabel.font = .systemFont(ofSize: 12)
 
-        let content = NSStackView(views: [header, allItemsRow, scroll, emptyLabel])
+        let content = NSStackView(views: [header, mode, allItemsRow, scroll, emptyLabel])
         content.orientation = .vertical
         content.alignment = .leading
         content.spacing = 8
@@ -141,6 +149,7 @@ private final class FloatShelfView: NSVisualEffectView {
             content.topAnchor.constraint(equalTo: topAnchor),
             content.bottomAnchor.constraint(equalTo: bottomAnchor),
             header.widthAnchor.constraint(equalTo: content.widthAnchor, constant: -20),
+            mode.widthAnchor.constraint(equalTo: header.widthAnchor),
             allItemsRow.widthAnchor.constraint(equalTo: header.widthAnchor),
             scroll.widthAnchor.constraint(equalTo: header.widthAnchor),
             emptyLabel.widthAnchor.constraint(equalTo: header.widthAnchor),
@@ -171,6 +180,10 @@ private final class FloatShelfView: NSVisualEffectView {
         allItemsRow.urls = urls
         allItemsRow.isHidden = urls.count < 2
         emptyLabel.isHidden = !urls.isEmpty
+    }
+
+    @objc private func modeChanged(_ sender: NSSegmentedControl) {
+        AppSettings.shared.floatMovesFiles = sender.selectedSegment == 1
     }
 
     @objc private func clearTapped() {
@@ -273,9 +286,12 @@ private final class FloatItemView: NSView, NSDraggingSource {
             removeButton.isHidden = true
             layer?.backgroundColor = NSColor.labelColor.withAlphaComponent(0.06).cgColor
         } else if let url = urls.first {
+            let exists = FileManager.default.fileExists(atPath: url.path)
             iconView.image = NSWorkspace.shared.icon(forFile: url.path)
-            nameLabel.stringValue = url.lastPathComponent
-            toolTip = url.path
+            nameLabel.stringValue = exists ? url.lastPathComponent : "\(url.lastPathComponent) — перемещён"
+            nameLabel.textColor = exists ? .labelColor : .tertiaryLabelColor
+            iconView.alphaValue = exists ? 1 : 0.4
+            toolTip = exists ? url.path : "Файла больше нет по адресу \(url.path)"
         }
     }
 
@@ -289,13 +305,14 @@ private final class FloatItemView: NSView, NSDraggingSource {
     }
 
     override func mouseDragged(with event: NSEvent) {
-        guard let start = mouseDownEvent, !urls.isEmpty else { return }
+        let available = urls.filter { FileManager.default.fileExists(atPath: $0.path) }
+        guard let start = mouseDownEvent, !available.isEmpty else { return }
         let distance = hypot(event.locationInWindow.x - start.locationInWindow.x,
                              event.locationInWindow.y - start.locationInWindow.y)
         guard distance > 3 else { return }
         mouseDownEvent = nil
 
-        let items = urls.enumerated().map { index, url in
+        let items = available.enumerated().map { index, url in
             let item = NSDraggingItem(pasteboardWriter: url as NSURL)
             let icon = NSWorkspace.shared.icon(forFile: url.path)
             let offset = CGFloat(min(index, 4)) * 4
@@ -304,7 +321,7 @@ private final class FloatItemView: NSView, NSDraggingSource {
         }
         let session = beginDraggingSession(with: items, event: event, source: self)
         session.draggingFormation = .pile
-        DragMonitor.shared.beginDrag(urls: urls)
+        DragMonitor.shared.beginDrag(urls: available)
     }
 
     override func rightMouseDown(with event: NSEvent) {
@@ -332,13 +349,16 @@ private final class FloatItemView: NSView, NSDraggingSource {
 
     func draggingSession(_ session: NSDraggingSession,
                          sourceOperationMaskFor context: NSDraggingContext) -> NSDragOperation {
-        // Inside Mangosteen only the wheel accepts drops; outside, behave like a Finder drag.
-        context == .withinApplication ? .copy : [.copy, .move, .link, .generic]
+        // Inside Mangosteen only the wheel accepts drops (and never moves the original).
+        // Outside, offering only .copy guarantees the destination cannot take the original away;
+        // .generic is left out because Finder treats it as a move on the same volume.
+        guard context == .outsideApplication, AppSettings.shared.floatMovesFiles else { return .copy }
+        return .move
     }
 
     func draggingSession(_ session: NSDraggingSession, endedAt screenPoint: NSPoint, operation: NSDragOperation) {
         DispatchQueue.main.async {
-            FloatShelf.shared.pruneMissing()
+            FloatShelf.shared.refresh()
         }
     }
 }

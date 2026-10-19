@@ -38,6 +38,7 @@ final class AppSettings: ObservableObject {
         static let webpQuality = "webpQuality"
         static let preserveMetadata = "preserveMetadata"
         static let terminalApp = "terminalApp"
+        static let floatMovesFiles = "floatMovesFiles"
     }
 
     private let defaults: UserDefaults
@@ -54,6 +55,8 @@ final class AppSettings: ObservableObject {
     @Published var webpQuality: Int { didSet { defaults.set(webpQuality, forKey: Key.webpQuality) } }
     @Published var preserveMetadata: Bool { didSet { defaults.set(preserveMetadata, forKey: Key.preserveMetadata) } }
     @Published var terminalApp: TerminalChoice { didSet { defaults.set(terminalApp.rawValue, forKey: Key.terminalApp) } }
+    /// Dragging out of Float moves the original instead of copying it.
+    @Published var floatMovesFiles: Bool { didSet { defaults.set(floatMovesFiles, forKey: Key.floatMovesFiles) } }
 
     @Published var launchAtLogin: Bool {
         didSet {
@@ -99,6 +102,7 @@ final class AppSettings: ObservableObject {
         webpQuality = defaults.integer(forKey: Key.webpQuality)
         preserveMetadata = defaults.bool(forKey: Key.preserveMetadata)
         terminalApp = TerminalChoice(rawValue: defaults.string(forKey: Key.terminalApp) ?? "") ?? .terminal
+        floatMovesFiles = defaults.bool(forKey: Key.floatMovesFiles)
         launchAtLogin = SMAppService.mainApp.status == .enabled
     }
 
