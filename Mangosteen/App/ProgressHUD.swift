@@ -60,17 +60,20 @@ final class ProgressHUD {
         stack.orientation = .vertical
         stack.alignment = .leading
         stack.spacing = 4
-        let row = NSStackView(views: [stack, cancelButton])
-        row.orientation = .horizontal
-        row.alignment = .centerY
-        row.spacing = 10
-        row.translatesAutoresizingMaskIntoConstraints = false
-        background.addSubview(row)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        background.addSubview(stack)
+        background.addSubview(cancelButton)
+        // The text column takes all the width left of the Stop button, so the bar spans the panel.
         NSLayoutConstraint.activate([
-            row.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 14),
-            row.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -12),
-            row.centerYAnchor.constraint(equalTo: background.centerYAnchor),
+            stack.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 16),
+            stack.centerYAnchor.constraint(equalTo: background.centerYAnchor),
+            cancelButton.leadingAnchor.constraint(equalTo: stack.trailingAnchor, constant: 12),
+            cancelButton.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -14),
+            cancelButton.centerYAnchor.constraint(equalTo: indicator.centerYAnchor),
+            cancelButton.widthAnchor.constraint(equalToConstant: 18),
             indicator.widthAnchor.constraint(equalTo: stack.widthAnchor),
+            titleLabel.widthAnchor.constraint(lessThanOrEqualTo: stack.widthAnchor),
         ])
         panel.contentView = background
     }
@@ -145,6 +148,8 @@ final class ProgressHUD {
         titleLabel.stringValue = jobs.count == 1 ? (jobs.values.first?.title ?? "") : "Задач: \(jobs.count)"
         detailLabel.stringValue = "\(done) из \(total) · \(Int((fraction * 100).rounded()))%"
         indicator.doubleValue = fraction
-        cancelButton.isHidden = !jobs.values.contains { $0.cancel != nil }
+        // Hidden, not removed, so the bar keeps its length.
+        cancelButton.alphaValue = jobs.values.contains { $0.cancel != nil } ? 1 : 0
+        cancelButton.isEnabled = cancelButton.alphaValue > 0
     }
 }
