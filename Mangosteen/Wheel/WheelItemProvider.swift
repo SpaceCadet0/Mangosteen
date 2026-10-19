@@ -42,6 +42,22 @@ enum WheelItemProvider {
                 ToolWindow.present(title: "Скорость") { SpeedView(urls: urls, close: $0) }
             })
         }
+        if formats.contains(where: { $0.category.isMedia }) {
+            items.append(WheelItem(id: "tool.normalize", title: "Громкость", symbolName: "speaker.wave.3") { urls in
+                ToolWindow.present(title: "Громкость") { NormalizeView(urls: urls, close: $0) }
+            })
+            items.append(WheelItem(id: "tool.bleep", title: "Запикать", symbolName: "waveform.badge.minus") { urls in
+                ToolWindow.present(title: "Запикать") { BleepView(urls: urls, close: $0) }
+            })
+        }
+        if formats.contains(where: { $0.category == .audio }) {
+            items.append(WheelItem(id: "tool.channels", title: "Каналы", symbolName: "headphones") { urls in
+                ToolWindow.present(title: "Каналы") { ChannelsView(urls: urls, close: $0) }
+            })
+            items.append(WheelItem(id: "tool.visualizer", title: "Визуализатор", symbolName: "waveform.circle") { urls in
+                ToolWindow.present(title: "Визуализатор") { VisualizerView(urls: urls, close: $0) }
+            })
+        }
         if formats.contains(where: { $0.category == .video }) {
             items.append(WheelItem(id: "tool.cropVideo", title: "Кадрировать", symbolName: "crop") { urls in
                 ToolWindow.present(title: "Кадрирование видео") { VideoCropView(urls: urls, close: $0) }

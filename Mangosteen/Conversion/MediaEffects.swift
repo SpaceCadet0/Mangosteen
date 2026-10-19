@@ -69,7 +69,7 @@ enum MediaEffects {
         }
         let canvasWidth = width / 2 * 2
         let canvasHeight = height / 2 * 2
-        let fps = String(format: "%.3f", first.frameRate ?? 30)
+        let fps = String(format: "%.3f", Double(first.frameRate ?? 30.0))
 
         var graph: [String] = []
         var concatInputs = ""
@@ -79,7 +79,7 @@ enum MediaEffects {
             if info.hasAudio {
                 graph.append("[\(index):a:0]aresample=48000,aformat=sample_fmts=fltp:channel_layouts=stereo[a\(index)]")
             } else {
-                let duration = String(format: "%.3f", info.duration ?? 0)
+                let duration = String(format: "%.3f", Double(info.duration ?? 0.0))
                 graph.append("anullsrc=channel_layout=stereo:sample_rate=48000,atrim=0:\(duration),aformat=sample_fmts=fltp[a\(index)]")
             }
             concatInputs += "[v\(index)][a\(index)]"

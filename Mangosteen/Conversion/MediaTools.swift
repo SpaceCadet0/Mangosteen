@@ -162,11 +162,13 @@ enum MediaTools {
     // MARK: - Waveform
 
     /// Peak level (0…1) of `buckets` equal slices of the first audio track, mixed to mono.
-    static func waveform(_ input: URL, duration: Double, buckets: Int) throws -> [Float] {
+    /// `filter` runs before the mono mixdown, e.g. `pan=mono|c0=c1` for the right channel only.
+    static func waveform(_ input: URL, duration: Double, buckets: Int, filter: String? = nil) throws -> [Float] {
         let sampleRate = duration > 600 ? 500 : 4000
+        let filterArguments = filter.map { ["-af", $0] } ?? []
         let data = try ExternalTool.runData("ffmpeg", [
             "-hide_banner", "-nostdin", "-loglevel", "error", "-i", input.path,
-            "-map", "0:a:0", "-ac", "1", "-ar", String(sampleRate), "-f", "f32le", "-",
+            "-map", "0:a:0"] + filterArguments + ["-ac", "1", "-ar", String(sampleRate), "-f", "f32le", "-",
         ])
         let samples = data.withUnsafeBytes { Array($0.bindMemory(to: Float.self)) }
         guard !samples.isEmpty, buckets > 0 else { return [] }
