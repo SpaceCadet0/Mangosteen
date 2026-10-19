@@ -97,6 +97,33 @@ enum ExternalTool {
         }
     }
 
+    /// Runs the tool and returns its raw stdout (images or samples piped by ffmpeg).
+    static func runData(_ name: String, _ arguments: [String]) throws -> Data {
+        guard let executable = locate(name) else { throw Missing(tool: name) }
+        let process = Process()
+        process.executableURL = executable
+        process.arguments = arguments
+        let output = Pipe()
+        let errors = Pipe()
+        process.standardOutput = output
+        process.standardError = errors
+        let errorLock = NSLock()
+        var errorData = Data()
+        errors.fileHandleForReading.readabilityHandler = { handle in
+            let data = handle.availableData
+            errorLock.withLock { errorData.append(data) }
+        }
+        try process.run()
+        let data = output.fileHandleForReading.readDataToEndOfFile()
+        process.waitUntilExit()
+        errors.fileHandleForReading.readabilityHandler = nil
+        guard process.terminationStatus == 0 else {
+            let message = errorLock.withLock { String(decoding: errorData, as: UTF8.self) }
+            throw Failure(tool: name, status: process.terminationStatus, output: String(message.suffix(800)))
+        }
+        return data
+    }
+
     /// Runs the tool synchronously and returns its combined output. Arguments are passed directly,
     /// never through a shell.
     @discardableResult

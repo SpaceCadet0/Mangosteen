@@ -29,6 +29,19 @@ enum WheelItemProvider {
     private static func toolItems(for urls: [URL]) -> [WheelItem] {
         let formats = urls.compactMap(FileFormat.detect)
         var items: [WheelItem] = []
+        if formats.contains(where: { $0.category.isMedia }) {
+            items.append(WheelItem(id: "tool.trimMedia", title: "Обрезать", symbolName: "timeline.selection") { urls in
+                ToolWindow.present(title: "Обрезка") { TrimMediaView(urls: urls, close: $0) }
+            })
+            items.append(WheelItem(id: "tool.splitMedia", title: "Разделить", symbolName: "scissors") { urls in
+                ToolWindow.present(title: "Разделение") { SplitMediaView(urls: urls, close: $0) }
+            })
+        }
+        if formats.contains(where: { $0.category == .video }) {
+            items.append(WheelItem(id: "tool.frames", title: "Кадры", symbolName: "photo.on.rectangle") { urls in
+                ToolWindow.present(title: "Кадры из видео") { FramesView(urls: urls, close: $0) }
+            })
+        }
         let hasImages = formats.contains { $0.category == .image }
         if hasImages || formats.contains(.pdf) {
             items.append(WheelItem(id: "tool.compress", title: "Сжать", symbolName: "arrow.down.right.and.arrow.up.left") { urls in

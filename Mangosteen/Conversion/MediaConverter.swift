@@ -8,6 +8,7 @@ struct MediaInfo {
     var width: Int?
     var height: Int?
     var audioChannels: Int?
+    var frameRate: Double?
 
     var hasVideo: Bool { videoCodec != nil }
     var hasAudio: Bool { audioCodec != nil }
@@ -42,6 +43,8 @@ enum MediaConverter {
                 let height: Int?
                 let channels: Int?
                 let disposition: [String: Int]?
+                let avg_frame_rate: String?
+                let r_frame_rate: String?
             }
             struct Format: Decodable {
                 let duration: String?
@@ -60,8 +63,18 @@ enum MediaConverter {
             audioCodec: audio?.codec_name,
             width: video?.width,
             height: video?.height,
-            audioChannels: audio?.channels
+            audioChannels: audio?.channels,
+            frameRate: rate(video?.avg_frame_rate) ?? rate(video?.r_frame_rate)
         )
+    }
+
+    /// "30000/1001" → 29.97; nil for "0/0" or garbage.
+    static func rate(_ fraction: String?) -> Double? {
+        guard let parts = fraction?.split(separator: "/"), parts.count == 2,
+              let numerator = Double(parts[0]), let denominator = Double(parts[1]), denominator > 0, numerator > 0 else {
+            return nil
+        }
+        return numerator / denominator
     }
 
     // MARK: - Conversion
