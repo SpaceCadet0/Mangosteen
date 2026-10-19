@@ -2,7 +2,7 @@
 
 Mangosteen — офлайн-конвертер файлов для macOS «в ноль кликов», вдохновлённый Tangerine.
 Приложение для личного использования: без paywall, без лимитов, без телеметрии.
-Весь код пишется с нуля; из Tangerine ничего не копируется (ни код, ни ресурсы, ни скрипты).
+Весь код пишется с нуля; из Tangerine ничего не копируется (ни код, ни ресурсы).
 
 ## 1. Что делает исходный продукт (результаты исследования)
 
@@ -25,17 +25,13 @@ Mangosteen — офлайн-конвертер файлов для macOS «в н
 - Онбординг (welcome wheel), настройки: модификаторы, звук/хаптика, автозапуск, доступ к папкам,
   настройки конвертации по умолчанию для каждого выходного формата (качество, пресеты).
 
-### Технологии, увиденные в бандле (ориентир для собственного стека)
-| Область | Tangerine | Mangosteen |
-|---|---|---|
-| UI | Swift, AppKit + SwiftUI | то же |
-| Изображения | ImageIO + `cwebp` | ImageIO (JPG/PNG/HEIC/TIFF/AVIF/BMP/GIF/PDF) + `cwebp` |
-| Видео/аудио | собранный `ffmpeg` + `lame` | `ffmpeg` из Homebrew → позже вшитый |
-| Метаданные | ExifTool + собственные perl-скрипты | ExifTool (Homebrew) + свой код / ImageIO |
-| PDF | PDFKit | PDFKit |
-| Документы | NSAttributedString, свой Pages-writer | NSAttributedString / `textutil` |
-| Office (PPTX/XLSX) | встроенная JRE + Apache POI/PDFBox | **не делаем** (решение пользователя) |
-| Лимиты | RevenueCat, счётчик в Keychain | **нет** |
+### Стек Mangosteen
+- UI: Swift, AppKit + SwiftUI.
+- Изображения: ImageIO (JPG/PNG/HEIC/TIFF/AVIF/BMP/GIF/PDF) + `cwebp` для WebP.
+- Видео/аудио: `ffmpeg` из Homebrew, позже вшитый в бандл.
+- Метаданные: ImageIO + ExifTool.
+- PDF: PDFKit. Документы: NSAttributedString / `textutil`.
+- Office (PPTX/XLSX) не делаем. Лимитов нет.
 
 Наше приложение не в песочнице (личное использование, ad-hoc подпись), поэтому
 не нужен экран «разрешите доступ к домашней папке».

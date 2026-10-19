@@ -10,8 +10,8 @@ enum FormatCategory: String {
 enum FileFormat: String, CaseIterable, Identifiable {
     // Read + write
     case jpg, png, webp, heic, tiff, avif, bmp, gif, pdf
-    // Read only
-    case svg, ico, icns, psd, jp2, tga, exr
+    // Read only (SVG needs a WebKit renderer, planned for phase 1)
+    case ico, icns, psd, jp2, tga, exr
 
     var id: String { rawValue }
 
@@ -41,7 +41,6 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .bmp: .bmp
         case .gif: .gif
         case .pdf: .pdf
-        case .svg: .svg
         case .ico: .ico
         case .icns: .icns
         case .psd: UTType("com.adobe.photoshop-image") ?? .image
