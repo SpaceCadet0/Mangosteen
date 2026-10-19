@@ -152,10 +152,11 @@ enum MediaTools {
     }
 
     /// Evenly spaced small frames for the timeline strip.
-    static func thumbnails(_ input: URL, duration: Double, count: Int, height: Int) -> [CGImage] {
+    /// `duration` seconds starting at `start` (the whole file by default) split into `count` frames.
+    static func thumbnails(_ input: URL, start: Double = 0, duration: Double, count: Int, height: Int) -> [CGImage] {
         guard duration > 0, count > 0 else { return [] }
         return (0..<count).compactMap { index in
-            try? frame(input, at: duration * (Double(index) + 0.5) / Double(count), maxHeight: height)
+            try? frame(input, at: start + duration * (Double(index) + 0.5) / Double(count), maxHeight: height)
         }
     }
 
@@ -163,11 +164,14 @@ enum MediaTools {
 
     /// Peak level (0…1) of `buckets` equal slices of the first audio track, mixed to mono.
     /// `filter` runs before the mono mixdown, e.g. `pan=mono|c0=c1` for the right channel only.
-    static func waveform(_ input: URL, duration: Double, buckets: Int, filter: String? = nil) throws -> [Float] {
+    /// With `start`, only `duration` seconds from that point are read (a zoomed-in window).
+    static func waveform(_ input: URL, duration: Double, buckets: Int, filter: String? = nil,
+                         start: Double? = nil) throws -> [Float] {
         let sampleRate = duration > 600 ? 500 : 4000
         let filterArguments = filter.map { ["-af", $0] } ?? []
+        let window = start.map { ["-ss", String(format: "%.3f", $0), "-t", String(format: "%.3f", duration)] } ?? []
         let data = try ExternalTool.runData("ffmpeg", [
-            "-hide_banner", "-nostdin", "-loglevel", "error", "-i", input.path,
+            "-hide_banner", "-nostdin", "-loglevel", "error"] + window + ["-i", input.path,
             "-map", "0:a:0"] + filterArguments + ["-ac", "1", "-ar", String(sampleRate), "-f", "f32le", "-",
         ])
         let samples = data.withUnsafeBytes { Array($0.bindMemory(to: Float.self)) }

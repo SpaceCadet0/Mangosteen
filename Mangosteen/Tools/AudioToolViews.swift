@@ -327,20 +327,31 @@ struct ChannelsView: View {
 struct BleepView: View {
     let close: () -> Void
     @StateObject private var model: MediaPlayerModel
-    @StateObject private var listener = PreviewListener()
     @State private var ranges: [ClosedRange<Double>] = []
     @State private var selected: Int?
     @State private var frequency = 1000.0
     @State private var volume = 0.3
+    @State private var version = Version.original
+    @State private var rendering = false
+    @State private var renderedKey: BleepKey?
+    @State private var bleepedFile: URL?
+    @State private var originalFile: URL?
+    @State private var notice = ""
+
+    private enum Version { case original, bleeped }
+
+    private struct BleepKey: Equatable {
+        var ranges: [ClosedRange<Double>]
+        var frequency: Double
+        var volume: Double
+    }
 
     init(urls: [URL], close: @escaping () -> Void) {
         self.close = close
         _model = StateObject(wrappedValue: MediaPlayerModel(url: firstMedia(urls)))
     }
 
-    private var graph: String {
-        AudioTools.bleepGraph(ranges: ranges, frequency: frequency, volume: volume, duration: model.duration)
-    }
+    private var key: BleepKey { BleepKey(ranges: ranges, frequency: frequency, volume: volume) }
 
     var body: some View {
         VStack(spacing: 12) {
@@ -349,7 +360,11 @@ struct BleepView: View {
                        idealHeight: model.isVideo ? 360 : 140)
             BleepStrip(model: model, ranges: $ranges, selected: $selected)
             HStack(spacing: 10) {
-                TransportBar(model: model)
+                TransportBar(model: model, onPlay: playBleeped, isBusy: rendering)
+                Text(model.isPlaying ? (version == .bleeped ? "с пиками" : "оригинал") : "")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .frame(width: 70, alignment: .leading)
                 Spacer(minLength: 12)
                 Button { addBleep() } label: { Label("Пик по курсору", systemImage: "plus") }
                     .keyboardShortcut(.return, modifiers: [])
@@ -370,23 +385,16 @@ struct BleepView: View {
                 Text("Громкость")
                 Slider(value: $volume, in: 0.05...1).frame(width: 120)
                 Spacer()
-                ListenButton(listener: listener, label: "bleeped", title: "С пиками") {
-                    model.pause()
-                    let graph = graph
-                    let input = model.url
-                    listener.play("bleeped", from: model.currentTime) {
-                        try AudioTools.renderPreview(input, graph: graph, to: $0, cancellation: $1)
-                    }
+                Button(action: playOriginal) {
+                    Label("Оригинал", systemImage: model.isPlaying && version == .original ? "stop.fill" : "play.fill")
                 }
-                .disabled(ranges.isEmpty)
-                ListenButton(listener: listener, label: "original", title: "Оригинал") {
-                    model.pause()
-                    let input = model.url
-                    listener.play("original", from: model.currentTime) {
-                        try AudioTools.renderPreview(input, to: $0, cancellation: $1)
-                    }
-                }
-                if listener.isRendering { ProgressView().controlSize(.small) }
+                .disabled(!model.isLoaded || rendering)
+            }
+            HStack {
+                Text(notice.isEmpty ? "Пробел — прослушать с пиками, ⏎ — пик по курсору." : notice)
+                    .font(.caption)
+                    .foregroundStyle(notice.isEmpty ? Color.secondary : Color.orange)
+                Spacer()
             }
             ToolFooter(fileCount: 1, actionTitle: ranges.count > 1 ? "Запикать (\(ranges.count))" : "Запикать",
                        actionDisabled: ranges.isEmpty, cancel: close, action: run)
@@ -398,20 +406,107 @@ struct BleepView: View {
             if ProcessInfo.processInfo.environment["MANGOSTEEN_DEMO"] != nil {
                 ranges = [model.duration * 0.2...model.duration * 0.27, model.duration * 0.6...model.duration * 0.7]
                 selected = 1
+                model.setZoom(4, anchor: model.duration * 0.62, anchorFraction: 0.3)
+                if ProcessInfo.processInfo.environment["MANGOSTEEN_DEMO_PLAY"] != nil {
+                    model.seek(to: model.duration * 0.58)
+                    playBleeped()
+                }
             }
             #endif
         }
-        .onChange(of: ranges) { _ in listener.stop() }
+        .onChange(of: key) { _ in
+            // The rendered sound no longer matches; stop rather than play stale bleeps.
+            if version == .bleeped, model.isPlaying { model.pause() }
+            notice = ""
+        }
         .onDisappear {
             model.pause()
-            listener.stop()
+            [bleepedFile, originalFile].compactMap { $0 }.forEach { try? FileManager.default.removeItem(at: $0) }
         }
     }
 
+    private func temporaryFile() -> URL {
+        FileManager.default.temporaryDirectory.appendingPathComponent("mangosteen-bleep-\(UUID().uuidString).m4a")
+    }
+
+    /// Space: play (or pause) with the bleeps, preparing the processed sound when the bleeps changed.
+    private func playBleeped() {
+        if model.isPlaying {
+            model.pause()
+            return
+        }
+        guard !ranges.isEmpty else {
+            playOriginal()
+            return
+        }
+        Task {
+            if renderedKey != key || bleepedFile == nil {
+                rendering = true
+                let file = temporaryFile()
+                let input = model.url
+                let graph = AudioTools.bleepGraph(ranges: ranges, frequency: frequency, volume: volume, duration: model.duration)
+                let renderedFor = key
+                let ok = await Task.detached(priority: .userInitiated) {
+                    (try? AudioTools.renderPreview(input, graph: graph, to: file)) != nil
+                }.value
+                rendering = false
+                guard ok else { return }
+                if let old = bleepedFile { try? FileManager.default.removeItem(at: old) }
+                bleepedFile = file
+                renderedKey = renderedFor
+                version = .original // force the swap below
+            }
+            if version != .bleeped, let bleepedFile {
+                try? await model.setAudioOverride(bleepedFile)
+                version = .bleeped
+            }
+            model.togglePlay()
+        }
+    }
+
+    private func playOriginal() {
+        if model.isPlaying {
+            let wasOriginal = version == .original
+            model.pause()
+            if wasOriginal { return }
+        }
+        Task {
+            if version != .original || model.player == nil {
+                if model.canPlayOriginal {
+                    try? await model.setAudioOverride(nil)
+                } else {
+                    // Formats AVFoundation cannot open: listen to the decoded original sound.
+                    if originalFile == nil {
+                        rendering = true
+                        let file = temporaryFile()
+                        let input = model.url
+                        let ok = await Task.detached { (try? AudioTools.renderPreview(input, to: file)) != nil }.value
+                        rendering = false
+                        guard ok else { return }
+                        originalFile = file
+                    }
+                    if let originalFile { try? await model.setAudioOverride(originalFile) }
+                }
+                version = .original
+            }
+            model.togglePlay()
+        }
+    }
+
+    /// Adds a 0.6 s bleep at the playhead, never on top of another one.
     private func addBleep() {
         let start = model.currentTime
-        let end = min(start + 0.6, model.duration)
-        guard end - start > 0.05 else { return }
+        if let existing = ranges.firstIndex(where: { $0.contains(start) }) {
+            selected = existing
+            notice = "Здесь уже есть пик — он выделен."
+            return
+        }
+        let next = ranges.map(\.lowerBound).filter { $0 > start }.min() ?? model.duration
+        let end = min(start + 0.6, next, model.duration)
+        guard end - start >= 0.05 else {
+            notice = "Слишком близко к соседнему пику."
+            return
+        }
         ranges.append(start...end)
         ranges.sort { $0.lowerBound < $1.lowerBound }
         selected = ranges.firstIndex { $0.lowerBound == start }
@@ -424,7 +519,6 @@ struct BleepView: View {
     }
 
     private func run() {
-        listener.stop()
         model.pause()
         let ranges = ranges
         let frequency = frequency
@@ -437,85 +531,52 @@ struct BleepView: View {
     }
 }
 
-/// Timeline with several bleep ranges: click a range to select it, drag it to move, drag its edges to resize.
+/// Bleep ranges on the shared timeline: click a range to select it, drag it to move, drag its edges to
+/// resize. Ranges stay sorted and never overlap: moves and resizes stop at the neighbours.
 private struct BleepStrip: View {
     @ObservedObject var model: MediaPlayerModel
     @Binding var ranges: [ClosedRange<Double>]
     @Binding var selected: Int?
     @State private var dragStart: ClosedRange<Double>?
 
-    private static let space = "bleepStrip"
-
     var body: some View {
-        GeometryReader { geometry in
-            let width = geometry.size.width
-            let height = geometry.size.height
-            ZStack(alignment: .topLeading) {
-                Color.clear
-                background(width: width, height: height)
-                    .frame(width: width, height: height)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .position(x: width / 2, y: height / 2)
-
-                ForEach(Array(ranges.enumerated()), id: \.offset) { index, range in
-                    let start = x(range.lowerBound, width)
-                    let end = x(range.upperBound, width)
-                    let isSelected = index == selected
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.red.opacity(isSelected ? 0.55 : 0.4))
-                        .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.red, lineWidth: isSelected ? 2.5 : 1))
-                        .frame(width: max(end - start, 4), height: height)
-                        .position(x: (start + end) / 2, y: height / 2)
-                        .gesture(moveGesture(index, width: width))
-                    if isSelected {
-                        edge(index, isStart: true, at: start, width: width, height: height)
-                        edge(index, isStart: false, at: end, width: width, height: height)
-                    }
+        TimelineFrame(model: model, onScrub: { selected = nil }) { width, height in
+            ForEach(Array(ranges.enumerated()), id: \.offset) { index, range in
+                let start = model.x(for: range.lowerBound, width: width)
+                let end = model.x(for: range.upperBound, width: width)
+                let isSelected = index == selected
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.red.opacity(isSelected ? 0.55 : 0.4))
+                    .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.red, lineWidth: isSelected ? 2.5 : 1))
+                    .frame(width: max(end - start, 4), height: height)
+                    .position(x: (start + end) / 2, y: height / 2)
+                    .gesture(moveGesture(index, width: width))
+                if isSelected {
+                    edge(index, isStart: true, at: start, width: width, height: height)
+                    edge(index, isStart: false, at: end, width: width, height: height)
                 }
-
-                Rectangle().fill(Color.white)
-                    .frame(width: 2, height: height + 10)
-                    .shadow(color: .black.opacity(0.6), radius: 1)
-                    .position(x: x(model.currentTime, width), y: height / 2)
-                    .allowsHitTesting(false)
             }
-            .frame(width: width, height: height)
-            .contentShape(Rectangle())
-            .coordinateSpace(name: Self.space)
-            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .named(Self.space)).onChanged { value in
-                selected = nil
-                model.pause()
-                model.seek(to: time(value.location.x, width))
-            })
         }
-        .frame(height: 64)
-        .padding(.vertical, 5)
     }
 
-    @ViewBuilder
-    private func background(width: CGFloat, height: CGFloat) -> some View {
-        if model.isVideo, !model.thumbnails.isEmpty {
-            HStack(spacing: 0) {
-                ForEach(Array(model.thumbnails.enumerated()), id: \.offset) { _, image in
-                    Image(decorative: image, scale: 1).resizable().scaledToFill()
-                        .frame(width: width / CGFloat(model.thumbnails.count), height: height).clipped()
-                }
-            }
-        } else {
-            WaveformView(peaks: model.waveform).background(Color.primary.opacity(0.07))
-        }
+    /// Free space around range `index`: from the previous range's end to the next range's start.
+    private func limits(_ index: Int) -> ClosedRange<Double> {
+        let lower = index > 0 ? ranges[index - 1].upperBound : 0
+        let upper = index < ranges.count - 1 ? ranges[index + 1].lowerBound : model.duration
+        return lower...max(upper, lower)
     }
 
     private func moveGesture(_ index: Int, width: CGFloat) -> some Gesture {
-        DragGesture(minimumDistance: 0, coordinateSpace: .named(Self.space))
+        DragGesture(minimumDistance: 0, coordinateSpace: .named(timelineSpace))
             .onChanged { value in
                 guard ranges.indices.contains(index) else { return }
                 selected = index
                 let start = dragStart ?? ranges[index]
                 dragStart = start
                 let length = start.upperBound - start.lowerBound
-                let shift = Double(value.translation.width / max(width, 1)) * model.duration
-                let lower = min(max(start.lowerBound + shift, 0), model.duration - length)
+                let shift = Double(value.translation.width / max(width, 1)) * model.viewLength
+                let bounds = limits(index)
+                let lower = min(max(start.lowerBound + shift, bounds.lowerBound), bounds.upperBound - length)
                 ranges[index] = lower...(lower + length)
             }
             .onEnded { _ in dragStart = nil }
@@ -528,23 +589,15 @@ private struct BleepStrip: View {
             .frame(width: 22, height: height + 8)
             .contentShape(Rectangle())
             .position(x: position, y: height / 2)
-            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .named(Self.space)).onChanged { value in
+            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .named(timelineSpace)).onChanged { value in
                 guard ranges.indices.contains(index) else { return }
-                let seconds = time(value.location.x, width)
+                let seconds = model.time(at: value.location.x, width: width)
                 let current = ranges[index]
+                let bounds = limits(index)
                 ranges[index] = isStart
-                    ? min(seconds, current.upperBound - 0.05)...current.upperBound
-                    : current.lowerBound...max(seconds, current.lowerBound + 0.05)
+                    ? max(min(seconds, current.upperBound - 0.05), bounds.lowerBound)...current.upperBound
+                    : current.lowerBound...min(max(seconds, current.lowerBound + 0.05), bounds.upperBound)
             })
-    }
-
-    private func x(_ seconds: Double, _ width: CGFloat) -> CGFloat {
-        model.duration > 0 ? CGFloat(seconds / model.duration) * width : 0
-    }
-
-    private func time(_ x: CGFloat, _ width: CGFloat) -> Double {
-        guard width > 0 else { return 0 }
-        return min(max(Double(x / width) * model.duration, 0), model.duration)
     }
 }
 
