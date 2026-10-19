@@ -9,6 +9,9 @@ final class ProgressHUD {
         var title: String
         var total: Int
         var done = 0
+        /// Progress of files still running, by index; -1 marks a finished file.
+        var partial: [Int: Double] = [:]
+        var cancel: (() -> Void)?
     }
 
     private let showDelay: TimeInterval = 0.5
@@ -16,11 +19,12 @@ final class ProgressHUD {
     private let titleLabel = NSTextField(labelWithString: "")
     private let detailLabel = NSTextField(labelWithString: "")
     private let indicator = NSProgressIndicator()
+    private let cancelButton = NSButton()
     private var jobs: [UUID: Job] = [:]
     private var pendingShow: DispatchWorkItem?
 
     private init() {
-        panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 300, height: 68),
+        panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 330, height: 70),
                         styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: true)
         panel.level = .statusBar
         panel.isFloatingPanel = true
@@ -46,27 +50,40 @@ final class ProgressHUD {
         indicator.isIndeterminate = false
         indicator.minValue = 0
         indicator.maxValue = 1
+        cancelButton.image = NSImage(systemSymbolName: "xmark.circle.fill", accessibilityDescription: "Остановить")
+        cancelButton.isBordered = false
+        cancelButton.toolTip = "Остановить"
+        cancelButton.target = self
+        cancelButton.action = #selector(cancelTapped)
 
         let stack = NSStackView(views: [titleLabel, indicator, detailLabel])
         stack.orientation = .vertical
         stack.alignment = .leading
         stack.spacing = 4
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        background.addSubview(stack)
+        let row = NSStackView(views: [stack, cancelButton])
+        row.orientation = .horizontal
+        row.alignment = .centerY
+        row.spacing = 10
+        row.translatesAutoresizingMaskIntoConstraints = false
+        background.addSubview(row)
         NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 14),
-            stack.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -14),
-            stack.centerYAnchor.constraint(equalTo: background.centerYAnchor),
+            row.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 14),
+            row.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -12),
+            row.centerYAnchor.constraint(equalTo: background.centerYAnchor),
             indicator.widthAnchor.constraint(equalTo: stack.widthAnchor),
         ])
         panel.contentView = background
     }
 
+    #if DEBUG
+    var debugWindow: NSWindow { panel }
+    #endif
+
     // All methods are called on the main thread.
 
-    func begin(_ title: String, total: Int) -> UUID {
+    func begin(_ title: String, total: Int, cancel: (() -> Void)? = nil) -> UUID {
         let id = UUID()
-        jobs[id] = Job(title: title, total: max(total, 1))
+        jobs[id] = Job(title: title, total: max(total, 1), cancel: cancel)
         if !panel.isVisible, pendingShow == nil {
             let work = DispatchWorkItem { [weak self] in
                 self?.pendingShow = nil
@@ -79,8 +96,17 @@ final class ProgressHUD {
         return id
     }
 
-    func step(_ id: UUID) {
+    func update(_ id: UUID, item: Int, fraction: Double) {
+        // A late progress update must not resurrect a finished file.
+        guard jobs[id] != nil, jobs[id]?.partial[item] != -1 else { return }
+        jobs[id]?.partial[item] = fraction
+        refresh()
+    }
+
+    func step(_ id: UUID, item: Int? = nil) {
+        guard jobs[id] != nil else { return }
         jobs[id]?.done += 1
+        if let item { jobs[id]?.partial[item] = -1 }
         refresh()
     }
 
@@ -95,6 +121,14 @@ final class ProgressHUD {
         panel.orderOut(nil)
     }
 
+    @objc private func cancelTapped() {
+        for id in jobs.keys where jobs[id]?.cancel != nil {
+            jobs[id]?.cancel?()
+            jobs[id]?.title = "Останавливаю…"
+        }
+        refresh()
+    }
+
     private func present() {
         guard !jobs.isEmpty, let screen = NSScreen.main else { return }
         let visible = screen.visibleFrame
@@ -106,8 +140,11 @@ final class ProgressHUD {
     private func refresh() {
         let total = jobs.values.reduce(0) { $0 + $1.total }
         let done = jobs.values.reduce(0) { $0 + $1.done }
+        let running = jobs.values.reduce(0.0) { sum, job in sum + job.partial.values.filter { $0 >= 0 }.reduce(0, +) }
+        let fraction = total == 0 ? 0 : min((Double(done) + running) / Double(total), 1)
         titleLabel.stringValue = jobs.count == 1 ? (jobs.values.first?.title ?? "") : "Задач: \(jobs.count)"
-        detailLabel.stringValue = "\(done) из \(total)"
-        indicator.doubleValue = total == 0 ? 0 : Double(done) / Double(total)
+        detailLabel.stringValue = "\(done) из \(total) · \(Int((fraction * 100).rounded()))%"
+        indicator.doubleValue = fraction
+        cancelButton.isHidden = !jobs.values.contains { $0.cancel != nil }
     }
 }

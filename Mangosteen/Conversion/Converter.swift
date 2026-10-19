@@ -41,7 +41,8 @@ enum ConversionError: LocalizedError {
 /// Entry point for format conversion: picks the converter and writes the result next to the input.
 enum Converter {
     /// Converts `input` to `target`. Returns `nil` when the file already has the target format.
-    static func convert(_ input: URL, to target: FileFormat, options: ConversionOptions) throws -> URL? {
+    static func convert(_ input: URL, to target: FileFormat, options: ConversionOptions,
+                        progress: ((Double) -> Void)? = nil, cancellation: CancellationToken? = nil) throws -> URL? {
         let (source, targets) = FormatCatalog.conversion(for: input)
         if source == target { return nil }
         guard targets.contains(target) else {
@@ -82,6 +83,8 @@ enum Converter {
                 try TableConverter.convert(input, from: source, to: target, output: output)
             case .archive:
                 try ArchiveConverter.repack(input, from: source, as: target, to: output)
+            case .video, .audio:
+                try MediaConverter.convert(input, to: target, output: output, progress: progress, cancellation: cancellation)
             }
         }
     }

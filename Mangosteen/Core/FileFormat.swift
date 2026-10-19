@@ -8,6 +8,10 @@ enum FormatCategory: String {
     case subtitle
     case table
     case archive
+    case video
+    case audio
+
+    var isMedia: Bool { self == .video || self == .audio }
 }
 
 /// A file format Mangosteen can read and/or write.
@@ -25,6 +29,10 @@ enum FileFormat: String, CaseIterable, Identifiable {
     case csv, tsv
     // Archives
     case zip, tar, tgz
+    // Video (m4v is read only)
+    case mp4, mov, mkv, webm, avi, wmv, m4v
+    // Audio (aac is read only)
+    case mp3, m4a, wav, flac, ogg, opus, aiff, wma, aac
 
     var id: String { rawValue }
 
@@ -42,6 +50,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .jp2: "JPEG 2000"
         case .md: "Markdown"
         case .tgz: "TAR.GZ"
+        case .webm: "WebM"
+        case .opus: "Opus"
         default: rawValue.uppercased()
         }
     }
@@ -53,6 +63,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .srt, .vtt: .subtitle
         case .csv, .tsv: .table
         case .zip, .tar, .tgz: .archive
+        case .mp4, .mov, .mkv, .webm, .avi, .wmv, .m4v: .video
+        case .mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma, .aac: .audio
         default: .image
         }
     }
@@ -90,7 +102,23 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .zip: .zip
         case .tar: UTType("public.tar-archive") ?? .archive
         case .tgz: .gzip
+        case .mp4: .mpeg4Movie
+        case .mov: .quickTimeMovie
+        case .avi: .avi
+        case .m4v: UTType("com.apple.m4v-video") ?? Self.byExtension("m4v")
+        case .mp3: .mp3
+        case .m4a: .mpeg4Audio
+        case .wav: .wav
+        case .aiff: .aiff
+        case .aac: UTType("public.aac-audio") ?? Self.byExtension("aac")
+        case .mkv, .webm, .wmv, .flac, .ogg, .opus, .wma: Self.byExtension(rawValue)
         }
+    }
+
+    /// A type that only matches this extension (a dynamic type when the system does not know it),
+    /// so the content-type fallback in `detect` never matches unrelated files.
+    private static func byExtension(_ ext: String) -> UTType {
+        UTType(filenameExtension: ext) ?? UTType(exportedAs: "dev.mangosteen.\(ext)")
     }
 
     /// Whether the encoded file can carry transparency. Opaque formats get a white background.
@@ -117,6 +145,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .subtitle: "captions.bubble"
         case .table: "tablecells"
         case .archive: "archivebox"
+        case .video: "film"
+        case .audio: "waveform"
         }
     }
 
@@ -131,6 +161,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
         "webvtt": .vtt,
         "tab": .tsv,
         "gz": .tgz,
+        "qt": .mov, "mpeg4": .mp4,
+        "aif": .aiff, "aifc": .aiff, "oga": .ogg, "wave": .wav,
     ]
 
     /// Detects the format from the file name, falling back to the system content type.

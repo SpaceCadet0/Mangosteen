@@ -50,6 +50,53 @@ enum ExternalTool {
         locate(name) != nil
     }
 
+    /// Runs the tool, delivering each stdout line as it arrives (used for ffmpeg `-progress pipe:1`).
+    /// Stderr is kept for the error message. The process is terminated when `cancellation` fires,
+    /// and the call then throws `CancellationError`.
+    static func runStreaming(_ name: String, _ arguments: [String], cancellation: CancellationToken? = nil,
+                             onLine: @escaping (String) -> Void) throws {
+        guard let executable = locate(name) else { throw Missing(tool: name) }
+        let process = Process()
+        process.executableURL = executable
+        process.arguments = arguments
+        let output = Pipe()
+        let errors = Pipe()
+        process.standardOutput = output
+        process.standardError = errors
+
+        var pending = Data()
+        output.fileHandleForReading.readabilityHandler = { handle in
+            pending.append(handle.availableData)
+            while let newline = pending.firstIndex(of: 0x0A) {
+                let line = pending[pending.startIndex..<newline]
+                pending.removeSubrange(pending.startIndex...newline)
+                onLine(String(decoding: line, as: UTF8.self))
+            }
+        }
+        let errorLock = NSLock()
+        var errorData = Data()
+        errors.fileHandleForReading.readabilityHandler = { handle in
+            let data = handle.availableData
+            errorLock.withLock { errorData.append(data) }
+        }
+
+        try process.run()
+        cancellation?.onCancel {
+            if process.isRunning { process.terminate() }
+        }
+        process.waitUntilExit()
+        output.fileHandleForReading.readabilityHandler = nil
+        errors.fileHandleForReading.readabilityHandler = nil
+        let rest = errors.fileHandleForReading.readDataToEndOfFile()
+        errorLock.withLock { errorData.append(rest) }
+
+        if cancellation?.isCancelled == true { throw CancellationError() }
+        guard process.terminationStatus == 0 else {
+            let message = errorLock.withLock { String(decoding: errorData, as: UTF8.self) }
+            throw Failure(tool: name, status: process.terminationStatus, output: String(message.suffix(800)))
+        }
+    }
+
     /// Runs the tool synchronously and returns its combined output. Arguments are passed directly,
     /// never through a shell.
     @discardableResult

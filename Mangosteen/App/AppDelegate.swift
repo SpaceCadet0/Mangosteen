@@ -46,24 +46,34 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let itemID = arguments[flag + 1]
         let output = URL(fileURLWithPath: arguments[flag + 2])
         let inputs = arguments[(flag + 3)...].map { URL(fileURLWithPath: $0) }
+        // "wheel.convert" / "wheel.tools" / "wheel.actions" show the wheel itself at the centre of the screen.
+        if itemID.hasPrefix("wheel."), let kind = WheelKind(rawValue: String(itemID.dropFirst("wheel.".count))) {
+            let center = NSScreen.main.map { NSPoint(x: $0.frame.midX, y: $0.frame.midY) } ?? .zero
+            wheel.show(kind: kind, urls: inputs, at: center)
+            finishSnapshot(window: wheel.debugWindow)
+            return
+        }
         let kind: WheelKind = itemID.hasPrefix("action.") ? .actions : itemID.hasPrefix("convert.") ? .convert : .tools
         guard let item = WheelItemProvider.items(for: kind, urls: inputs).first(where: { $0.id == itemID }) else {
             print("snapshot: no item \(itemID)")
             exit(2)
         }
         item.perform(inputs)
+        // Conversions have no window of their own; capture the progress panel instead.
+        finishSnapshot(window: kind == .convert ? ProgressHUD.shared.debugWindow : nil)
+        _ = output
+    }
+
+    /// Prints the window id after 3 s and stays open 4 s more so `screencapture -l <id>` can grab it.
+    private func finishSnapshot(window fixed: NSWindow?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            guard let window = NSApp.windows.first(where: { $0.isVisible && $0.contentViewController != nil }),
-                  let view = window.contentView,
-                  let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else {
+            guard let window = fixed ?? NSApp.windows.first(where: { $0.isVisible && $0.contentViewController != nil }),
+                  window.isVisible else {
                 print("snapshot: no window")
                 exit(3)
             }
-            view.cacheDisplay(in: view.bounds, to: bitmap)
-            try? bitmap.representation(using: .png, properties: [:])?.write(to: output)
             print("snapshot: window \(window.frame), screen \(window.screen?.visibleFrame ?? .zero), id \(window.windowNumber)")
             fflush(stdout)
-            // Stay open briefly so `screencapture -l <id>` can grab the fully rendered window.
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) { exit(0) }
         }
     }

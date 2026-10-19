@@ -8,24 +8,34 @@ enum FormatCatalog {
     static let subtitleOutputs: [FileFormat] = [.srt, .vtt, .txt]
     static let tableOutputs: [FileFormat] = [.csv, .tsv]
     static let archiveOutputs: [FileFormat] = [.zip, .tar, .tgz]
+    static let videoOutputs: [FileFormat] = [.mp4, .mov, .mkv, .webm, .avi, .wmv, .gif, .mp3]
+    static let audioOutputs: [FileFormat] = [.mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma]
 
-    /// Order of segments on the wheel.
+    /// Order of segments on the wheel when the selection mixes kinds of files.
     private static let displayOrder: [FileFormat] = [
         .png, .jpg, .webp, .heic, .tiff, .avif, .bmp, .gif, .pdf,
         .docx, .odt, .rtf, .rtfd, .txt, .md, .html,
-        .srt, .vtt, .csv, .tsv, .zip, .tar, .tgz,
+        .srt, .vtt, .csv, .tsv,
+        .mp4, .mov, .mkv, .webm, .avi, .wmv,
+        .mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma,
+        .zip, .tar, .tgz,
     ]
 
-    static func targets(for source: FileFormat) -> [FileFormat] {
-        let outputs: [FileFormat] = switch source.category {
+    static func outputs(for category: FormatCategory) -> [FileFormat] {
+        switch category {
         case .image: imageOutputs
         case .pdf: pdfOutputs
         case .document: documentOutputs
         case .subtitle: subtitleOutputs
         case .table: tableOutputs
         case .archive: archiveOutputs
+        case .video: videoOutputs
+        case .audio: audioOutputs
         }
-        return outputs.filter { $0 != source }
+    }
+
+    static func targets(for source: FileFormat) -> [FileFormat] {
+        outputs(for: source.category).filter { $0 != source }
     }
 
     /// The detected format of an item (nil for plain folders) and what it can become.
@@ -43,7 +53,10 @@ enum FormatCatalog {
     static func targets(for urls: [URL]) -> [FileFormat] {
         let items = urls.map(conversion(for:)).filter { !$0.targets.isEmpty }
         guard !items.isEmpty else { return [] }
-        return displayOrder.filter { target in
+        // A single kind of file keeps that kind's own order (video: MP4 first, GIF near the end).
+        let categories = Set(items.map { $0.source?.category ?? .archive })
+        let order = categories.count == 1 ? outputs(for: categories.first!) : displayOrder
+        return order.filter { target in
             items.allSatisfy { $0.source == target || $0.targets.contains(target) }
                 && items.contains { $0.source != target }
         }

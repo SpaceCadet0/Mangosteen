@@ -10,6 +10,10 @@ final class WheelController {
 
     var isVisible: Bool { panel.isVisible }
 
+    #if DEBUG
+    var debugWindow: NSWindow { panel }
+    #endif
+
     init() {
         let size = WheelView.diameter
         wheelView = WheelView(frame: NSRect(x: 0, y: 0, width: size, height: size))
