@@ -66,7 +66,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Prints the window id after 3 s and stays open 4 s more so `screencapture -l <id>` can grab it.
     private func finishSnapshot(window fixed: NSWindow?) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        let delay = Double(ProcessInfo.processInfo.environment["MANGOSTEEN_SNAPSHOT_DELAY"] ?? "") ?? 3
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             guard let window = fixed ?? NSApp.windows.first(where: { $0.isVisible && $0.contentViewController != nil }),
                   window.isVisible else {
                 print("snapshot: no window")

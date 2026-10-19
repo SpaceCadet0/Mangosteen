@@ -312,6 +312,9 @@ struct MediaCompressView: View {
     @State private var settings = MediaEffects.CompressionSettings()
     @State private var targetMegabytes = 25.0
     @State private var summary = ""
+    @State private var estimate = ""
+    @State private var estimateIsWarning = false
+    @State private var estimating = false
 
     private static let heights: [Int?] = [nil, 2160, 1440, 1080, 720, 480]
     private var files: [URL] { media(urls) }
@@ -346,8 +349,30 @@ struct MediaCompressView: View {
             .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(RoundedRectangle(cornerRadius: 10).fill(Color.primary.opacity(0.05)))
-            if !summary.isEmpty {
-                Text(summary).font(.callout.monospacedDigit()).foregroundStyle(.secondary)
+            if let first = files.first {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(first.lastPathComponent)
+                        .font(.callout.weight(.medium))
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                    Text(verbatim: summary)
+                        .font(.callout.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                    HStack(spacing: 6) {
+                        if estimating {
+                            ProgressView().controlSize(.small)
+                            Text("Оцениваю размер…").font(.callout).foregroundStyle(.secondary)
+                        } else if !estimate.isEmpty {
+                            Text(verbatim: estimate)
+                                .font(.callout.monospacedDigit().weight(.semibold))
+                                .foregroundStyle(estimateIsWarning ? Color.orange : Color.primary)
+                        }
+                    }
+                    .frame(height: 18)
+                    if files.count > 1 {
+                        Text("Оценка для первого файла.").font(.caption).foregroundStyle(.secondary)
+                    }
+                }
             }
             Text(hasVideo ? "Видео сохраняется в MP4 (MOV и MKV остаются в своём формате)."
                           : "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате.")
@@ -359,16 +384,51 @@ struct MediaCompressView: View {
         .padding(20)
         .frame(width: 560)
         .task { await describe() }
+        .task(id: settings) { await updateEstimate() }
         .onChange(of: targetMegabytes) { value in settings.targetBytes = Int64(max(value, 0.1) * 1_000_000) }
     }
 
     private func describe() async {
         guard let first = files.first else { return }
         let info = await Task.detached { try? MediaConverter.probe(first) }.value
-        var parts = [first.lastPathComponent, ByteCountFormatter().string(fromByteCount: ImageCompression.fileSize(first))]
+        var parts = [ByteCountFormatter().string(fromByteCount: ImageCompression.fileSize(first))]
         if let width = info?.width, let height = info?.height { parts.append("\(width)×\(height)") }
         if let duration = info?.duration { parts.append(MediaTools.timecode(duration)) }
         summary = parts.joined(separator: " · ")
+    }
+
+    /// Re-estimates after settings settle; a newer change cancels the running sample encode.
+    private func updateEstimate() async {
+        guard let first = files.first else { return }
+        try? await Task.sleep(nanoseconds: 400_000_000)
+        guard !Task.isCancelled else { return }
+        estimating = true
+        let settings = settings
+        let token = CancellationToken()
+        let result = await withTaskCancellationHandler {
+            await Task.detached(priority: .userInitiated) {
+                Result { try MediaEffects.estimateCompressedSize(first, settings: settings, cancellation: token) }
+            }.value
+        } onCancel: {
+            token.cancel()
+        }
+        guard !Task.isCancelled else { return }
+        estimating = false
+        switch result {
+        case .success(let bytes):
+            let original = ImageCompression.fileSize(first)
+            let formatter = ByteCountFormatter()
+            let change = original > 0 ? Int((Double(bytes) / Double(original) - 1) * 100) : 0
+            let sign = change > 0 ? "+" : "−"
+            let prefix = settings.useTargetSize ? "≤" : "≈"
+            estimate = "\(formatter.string(fromByteCount: original)) → \(prefix) \(formatter.string(fromByteCount: bytes)) (\(sign)\(abs(change))%)"
+            estimateIsWarning = bytes >= original
+            if estimateIsWarning {
+                estimate += " — не меньше оригинала, файл не будет сохранён"
+            }
+        case .failure:
+            estimate = ""
+        }
     }
 
     private func run() {

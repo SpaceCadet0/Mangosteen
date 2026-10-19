@@ -205,6 +205,35 @@ enum MediaEffects {
         return arguments
     }
 
+    /// Predicted output size. Video is measured by encoding a short sample from the middle with the same
+    /// settings; audio follows from the bitrate; target-size mode returns the target.
+    static func estimateCompressedSize(_ input: URL, settings: CompressionSettings,
+                                       cancellation: CancellationToken? = nil) throws -> Int64 {
+        guard let source = FileFormat.detect(input), source.category.isMedia else { throw ConversionError.unrecognized(input) }
+        let info = try MediaConverter.probe(input)
+        let duration = info.duration ?? 0
+        if settings.useTargetSize {
+            return settings.targetBytes
+        }
+        if source.category == .audio {
+            let kbps = min(max(settings.quality.audioKbps, 24), 320)
+            return Int64(Double(kbps) * 1000 / 8 * duration)
+        }
+        let sampleLength = min(duration, 6)
+        guard sampleLength > 0 else { throw ConversionError.unreadable(input) }
+        let start = max(0, duration / 2 - sampleLength / 2)
+        let sample = FileManager.default.temporaryDirectory
+            .appendingPathComponent("mangosteen-estimate-\(UUID().uuidString)")
+            .appendingPathExtension(compressedFormat(for: source).fileExtension)
+        defer { try? FileManager.default.removeItem(at: sample) }
+        try MediaConverter.runFFmpeg(
+            ["-ss", String(format: "%.3f", start), "-t", String(format: "%.3f", sampleLength), "-i", input.path]
+                + compressionArguments(for: source, info: info, settings: settings),
+            output: sample, duration: sampleLength, progress: nil, cancellation: cancellation
+        )
+        return Int64(Double(ImageCompression.fileSize(sample)) * duration / sampleLength)
+    }
+
     /// Writes `<name> (сжатый).<ext>`; refuses to keep a result that is not smaller than the original.
     static func compress(_ input: URL, settings: CompressionSettings,
                          progress: ((Double) -> Void)? = nil, cancellation: CancellationToken? = nil) throws -> URL {

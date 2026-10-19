@@ -100,6 +100,18 @@ final class MediaEffectsTests: XCTestCase {
         XCTAssertLessThan(ImageCompression.fileSize(targeted), 800_000)
     }
 
+    func testEstimateIsCloseToTheRealResult() throws {
+        let input = try makeVideo("estimate.mp4", size: "1280x720", seconds: 8, bitrate: "8M")
+        let settings = MediaEffects.CompressionSettings()
+        let estimate = try MediaEffects.estimateCompressedSize(input, settings: settings)
+        let actual = ImageCompression.fileSize(try MediaEffects.compress(input, settings: settings))
+        // A test pattern compresses evenly, so the sample should land within a factor of two.
+        XCTAssertGreaterThan(Double(estimate), Double(actual) * 0.5)
+        XCTAssertLessThan(Double(estimate), Double(actual) * 2)
+        let leftovers = try FileManager.default.contentsOfDirectory(atPath: FileManager.default.temporaryDirectory.path)
+        XCTAssertFalse(leftovers.contains { $0.hasPrefix("mangosteen-estimate-") })
+    }
+
     func testCompressLosslessAudioBecomesAAC() throws {
         let output = try MediaEffects.compress(makeAudio(), settings: MediaEffects.CompressionSettings())
         XCTAssertEqual(output.pathExtension, "m4a")
