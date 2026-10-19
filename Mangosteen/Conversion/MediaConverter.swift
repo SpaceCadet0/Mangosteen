@@ -9,6 +9,7 @@ struct MediaInfo {
     var height: Int?
     var audioChannels: Int?
     var frameRate: Double?
+    var sampleRate: Int?
 
     var hasVideo: Bool { videoCodec != nil }
     var hasAudio: Bool { audioCodec != nil }
@@ -44,6 +45,7 @@ enum MediaConverter {
                 let channels: Int?
                 let disposition: [String: Int]?
                 let avg_frame_rate: String?
+                let sample_rate: String?
                 let r_frame_rate: String?
             }
             struct Format: Decodable {
@@ -64,7 +66,8 @@ enum MediaConverter {
             width: video?.width,
             height: video?.height,
             audioChannels: audio?.channels,
-            frameRate: rate(video?.avg_frame_rate) ?? rate(video?.r_frame_rate)
+            frameRate: rate(video?.avg_frame_rate) ?? rate(video?.r_frame_rate),
+            sampleRate: audio?.sample_rate.flatMap { Int($0) }
         )
     }
 
@@ -137,9 +140,16 @@ enum MediaConverter {
     }
 
     /// Re-encoding arguments for each target.
-    static func encodeArguments(for target: FileFormat, info: MediaInfo) -> [String] {
+    /// `videoFilters` run before the even-size scaling; `audioFilters` apply when there is an audio track.
+    static func encodeArguments(for target: FileFormat, info: MediaInfo,
+                                videoFilters: [String] = [], audioFilters: [String] = []) -> [String] {
+        let audio = info.hasAudio && !audioFilters.isEmpty ? ["-af", audioFilters.joined(separator: ",")] : []
+        return videoCodecArguments(for: target, info: info, videoFilters: videoFilters) + audio
+    }
+
+    private static func videoCodecArguments(for target: FileFormat, info: MediaInfo, videoFilters: [String]) -> [String] {
         // H.264 and the other 4:2:0 encoders need even dimensions.
-        let evenSize = ["-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2"]
+        let evenSize = ["-vf", (videoFilters + ["scale=trunc(iw/2)*2:trunc(ih/2)*2"]).joined(separator: ",")]
         let h264 = ["-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p"] + evenSize
         let aac = ["-c:a", "aac", "-b:a", "192k"]
         switch target {
@@ -159,7 +169,7 @@ enum MediaConverter {
                     "-c:a", "wmav2", "-b:a", "192k"] + evenSize
         case .gif:
             return ["-an", "-vf",
-                    "fps=15,scale='min(720,iw)':-2:flags=lanczos,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4",
+                    videoFilters.map { $0 + "," }.joined() + "fps=15,scale='min(720,iw)':-2:flags=lanczos,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4",
                     "-loop", "0"]
         case .mp3:
             return ["-vn", "-c:a", "libmp3lame", "-q:a", "2"]
@@ -187,11 +197,17 @@ enum MediaConverter {
     static func run(input: URL, output: URL, codecArguments: [String], duration: Double?,
                     extraInputArguments: [String] = [],
                     progress: ((Double) -> Void)?, cancellation: CancellationToken?) throws {
+        try runFFmpeg(extraInputArguments + ["-i", input.path] + codecArguments + ["-map_metadata", "0"],
+                      output: output, duration: duration, progress: progress, cancellation: cancellation)
+    }
+
+    /// Runs ffmpeg with `arguments` (inputs, filters, codecs) and progress reporting against `duration`.
+    static func runFFmpeg(_ arguments: [String], output: URL, duration: Double?,
+                          progress: ((Double) -> Void)?, cancellation: CancellationToken?) throws {
         try cancellation?.throwIfCancelled()
         let arguments = ["-hide_banner", "-nostdin", "-y", "-loglevel", "error"]
-            + extraInputArguments + ["-i", input.path]
-            + codecArguments
-            + ["-map_metadata", "0", "-progress", "pipe:1", "-nostats", output.path]
+            + arguments
+            + ["-progress", "pipe:1", "-nostats", output.path]
         try ExternalTool.runStreaming("ffmpeg", arguments, cancellation: cancellation) { line in
             guard let progress, let duration, duration > 0, line.hasPrefix("out_time_us="),
                   let microseconds = Double(line.dropFirst("out_time_us=".count)) else {

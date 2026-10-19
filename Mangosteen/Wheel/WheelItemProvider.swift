@@ -37,6 +37,27 @@ enum WheelItemProvider {
                 ToolWindow.present(title: "Разделение") { SplitMediaView(urls: urls, close: $0) }
             })
         }
+        if formats.contains(where: { $0.category.isMedia }) {
+            items.append(WheelItem(id: "tool.speed", title: "Скорость", symbolName: "gauge.with.dots.needle.67percent") { urls in
+                ToolWindow.present(title: "Скорость") { SpeedView(urls: urls, close: $0) }
+            })
+        }
+        if formats.contains(where: { $0.category == .video }) {
+            items.append(WheelItem(id: "tool.cropVideo", title: "Кадрировать", symbolName: "crop") { urls in
+                ToolWindow.present(title: "Кадрирование видео") { VideoCropView(urls: urls, close: $0) }
+            })
+        }
+        if formats.filter({ $0.category == .video }).count >= 2 {
+            items.append(WheelItem(id: "tool.join", title: "Склеить", symbolName: "film.stack") { urls in
+                ToolWindow.present(title: "Склейка видео") { JoinView(urls: urls, close: $0) }
+            })
+        }
+        if formats.contains(where: { $0.category.isMedia }),
+           !formats.contains(where: { $0.category == .image || $0 == .pdf }) {
+            items.append(WheelItem(id: "tool.compressMedia", title: "Сжать", symbolName: "arrow.down.right.and.arrow.up.left") { urls in
+                ToolWindow.present(title: "Сжатие") { MediaCompressView(urls: urls, close: $0) }
+            })
+        }
         if formats.contains(where: { $0.category == .video }) {
             items.append(WheelItem(id: "tool.frames", title: "Кадры", symbolName: "photo.on.rectangle") { urls in
                 ToolWindow.present(title: "Кадры из видео") { FramesView(urls: urls, close: $0) }

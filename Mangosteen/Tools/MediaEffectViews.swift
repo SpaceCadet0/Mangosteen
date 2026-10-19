@@ -1,0 +1,381 @@
+import SwiftUI
+
+private func media(_ urls: [URL]) -> [URL] {
+    urls.filter { FileFormat.detect($0)?.category.isMedia == true }
+}
+
+private func videos(_ urls: [URL]) -> [URL] {
+    urls.filter { FileFormat.detect($0)?.category == .video }
+}
+
+// MARK: - Speed
+
+/// Make a slower or faster copy of videos or recordings.
+struct SpeedView: View {
+    let urls: [URL]
+    let close: () -> Void
+
+    @State private var factor = 2.0
+    @State private var preservePitch = true
+    @State private var firstDuration: Double?
+
+    private static let presets = [0.25, 0.5, 0.75, 1.25, 1.5, 2, 3, 4]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Скорость").font(.headline)
+            HStack(spacing: 6) {
+                ForEach(Self.presets, id: \.self) { preset in
+                    if abs(factor - preset) < 0.001 {
+                        Button(MediaEffects.speedLabel(preset)) { factor = preset }.buttonStyle(.borderedProminent)
+                    } else {
+                        Button(MediaEffects.speedLabel(preset)) { factor = preset }.buttonStyle(.bordered)
+                    }
+                }
+            }
+            HStack {
+                Slider(value: $factor, in: 0.25...4)
+                Text(MediaEffects.speedLabel(factor))
+                    .font(.body.monospacedDigit())
+                    .frame(width: 56, alignment: .trailing)
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Toggle("Сохранять высоту звука", isOn: $preservePitch)
+                Text(preservePitch ? "Голос звучит естественно при любой скорости."
+                                   : "Как на плёнке: ускорение повышает тон, замедление понижает.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            if let firstDuration, let first = media(urls).first {
+                Text("\(first.lastPathComponent): \(MediaTools.timecode(firstDuration)) → \(MediaTools.timecode(firstDuration / factor))")
+                    .font(.callout.monospacedDigit())
+                    .foregroundStyle(.secondary)
+            }
+            ToolFooter(fileCount: media(urls).count, actionTitle: "Изменить скорость",
+                       actionDisabled: abs(factor - 1) < 0.01 || media(urls).isEmpty, cancel: close, action: run)
+        }
+        .padding(20)
+        .frame(width: 600)
+        .task {
+            guard let first = media(urls).first else { return }
+            firstDuration = await Task.detached { try? MediaConverter.probe(first).duration }.value ?? nil
+        }
+    }
+
+    private func run() {
+        let factor = (factor * 100).rounded() / 100
+        let preservePitch = preservePitch
+        ConversionService.shared.runEach("Скорость \(MediaEffects.speedLabel(factor))", inputs: media(urls),
+                                         maxConcurrent: 2) { url, progress, cancellation in
+            try MediaEffects.changeSpeed(url, factor: factor, preservePitch: preservePitch,
+                                         progress: progress, cancellation: cancellation)
+        }
+        close()
+    }
+}
+
+// MARK: - Join
+
+/// Arrange clips and combine them into one MP4.
+struct JoinView: View {
+    let urls: [URL]
+    let close: () -> Void
+
+    @State private var order: [URL] = []
+    @State private var infos: [URL: MediaInfo] = [:]
+    @State private var thumbnails: [URL: CGImage] = [:]
+
+    private var total: Double { order.compactMap { infos[$0]?.duration }.reduce(0, +) }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, "
+                 + "остальные вписываются в него с полями.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            List {
+                ForEach(order, id: \.self) { url in
+                    HStack(spacing: 10) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 4).fill(Color.black)
+                            if let image = thumbnails[url] {
+                                Image(decorative: image, scale: 1).resizable().scaledToFit()
+                            }
+                        }
+                        .frame(width: 80, height: 45)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(url.lastPathComponent).lineLimit(1).truncationMode(.middle)
+                            Text(details(url)).font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        if url == order.first {
+                            Text("холст").font(.caption).padding(.horizontal, 6).padding(.vertical, 2)
+                                .background(Capsule().fill(Color.accentColor.opacity(0.25)))
+                        }
+                    }
+                    .padding(.vertical, 2)
+                }
+                .onMove { order.move(fromOffsets: $0, toOffset: $1) }
+            }
+            .frame(minHeight: 260)
+            HStack {
+                Text("Итого: \(MediaTools.timecode(total))").font(.callout.monospacedDigit())
+                if let first = order.first, let width = infos[first]?.width, let height = infos[first]?.height {
+                    Text(verbatim: "· \(width)×\(height) · MP4").font(.callout).foregroundStyle(.secondary)
+                }
+            }
+            ToolFooter(fileCount: order.count, actionTitle: "Объединить", actionDisabled: order.count < 2,
+                       cancel: close, action: run)
+        }
+        .padding(20)
+        .frame(width: 620)
+        .task { await load() }
+    }
+
+    private func details(_ url: URL) -> String {
+        guard let info = infos[url] else { return "…" }
+        var parts = [MediaTools.timecode(info.duration ?? 0)]
+        if let width = info.width, let height = info.height { parts.append("\(width)×\(height)") }
+        if !info.hasAudio { parts.append("без звука") }
+        return parts.joined(separator: " · ")
+    }
+
+    private func load() async {
+        order = videos(urls)
+        for url in order {
+            let (info, thumbnail) = await Task.detached(priority: .userInitiated) { () -> (MediaInfo?, CGImage?) in
+                let info = try? MediaConverter.probe(url)
+                let time = min(1, (info?.duration ?? 0) / 2)
+                return (info, try? MediaTools.frame(url, at: time, maxHeight: 90))
+            }.value
+            infos[url] = info
+            thumbnails[url] = thumbnail
+        }
+    }
+
+    private func run() {
+        let order = order
+        guard let first = order.first else { return }
+        ConversionService.shared.runEach("Склейка видео", inputs: [first], maxConcurrent: 1) { _, progress, cancellation in
+            try MediaEffects.join(order, progress: progress, cancellation: cancellation)
+        }
+        close()
+    }
+}
+
+// MARK: - Crop video
+
+/// Reframe a video; the audio is kept.
+struct VideoCropView: View {
+    let urls: [URL]
+    let close: () -> Void
+
+    @State private var frame: CGImage?
+    @State private var imageSize = CGSize(width: 1, height: 1)
+    @State private var rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+    @State private var aspectChoice = CropView.AspectChoice.free
+    @State private var exactWidth = 1080
+    @State private var exactHeight = 1920
+    @State private var duration = 0.0
+    @State private var previewTime = 0.0
+    @State private var loadError: String?
+    @State private var frameTask: Task<Void, Never>?
+
+    private var clips: [URL] { videos(urls) }
+
+    private func pixelAspect(for size: CGSize) -> CGFloat? {
+        switch aspectChoice {
+        case .free: nil
+        case .original: size.width / size.height
+        case .exact: CGFloat(max(exactWidth, 1)) / CGFloat(max(exactHeight, 1))
+        default: aspectChoice.fixedRatio
+        }
+    }
+
+    private var normalizedAspect: CGFloat? {
+        pixelAspect(for: imageSize).map { $0 * imageSize.height / imageSize.width }
+    }
+
+    var body: some View {
+        VStack(spacing: 12) {
+            CropCanvas(image: frame, imageSize: imageSize, rect: $rect, aspect: normalizedAspect, message: loadError)
+                .frame(minWidth: 620, idealWidth: 720, minHeight: 380, idealHeight: 460)
+                .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
+            HStack(spacing: 8) {
+                Text("Кадр для предпросмотра").foregroundStyle(.secondary).fixedSize()
+                Slider(value: $previewTime, in: 0...max(duration, 0.1))
+                Text(MediaTools.timecode(previewTime)).font(.callout.monospacedDigit()).foregroundStyle(.secondary)
+            }
+            .disabled(duration == 0)
+            HStack(spacing: 12) {
+                Picker("Пропорции", selection: $aspectChoice) {
+                    ForEach(CropView.AspectChoice.allCases) { Text($0.title).tag($0) }
+                }
+                .frame(width: 260)
+                if aspectChoice == .exact {
+                    TextField("Ширина", value: $exactWidth, format: .number.grouping(.never)).frame(width: 70)
+                    Text("×")
+                    TextField("Высота", value: $exactHeight, format: .number.grouping(.never)).frame(width: 70)
+                    Text("px").foregroundStyle(.secondary)
+                }
+                Spacer()
+                let pixels = ImageCropper.pixelRect(rect, imageSize: imageSize)
+                Text(verbatim: "\(Int(pixels.width) / 2 * 2) × \(Int(pixels.height) / 2 * 2) px")
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+                Button("Сбросить") {
+                    aspectChoice = .free
+                    rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+                }
+            }
+            ToolFooter(fileCount: clips.count, actionTitle: "Кадрировать", actionDisabled: frame == nil,
+                       cancel: close, action: run)
+        }
+        .padding(20)
+        .task { await load() }
+        .onChange(of: aspectChoice) { _ in applyAspect() }
+        .onChange(of: exactWidth) { _ in applyAspect() }
+        .onChange(of: exactHeight) { _ in applyAspect() }
+        .onChange(of: previewTime) { time in loadFrame(at: time) }
+    }
+
+    private func applyAspect() {
+        guard let aspect = pixelAspect(for: imageSize) else { return }
+        rect = ImageCropper.centeredRect(aspect: aspect, imageSize: imageSize)
+    }
+
+    private func load() async {
+        guard let first = clips.first else {
+            loadError = "Нет видео"
+            return
+        }
+        let result = await Task.detached(priority: .userInitiated) { () -> (Double, CGImage)? in
+            guard let duration = try? MediaConverter.probe(first).duration,
+                  let image = try? MediaTools.frame(first, at: duration * 0.3) else { return nil }
+            return (duration, image)
+        }.value
+        guard let (duration, image) = result else {
+            loadError = "Не удалось прочитать видео"
+            return
+        }
+        self.duration = duration
+        imageSize = CGSize(width: image.width, height: image.height)
+        frame = image
+        previewTime = duration * 0.3
+    }
+
+    private func loadFrame(at time: Double) {
+        guard let first = clips.first, duration > 0 else { return }
+        frameTask?.cancel()
+        frameTask = Task {
+            try? await Task.sleep(nanoseconds: 150_000_000)
+            guard !Task.isCancelled else { return }
+            let image = await Task.detached(priority: .userInitiated) { try? MediaTools.frame(first, at: time) }.value
+            guard !Task.isCancelled, let image else { return }
+            frame = image
+        }
+    }
+
+    private func run() {
+        guard let first = clips.first else { return }
+        let firstRect = rect
+        let choice = aspectChoice
+        let exact = CGSize(width: exactWidth, height: exactHeight)
+        let outputSize: CGSize? = choice == .exact ? exact : nil
+        ConversionService.shared.runEach("Кадрирование видео", inputs: clips, maxConcurrent: 1) { url, progress, cancellation in
+            var cropRect = firstRect
+            if url != first, choice != .free {
+                let image = try MediaTools.frame(url, at: 0)
+                let size = CGSize(width: image.width, height: image.height)
+                let aspect: CGFloat = switch choice {
+                case .original: size.width / size.height
+                case .exact: exact.width / max(exact.height, 1)
+                default: choice.fixedRatio ?? size.width / size.height
+                }
+                cropRect = ImageCropper.centeredRect(aspect: aspect, imageSize: size)
+            }
+            return try MediaEffects.cropVideo(url, rect: cropRect, outputSize: outputSize,
+                                              progress: progress, cancellation: cancellation)
+        }
+        close()
+    }
+}
+
+// MARK: - Compress media
+
+/// Reduce the size of videos and recordings.
+struct MediaCompressView: View {
+    let urls: [URL]
+    let close: () -> Void
+
+    @State private var settings = MediaEffects.CompressionSettings()
+    @State private var targetMegabytes = 25.0
+    @State private var summary = ""
+
+    private static let heights: [Int?] = [nil, 2160, 1440, 1080, 720, 480]
+    private var files: [URL] { media(urls) }
+    private var hasVideo: Bool { !videos(urls).isEmpty }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 14) {
+                Picker("Качество", selection: $settings.quality) {
+                    ForEach(MediaEffects.CompressionSettings.Quality.allCases) { Text($0.title).tag($0) }
+                }
+                .pickerStyle(.radioGroup)
+                .disabled(settings.useTargetSize)
+                if hasVideo {
+                    Picker("Высота кадра", selection: $settings.maxHeight) {
+                        ForEach(Self.heights, id: \.self) { height in
+                            Text(height.map { "до \($0) px" } ?? "Без изменений").tag(height)
+                        }
+                    }
+                    .fixedSize()
+                    Toggle("HEVC (H.265) — меньше файл, сжатие дольше", isOn: $settings.hevc)
+                }
+                Toggle("Уложиться в размер файла", isOn: $settings.useTargetSize)
+                if settings.useTargetSize {
+                    HStack {
+                        Text("Не больше")
+                        TextField("", value: $targetMegabytes, format: .number).frame(width: 80)
+                        Text("МБ")
+                    }
+                }
+            }
+            .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primary.opacity(0.05)))
+            if !summary.isEmpty {
+                Text(summary).font(.callout.monospacedDigit()).foregroundStyle(.secondary)
+            }
+            Text(hasVideo ? "Видео сохраняется в MP4 (MOV и MKV остаются в своём формате)."
+                          : "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            ToolFooter(fileCount: files.count, actionTitle: "Сжать", actionDisabled: files.isEmpty,
+                       cancel: close, action: run)
+        }
+        .padding(20)
+        .frame(width: 560)
+        .task { await describe() }
+        .onChange(of: targetMegabytes) { value in settings.targetBytes = Int64(max(value, 0.1) * 1_000_000) }
+    }
+
+    private func describe() async {
+        guard let first = files.first else { return }
+        let info = await Task.detached { try? MediaConverter.probe(first) }.value
+        var parts = [first.lastPathComponent, ByteCountFormatter().string(fromByteCount: ImageCompression.fileSize(first))]
+        if let width = info?.width, let height = info?.height { parts.append("\(width)×\(height)") }
+        if let duration = info?.duration { parts.append(MediaTools.timecode(duration)) }
+        summary = parts.joined(separator: " · ")
+    }
+
+    private func run() {
+        let settings = settings
+        ConversionService.shared.runEach("Сжатие", inputs: files, maxConcurrent: hasVideo ? 1 : 2) { url, progress, cancellation in
+            try MediaEffects.compress(url, settings: settings, progress: progress, cancellation: cancellation)
+        }
+        close()
+    }
+}
