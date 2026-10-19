@@ -91,17 +91,23 @@ struct AnnotateView: View {
 
     // MARK: Canvas
 
+    private static let canvasSpace = "annotateCanvas"
+
+    /// Every layer is placed with `.position` inside a full-size ZStack, so the canvas origin is fixed at the
+    /// top-left and never shifts when the selection outline appears or changes size.
     private var canvas: some View {
         GeometryReader { geometry in
             let frame = fittedFrame(in: geometry.size)
             ZStack(alignment: .topLeading) {
+                Color.clear
                 if let rendered {
                     Image(nsImage: rendered)
                         .resizable()
                         .frame(width: frame.width, height: frame.height)
-                        .offset(x: frame.minX, y: frame.minY)
+                        .position(x: frame.midX, y: frame.midY)
                 } else {
-                    ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    ProgressView()
+                        .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                 }
                 if let annotation = selectedAnnotation {
                     selectionOverlay(annotation, frame: frame)
@@ -109,12 +115,15 @@ struct AnnotateView: View {
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .contentShape(Rectangle())
+            .coordinateSpace(name: Self.canvasSpace)
             .gesture(canvasGesture(frame))
+            .clipped()
         }
     }
 
     private func fittedFrame(in container: CGSize) -> CGRect {
         let inset: CGFloat = 16
+        guard container.width > inset * 2, container.height > inset * 2 else { return .zero }
         let scale = min((container.width - inset * 2) / fullSize.width, (container.height - inset * 2) / fullSize.height)
         let size = CGSize(width: fullSize.width * scale, height: fullSize.height * scale)
         return CGRect(x: (container.width - size.width) / 2, y: (container.height - size.height) / 2,
@@ -137,25 +146,25 @@ struct AnnotateView: View {
         let bottomRight = toView(CGPoint(x: bounds.maxX, y: bounds.maxY), frame)
         let box = CGRect(x: topLeft.x, y: topLeft.y, width: bottomRight.x - topLeft.x, height: bottomRight.y - topLeft.y)
             .insetBy(dx: -6, dy: -6)
-        return ZStack(alignment: .topLeading) {
+        return Group {
             Rectangle()
                 .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
                 .frame(width: box.width, height: box.height)
-                .offset(x: box.minX, y: box.minY)
+                .position(x: box.midX, y: box.midY)
+                .allowsHitTesting(false)
             ForEach(AnnotationGeometry.handles(annotation), id: \.0) { _, point in
-                let position = toView(point, frame)
                 Circle()
                     .fill(Color.white)
                     .overlay(Circle().stroke(Color.accentColor, lineWidth: 1.5))
                     .frame(width: 11, height: 11)
-                    .position(position)
+                    .position(toView(point, frame))
+                    .allowsHitTesting(false)
             }
         }
-        .allowsHitTesting(false)
     }
 
     private func canvasGesture(_ frame: CGRect) -> some Gesture {
-        DragGesture(minimumDistance: 0)
+        DragGesture(minimumDistance: 0, coordinateSpace: .named(Self.canvasSpace))
             .onChanged { value in
                 guard frame.width > 0 else { return }
                 let point = toPixels(value.location, frame)
@@ -261,8 +270,10 @@ struct AnnotateView: View {
                 // A click without dragging: undo the empty shape.
                 annotations.removeAll { $0.id == id }
                 _ = history.popLast()
-                selected = nil
             }
+            // Keep drawing freely; colour changes must not recolour the mark just made.
+            // Marks are adjusted with the Select tool.
+            selected = nil
         case .placing:
             place(at: point)
         default:
@@ -289,7 +300,6 @@ struct AnnotateView: View {
             }.max().map { $0 + 1 } ?? 1
             let annotation = Annotation(shape: .number(point, next), color: color, lineWidth: lineWidth, fontSize: fontSize)
             annotations.append(annotation)
-            selected = annotation.id
         case .image:
             insertPicture(at: point)
         default:
@@ -319,13 +329,16 @@ struct AnnotateView: View {
 
     private var inspector: some View {
         VStack(alignment: .leading, spacing: 14) {
-            LazyVGrid(columns: Array(repeating: GridItem(.fixed(40), spacing: 6), count: 5), spacing: 6) {
+            LazyVGrid(columns: Array(repeating: GridItem(.fixed(44), spacing: 4), count: 5), spacing: 4) {
                 ForEach(AnnotationTool.allCases) { item in
                     Button { tool = item } label: {
                         Image(systemName: item.symbolName)
-                            .frame(width: 36, height: 30)
-                            .background(RoundedRectangle(cornerRadius: 6)
-                                .fill(tool == item ? Color.accentColor.opacity(0.3) : Color.clear))
+                            .font(.system(size: 15))
+                            .frame(width: 44, height: 36)
+                            .background(RoundedRectangle(cornerRadius: 7)
+                                .fill(tool == item ? Color.accentColor.opacity(0.3) : Color.primary.opacity(0.06)))
+                            // The whole tile is clickable, not only the glyph.
+                            .contentShape(RoundedRectangle(cornerRadius: 7))
                     }
                     .buttonStyle(.plain)
                     .help(item.title)
@@ -349,10 +362,14 @@ struct AnnotateView: View {
                             supportsOpacity: false)
             }
 
-            Picker("Линия", selection: $stroke) {
-                ForEach(StrokePreset.allCases) { Text($0.title).tag($0) }
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Линия").font(.callout)
+                Picker("Линия", selection: $stroke) {
+                    ForEach(StrokePreset.allCases) { Text($0.title).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
             }
-            .pickerStyle(.segmented)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("Размер текста и номеров").font(.callout)
@@ -383,7 +400,8 @@ struct AnnotateView: View {
                 .disabled(annotations.isEmpty)
             }
             Spacer()
-            Text(urls.count > 1 ? "Пометки добавляются к первому изображению." : "⌫ удаляет выделенное, ⌘Z — отмена.")
+            Text((urls.count > 1 ? "Пометки добавляются к первому изображению. " : "")
+                 + "Чтобы передвинуть или изменить пометку, выберите инструмент «Выбор». ⌫ удаляет выделенное, ⌘Z — отмена.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -439,8 +457,30 @@ struct AnnotateView: View {
         if let (preview, size) = result {
             fullSize = size
             self.preview = preview
+            #if DEBUG
+            if ProcessInfo.processInfo.environment["MANGOSTEEN_DEMO"] != nil { addDemoAnnotations() }
+            #endif
         }
     }
+
+    #if DEBUG
+    /// Marks used by snapshot checks: the selected arrow's handles must sit exactly on its ends.
+    private func addDemoAnnotations() {
+        let w = fullSize.width, h = fullSize.height, longest = longestSide
+        func make(_ shape: Annotation.Shape, _ color: RGBAColor) -> Annotation {
+            Annotation(shape: shape, color: color, lineWidth: 0.006 * longest, fontSize: 0.05 * longest)
+        }
+        let arrow = make(.arrow(CGPoint(x: w * 0.1, y: h * 0.15), CGPoint(x: w * 0.45, y: h * 0.5)), Self.palette[0])
+        annotations = [
+            arrow,
+            make(.rectangle(CGRect(x: w * 0.55, y: h * 0.2, width: w * 0.3, height: h * 0.3)), Self.palette[4]),
+            make(.text(CGPoint(x: w * 0.1, y: h * 0.7), "Проверка"), Self.palette[2]),
+            make(.number(CGPoint(x: w * 0.8, y: h * 0.75), 1), Self.palette[0]),
+            make(.magnifier(CGPoint(x: w * 0.5, y: h * 0.75), longest * 0.08), Self.palette[3]),
+        ]
+        selected = arrow.id
+    }
+    #endif
 
     private func renderPreview() async {
         guard let preview else { return }

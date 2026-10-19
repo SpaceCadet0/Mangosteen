@@ -80,7 +80,7 @@ struct MetadataView: View {
                     TextField(field.title, text: Binding(
                         get: { texts[field, default: ""] },
                         set: { texts[field] = $0 }
-                    ))
+                    ), prompt: Text("не задано"))
                 }
             }
             .disabled(removeAll)

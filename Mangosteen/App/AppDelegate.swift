@@ -32,7 +32,42 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.wheel.dragEnded()
         }
         dragMonitor.start()
+        #if DEBUG
+        runSnapshotIfRequested()
+        #endif
     }
+
+    #if DEBUG
+    /// `Mangosteen --snapshot <item id> <output.png> <file>…` opens a wheel item's window on the files and
+    /// saves a picture of it, so tool layouts can be checked without clicking through the UI.
+    private func runSnapshotIfRequested() {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard let flag = arguments.firstIndex(of: "--snapshot"), arguments.count > flag + 3 else { return }
+        let itemID = arguments[flag + 1]
+        let output = URL(fileURLWithPath: arguments[flag + 2])
+        let inputs = arguments[(flag + 3)...].map { URL(fileURLWithPath: $0) }
+        let kind: WheelKind = itemID.hasPrefix("action.") ? .actions : itemID.hasPrefix("convert.") ? .convert : .tools
+        guard let item = WheelItemProvider.items(for: kind, urls: inputs).first(where: { $0.id == itemID }) else {
+            print("snapshot: no item \(itemID)")
+            exit(2)
+        }
+        item.perform(inputs)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            guard let window = NSApp.windows.first(where: { $0.isVisible && $0.contentViewController != nil }),
+                  let view = window.contentView,
+                  let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else {
+                print("snapshot: no window")
+                exit(3)
+            }
+            view.cacheDisplay(in: view.bounds, to: bitmap)
+            try? bitmap.representation(using: .png, properties: [:])?.write(to: output)
+            print("snapshot: window \(window.frame), screen \(window.screen?.visibleFrame ?? .zero), id \(window.windowNumber)")
+            fflush(stdout)
+            // Stay open briefly so `screencapture -l <id>` can grab the fully rendered window.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { exit(0) }
+        }
+    }
+    #endif
 
     /// Fallback without dragging: pick files, then open the wheel at the cursor and click a segment.
     private func chooseFiles(for kind: WheelKind) {

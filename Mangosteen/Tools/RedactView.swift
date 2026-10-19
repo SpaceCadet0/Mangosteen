@@ -99,15 +99,18 @@ struct RedactView: View {
     private var canvas: some View {
         GeometryReader { geometry in
             let frame = fittedFrame(in: geometry.size)
+            // A full-size base keeps the ZStack origin at the top-left; layers are placed with `.position`.
             ZStack(alignment: .topLeading) {
+                Color.clear
                 if let image = rendered {
                     Image(nsImage: image)
                         .resizable()
                         .frame(width: frame.width, height: frame.height)
-                        .offset(x: frame.minX, y: frame.minY)
                         .gesture(drawGesture(frame))
+                        .position(x: frame.midX, y: frame.midY)
                 } else {
-                    ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    ProgressView()
+                        .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                 }
 
                 ForEach(currentRegions) { region in
@@ -117,10 +120,12 @@ struct RedactView: View {
                     Rectangle()
                         .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5, dash: [5, 3]))
                         .frame(width: draft.width * frame.width, height: draft.height * frame.height)
-                        .offset(x: frame.minX + draft.minX * frame.width, y: frame.minY + draft.minY * frame.height)
+                        .position(x: frame.minX + draft.midX * frame.width, y: frame.minY + draft.midY * frame.height)
                         .allowsHitTesting(false)
                 }
             }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .clipped()
         }
     }
 

@@ -71,6 +71,8 @@ struct CollageView: View {
             }
         }
         .formStyle(.grouped)
+        // Tall enough for every row, so nothing hides behind an inner scroll bar.
+        .frame(height: settings.layout == .grid ? 430 : 385)
     }
 
     private func slider(_ title: String, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
@@ -97,7 +99,7 @@ struct CollageView: View {
                 }
                 .onMove { order.move(fromOffsets: $0, toOffset: $1) }
             }
-            .frame(minHeight: 140)
+            .frame(minHeight: 110, idealHeight: 150)
         }
     }
 

@@ -91,11 +91,12 @@ struct CropView: View {
             let crop = CGRect(x: frame.minX + rect.minX * frame.width, y: frame.minY + rect.minY * frame.height,
                               width: rect.width * frame.width, height: rect.height * frame.height)
             ZStack(alignment: .topLeading) {
+                Color.clear
                 if let displayImage {
                     Image(decorative: displayImage, scale: 1)
                         .resizable()
                         .frame(width: frame.width, height: frame.height)
-                        .offset(x: frame.minX, y: frame.minY)
+                        .position(x: frame.midX, y: frame.midY)
 
                     Path { path in
                         path.addRect(frame)
