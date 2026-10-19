@@ -3,17 +3,23 @@ import SwiftUI
 
 /// Hosts a tool's SwiftUI view in its own window and keeps it alive until closed.
 final class ToolWindow: NSObject, NSWindowDelegate {
-    private static var openWindows: Set<ToolWindow> = []
+    private static var openWindows: [ToolWindow] = []
 
     private var window: NSWindow?
 
-    /// `content` receives a closure that closes the window.
-    static func present<Content: View>(title: String, @ViewBuilder content: (_ close: @escaping () -> Void) -> Content) {
+    /// Open tool windows, oldest first (minimised ones included).
+    static var windows: [NSWindow] { openWindows.compactMap(\.window) }
+
+    /// `content` receives a closure that closes the window. `files` name the window so several are
+    /// easy to tell apart in the Window menu and the status menu.
+    static func present<Content: View>(title: String, files: [URL] = [],
+                                       @ViewBuilder content: (_ close: @escaping () -> Void) -> Content) {
         let controller = ToolWindow()
         let view = content { [weak controller] in controller?.window?.close() }
         let hosting = NSHostingController(rootView: view)
         let window = NSWindow(contentViewController: hosting)
         window.title = title
+        window.subtitle = subtitle(for: files)
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         window.isReleasedWhenClosed = false
         window.delegate = controller
@@ -21,11 +27,16 @@ final class ToolWindow: NSObject, NSWindowDelegate {
         window.setContentSize(hosting.view.fittingSize)
         fitOnScreen(window)
         controller.window = window
-        openWindows.insert(controller)
-        NSApp.activate(ignoringOtherApps: true)
+        openWindows.append(controller)
+        AppPresence.windowOpened()
         window.makeKeyAndOrderFront(nil)
         // SwiftUI may settle on its final size after the first layout pass.
         DispatchQueue.main.async { fitOnScreen(window) }
+    }
+
+    private static func subtitle(for files: [URL]) -> String {
+        guard let first = files.first else { return "" }
+        return files.count > 1 ? "\(first.lastPathComponent) и ещё \(files.count - 1)" : first.lastPathComponent
     }
 
     /// Shrinks the window to the visible area of the screen under the cursor and centres it there.
@@ -45,7 +56,66 @@ final class ToolWindow: NSObject, NSWindowDelegate {
 
     func windowWillClose(_ notification: Notification) {
         window?.delegate = nil
-        Self.openWindows.remove(self)
+        Self.openWindows.removeAll { $0 === self }
+        AppPresence.windowClosed()
+    }
+}
+
+/// Mangosteen normally lives only in the menu bar. While any of its windows is open it becomes a regular
+/// app — Dock icon, ⌘Tab, ⌘` and the Window menu — so a window that went behind others or was minimised
+/// can always be brought back. It returns to the menu bar when the last window closes.
+enum AppPresence {
+    /// The settings window, tracked alongside tool windows.
+    static weak var settingsWindow: NSWindow?
+
+    static func windowOpened() {
+        if NSApp.activationPolicy() != .regular {
+            NSApp.setActivationPolicy(.regular)
+        }
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    static func windowClosed() {
+        // Decide after the closing window is gone.
+        DispatchQueue.main.async {
+            let settingsOpen = settingsWindow.map { $0.isVisible || $0.isMiniaturized } ?? false
+            if ToolWindow.windows.isEmpty, !settingsOpen, NSApp.activationPolicy() != .accessory {
+                NSApp.setActivationPolicy(.accessory)
+            }
+        }
+    }
+
+    /// Every window the user can return to.
+    static var windows: [NSWindow] {
+        ToolWindow.windows + [settingsWindow].compactMap { $0 }.filter { $0.isVisible || $0.isMiniaturized }
+    }
+
+    static func bringBack(_ window: NSWindow) {
+        if window.isMiniaturized { window.deminiaturize(nil) }
+        NSApp.activate(ignoringOtherApps: true)
+        window.makeKeyAndOrderFront(nil)
+    }
+
+    /// The app icon shown in the Dock and ⌘Tab while windows are open: a mangosteen on a light tile.
+    static func makeIcon() -> NSImage {
+        NSImage(size: NSSize(width: 512, height: 512), flipped: false) { rect in
+            let tile = NSBezierPath(roundedRect: rect.insetBy(dx: 44, dy: 44), xRadius: 96, yRadius: 96)
+            NSGradient(starting: NSColor(red: 0.99, green: 0.96, blue: 0.98, alpha: 1),
+                       ending: NSColor(red: 0.88, green: 0.8, blue: 0.91, alpha: 1))?.draw(in: tile, angle: -90)
+            // The fruit…
+            let fruit = NSRect(x: 136, y: 104, width: 240, height: 240)
+            NSGradient(starting: NSColor(red: 0.62, green: 0.25, blue: 0.62, alpha: 1),
+                       ending: NSColor(red: 0.33, green: 0.1, blue: 0.38, alpha: 1))?
+                .draw(in: NSBezierPath(ovalIn: fruit), relativeCenterPosition: NSPoint(x: -0.3, y: 0.4))
+            // …and its green crown of four leaves.
+            NSColor(red: 0.36, green: 0.62, blue: 0.27, alpha: 1).setFill()
+            for (dx, dy) in [(-46.0, 0.0), (46.0, 0.0), (0.0, -22.0), (0.0, 22.0)] {
+                NSBezierPath(ovalIn: NSRect(x: 256 - 34 + dx, y: 330 - 18 + dy, width: 68, height: 36)).fill()
+            }
+            NSColor(red: 0.27, green: 0.45, blue: 0.2, alpha: 1).setFill()
+            NSBezierPath(roundedRect: NSRect(x: 246, y: 340, width: 20, height: 58), xRadius: 8, yRadius: 8).fill()
+            return true
+        }
     }
 }
 

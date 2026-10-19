@@ -38,7 +38,39 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         statusItem.menu = menu
     }
 
+    private var windowItems: [NSMenuItem] = []
+
+    /// Open windows, listed at the top of the menu so a hidden or minimised one can be brought back.
+    private func refreshWindowItems(in menu: NSMenu) {
+        windowItems.forEach(menu.removeItem)
+        windowItems.removeAll()
+        let windows = AppPresence.windows
+        guard !windows.isEmpty else { return }
+        var items = [NSMenuItem(title: "Открытые окна", action: nil, keyEquivalent: "")]
+        items[0].isEnabled = false
+        for window in windows {
+            let title = window.subtitle.isEmpty ? window.title : "\(window.title) — \(window.subtitle)"
+            let item = NSMenuItem(title: title + (window.isMiniaturized ? " (свёрнуто)" : ""),
+                                  action: #selector(windowSelected(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = window
+            item.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: nil)
+            items.append(item)
+        }
+        items.append(.separator())
+        for (offset, item) in items.enumerated() {
+            menu.insertItem(item, at: offset)
+        }
+        windowItems = items
+    }
+
+    @objc private func windowSelected(_ sender: NSMenuItem) {
+        guard let window = sender.representedObject as? NSWindow else { return }
+        AppPresence.bringBack(window)
+    }
+
     func menuWillOpen(_ menu: NSMenu) {
+        refreshWindowItems(in: menu)
         let settings = AppSettings.shared
         let keys = [settings.convertModifier, settings.toolsModifier, settings.actionsModifier]
             .filter { $0 != .none }

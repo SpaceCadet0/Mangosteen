@@ -31,96 +31,96 @@ enum WheelItemProvider {
         var items: [WheelItem] = []
         if formats.contains(where: { $0.category.isMedia }) {
             items.append(WheelItem(id: "tool.trimMedia", title: "Обрезать", symbolName: "timeline.selection") { urls in
-                ToolWindow.present(title: "Обрезка") { TrimMediaView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Обрезка", files: urls) { TrimMediaView(urls: urls, close: $0) }
             })
             items.append(WheelItem(id: "tool.splitMedia", title: "Разделить", symbolName: "scissors") { urls in
-                ToolWindow.present(title: "Разделение") { SplitMediaView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Разделение", files: urls) { SplitMediaView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { $0.category.isMedia }) {
             items.append(WheelItem(id: "tool.speed", title: "Скорость", symbolName: "gauge.with.dots.needle.67percent") { urls in
-                ToolWindow.present(title: "Скорость") { SpeedView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Скорость", files: urls) { SpeedView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { $0.category.isMedia }) {
             items.append(WheelItem(id: "tool.normalize", title: "Громкость", symbolName: "speaker.wave.3") { urls in
-                ToolWindow.present(title: "Громкость") { NormalizeView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Громкость", files: urls) { NormalizeView(urls: urls, close: $0) }
             })
             items.append(WheelItem(id: "tool.bleep", title: "Запикать", symbolName: "waveform.badge.minus") { urls in
-                ToolWindow.present(title: "Запикать") { BleepView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Запикать", files: urls) { BleepView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { $0.category == .audio }) {
             items.append(WheelItem(id: "tool.channels", title: "Каналы", symbolName: "headphones") { urls in
-                ToolWindow.present(title: "Каналы") { ChannelsView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Каналы", files: urls) { ChannelsView(urls: urls, close: $0) }
             })
             items.append(WheelItem(id: "tool.visualizer", title: "Визуализатор", symbolName: "waveform.circle") { urls in
-                ToolWindow.present(title: "Визуализатор") { VisualizerView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Визуализатор", files: urls) { VisualizerView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { $0.category == .video }) {
             items.append(WheelItem(id: "tool.cropVideo", title: "Кадрировать", symbolName: "crop") { urls in
-                ToolWindow.present(title: "Кадрирование видео") { VideoCropView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Кадрирование видео", files: urls) { VideoCropView(urls: urls, close: $0) }
             })
         }
         if formats.filter({ $0.category == .video }).count >= 2 {
             items.append(WheelItem(id: "tool.join", title: "Склеить", symbolName: "film.stack") { urls in
-                ToolWindow.present(title: "Склейка видео") { JoinView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Склейка видео", files: urls) { JoinView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { $0.category.isMedia }),
            !formats.contains(where: { $0.category == .image || $0 == .pdf }) {
             items.append(WheelItem(id: "tool.compressMedia", title: "Сжать", symbolName: "arrow.down.right.and.arrow.up.left") { urls in
-                ToolWindow.present(title: "Сжатие") { MediaCompressView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Сжатие", files: urls) { MediaCompressView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { $0.category == .video }) {
             items.append(WheelItem(id: "tool.frames", title: "Кадры", symbolName: "photo.on.rectangle") { urls in
-                ToolWindow.present(title: "Кадры из видео") { FramesView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Кадры из видео", files: urls) { FramesView(urls: urls, close: $0) }
             })
         }
         let hasImages = formats.contains { $0.category == .image }
         if hasImages || formats.contains(.pdf) {
             items.append(WheelItem(id: "tool.compress", title: "Сжать", symbolName: "arrow.down.right.and.arrow.up.left") { urls in
-                ToolWindow.present(title: "Сжатие") { CompressView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Сжатие", files: urls) { CompressView(urls: urls, close: $0) }
             })
         }
         if hasImages {
             items.append(WheelItem(id: "tool.crop", title: "Обрезать", symbolName: "crop") { urls in
-                ToolWindow.present(title: "Обрезка") { CropView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Обрезка", files: urls) { CropView(urls: urls, close: $0) }
             })
         }
         if hasImages {
             items.append(WheelItem(id: "tool.edit", title: "Редактор", symbolName: "slider.horizontal.3") { urls in
-                ToolWindow.present(title: "Редактор фото") { PhotoEditView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Редактор фото", files: urls) { PhotoEditView(urls: urls, close: $0) }
             })
         }
         if hasImages {
             items.append(WheelItem(id: "tool.annotate", title: "Пометки", symbolName: "pencil.and.outline") { urls in
-                ToolWindow.present(title: "Пометки") { AnnotateView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Пометки", files: urls) { AnnotateView(urls: urls, close: $0) }
             })
             items.append(WheelItem(id: "tool.redact", title: "Скрыть", symbolName: "eye.slash") { urls in
-                ToolWindow.present(title: "Скрыть лица и текст") { RedactView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Скрыть лица и текст", files: urls) { RedactView(urls: urls, close: $0) }
             })
         }
         if formats.contains(.pdf) {
             items.append(WheelItem(id: "tool.organizePDF", title: "Страницы", symbolName: "doc.on.doc") { urls in
-                ToolWindow.present(title: "Страницы PDF") { PDFOrganizeView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Страницы PDF", files: urls) { PDFOrganizeView(urls: urls, close: $0) }
             })
         }
         if hasImages {
             items.append(WheelItem(id: "tool.frame", title: "Фон", symbolName: "photo.artframe") { urls in
-                ToolWindow.present(title: "Фон") { FrameView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Фон", files: urls) { FrameView(urls: urls, close: $0) }
             })
         }
         if formats.filter({ $0.category == .image }).count >= 2 {
             items.append(WheelItem(id: "tool.collage", title: "Коллаж", symbolName: "square.grid.2x2") { urls in
-                ToolWindow.present(title: "Коллаж") { CollageView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Коллаж", files: urls) { CollageView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { $0.category == .image && $0 != .svg }) {
             items.append(WheelItem(id: "tool.metadata", title: "Метаданные", symbolName: "info.circle") { urls in
-                ToolWindow.present(title: "Метаданные") { MetadataView(urls: urls, close: $0) }
+                ToolWindow.present(title: "Метаданные", files: urls) { MetadataView(urls: urls, close: $0) }
             })
             items.append(WheelItem(id: "tool.createPDF", title: "PDF из фото", symbolName: "doc.badge.plus") { urls in
                 ConversionService.shared.runBatch("Создание PDF", inputs: urls) { [try PDFTools.createPDF(fromImages: $0)] }

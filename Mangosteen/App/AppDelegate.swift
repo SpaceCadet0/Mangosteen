@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 
 @main
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private let dragMonitor = DragMonitor.shared
     private let wheel = WheelController()
     private var menuBar: MenuBarController?
@@ -19,6 +19,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.applicationIconImage = AppPresence.makeIcon()
+        NSApp.mainMenu = makeMainMenu()
         menuBar = MenuBarController(
             openFiles: { [weak self] kind in self?.chooseFiles(for: kind) },
             openSettings: { [weak self] in self?.showSettings() }
@@ -46,6 +48,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let itemID = arguments[flag + 1]
         let output = URL(fileURLWithPath: arguments[flag + 2])
         let inputs = arguments[(flag + 3)...].map { URL(fileURLWithPath: $0) }
+        if itemID == "icon" {
+            let image = AppPresence.makeIcon()
+            if let tiff = image.tiffRepresentation, let bitmap = NSBitmapImageRep(data: tiff) {
+                try? bitmap.representation(using: .png, properties: [:])?.write(to: output)
+            }
+            exit(0)
+        }
         // "wheel.convert" / "wheel.tools" / "wheel.actions" show the wheel itself at the centre of the screen.
         if itemID.hasPrefix("wheel."), let kind = WheelKind(rawValue: String(itemID.dropFirst("wheel.".count))) {
             let center = NSScreen.main.map { NSPoint(x: $0.frame.midX, y: $0.frame.midY) } ?? .zero
@@ -95,16 +104,75 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func showSettings() {
+    @objc func showSettings() {
         if settingsWindow == nil {
             let window = NSWindow(contentViewController: NSHostingController(rootView: SettingsView()))
             window.title = "Настройки Mangosteen"
             window.styleMask = [.titled, .closable, .miniaturizable]
             window.isReleasedWhenClosed = false
+            window.delegate = self
             window.center()
             settingsWindow = window
         }
-        NSApp.activate(ignoringOtherApps: true)
+        AppPresence.settingsWindow = settingsWindow
+        AppPresence.windowOpened()
         settingsWindow?.makeKeyAndOrderFront(nil)
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        AppPresence.windowClosed()
+    }
+
+    /// Clicking the Dock icon brings back a hidden or minimised window.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if let window = AppPresence.windows.last(where: \.isMiniaturized) ?? AppPresence.windows.last {
+            AppPresence.bringBack(window)
+        }
+        return false
+    }
+
+    /// Shown while Mangosteen acts as a regular app (any window open). The Edit menu also makes
+    /// ⌘C/⌘V/⌘A work in text fields; the Window menu lists open windows.
+    private func makeMainMenu() -> NSMenu {
+        func item(_ title: String, _ action: Selector?, _ key: String = "", _ modifiers: NSEvent.ModifierFlags = .command) -> NSMenuItem {
+            let item = NSMenuItem(title: title, action: action, keyEquivalent: key)
+            item.keyEquivalentModifierMask = modifiers
+            return item
+        }
+        let main = NSMenu()
+
+        let app = NSMenu(title: "Mangosteen")
+        app.addItem(item("О Mangosteen", #selector(NSApplication.orderFrontStandardAboutPanel(_:))))
+        app.addItem(.separator())
+        let settings = item("Настройки…", #selector(showSettings), ",")
+        settings.target = self
+        app.addItem(settings)
+        app.addItem(.separator())
+        app.addItem(item("Скрыть Mangosteen", #selector(NSApplication.hide(_:)), "h"))
+        app.addItem(item("Выйти из Mangosteen", #selector(NSApplication.terminate(_:)), "q"))
+
+        let edit = NSMenu(title: "Правка")
+        edit.addItem(item("Отменить", Selector(("undo:")), "z"))
+        edit.addItem(item("Повторить", Selector(("redo:")), "z", [.command, .shift]))
+        edit.addItem(.separator())
+        edit.addItem(item("Вырезать", #selector(NSText.cut(_:)), "x"))
+        edit.addItem(item("Копировать", #selector(NSText.copy(_:)), "c"))
+        edit.addItem(item("Вставить", #selector(NSText.paste(_:)), "v"))
+        edit.addItem(item("Выделить всё", #selector(NSText.selectAll(_:)), "a"))
+
+        let window = NSMenu(title: "Окно")
+        window.addItem(item("Свернуть", #selector(NSWindow.performMiniaturize(_:)), "m"))
+        window.addItem(item("Масштаб", #selector(NSWindow.performZoom(_:))))
+        window.addItem(item("Закрыть", #selector(NSWindow.performClose(_:)), "w"))
+        window.addItem(.separator())
+        window.addItem(item("Все окна на передний план", #selector(NSApplication.arrangeInFront(_:))))
+
+        for submenu in [app, edit, window] {
+            let holder = NSMenuItem(title: submenu.title, action: nil, keyEquivalent: "")
+            holder.submenu = submenu
+            main.addItem(holder)
+        }
+        NSApp.windowsMenu = window
+        return main
     }
 }
