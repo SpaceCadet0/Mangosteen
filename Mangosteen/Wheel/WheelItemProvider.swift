@@ -46,6 +46,16 @@ enum WheelItemProvider {
             })
         }
         if hasImages {
+            items.append(WheelItem(id: "tool.redact", title: "Скрыть", symbolName: "eye.slash") { urls in
+                ToolWindow.present(title: "Скрыть лица и текст") { RedactView(urls: urls, close: $0) }
+            })
+        }
+        if formats.contains(.pdf) {
+            items.append(WheelItem(id: "tool.organizePDF", title: "Страницы", symbolName: "doc.on.doc") { urls in
+                ToolWindow.present(title: "Страницы PDF") { PDFOrganizeView(urls: urls, close: $0) }
+            })
+        }
+        if hasImages {
             items.append(WheelItem(id: "tool.frame", title: "Фон", symbolName: "photo.artframe") { urls in
                 ToolWindow.present(title: "Фон") { FrameView(urls: urls, close: $0) }
             })
