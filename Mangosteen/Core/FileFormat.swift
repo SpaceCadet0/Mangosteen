@@ -26,7 +26,7 @@ enum FileFormat: String, CaseIterable, Identifiable {
     // Subtitles
     case srt, vtt
     // Tables
-    case csv, tsv
+    case csv, tsv, xlsx
     // Archives
     case zip, tar, tgz
     // Video (m4v is read only)
@@ -61,7 +61,7 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .pdf: .pdf
         case .docx, .doc, .odt, .rtf, .rtfd, .txt, .md, .html: .document
         case .srt, .vtt: .subtitle
-        case .csv, .tsv: .table
+        case .csv, .tsv, .xlsx: .table
         case .zip, .tar, .tgz: .archive
         case .mp4, .mov, .mkv, .webm, .avi, .wmv, .m4v: .video
         case .mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma, .aac: .audio
@@ -99,6 +99,7 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .vtt: UTType(filenameExtension: "vtt") ?? .plainText
         case .csv: .commaSeparatedText
         case .tsv: .tabSeparatedText
+        case .xlsx: UTType("org.openxmlformats.spreadsheetml.sheet") ?? Self.byExtension("xlsx")
         case .zip: .zip
         case .tar: UTType("public.tar-archive") ?? .archive
         case .tgz: .gzip

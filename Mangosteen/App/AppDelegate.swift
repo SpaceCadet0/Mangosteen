@@ -24,7 +24,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         menuBar = MenuBarController(
             openFiles: { [weak self] kind in self?.chooseFiles(for: kind) },
             openSettings: { [weak self] in self?.showSettings() },
-            openWelcome: { [weak self] in self?.showWelcome() }
+            openWelcome: { [weak self] in self?.showWelcome() },
+            openAbout: { [weak self] in self?.showAbout() }
         )
 
         dragMonitor.onModifierTap = { [weak self] flags, urls in
@@ -42,6 +43,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if !UserDefaults.standard.bool(forKey: WelcomeView.shownKey) {
             showWelcome()
         }
+    }
+
+    @objc func showAbout() {
+        let title = String(localized: "О Mangosteen")
+        if let window = NSApp.windows.first(where: { $0.title == title && ($0.isVisible || $0.isMiniaturized) }) {
+            AppPresence.bringBack(window)
+            return
+        }
+        ToolWindow.present(title: title) { AboutView(close: $0) }
     }
 
     @objc func showWelcome() {
@@ -83,6 +93,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             wheel.show(kind: kind, urls: inputs, at: center)
             wheel.debugHighlight(1)
             finishSnapshot(window: wheel.debugWindow)
+            return
+        }
+        if itemID == "about" {
+            showAbout()
+            finishSnapshot(window: nil)
             return
         }
         if itemID == "welcome" {
@@ -170,7 +185,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let main = NSMenu()
 
         let app = NSMenu(title: "Mangosteen")
-        app.addItem(item(String(localized: "О Mangosteen"), #selector(NSApplication.orderFrontStandardAboutPanel(_:))))
+        let about = item(String(localized: "О Mangosteen…"), #selector(showAbout))
+        about.target = self
+        app.addItem(about)
         app.addItem(.separator())
         let settings = item(String(localized: "Настройки…"), #selector(showSettings), ",")
         settings.target = self

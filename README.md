@@ -60,7 +60,7 @@ then click a segment.
 | Video | MP4, MOV, MKV, WebM, AVI, WMV — into each other, GIF and MP3 |
 | Audio | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA |
 | Subtitles | SRT ⇄ VTT |
-| Tables | CSV ⇄ TSV |
+| Tables | CSV, TSV, XLSX — into each other; a workbook with several sheets becomes a folder of tables |
 | Archives | ZIP, TAR, TAR.GZ — and folders into archives |
 
 When the target container accepts the original streams, video is copied without re-encoding, so it is instant and

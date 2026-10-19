@@ -31,7 +31,7 @@ Mangosteen — офлайн-конвертер файлов для macOS «в н
 - Видео/аудио: `ffmpeg` из Homebrew, позже вшитый в бандл.
 - Метаданные: ImageIO + ExifTool.
 - PDF: PDFKit. Документы: NSAttributedString / `textutil`.
-- Office (PPTX/XLSX) не делаем. Лимитов нет.
+- Office: только XLSX ⇄ CSV/TSV, нативно (свой ZIP на Compression + XMLParser), без сторонних приложений. PPTX/DOCX-вёрстку и iWork не делаем: без внешних приложений их не отрисовать. Лимитов нет.
 
 Наше приложение не в песочнице (личное использование, ad-hoc подпись), поэтому
 не нужен экран «разрешите доступ к домашней папке».
@@ -82,7 +82,7 @@ MangosteenTests/  юнит-тесты конвертеров, именовани
 - PDF → JPG/PNG (все страницы, 300 DPI, папка), PDF → TXT/MD/RTF/DOCX/HTML (текстовый слой), PDF → EPUB (простой).
 - DOCX/RTF/RTFD/TXT/MD/HTML/ODT ↔ друг в друга и → PDF (NSAttributedString / textutil, MD — свой парсер).
 - Субтитры SRT ↔ VTT, → TXT.
-- Таблицы CSV ↔ TSV (без Office).
+- Таблицы CSV ↔ TSV ↔ XLSX (XLSX — нативно, листы → папка таблиц).
 - Архивы: ZIP/TAR/GZIP упаковка и распаковка (`ditto`, `tar`, `gzip`).
 
 ### Фаза 3 — файловые действия (⌃ колесо) — готово (прилипание к краю и несколько полок — позже)

@@ -30,6 +30,7 @@
 "1500 Гц" = "1500 Hz";
 "800 Гц" = "800 Hz";
 "HEVC (H.265) — меньше файл, сжатие дольше" = "HEVC (H.265) — archivo más pequeño, compresión más lenta";
+"Mangosteen на GitHub" = "Mangosteen en GitHub";
 "PDF защищён паролем" = "El PDF está protegido con contraseña";
 "PDF из фото" = "PDF de fotos";
 "PNG, TIFF и другие форматы без потерь будут сохранены как %@." = "PNG, TIFF y otros formatos sin pérdida se guardarán como %@.";
@@ -49,6 +50,7 @@
 "В «%@» нет видео." = "«%@» no tiene vídeo.";
 "В «%@» нет звуковой дорожки." = "«%@» no tiene pista de audio.";
 "Введите координаты в градусах, например 55.7558 и 37.6173" = "Introduce las coordenadas en grados, p. ej. 55.7558 y 37.6173";
+"Версия %@" = "Versión %@";
 "Вертикальная 9:16" = "Vertical 9:16";
 "Весь ролик" = "Todo el vídeo";
 "Весь файл" = "Archivo completo";
@@ -147,6 +149,7 @@
 "Конвертация %@ → %@ не поддерживается." = "La conversión %@ → %@ no está disponible.";
 "Конвертация в %@" = "Convirtiendo a %@";
 "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений." = "Conversión y herramientas para archivos mientras los arrastras. Todo funciona en este Mac, sin límites.";
+"Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку колеса. Всё работает на этом Mac, без ограничений." = "Conversión y herramientas para tus archivos mientras los arrastras: empieza a arrastrar un archivo, pulsa una tecla y suéltalo en un segmento de la rueda. Todo funciona en este Mac, sin límites.";
 "Конец" = "Fin";
 "Конец = курсор" = "Fin = cursor";
 "Конец = положение курсора" = "Fin = posición del cursor";
@@ -207,6 +210,7 @@
 "Нормализовать" = "Normalizar";
 "Нуар" = "Noir";
 "О Mangosteen" = "Acerca de Mangosteen";
+"О Mangosteen…" = "Acerca de Mangosteen…";
 "Обрезать" = "Recortar";
 "Обрезка" = "Recorte";
 "Объединение PDF" = "Combinando PDF";

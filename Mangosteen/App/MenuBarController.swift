@@ -6,12 +6,15 @@ final class MenuBarController: NSObject, NSMenuDelegate {
     private let openFiles: (WheelKind) -> Void
     private let openSettings: () -> Void
     private let openWelcome: () -> Void
+    private let openAbout: () -> Void
     private let hintItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
 
-    init(openFiles: @escaping (WheelKind) -> Void, openSettings: @escaping () -> Void, openWelcome: @escaping () -> Void) {
+    init(openFiles: @escaping (WheelKind) -> Void, openSettings: @escaping () -> Void, openWelcome: @escaping () -> Void,
+         openAbout: @escaping () -> Void) {
         self.openFiles = openFiles
         self.openSettings = openSettings
         self.openWelcome = openWelcome
+        self.openAbout = openAbout
         super.init()
 
         statusItem.button?.image = MangosteenArt.menuBarIcon()
@@ -35,6 +38,9 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         let welcome = NSMenuItem(title: String(localized: "Как пользоваться…"), action: #selector(welcomeSelected), keyEquivalent: "")
         welcome.target = self
         menu.addItem(welcome)
+        let about = NSMenuItem(title: String(localized: "О Mangosteen…"), action: #selector(aboutSelected), keyEquivalent: "")
+        about.target = self
+        menu.addItem(about)
         let settings = NSMenuItem(title: String(localized: "Настройки…"), action: #selector(settingsSelected), keyEquivalent: ",")
         settings.target = self
         menu.addItem(settings)
@@ -95,6 +101,10 @@ final class MenuBarController: NSObject, NSMenuDelegate {
 
     @objc private func welcomeSelected() {
         openWelcome()
+    }
+
+    @objc private func aboutSelected() {
+        openAbout()
     }
 
     @objc private func settingsSelected() {

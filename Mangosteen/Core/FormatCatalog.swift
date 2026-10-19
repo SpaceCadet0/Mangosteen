@@ -6,7 +6,7 @@ enum FormatCatalog {
     static let documentOutputs: [FileFormat] = [.pdf, .docx, .odt, .rtf, .rtfd, .txt, .md, .html]
     static let pdfOutputs: [FileFormat] = [.png, .jpg, .txt, .md, .rtf, .docx, .html]
     static let subtitleOutputs: [FileFormat] = [.srt, .vtt, .txt]
-    static let tableOutputs: [FileFormat] = [.csv, .tsv]
+    static let tableOutputs: [FileFormat] = [.csv, .tsv, .xlsx]
     static let archiveOutputs: [FileFormat] = [.zip, .tar, .tgz]
     static let videoOutputs: [FileFormat] = [.mp4, .mov, .mkv, .webm, .avi, .wmv, .gif, .mp3]
     static let audioOutputs: [FileFormat] = [.mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma]
@@ -15,7 +15,7 @@ enum FormatCatalog {
     private static let displayOrder: [FileFormat] = [
         .png, .jpg, .webp, .heic, .tiff, .avif, .bmp, .gif, .pdf,
         .docx, .odt, .rtf, .rtfd, .txt, .md, .html,
-        .srt, .vtt, .csv, .tsv,
+        .srt, .vtt, .csv, .tsv, .xlsx,
         .mp4, .mov, .mkv, .webm, .avi, .wmv,
         .mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma,
         .zip, .tar, .tgz,

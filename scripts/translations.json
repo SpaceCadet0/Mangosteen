@@ -1642,5 +1642,21 @@
  "Перезапустить": {
   "en": "Restart",
   "es": "Reiniciar"
+ },
+ "О Mangosteen…": {
+  "en": "About Mangosteen…",
+  "es": "Acerca de Mangosteen…"
+ },
+ "Версия %@": {
+  "en": "Version %@",
+  "es": "Versión %@"
+ },
+ "Mangosteen на GitHub": {
+  "en": "Mangosteen on GitHub",
+  "es": "Mangosteen en GitHub"
+ },
+ "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку колеса. Всё работает на этом Mac, без ограничений.": {
+  "en": "Converters and tools for your files, right while you drag: start dragging a file, tap a key and drop it on a segment of the wheel. Everything runs on this Mac, with no limits.",
+  "es": "Conversión y herramientas para tus archivos mientras los arrastras: empieza a arrastrar un archivo, pulsa una tecla y suéltalo en un segmento de la rueda. Todo funciona en este Mac, sin límites."
  }
 }

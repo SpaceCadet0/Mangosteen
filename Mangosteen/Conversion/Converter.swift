@@ -63,6 +63,18 @@ enum Converter {
             }
         }
 
+        // A workbook with several sheets becomes a folder with one table per sheet.
+        if source == .xlsx {
+            let sheets = try XLSX.read(input).filter { !$0.rows.isEmpty }
+            if sheets.count > 1 {
+                return try OutputNaming.writeAtomically(
+                    directory: directory, baseName: "\(baseName) (\(target.displayName))", pathExtension: ""
+                ) { folder in
+                    try TableConverter.writeSheets(sheets, as: target, into: folder)
+                }
+            }
+        }
+
         return try OutputNaming.writeAtomically(
             directory: directory, baseName: baseName, pathExtension: target.fileExtension
         ) { output in
