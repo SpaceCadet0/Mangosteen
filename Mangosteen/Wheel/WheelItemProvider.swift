@@ -45,6 +45,16 @@ enum WheelItemProvider {
                 ToolWindow.present(title: "Редактор фото") { PhotoEditView(urls: urls, close: $0) }
             })
         }
+        if hasImages {
+            items.append(WheelItem(id: "tool.frame", title: "Фон", symbolName: "photo.artframe") { urls in
+                ToolWindow.present(title: "Фон") { FrameView(urls: urls, close: $0) }
+            })
+        }
+        if formats.filter({ $0.category == .image }).count >= 2 {
+            items.append(WheelItem(id: "tool.collage", title: "Коллаж", symbolName: "square.grid.2x2") { urls in
+                ToolWindow.present(title: "Коллаж") { CollageView(urls: urls, close: $0) }
+            })
+        }
         if formats.contains(where: { $0.category == .image && $0 != .svg }) {
             items.append(WheelItem(id: "tool.metadata", title: "Метаданные", symbolName: "info.circle") { urls in
                 ToolWindow.present(title: "Метаданные") { MetadataView(urls: urls, close: $0) }
