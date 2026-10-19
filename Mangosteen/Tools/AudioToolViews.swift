@@ -9,6 +9,7 @@ private func firstMedia(_ urls: [URL]) -> URL {
 // MARK: - Listening to results
 
 /// Renders processed sound to a temporary file and plays it, so a change can be heard before saving.
+@MainActor
 final class PreviewListener: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published private(set) var isRendering = false
     /// What is playing now (a label chosen by the caller), nil when silent.
@@ -48,12 +49,11 @@ final class PreviewListener: NSObject, ObservableObject, AVAudioPlayerDelegate {
         isRendering = false
     }
 
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        DispatchQueue.main.async { self.playing = nil }
+    nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        Task { @MainActor in self.playing = nil }
     }
 
     deinit {
-        player?.stop()
         try? FileManager.default.removeItem(at: file)
     }
 }

@@ -67,6 +67,17 @@ struct TrimMediaView: View {
                 range = model.duration * 0.2...model.duration * 0.7
                 model.seek(to: model.duration * 0.35)
             }
+            if ProcessInfo.processInfo.environment["MANGOSTEEN_ZOOM_STRESS"] != nil {
+                // Drag the zoom slider to the maximum and scroll around, as fast as a user could.
+                for step in 0...60 {
+                    model.setZoom(pow(2, Double(step) / 10))
+                    try? await Task.sleep(nanoseconds: 15_000_000)
+                }
+                for _ in 0..<40 {
+                    model.pan(by: model.viewLength * 0.3)
+                    try? await Task.sleep(nanoseconds: 15_000_000)
+                }
+            }
             #endif
             model.loopRange = range
         }

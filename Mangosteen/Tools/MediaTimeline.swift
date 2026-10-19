@@ -5,6 +5,8 @@ import SwiftUI
 /// Playback state shared by the media tools. Uses AVPlayer when AVFoundation can play the file;
 /// otherwise shows frames decoded by ffmpeg at the playhead. Also owns the timeline viewport (zoom and
 /// scroll) so every strip and control agrees on what part of the file is visible.
+/// Main-actor isolated: its async loading must publish on the main thread or SwiftUI misses the updates.
+@MainActor
 final class MediaPlayerModel: ObservableObject {
     struct Tile {
         let image: CGImage
@@ -42,16 +44,12 @@ final class MediaPlayerModel: ObservableObject {
     private var timeObserver: Any?
     private var posterTask: Task<Void, Never>?
     private var detailTask: Task<Void, Never>?
+    private var detailCancellation: CancellationToken?
     private var lastPosterUpdate = Date.distantPast
 
     init(url: URL) {
         self.url = url
         isVideo = FileFormat.detect(url)?.category == .video
-    }
-
-    deinit {
-        if let timeObserver { player?.removeTimeObserver(timeObserver) }
-        player?.pause()
     }
 
     var frameDuration: Double { 1 / max(frameRate, 1) }
@@ -100,7 +98,7 @@ final class MediaPlayerModel: ObservableObject {
         let player = AVPlayer(playerItem: item)
         player.actionAtItemEnd = .pause
         timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 30), queue: .main) { [weak self] time in
-            self?.tick(time.seconds)
+            MainActor.assumeIsolated { self?.tick(time.seconds) }
         }
         self.player = player
     }
@@ -183,8 +181,11 @@ final class MediaPlayerModel: ObservableObject {
     }
 
     func pause() {
+        let wasPlaying = isPlaying
         isPlaying = false
         player?.pause()
+        // Detail is not fetched while playing; catch up now.
+        if wasPlaying { scheduleDetail() }
     }
 
     func step(frames: Int) {
@@ -251,25 +252,32 @@ final class MediaPlayerModel: ObservableObject {
         return abs(detailWindow.lowerBound - viewStart) < tolerance && abs(detailWindow.upperBound - (viewStart + viewLength)) < tolerance
     }
 
-    /// Re-reads frames or audio for the visible window so zooming in shows real detail.
+    /// Re-reads frames or audio for the visible window so zooming in shows real detail. Only one fetch runs
+    /// at a time: a newer viewport cancels the previous one between frames, and nothing is fetched while
+    /// playing (the window moves too often), so zooming or scrolling cannot pile up ffmpeg processes.
     private func scheduleDetail() {
         detailTask?.cancel()
+        detailCancellation?.cancel()
         guard zoom > 1.01, isLoaded else {
             detailWindow = nil
             return
         }
+        guard !isPlaying else { return }
         let window = currentWindow
         let url = url
         let isVideo = isVideo
+        let token = CancellationToken()
+        detailCancellation = token
         detailTask = Task { [weak self] in
-            try? await Task.sleep(nanoseconds: 250_000_000)
-            guard !Task.isCancelled else { return }
+            try? await Task.sleep(nanoseconds: 300_000_000)
+            guard !Task.isCancelled, !token.isCancelled else { return }
             let length = window.upperBound - window.lowerBound
             if isVideo {
                 let images = await Task.detached(priority: .utility) {
-                    MediaTools.thumbnails(url, start: window.lowerBound, duration: length, count: 12, height: 90)
+                    MediaTools.thumbnails(url, start: window.lowerBound, duration: length, count: 12, height: 90,
+                                          cancellation: token)
                 }.value
-                guard !Task.isCancelled, let self, images.count == 12 else { return }
+                guard !Task.isCancelled, !token.isCancelled, let self, images.count == 12 else { return }
                 let step = length / 12
                 self.detailTiles = images.enumerated().map { index, image in
                     Tile(image: image, range: (window.lowerBound + Double(index) * step)...(window.lowerBound + Double(index + 1) * step))
@@ -278,7 +286,7 @@ final class MediaPlayerModel: ObservableObject {
                 let peaks = await Task.detached(priority: .utility) {
                     (try? MediaTools.waveform(url, duration: length, buckets: 800, start: window.lowerBound)) ?? []
                 }.value
-                guard !Task.isCancelled, let self, !peaks.isEmpty else { return }
+                guard !Task.isCancelled, !token.isCancelled, let self, !peaks.isEmpty else { return }
                 self.detailWaveform = peaks
             }
             self?.detailWindow = window

@@ -153,11 +153,18 @@ enum MediaTools {
 
     /// Evenly spaced small frames for the timeline strip.
     /// `duration` seconds starting at `start` (the whole file by default) split into `count` frames.
-    static func thumbnails(_ input: URL, start: Double = 0, duration: Double, count: Int, height: Int) -> [CGImage] {
+    /// Stops early (returning what it has) when `cancellation` fires.
+    static func thumbnails(_ input: URL, start: Double = 0, duration: Double, count: Int, height: Int,
+                           cancellation: CancellationToken? = nil) -> [CGImage] {
         guard duration > 0, count > 0 else { return [] }
-        return (0..<count).compactMap { index in
-            try? frame(input, at: start + duration * (Double(index) + 0.5) / Double(count), maxHeight: height)
+        var images: [CGImage] = []
+        for index in 0..<count {
+            if cancellation?.isCancelled == true { break }
+            if let image = try? frame(input, at: start + duration * (Double(index) + 0.5) / Double(count), maxHeight: height) {
+                images.append(image)
+            }
         }
+        return images
     }
 
     // MARK: - Waveform
