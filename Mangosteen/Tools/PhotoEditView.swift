@@ -1,6 +1,78 @@
 import CoreImage
 import SwiftUI
 
+/// A slider where a double-click toggles between the default value and the last changed value.
+struct ResettableSlider: NSViewRepresentable {
+    @Binding var value: Double
+    let range: ClosedRange<Double>
+    let defaultValue: Double
+
+    final class Coordinator: NSObject {
+        var parent: ResettableSlider
+        /// The changed value to bring back on the next double-click.
+        var stashed: Double?
+
+        init(_ parent: ResettableSlider) {
+            self.parent = parent
+        }
+
+        @objc func changed(_ sender: NSSlider) {
+            parent.value = sender.doubleValue
+        }
+
+        /// `intended` is the value before the double-click began; its first click may have moved the knob.
+        func toggle(from intended: Double, slider: NSSlider) {
+            let isDefault = abs(intended - parent.defaultValue) < 0.0001
+            let target: Double
+            if !isDefault {
+                stashed = intended
+                target = parent.defaultValue
+            } else {
+                target = stashed ?? parent.defaultValue
+            }
+            slider.doubleValue = target
+            parent.value = target
+        }
+    }
+
+    final class Slider: NSSlider {
+        var onDoubleClick: ((Double) -> Void)?
+        private var valueBeforeClick: Double = 0
+
+        override func mouseDown(with event: NSEvent) {
+            if event.clickCount >= 2 {
+                onDoubleClick?(valueBeforeClick)
+                return
+            }
+            valueBeforeClick = doubleValue
+            super.mouseDown(with: event)
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeNSView(context: Context) -> Slider {
+        let slider = Slider(value: value, minValue: range.lowerBound, maxValue: range.upperBound,
+                            target: context.coordinator, action: #selector(Coordinator.changed(_:)))
+        slider.isContinuous = true
+        slider.controlSize = .small
+        slider.onDoubleClick = { [weak slider, coordinator = context.coordinator] intended in
+            guard let slider else { return }
+            coordinator.toggle(from: intended, slider: slider)
+        }
+        return slider
+    }
+
+    func updateNSView(_ slider: Slider, context: Context) {
+        context.coordinator.parent = self
+        if slider.doubleValue != value {
+            slider.doubleValue = value
+        }
+    }
+}
+
 /// Photo editor: light, colour, detail and effects with a live preview. Hold the preview to see the original.
 struct PhotoEditView: View {
     let urls: [URL]
@@ -96,7 +168,7 @@ struct PhotoEditView: View {
                 slider("Виньетка", \.vignette, 0...1)
                 slider("Зерно", \.grain, 0...1)
             }
-            Text("Двойной клик по названию сбрасывает ползунок.")
+            Text("Двойной клик по ползунку сбрасывает его, повторный — возвращает изменённое значение.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -115,15 +187,13 @@ struct PhotoEditView: View {
         return VStack(alignment: .leading, spacing: 2) {
             HStack {
                 Text(title)
-                    .onTapGesture(count: 2) { adjustments[keyPath: keyPath] = PhotoAdjustments()[keyPath: keyPath] }
                 Spacer()
                 Text(String(format: "%+.2f", value.wrappedValue))
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
             }
             .font(.callout)
-            Slider(value: value, in: range)
-                .controlSize(.small)
+            ResettableSlider(value: value, range: range, defaultValue: PhotoAdjustments()[keyPath: keyPath])
         }
     }
 
