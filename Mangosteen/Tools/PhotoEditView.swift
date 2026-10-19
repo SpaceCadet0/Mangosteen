@@ -34,7 +34,6 @@ struct PhotoEditView: View {
                        actionDisabled: adjustments.isIdentity || base == nil, cancel: close, action: run)
         }
         .padding(20)
-        .frame(minHeight: 620)
         .task { await load() }
         .task(id: adjustments) { await renderPreview() }
     }
@@ -62,7 +61,7 @@ struct PhotoEditView: View {
                     .padding(10)
             }
         }
-        .frame(minWidth: 560, minHeight: 520)
+        .frame(minWidth: 480, idealWidth: 620, minHeight: 380, idealHeight: 520)
         .contentShape(Rectangle())
         .onLongPressGesture(minimumDuration: 0.05, maximumDistance: 50, perform: {}, onPressingChanged: { pressing in
             showOriginal = pressing
