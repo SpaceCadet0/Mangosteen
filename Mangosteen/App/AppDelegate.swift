@@ -19,7 +19,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.applicationIconImage = AppPresence.makeIcon()
+        NSApp.applicationIconImage = MangosteenArt.appIcon()
         NSApp.mainMenu = makeMainMenu()
         menuBar = MenuBarController(
             openFiles: { [weak self] kind in self?.chooseFiles(for: kind) },
@@ -48,11 +48,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let itemID = arguments[flag + 1]
         let output = URL(fileURLWithPath: arguments[flag + 2])
         let inputs = arguments[(flag + 3)...].map { URL(fileURLWithPath: $0) }
-        if itemID == "icon" {
-            let image = AppPresence.makeIcon()
-            if let tiff = image.tiffRepresentation, let bitmap = NSBitmapImageRep(data: tiff) {
-                try? bitmap.representation(using: .png, properties: [:])?.write(to: output)
+        // "iconset": writes the app icon PNGs (and the menu bar icon preview) into the `output` folder.
+        if itemID == "iconset" {
+            func save(_ image: NSImage, pixels: Int, name: String) {
+                let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: pixels, pixelsHigh: pixels, bitsPerSample: 8,
+                                              samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+                                              colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+                bitmap.size = NSSize(width: pixels, height: pixels)
+                NSGraphicsContext.saveGraphicsState()
+                NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmap)
+                image.draw(in: NSRect(x: 0, y: 0, width: pixels, height: pixels))
+                NSGraphicsContext.restoreGraphicsState()
+                try? bitmap.representation(using: .png, properties: [:])?.write(to: output.appendingPathComponent(name))
             }
+            try? FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+            for pixels in [16, 32, 64, 128, 256, 512, 1024] {
+                save(MangosteenArt.appIcon(size: CGFloat(pixels)), pixels: pixels, name: "icon_\(pixels).png")
+            }
+            save(MangosteenArt.menuBarIcon(size: 18), pixels: 36, name: "menubar@2x.png")
             exit(0)
         }
         // "wheel.convert" / "wheel.tools" / "wheel.actions" show the wheel itself at the centre of the screen.

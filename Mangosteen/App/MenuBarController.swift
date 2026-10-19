@@ -12,8 +12,8 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         self.openSettings = openSettings
         super.init()
 
-        statusItem.button?.image = NSImage(systemSymbolName: "circle.hexagongrid.fill",
-                                           accessibilityDescription: "Mangosteen")
+        statusItem.button?.image = MangosteenArt.menuBarIcon()
+        statusItem.button?.image?.accessibilityDescription = "Mangosteen"
 
         let menu = NSMenu()
         menu.delegate = self
