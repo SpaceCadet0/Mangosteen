@@ -1,0 +1,50 @@
+import Foundation
+
+/// Chooses where results go: next to the original, never overwriting anything.
+enum OutputNaming {
+    /// `photo.png` → `photo.png`, or `photo 2.png`, `photo 3.png`… when taken.
+    static func uniqueURL(in directory: URL, baseName: String, pathExtension: String,
+                          fileManager: FileManager = .default) -> URL {
+        func candidate(_ index: Int) -> URL {
+            let name = index == 1 ? baseName : "\(baseName) \(index)"
+            let url = directory.appendingPathComponent(name)
+            return pathExtension.isEmpty ? url : url.appendingPathExtension(pathExtension)
+        }
+        var index = 1
+        while fileManager.fileExists(atPath: candidate(index).path) {
+            index += 1
+        }
+        return candidate(index)
+    }
+
+    static func baseName(of url: URL) -> String {
+        url.deletingPathExtension().lastPathComponent
+    }
+
+    /// Runs `produce` against a hidden temporary file in `directory`, then moves the result to a unique
+    /// final name. Nothing visible is left behind if `produce` throws.
+    @discardableResult
+    static func writeAtomically(directory: URL, baseName: String, pathExtension: String,
+                                fileManager: FileManager = .default,
+                                produce: (URL) throws -> Void) throws -> URL {
+        let temp = directory.appendingPathComponent(".mangosteen-\(UUID().uuidString)")
+            .appendingPathExtension(pathExtension)
+        defer { try? fileManager.removeItem(at: temp) }
+        try produce(temp)
+        guard fileManager.fileExists(atPath: temp.path) else {
+            throw CocoaError(.fileWriteUnknown)
+        }
+        // Another job may claim the same name between choosing and moving; retry with the next one.
+        for _ in 0..<20 {
+            let final = uniqueURL(in: directory, baseName: baseName, pathExtension: pathExtension,
+                                  fileManager: fileManager)
+            do {
+                try fileManager.moveItem(at: temp, to: final)
+                return final
+            } catch CocoaError.fileWriteFileExists {
+                continue
+            }
+        }
+        throw CocoaError(.fileWriteFileExists)
+    }
+}

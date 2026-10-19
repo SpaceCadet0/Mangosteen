@@ -1,0 +1,8 @@
+.DS_Store
+build/
+DerivedData/
+*.xcodeproj/
+xcuserdata/
+*.xcuserstate
+.swiftpm/
+Mangosteen/Resources/Tools/

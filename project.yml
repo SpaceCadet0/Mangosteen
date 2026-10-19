@@ -1,0 +1,52 @@
+name: Mangosteen
+options:
+  bundleIdPrefix: dev.mangosteen
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+targets:
+  Mangosteen:
+    type: application
+    platform: macOS
+    sources:
+      - Mangosteen
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.mangosteen.app
+        PRODUCT_NAME: Mangosteen
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_LSUIElement: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Mangosteen
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        ENABLE_APP_SANDBOX: NO
+        ENABLE_HARDENED_RUNTIME: NO
+  MangosteenTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - MangosteenTests
+      - Mangosteen/Core
+      - Mangosteen/Conversion
+      - Mangosteen/Support
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.mangosteen.tests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  Mangosteen:
+    build:
+      targets:
+        Mangosteen: all
+        MangosteenTests: [test]
+    test:
+      targets:
+        - MangosteenTests

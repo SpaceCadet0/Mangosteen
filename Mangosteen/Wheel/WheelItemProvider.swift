@@ -1,0 +1,52 @@
+import Foundation
+
+/// One segment of a wheel.
+struct WheelItem {
+    let id: String
+    let title: String
+    let symbolName: String
+    let perform: ([URL]) -> Void
+}
+
+/// Builds the segments shown for a wheel and a set of dragged files.
+enum WheelItemProvider {
+    static func items(for kind: WheelKind, urls: [URL]) -> [WheelItem] {
+        switch kind {
+        case .convert: conversionItems(for: urls)
+        case .tools: toolItems(for: urls)
+        case .actions: actionItems
+        }
+    }
+
+    private static func conversionItems(for urls: [URL]) -> [WheelItem] {
+        FormatCatalog.targets(for: urls).map { format in
+            WheelItem(id: "convert.\(format.rawValue)", title: format.displayName, symbolName: format.symbolName) { urls in
+                ConversionService.shared.convert(urls, to: format)
+            }
+        }
+    }
+
+    private static func toolItems(for urls: [URL]) -> [WheelItem] {
+        let formats = urls.compactMap(FileFormat.detect)
+        var items: [WheelItem] = []
+        if formats.contains(where: { $0.category == .image }) {
+            items.append(WheelItem(id: "tool.createPDF", title: "PDF из фото", symbolName: "doc.badge.plus") { urls in
+                ConversionService.shared.runBatch("Создание PDF", inputs: urls) { [try PDFTools.createPDF(fromImages: $0)] }
+            })
+        }
+        if formats.filter({ $0 == .pdf }).count >= 2 {
+            items.append(WheelItem(id: "tool.mergePDF", title: "Объединить", symbolName: "doc.on.doc") { urls in
+                ConversionService.shared.runBatch("Объединение PDF", inputs: urls) { [try PDFTools.merge($0)] }
+            })
+        }
+        return items
+    }
+
+    private static let actionItems: [WheelItem] = [
+        WheelItem(id: "action.airdrop", title: "AirDrop", symbolName: "dot.radiowaves.left.and.right", perform: FileActions.airDrop),
+        WheelItem(id: "action.copy", title: "Копировать", symbolName: "doc.on.clipboard", perform: FileActions.copy),
+        WheelItem(id: "action.move", title: "Переместить", symbolName: "folder", perform: FileActions.move),
+        WheelItem(id: "action.copyPath", title: "Путь", symbolName: "link", perform: FileActions.copyPaths),
+        WheelItem(id: "action.terminal", title: "Терминал", symbolName: "terminal", perform: FileActions.openTerminal),
+    ]
+}
