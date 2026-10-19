@@ -59,6 +59,9 @@ enum WheelItemProvider {
             })
         }
         if formats.contains(where: { $0.category == .video }) {
+            items.append(WheelItem(id: "tool.redactVideo", title: "Скрыть", symbolName: "eye.slash") { urls in
+                ToolWindow.present(title: "Скрыть на видео", files: urls) { VideoRedactView(urls: urls, close: $0) }
+            })
             items.append(WheelItem(id: "tool.cropVideo", title: "Кадрировать", symbolName: "crop") { urls in
                 ToolWindow.present(title: "Кадрирование видео", files: urls) { VideoCropView(urls: urls, close: $0) }
             })

@@ -97,7 +97,7 @@ MangosteenTests/  юнит-тесты конвертеров, именовани
   Collage (сетка/ряд/колонка/featured).
 - PDF: Merge PDFs, Organize pages (поворот, дублирование, удаление, порядок).
 
-### Фаза 5 — видео и аудио (ffmpeg) — конвертация ✅, инструменты в работе
+### Фаза 5 — видео и аудио (ffmpeg) ✅
 - Конвертация MP4/MOV/MKV/WebM/AVI/WMV/GIF, MP3 из видео; аудио MP3/M4A/WAV/FLAC/OGG/Opus/AIFF/WMA.
 - Инструменты: Trim, Crop, Speed, Join, Save frames, Split, Redact video; Normalize, Visualizer, Trim audio, Channels, Bleep.
 - Прогресс по выводу ffmpeg (`-progress pipe:1`), отмена.
