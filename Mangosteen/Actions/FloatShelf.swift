@@ -34,6 +34,16 @@ final class FloatShelf {
         reload()
     }
 
+    /// Finder finishes moves asynchronously after the drag ends, often one file at a time,
+    /// so availability is re-checked for a few seconds.
+    func refreshAfterDrag() {
+        for delay in [0.3, 1, 2, 4, 8] {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+                self?.reload()
+            }
+        }
+    }
+
     func show() {
         let panel = panel ?? makePanel()
         if !panel.isVisible, let screen = NSScreen.main {
@@ -182,6 +192,18 @@ private final class FloatShelfView: NSVisualEffectView {
         emptyLabel.isHidden = !urls.isEmpty
     }
 
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        trackingAreas.forEach(removeTrackingArea)
+        addTrackingArea(NSTrackingArea(rect: bounds, options: [.mouseEnteredAndExited, .activeAlways],
+                                       owner: self, userInfo: nil))
+    }
+
+    /// Files may have been moved or deleted elsewhere while the shelf was idle.
+    override func mouseEntered(with event: NSEvent) {
+        FloatShelf.shared.refresh()
+    }
+
     @objc private func modeChanged(_ sender: NSSegmentedControl) {
         AppSettings.shared.floatMovesFiles = sender.selectedSegment == 1
     }
@@ -281,7 +303,8 @@ private final class FloatItemView: NSView, NSDraggingSource {
     private func refresh() {
         if isGroup {
             iconView.image = NSImage(systemSymbolName: "square.stack.3d.up.fill", accessibilityDescription: nil)
-            nameLabel.stringValue = "Перетащить все (\(urls.count))"
+            let available = urls.filter { FileManager.default.fileExists(atPath: $0.path) }.count
+            nameLabel.stringValue = "Перетащить все (\(available))"
             nameLabel.font = .systemFont(ofSize: 12, weight: .semibold)
             removeButton.isHidden = true
             layer?.backgroundColor = NSColor.labelColor.withAlphaComponent(0.06).cgColor
@@ -357,8 +380,6 @@ private final class FloatItemView: NSView, NSDraggingSource {
     }
 
     func draggingSession(_ session: NSDraggingSession, endedAt screenPoint: NSPoint, operation: NSDragOperation) {
-        DispatchQueue.main.async {
-            FloatShelf.shared.refresh()
-        }
+        FloatShelf.shared.refreshAfterDrag()
     }
 }
