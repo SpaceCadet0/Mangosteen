@@ -52,6 +52,7 @@ enum WheelItemProvider {
 
     private static let actionItems: [WheelItem] = [
         WheelItem(id: "action.airdrop", title: "AirDrop", symbolName: "dot.radiowaves.left.and.right", perform: FileActions.airDrop),
+        WheelItem(id: "action.float", title: "Float", symbolName: "tray.and.arrow.down", perform: FloatShelf.shared.add),
         WheelItem(id: "action.copy", title: "Копировать", symbolName: "doc.on.clipboard", perform: FileActions.copy),
         WheelItem(id: "action.move", title: "Переместить", symbolName: "folder", perform: FileActions.move),
         WheelItem(id: "action.copyPath", title: "Путь", symbolName: "link", perform: FileActions.copyPaths),

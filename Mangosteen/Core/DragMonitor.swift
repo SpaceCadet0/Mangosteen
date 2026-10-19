@@ -5,6 +5,8 @@ import AppKit
 /// Uses only mouse event monitors and `NSEvent.modifierFlags` polling, so no Accessibility or
 /// Input Monitoring permission is required.
 final class DragMonitor {
+    static let shared = DragMonitor()
+
     /// Called on the main thread when the user taps a modifier combination during a file drag.
     var onModifierTap: ((NSEvent.ModifierFlags, [URL]) -> Void)?
     /// Called on the main thread when the mouse button is released after a file drag.
@@ -59,8 +61,13 @@ final class DragMonitor {
         let pasteboard = NSPasteboard(name: .drag)
         // The drag pasteboard is only rewritten when a real drag session starts.
         guard pasteboard.changeCount != baselineChangeCount else { return }
-        let urls = Self.fileURLs(on: pasteboard)
-        guard !urls.isEmpty else { return }
+        beginDrag(urls: Self.fileURLs(on: pasteboard))
+    }
+
+    /// Called directly by Mangosteen's own drag sources (the Float shelf), whose drags the event
+    /// monitors may not observe.
+    func beginDrag(urls: [URL]) {
+        guard !isDragging, !urls.isEmpty else { return }
         isDragging = true
         draggedURLs = urls
         lastFlags = currentFlags()

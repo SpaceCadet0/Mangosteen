@@ -3,7 +3,7 @@ import SwiftUI
 
 @main
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private let dragMonitor = DragMonitor()
+    private let dragMonitor = DragMonitor.shared
     private let wheel = WheelController()
     private var menuBar: MenuBarController?
     private var settingsWindow: NSWindow?

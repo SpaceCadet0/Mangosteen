@@ -26,6 +26,9 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             item.representedObject = kind.rawValue
             menu.addItem(item)
         }
+        let float = NSMenuItem(title: "Показать или скрыть Float", action: #selector(floatSelected), keyEquivalent: "")
+        float.target = self
+        menu.addItem(float)
         menu.addItem(.separator())
         let settings = NSMenuItem(title: "Настройки…", action: #selector(settingsSelected), keyEquivalent: ",")
         settings.target = self
@@ -47,6 +50,10 @@ final class MenuBarController: NSObject, NSMenuDelegate {
     @objc private func openFilesSelected(_ sender: NSMenuItem) {
         guard let raw = sender.representedObject as? String, let kind = WheelKind(rawValue: raw) else { return }
         openFiles(kind)
+    }
+
+    @objc private func floatSelected() {
+        FloatShelf.shared.toggle()
     }
 
     @objc private func settingsSelected() {

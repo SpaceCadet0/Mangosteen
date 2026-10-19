@@ -85,7 +85,7 @@ MangosteenTests/  юнит-тесты конвертеров, именовани
 - Таблицы CSV ↔ TSV (без Office).
 - Архивы: ZIP/TAR/GZIP упаковка и распаковка (`ditto`, `tar`, `gzip`).
 
-### Фаза 3 — файловые действия (⌃ колесо)
+### Фаза 3 — файловые действия (⌃ колесо) ✅ (прилипание к краю и несколько полок — позже)
 - AirDrop (`NSSharingService(.sendViaAirDrop)`), Copy (файлы в pasteboard), Move (выбор папки),
   Copy Path, Terminal (Terminal / iTerm2 по настройке).
 - Float: плавающая полка, прилипание к краю, перетаскивание наружу, Quick Look, несколько полок.
