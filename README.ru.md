@@ -16,6 +16,7 @@
   <img src="https://img.shields.io/badge/Swift-SwiftUI%20%2B%20AppKit-671E38?logo=swift&logoColor=white" alt="Swift">
   <img src="https://img.shields.io/badge/works-offline-671E38" alt="Работает офлайн">
   <img src="https://img.shields.io/badge/languages-EN%20%C2%B7%20ES%20%C2%B7%20RU-671E38" alt="Языки">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-671E38" alt="MIT License"></a>
 </p>
 
 ---
@@ -169,3 +170,9 @@ xcodebuild -scheme Mangosteen -derivedDataPath build.noindex test
 План развития: [docs/PLAN.md](docs/PLAN.md).
 
 Приложение не использует песочницу и подписывается ad-hoc. Оно предназначено для личного использования.
+
+## Лицензия
+
+Mangosteen распространяется по [лицензии MIT](LICENSE). В релизную сборку встроены [FFmpeg](https://ffmpeg.org)
+(GPL v3, сборка Homebrew) и утилиты [libwebp](https://chromium.googlesource.com/webm/libwebp) (BSD) — на них
+действуют их собственные лицензии.

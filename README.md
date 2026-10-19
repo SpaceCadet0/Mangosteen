@@ -16,6 +16,7 @@
   <img src="https://img.shields.io/badge/Swift-SwiftUI%20%2B%20AppKit-671E38?logo=swift&logoColor=white" alt="Swift">
   <img src="https://img.shields.io/badge/works-offline-671E38" alt="Works offline">
   <img src="https://img.shields.io/badge/languages-EN%20%C2%B7%20ES%20%C2%B7%20RU-671E38" alt="Languages">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-671E38" alt="MIT License"></a>
 </p>
 
 ---
@@ -169,3 +170,9 @@ Debug builds can capture any tool window to check the layout:
 The roadmap is in [docs/PLAN.md](docs/PLAN.md) (in Russian).
 
 The app is not sandboxed and is signed ad hoc. It is made for personal use.
+
+## License
+
+Mangosteen is released under the [MIT License](LICENSE). The release build bundles [FFmpeg](https://ffmpeg.org)
+(GPL v3, built by Homebrew) and [libwebp](https://chromium.googlesource.com/webm/libwebp) tools (BSD), which keep
+their own licenses.
