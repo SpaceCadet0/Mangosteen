@@ -102,10 +102,10 @@ MangosteenTests/  юнит-тесты конвертеров, именовани
 - Инструменты: Trim, Crop, Speed, Join, Save frames, Split, Redact video; Normalize, Visualizer, Trim audio, Channels, Bleep.
 - Прогресс по выводу ffmpeg (`-progress pipe:1`), отмена.
 
-### Фаза 6 — полировка и автономность
+### Фаза 6 — полировка и автономность ✅
 - Онбординг, звук/хаптика, иконка, автозапуск (`SMAppService.mainApp`).
-- Скрипт `scripts/bundle-tools.sh`: вшить ffmpeg/cwebp/exiftool в `.app` (поиск в бандле имеет приоритет).
-- Скрипт сборки релиза и установки в /Applications.
+- `scripts/bundle_tools.py`: вшивает ffmpeg/ffprobe/cwebp/gif2webp со всеми библиотеками в `.app` (поиск в бандле имеет приоритет).
+- `scripts/release.sh [--install]`: Release-сборка, встраивание утилит, проверка, установка в /Applications.
 
 ## 4. Принципы
 - Оригинал никогда не изменяется; запись атомарная (во временный файл → переименование).

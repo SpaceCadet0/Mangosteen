@@ -5,11 +5,13 @@ final class MenuBarController: NSObject, NSMenuDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     private let openFiles: (WheelKind) -> Void
     private let openSettings: () -> Void
+    private let openWelcome: () -> Void
     private let hintItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
 
-    init(openFiles: @escaping (WheelKind) -> Void, openSettings: @escaping () -> Void) {
+    init(openFiles: @escaping (WheelKind) -> Void, openSettings: @escaping () -> Void, openWelcome: @escaping () -> Void) {
         self.openFiles = openFiles
         self.openSettings = openSettings
+        self.openWelcome = openWelcome
         super.init()
 
         statusItem.button?.image = MangosteenArt.menuBarIcon()
@@ -30,6 +32,9 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         float.target = self
         menu.addItem(float)
         menu.addItem(.separator())
+        let welcome = NSMenuItem(title: "Как пользоваться…", action: #selector(welcomeSelected), keyEquivalent: "")
+        welcome.target = self
+        menu.addItem(welcome)
         let settings = NSMenuItem(title: "Настройки…", action: #selector(settingsSelected), keyEquivalent: ",")
         settings.target = self
         menu.addItem(settings)
@@ -86,6 +91,10 @@ final class MenuBarController: NSObject, NSMenuDelegate {
 
     @objc private func floatSelected() {
         FloatShelf.shared.toggle()
+    }
+
+    @objc private func welcomeSelected() {
+        openWelcome()
     }
 
     @objc private func settingsSelected() {

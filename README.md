@@ -15,19 +15,30 @@
 
 Подробный план развития: [docs/PLAN.md](docs/PLAN.md).
 
-## Сборка
+## Установка
 
-Требования: macOS 14+, Xcode 26+, [XcodeGen](https://github.com/yonaskolb/XcodeGen).
-Для WebP нужен `cwebp`, позже понадобятся `ffmpeg` и `exiftool`:
+Требования: macOS 14+, Xcode 26+, [XcodeGen](https://github.com/yonaskolb/XcodeGen) и утилиты из Homebrew,
+которые будут встроены в приложение:
 
 ```bash
-brew install xcodegen webp ffmpeg exiftool
+brew install xcodegen webp ffmpeg
 ```
+
+Собрать автономное приложение (ffmpeg, ffprobe, cwebp и gif2webp с библиотеками внутри) и установить в /Applications:
+
+```bash
+scripts/release.sh --install
+```
+
+Без `--install` готовое приложение остаётся в `build/release/Build/Products/Release/Mangosteen.app`.
+При первом запуске откроется окно «Как пользоваться»; позже оно доступно из меню значка.
+
+## Разработка
 
 ```bash
 xcodegen generate
-xcodebuild -scheme Mangosteen -configuration Release -derivedDataPath build build
-open build/Build/Products/Release/Mangosteen.app
+xcodebuild -scheme Mangosteen -derivedDataPath build build
+open build/Build/Products/Debug/Mangosteen.app
 ```
 
 Тесты:
@@ -35,5 +46,8 @@ open build/Build/Products/Release/Mangosteen.app
 ```bash
 xcodebuild -scheme Mangosteen -derivedDataPath build test
 ```
+
+Отладочная сборка умеет снимать окна инструментов для проверки вёрстки:
+`Mangosteen --snapshot <id пункта колеса> <выход> <файлы…>` (см. `AppDelegate`).
 
 Приложение не использует песочницу и подписывается ad-hoc. Оно предназначено для личного использования.

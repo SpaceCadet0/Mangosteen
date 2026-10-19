@@ -23,7 +23,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         NSApp.mainMenu = makeMainMenu()
         menuBar = MenuBarController(
             openFiles: { [weak self] kind in self?.chooseFiles(for: kind) },
-            openSettings: { [weak self] in self?.showSettings() }
+            openSettings: { [weak self] in self?.showSettings() },
+            openWelcome: { [weak self] in self?.showWelcome() }
         )
 
         dragMonitor.onModifierTap = { [weak self] flags, urls in
@@ -36,7 +37,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         dragMonitor.start()
         #if DEBUG
         runSnapshotIfRequested()
+        if ProcessInfo.processInfo.arguments.contains("--snapshot") { return }
         #endif
+        if !UserDefaults.standard.bool(forKey: WelcomeView.shownKey) {
+            showWelcome()
+        }
+    }
+
+    @objc func showWelcome() {
+        ToolWindow.present(title: "Как пользоваться Mangosteen") { WelcomeView(close: $0) }
     }
 
     #if DEBUG
@@ -73,6 +82,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let center = NSScreen.main.map { NSPoint(x: $0.frame.midX, y: $0.frame.midY) } ?? .zero
             wheel.show(kind: kind, urls: inputs, at: center)
             finishSnapshot(window: wheel.debugWindow)
+            return
+        }
+        if itemID == "welcome" {
+            showWelcome()
+            finishSnapshot(window: nil)
             return
         }
         let kind: WheelKind = itemID.hasPrefix("action.") ? .actions : itemID.hasPrefix("convert.") ? .convert : .tools
