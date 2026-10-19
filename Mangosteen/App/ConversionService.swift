@@ -77,18 +77,30 @@ final class ConversionService {
 
 /// Sounds, haptics, Finder reveal and error reporting.
 enum Feedback {
-    /// A short, muted click like pressing a trackpad: a soft low thump with a faint tick on top,
-    /// synthesised once as 16-bit mono PCM.
-    private static let hoverSound: NSSound? = {
-        let rate = 44_100.0
-        let count = Int(rate * 0.022)
-        var samples = [Int16](repeating: 0, count: count)
-        for index in 0..<count {
-            let t = Double(index) / rate
-            let thump = sin(2 * .pi * 180 * t) * exp(-t * 320)
-            let tick = sin(2 * .pi * 2_600 * t) * exp(-t * 2_200) * 0.35
-            samples[index] = Int16(max(-1, min(1, (thump + tick) * 0.5)) * Double(Int16.max))
+    /// A short, muted click like pressing a trackpad: a soft low thump with a faint tick on top.
+    private static let hoverSound = synthesize(duration: 0.022, volume: 0.45) { t in
+        let thump = sin(2 * .pi * 180 * t) * exp(-t * 320)
+        let tick = sin(2 * .pi * 2_600 * t) * exp(-t * 2_200) * 0.35
+        return (thump + tick) * 0.5
+    }
+
+    /// A soft, low two-note chime (C5 then G5) with gentle attack and quick decay — calmer than "Glass".
+    private static let doneSound = synthesize(duration: 0.5, volume: 0.5) { t in
+        func note(_ frequency: Double, at start: Double, decay: Double) -> Double {
+            let local = t - start
+            guard local >= 0 else { return 0 }
+            let attack = min(1, local / 0.006)
+            return attack * exp(-local * decay)
+                * (sin(2 * .pi * frequency * local) + 0.18 * sin(4 * .pi * frequency * local))
         }
+        let fadeOut = min(1, (0.5 - t) / 0.03)
+        return (note(523.25, at: 0, decay: 13) + note(783.99, at: 0.085, decay: 11)) * 0.32 * fadeOut
+    }
+
+    /// Renders `sample(t)` (−1…1) as 16-bit mono 44.1 kHz WAV and wraps it in a sound.
+    private static func synthesize(duration: Double, volume: Float, sample: (Double) -> Double) -> NSSound? {
+        let rate = 44_100.0
+        let count = Int(rate * duration)
         var data = Data()
         func append<T>(_ value: T) { withUnsafeBytes(of: value) { data.append(contentsOf: $0) } }
         let payload = UInt32(count * 2)
@@ -98,12 +110,14 @@ enum Feedback {
         append(UInt32(44_100).littleEndian); append(UInt32(88_200).littleEndian)
         append(UInt16(2).littleEndian); append(UInt16(16).littleEndian)
         data.append(contentsOf: Array("data".utf8)); append(payload.littleEndian)
-        samples.forEach { append($0.littleEndian) }
+        for index in 0..<count {
+            let value = max(-1, min(1, sample(Double(index) / rate)))
+            append(Int16(value * Double(Int16.max)).littleEndian)
+        }
         let sound = NSSound(data: data)
-        sound?.volume = 0.45
+        sound?.volume = volume
         return sound
-    }()
-    private static let doneSound = NSSound(named: "Glass")
+    }
 
     static func hover() {
         let settings = AppSettings.shared
@@ -119,7 +133,10 @@ enum Feedback {
     static func finished(_ title: String, outputs: [URL], failures: [(URL, Error)]) {
         let settings = AppSettings.shared
         if !outputs.isEmpty {
-            if settings.playSounds { doneSound?.play() }
+            if settings.playSounds, let sound = doneSound {
+                sound.stop()
+                sound.play()
+            }
             if settings.revealInFinder { NSWorkspace.shared.activateFileViewerSelecting(outputs) }
         }
         guard !failures.isEmpty else { return }
