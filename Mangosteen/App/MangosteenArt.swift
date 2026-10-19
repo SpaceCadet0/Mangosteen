@@ -135,16 +135,13 @@ enum MangosteenArt {
 
     // MARK: - Menu bar icon
 
-    /// A monochrome ring with the segments, for the status item; macOS tints template images.
+    /// The segments alone in monochrome, for the status item; macOS tints template images.
     static func menuBarIcon(size: CGFloat = 18) -> NSImage {
         let image = NSImage(size: NSSize(width: size, height: size), flipped: false) { rect in
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
             let center = CGPoint(x: rect.midX, y: rect.midY)
-            let radius = size / 2 - 0.75
-            context.setStrokeColor(NSColor.black.cgColor)
-            context.setLineWidth(1.5)
-            context.strokeEllipse(in: CGRect(x: center.x - radius, y: center.y - radius, width: radius * 2, height: radius * 2))
-            let flesh = radius - 1.9
+            // Segments only, nearly the full size of the icon.
+            let flesh = size / 2 - 0.3
             context.setFillColor(NSColor.black.cgColor)
             var angle = startAngle
             for index in spans.indices {
