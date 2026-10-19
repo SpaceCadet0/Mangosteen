@@ -40,7 +40,15 @@ enum WheelItemProvider {
                 ToolWindow.present(title: "Обрезка") { CropView(urls: urls, close: $0) }
             })
         }
+        if hasImages {
+            items.append(WheelItem(id: "tool.edit", title: "Редактор", symbolName: "slider.horizontal.3") { urls in
+                ToolWindow.present(title: "Редактор фото") { PhotoEditView(urls: urls, close: $0) }
+            })
+        }
         if formats.contains(where: { $0.category == .image && $0 != .svg }) {
+            items.append(WheelItem(id: "tool.metadata", title: "Метаданные", symbolName: "info.circle") { urls in
+                ToolWindow.present(title: "Метаданные") { MetadataView(urls: urls, close: $0) }
+            })
             items.append(WheelItem(id: "tool.createPDF", title: "PDF из фото", symbolName: "doc.badge.plus") { urls in
                 ConversionService.shared.runBatch("Создание PDF", inputs: urls) { [try PDFTools.createPDF(fromImages: $0)] }
             })
