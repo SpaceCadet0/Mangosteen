@@ -46,6 +46,9 @@ enum WheelItemProvider {
             })
         }
         if hasImages {
+            items.append(WheelItem(id: "tool.annotate", title: "Пометки", symbolName: "pencil.and.outline") { urls in
+                ToolWindow.present(title: "Пометки") { AnnotateView(urls: urls, close: $0) }
+            })
             items.append(WheelItem(id: "tool.redact", title: "Скрыть", symbolName: "eye.slash") { urls in
                 ToolWindow.present(title: "Скрыть лица и текст") { RedactView(urls: urls, close: $0) }
             })
