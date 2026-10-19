@@ -77,9 +77,30 @@ final class ConversionService {
 
 /// Sounds, haptics, Finder reveal and error reporting.
 enum Feedback {
+    /// A short, muted click like pressing a trackpad: a soft low thump with a faint tick on top,
+    /// synthesised once as 16-bit mono PCM.
     private static let hoverSound: NSSound? = {
-        let sound = NSSound(named: "Tink")
-        sound?.volume = 0.25
+        let rate = 44_100.0
+        let count = Int(rate * 0.022)
+        var samples = [Int16](repeating: 0, count: count)
+        for index in 0..<count {
+            let t = Double(index) / rate
+            let thump = sin(2 * .pi * 180 * t) * exp(-t * 320)
+            let tick = sin(2 * .pi * 2_600 * t) * exp(-t * 2_200) * 0.35
+            samples[index] = Int16(max(-1, min(1, (thump + tick) * 0.5)) * Double(Int16.max))
+        }
+        var data = Data()
+        func append<T>(_ value: T) { withUnsafeBytes(of: value) { data.append(contentsOf: $0) } }
+        let payload = UInt32(count * 2)
+        data.append(contentsOf: Array("RIFF".utf8)); append(UInt32(36 + payload).littleEndian)
+        data.append(contentsOf: Array("WAVEfmt ".utf8)); append(UInt32(16).littleEndian)
+        append(UInt16(1).littleEndian); append(UInt16(1).littleEndian)
+        append(UInt32(44_100).littleEndian); append(UInt32(88_200).littleEndian)
+        append(UInt16(2).littleEndian); append(UInt16(16).littleEndian)
+        data.append(contentsOf: Array("data".utf8)); append(payload.littleEndian)
+        samples.forEach { append($0.littleEndian) }
+        let sound = NSSound(data: data)
+        sound?.volume = 0.45
         return sound
     }()
     private static let doneSound = NSSound(named: "Glass")

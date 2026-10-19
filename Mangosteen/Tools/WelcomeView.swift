@@ -60,7 +60,7 @@ struct WelcomeView: View {
                 .font(.callout.weight(.bold))
                 .foregroundStyle(.white)
                 .frame(width: 22, height: 22)
-                .background(Circle().fill(Color.accentColor))
+                .background(Circle().fill(Brand.color))
             Text(text).fixedSize(horizontal: false, vertical: true)
         }
     }

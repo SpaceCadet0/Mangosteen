@@ -1,13 +1,13 @@
 #!/bin/bash
 # Builds a self-contained Release of Mangosteen (ffmpeg, ffprobe, cwebp and gif2webp inside the app).
-#   scripts/release.sh            build into build/release
+#   scripts/release.sh            build into build.noindex/release
 #   scripts/release.sh --install  build, then replace /Applications/Mangosteen.app and start it
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 xcodegen generate --quiet
-xcodebuild -scheme Mangosteen -configuration Release -derivedDataPath build/release build -quiet
-APP="build/release/Build/Products/Release/Mangosteen.app"
+xcodebuild -scheme Mangosteen -configuration Release -derivedDataPath build.noindex/release build -quiet
+APP="build.noindex/release/Build/Products/Release/Mangosteen.app"
 
 python3 scripts/bundle_tools.py "$APP"
 codesign --force --sign - "$APP"
@@ -23,5 +23,7 @@ if [ "${1:-}" = "--install" ]; then
     rm -rf /Applications/Mangosteen.app
     cp -R "$APP" /Applications/
     open /Applications/Mangosteen.app
+    # Keep a single Mangosteen on the Mac: the intermediate copy goes once it is installed.
+    rm -rf "$APP"
     echo "Installed /Applications/Mangosteen.app"
 fi

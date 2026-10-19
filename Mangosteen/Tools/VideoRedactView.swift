@@ -136,7 +136,7 @@ struct VideoRedactView: View {
                 if let draft {
                     let rect = viewRect(draft, in: frame)
                     Rectangle()
-                        .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5, dash: [5, 3]))
+                        .stroke(Brand.color, style: StrokeStyle(lineWidth: 1.5, dash: [5, 3]))
                         .frame(width: rect.width, height: rect.height)
                         .position(x: rect.midX, y: rect.midY)
                         .allowsHitTesting(false)
@@ -154,7 +154,7 @@ struct VideoRedactView: View {
         return ZStack {
             Rectangle()
                 .fill(active && checkedFrame == nil ? fill : Color.white.opacity(0.001))
-                .overlay(Rectangle().stroke(isSelected ? Color.accentColor : Color.white.opacity(active ? 0.8 : 0.45),
+                .overlay(Rectangle().stroke(isSelected ? Brand.color : Color.white.opacity(active ? 0.8 : 0.45),
                                             style: StrokeStyle(lineWidth: isSelected ? 2 : 1, dash: active ? [] : [4, 3])))
                 .overlay {
                     if active, style != .solid, checkedFrame == nil {
@@ -240,7 +240,7 @@ struct VideoRedactView: View {
             let start = model.x(for: region.start, width: width)
             let end = model.x(for: region.end, width: width)
             Capsule()
-                .fill(region.id == selected ? Color.yellow : Color.accentColor.opacity(0.85))
+                .fill(region.id == selected ? Color.yellow : Brand.color.opacity(0.85))
                 .frame(width: max(end - start, 3), height: 5)
                 .position(x: (start + end) / 2, y: height - 5)
                 .allowsHitTesting(false)

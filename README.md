@@ -30,21 +30,21 @@ brew install xcodegen webp ffmpeg
 scripts/release.sh --install
 ```
 
-Без `--install` готовое приложение остаётся в `build/release/Build/Products/Release/Mangosteen.app`.
+Без `--install` готовое приложение остаётся в `build.noindex/release/Build/Products/Release/Mangosteen.app`.
 При первом запуске откроется окно «Как пользоваться»; позже оно доступно из меню значка.
 
 ## Разработка
 
 ```bash
 xcodegen generate
-xcodebuild -scheme Mangosteen -derivedDataPath build build
-open build/Build/Products/Debug/Mangosteen.app
+xcodebuild -scheme Mangosteen -derivedDataPath build.noindex build
+open build.noindex/Build/Products/Debug/Mangosteen.app
 ```
 
 Тесты:
 
 ```bash
-xcodebuild -scheme Mangosteen -derivedDataPath build test
+xcodebuild -scheme Mangosteen -derivedDataPath build.noindex test
 ```
 
 Отладочная сборка умеет снимать окна инструментов для проверки вёрстки:

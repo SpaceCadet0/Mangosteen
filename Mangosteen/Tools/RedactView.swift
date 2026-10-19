@@ -118,7 +118,7 @@ struct RedactView: View {
                 }
                 if let draft {
                     Rectangle()
-                        .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5, dash: [5, 3]))
+                        .stroke(Brand.color, style: StrokeStyle(lineWidth: 1.5, dash: [5, 3]))
                         .frame(width: draft.width * frame.width, height: draft.height * frame.height)
                         .position(x: frame.minX + draft.midX * frame.width, y: frame.minY + draft.midY * frame.height)
                         .allowsHitTesting(false)
@@ -145,7 +145,7 @@ struct RedactView: View {
         return ZStack {
             Rectangle()
                 .fill(Color.white.opacity(0.001))
-                .overlay(Rectangle().stroke(isSelected ? Color.accentColor : Color.white.opacity(0.7),
+                .overlay(Rectangle().stroke(isSelected ? Brand.color : Color.white.opacity(0.7),
                                             lineWidth: isSelected ? 2 : 1))
                 .frame(width: rect.width, height: rect.height)
                 .position(x: rect.midX, y: rect.midY)

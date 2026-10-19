@@ -88,8 +88,8 @@ struct PDFOrganizeView: View {
             }
         }
         .padding(8)
-        .background(RoundedRectangle(cornerRadius: 8).fill(isSelected ? Color.accentColor.opacity(0.25) : Color.clear))
-        .overlay(RoundedRectangle(cornerRadius: 8).stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 2))
+        .background(RoundedRectangle(cornerRadius: 8).fill(isSelected ? Brand.color.opacity(0.25) : Color.clear))
+        .overlay(RoundedRectangle(cornerRadius: 8).stroke(isSelected ? Brand.color : Color.clear, lineWidth: 2))
         .contentShape(Rectangle())
         .onTapGesture {
             if NSEvent.modifierFlags.contains(.command) {

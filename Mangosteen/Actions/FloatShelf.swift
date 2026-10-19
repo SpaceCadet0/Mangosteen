@@ -221,7 +221,7 @@ private final class FloatShelfView: NSVisualEffectView {
     private var isTargeted = false {
         didSet {
             layer?.borderWidth = isTargeted ? 2 : 0
-            layer?.borderColor = NSColor.controlAccentColor.cgColor
+            layer?.borderColor = Brand.nsColor.cgColor
         }
     }
 

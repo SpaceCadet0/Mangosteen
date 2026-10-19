@@ -32,6 +32,10 @@ final class WheelView: NSView {
         fatalError("init(coder:) is not supported")
     }
 
+    #if DEBUG
+    func debugHighlight(_ index: Int) { highlighted = index }
+    #endif
+
     func configure(kind: WheelKind, items: [WheelItem], fileCount: Int) {
         self.kind = kind
         self.items = items
@@ -88,24 +92,36 @@ final class WheelView: NSView {
             path.windingRule = .evenOdd
             return path
         }
-        let gap: CGFloat = 0.025
-        let start = CGFloat(index) * span - span / 2 + gap
-        let end = CGFloat(index) * span + span / 2 - gap
-        // NSBezierPath angles are degrees counter-clockwise from 3 o'clock.
-        func degrees(_ clockwiseFromTop: CGFloat) -> CGFloat { 90 - clockwiseFromTop * 180 / .pi }
-        let path = NSBezierPath()
-        path.appendArc(withCenter: ringCenter, radius: Self.outerRadius - 4,
-                       startAngle: degrees(start), endAngle: degrees(end), clockwise: true)
-        path.appendArc(withCenter: ringCenter, radius: Self.innerRadius + 4,
-                       startAngle: degrees(end), endAngle: degrees(start), clockwise: false)
-        path.close()
-        return path
+        // A ring segment with rounded corners, like a mangosteen segment: the shape is shrunk by the
+        // corner radius, then grown back by a round-joined stroke of that radius.
+        let corner: CGFloat = 10
+        let gap: CGFloat = 6
+        let outer = Self.outerRadius - 4 - corner
+        let inner = Self.innerRadius + 4 + corner
+        let first = CGFloat(index) * span - span / 2
+        let last = CGFloat(index) * span + span / 2
+        func inset(at radius: CGFloat) -> CGFloat { (gap / 2 + corner) / radius }
+        // Angles here are clockwise from 12 o'clock; Core Graphics measures counter-clockwise from 3.
+        func cg(_ clockwiseFromTop: CGFloat) -> CGFloat { .pi / 2 - clockwiseFromTop }
+        func point(_ radius: CGFloat, _ angle: CGFloat) -> CGPoint {
+            CGPoint(x: ringCenter.x + radius * sin(angle), y: ringCenter.y + radius * cos(angle))
+        }
+        let path = CGMutablePath()
+        path.move(to: point(outer, first + inset(at: outer)))
+        path.addArc(center: ringCenter, radius: outer, startAngle: cg(first + inset(at: outer)),
+                    endAngle: cg(last - inset(at: outer)), clockwise: true)
+        path.addLine(to: point(inner, last - inset(at: inner)))
+        path.addArc(center: ringCenter, radius: inner, startAngle: cg(last - inset(at: inner)),
+                    endAngle: cg(first + inset(at: inner)), clockwise: false)
+        path.closeSubpath()
+        let stroke = path.copy(strokingWithWidth: corner * 2, lineCap: .round, lineJoin: .round, miterLimit: 1)
+        return NSBezierPath(cgPath: path.union(stroke))
     }
 
     private func drawSegment(_ index: Int) {
         let isHighlighted = index == highlighted
         let path = segmentPath(index)
-        (isHighlighted ? NSColor.controlAccentColor : NSColor.labelColor.withAlphaComponent(0.05)).setFill()
+        (isHighlighted ? Brand.nsColor : NSColor.labelColor.withAlphaComponent(0.05)).setFill()
         path.fill()
 
         let item = items[index]

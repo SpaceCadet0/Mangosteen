@@ -111,7 +111,7 @@ struct JoinView: View {
                         Spacer()
                         if url == order.first {
                             Text("холст").font(.caption).padding(.horizontal, 6).padding(.vertical, 2)
-                                .background(Capsule().fill(Color.accentColor.opacity(0.25)))
+                                .background(Capsule().fill(Brand.color.opacity(0.25)))
                         }
                     }
                     .padding(.vertical, 2)

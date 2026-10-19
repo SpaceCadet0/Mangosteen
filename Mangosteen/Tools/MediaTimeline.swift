@@ -388,7 +388,7 @@ struct WaveformView: View {
                 path.addRect(CGRect(x: CGFloat(index) * step, y: (size.height - height) / 2,
                                     width: max(step - 0.5, 0.5), height: height))
             }
-            context.fill(path, with: .color(.accentColor.opacity(0.75)))
+            context.fill(path, with: .color(Brand.light))
         }
     }
 }

@@ -148,14 +148,14 @@ struct AnnotateView: View {
             .insetBy(dx: -6, dy: -6)
         return Group {
             Rectangle()
-                .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+                .stroke(Brand.color, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
                 .frame(width: box.width, height: box.height)
                 .position(x: box.midX, y: box.midY)
                 .allowsHitTesting(false)
             ForEach(AnnotationGeometry.handles(annotation), id: \.0) { _, point in
                 Circle()
                     .fill(Color.white)
-                    .overlay(Circle().stroke(Color.accentColor, lineWidth: 1.5))
+                    .overlay(Circle().stroke(Brand.color, lineWidth: 1.5))
                     .frame(width: 11, height: 11)
                     .position(toView(point, frame))
                     .allowsHitTesting(false)
@@ -336,7 +336,7 @@ struct AnnotateView: View {
                             .font(.system(size: 15))
                             .frame(width: 44, height: 36)
                             .background(RoundedRectangle(cornerRadius: 7)
-                                .fill(tool == item ? Color.accentColor.opacity(0.3) : Color.primary.opacity(0.06)))
+                                .fill(tool == item ? Brand.color.opacity(0.3) : Color.primary.opacity(0.06)))
                             // The whole tile is clickable, not only the glyph.
                             .contentShape(RoundedRectangle(cornerRadius: 7))
                     }
@@ -352,7 +352,7 @@ struct AnnotateView: View {
                     ForEach(Array(Self.palette.enumerated()), id: \.offset) { _, swatch in
                         Circle()
                             .fill(Color(cgColor: swatch.cgColor))
-                            .overlay(Circle().stroke(swatch == color ? Color.accentColor : Color.secondary.opacity(0.4),
+                            .overlay(Circle().stroke(swatch == color ? Brand.color : Color.secondary.opacity(0.4),
                                                      lineWidth: swatch == color ? 2.5 : 1))
                             .frame(width: 20, height: 20)
                             .onTapGesture { color = swatch }

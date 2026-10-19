@@ -30,6 +30,8 @@ targets:
         ENABLE_APP_SANDBOX: NO
         ENABLE_HARDENED_RUNTIME: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        INFOPLIST_KEY_NSAccentColorName: AccentColor
       configs:
         # A separate identity so a development build never collides with the installed app
         # (status icon, drag monitor, settings, launch at login).

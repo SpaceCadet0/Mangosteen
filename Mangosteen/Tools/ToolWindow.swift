@@ -16,7 +16,7 @@ final class ToolWindow: NSObject, NSWindowDelegate {
                                        @ViewBuilder content: (_ close: @escaping () -> Void) -> Content) {
         let controller = ToolWindow()
         let view = content { [weak controller] in controller?.window?.close() }
-        let hosting = NSHostingController(rootView: view)
+        let hosting = NSHostingController(rootView: view.tint(Brand.color))
         let window = NSWindow(contentViewController: hosting)
         window.title = title
         window.subtitle = subtitle(for: files)
