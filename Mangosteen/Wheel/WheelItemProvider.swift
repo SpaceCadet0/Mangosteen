@@ -29,6 +29,17 @@ enum WheelItemProvider {
     private static func toolItems(for urls: [URL]) -> [WheelItem] {
         let formats = urls.compactMap(FileFormat.detect)
         var items: [WheelItem] = []
+        let hasImages = formats.contains { $0.category == .image }
+        if hasImages || formats.contains(.pdf) {
+            items.append(WheelItem(id: "tool.compress", title: "Сжать", symbolName: "arrow.down.right.and.arrow.up.left") { urls in
+                ToolWindow.present(title: "Сжатие") { CompressView(urls: urls, close: $0) }
+            })
+        }
+        if hasImages {
+            items.append(WheelItem(id: "tool.crop", title: "Обрезать", symbolName: "crop") { urls in
+                ToolWindow.present(title: "Обрезка") { CropView(urls: urls, close: $0) }
+            })
+        }
         if formats.contains(where: { $0.category == .image && $0 != .svg }) {
             items.append(WheelItem(id: "tool.createPDF", title: "PDF из фото", symbolName: "doc.badge.plus") { urls in
                 ConversionService.shared.runBatch("Создание PDF", inputs: urls) { [try PDFTools.createPDF(fromImages: $0)] }

@@ -54,19 +54,93 @@ enum ImageConverter {
     }
 
     /// Encodes a single already-decoded image (used for rendered PDF pages and SVG).
-    static func write(_ image: CGImage, as target: FileFormat, to output: URL, options: ConversionOptions) throws {
-        guard let destination = CGImageDestinationCreateWithURL(
-            output as CFURL, target.utType.identifier as CFString, 1, nil
+    /// `metadata` are source properties to carry over; orientation is reset because pixels are upright.
+    static func write(_ image: CGImage, as target: FileFormat, to output: URL, options: ConversionOptions,
+                      metadata: [CFString: Any]? = nil) throws {
+        try encode(image, as: target, quality: options.quality(for: target), metadata: metadata).write(to: output)
+    }
+
+    /// Encodes in memory. `quality` is 0…1 and only used by lossy formats.
+    static func encode(_ image: CGImage, as target: FileFormat, quality: Double?,
+                       metadata: [CFString: Any]? = nil) throws -> Data {
+        if target == .webp {
+            return try encodeWebP(image, quality: quality ?? 0.8)
+        }
+        let data = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(
+            data as CFMutableData, target.utType.identifier as CFString, 1, nil
         ) else {
             throw ConversionError.encodeFailed(target)
         }
         let pixels = !target.supportsAlpha && image.hasAlpha ? try flattened(image) : image
-        var properties: [CFString: Any] = [:]
-        if let quality = options.quality(for: target), target.isLossy {
+        var properties = metadata ?? [:]
+        properties[kCGImagePropertyOrientation] = 1
+        if var tiff = properties[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
+            tiff[kCGImagePropertyTIFFOrientation] = 1
+            properties[kCGImagePropertyTIFFDictionary] = tiff
+        }
+        // The new pixel size comes from the image itself.
+        properties[kCGImagePropertyPixelWidth] = nil
+        properties[kCGImagePropertyPixelHeight] = nil
+        if let quality, target.isLossy {
             properties[kCGImageDestinationLossyCompressionQuality] = quality
         }
         CGImageDestinationAddImage(destination, pixels, properties as CFDictionary)
         guard CGImageDestinationFinalize(destination) else { throw ConversionError.encodeFailed(target) }
+        return data as Data
+    }
+
+    private static func encodeWebP(_ image: CGImage, quality: Double) throws -> Data {
+        let workspace = FileManager.default.temporaryDirectory.appendingPathComponent("mangosteen-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let png = workspace.appendingPathComponent("in.png")
+        let webp = workspace.appendingPathComponent("out.webp")
+        try encode(image, as: .png, quality: nil).write(to: png)
+        try ExternalTool.run("cwebp", ["-quiet", "-q", String(Int((quality * 100).rounded())), png.path, "-o", webp.path])
+        return try Data(contentsOf: webp)
+    }
+
+    /// Decodes the primary image upright, optionally downscaled so its longer side is at most `maxPixelSize`.
+    /// Returns the image together with the source metadata.
+    static func load(_ url: URL, maxPixelSize: Int? = nil) throws -> (image: CGImage, metadata: [CFString: Any]) {
+        if FileFormat.detect(url) == .svg {
+            guard let svg = NSImage(contentsOf: url), svg.size.width > 0, svg.size.height > 0 else {
+                throw ConversionError.unreadable(url)
+            }
+            let longest = CGFloat(maxPixelSize ?? Int(svgMinimumPixelSize))
+            let scale = longest / max(svg.size.width, svg.size.height)
+            let width = Int((svg.size.width * scale).rounded()), height = Int((svg.size.height * scale).rounded())
+            guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0,
+                                          space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                          bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
+                throw ConversionError.unreadable(url)
+            }
+            drawImage(svg, in: context, rect: CGRect(x: 0, y: 0, width: width, height: height))
+            guard let image = context.makeImage() else { throw ConversionError.unreadable(url) }
+            return (image, [:])
+        }
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil), CGImageSourceGetCount(source) > 0 else {
+            throw ConversionError.unreadable(url)
+        }
+        let index = CGImageSourceGetPrimaryImageIndex(source)
+        let metadata = CGImageSourceCopyPropertiesAtIndex(source, index, nil) as? [CFString: Any] ?? [:]
+        let width = metadata[kCGImagePropertyPixelWidth] as? Int ?? 0
+        let height = metadata[kCGImagePropertyPixelHeight] as? Int ?? 0
+        let image: CGImage?
+        if let maxPixelSize, maxPixelSize < max(width, height) {
+            let options: [CFString: Any] = [
+                kCGImageSourceCreateThumbnailFromImageAlways: true,
+                kCGImageSourceCreateThumbnailWithTransform: true,
+                kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
+                kCGImageSourceShouldCacheImmediately: true,
+            ]
+            image = CGImageSourceCreateThumbnailAtIndex(source, index, options as CFDictionary)
+        } else {
+            image = orientedImage(source, at: index)
+        }
+        guard let image else { throw ConversionError.unreadable(url) }
+        return (image, metadata)
     }
 
     // MARK: - SVG
