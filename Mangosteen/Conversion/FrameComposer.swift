@@ -78,7 +78,7 @@ struct FrameSettings: Equatable {
             case .color: "Цвет"
             case .gradient: "Градиент"
             case .image: "Изображение"
-            case .blur: "Размытое фото"
+            case .blur: "Исходное изображение"
             }
         }
     }
