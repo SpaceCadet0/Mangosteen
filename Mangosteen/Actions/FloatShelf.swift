@@ -301,6 +301,10 @@ private final class FloatItemView: NSView, NSDraggingSource {
             iconView.heightAnchor.constraint(equalToConstant: FloatThumbnails.side),
         ])
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        // The name takes the free width, so the remove button always sits at the right edge.
+        nameLabel.setContentHuggingPriority(.init(1), for: .horizontal)
+        removeButton.setContentHuggingPriority(.required, for: .horizontal)
+        removeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         refresh()
     }
 
