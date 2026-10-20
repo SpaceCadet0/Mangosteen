@@ -182,10 +182,18 @@ enum MediaTools {
             "-map", "0:a:0"] + filterArguments + ["-ac", "1", "-ar", String(sampleRate), "-f", "f32le", "-",
         ])
         let samples = data.withUnsafeBytes { Array($0.bindMemory(to: Float.self)) }
+        return peaks(samples, buckets: buckets)
+    }
+
+    /// Splits the samples into `buckets` spans that together cover every sample, so bucket `i` starts at
+    /// exactly `i / buckets` of the length (whole-sized spans would drop the tail and stretch the rest).
+    static func peaks(_ samples: [Float], buckets: Int) -> [Float] {
         guard !samples.isEmpty, buckets > 0 else { return [] }
-        let size = max(samples.count / buckets, 1)
-        return stride(from: 0, to: samples.count, by: size).prefix(buckets).map { start in
-            samples[start..<min(start + size, samples.count)].reduce(0) { max($0, abs($1)) }
-        }.map { min($0, 1) }
+        let count = min(buckets, samples.count)
+        return (0..<count).map { index in
+            let lower = index * samples.count / count
+            let upper = max((index + 1) * samples.count / count, lower + 1)
+            return min(samples[lower..<upper].reduce(0) { max($0, abs($1)) }, 1)
+        }
     }
 }

@@ -59,8 +59,14 @@ enum MediaConverter {
         // Cover art is reported as a video stream; it is not a picture track.
         let video = streams.first { $0.codec_type == "video" && $0.disposition?["attached_pic"] != 1 }
         let audio = streams.first { $0.codec_type == "audio" }
+        var duration = output.format?.duration.flatMap(Double.init)
+        // MP3 without a VBR header has its duration guessed from the bitrate, which can be off by
+        // tens of seconds; counting the frames is exact and takes milliseconds.
+        if video == nil, audio?.codec_name == "mp3", let counted = try? countedDuration(url) {
+            duration = counted
+        }
         return MediaInfo(
-            duration: output.format?.duration.flatMap(Double.init),
+            duration: duration,
             videoCodec: video?.codec_name,
             audioCodec: audio?.codec_name,
             width: video?.width,
@@ -69,6 +75,17 @@ enum MediaConverter {
             frameRate: rate(video?.avg_frame_rate) ?? rate(video?.r_frame_rate),
             sampleRate: audio?.sample_rate.flatMap { Int($0) }
         )
+    }
+
+    /// The audio length from the packets themselves (stream copy to nowhere, nothing is decoded).
+    private static func countedDuration(_ url: URL) throws -> Double? {
+        let log = try ExternalTool.run("ffmpeg", [
+            "-hide_banner", "-nostdin", "-v", "error", "-stats", "-i", url.path, "-map", "0:a:0", "-c", "copy", "-f", "null", "-",
+        ])
+        guard let match = log.matches(of: #/time=(\d+):(\d+):(\d+(?:\.\d+)?)/#).last,
+              let hours = Double(match.1), let minutes = Double(match.2), let seconds = Double(match.3) else { return nil }
+        let total = hours * 3600 + minutes * 60 + seconds
+        return total > 0 ? total : nil
     }
 
     /// "30000/1001" → 29.97; nil for "0/0" or garbage.

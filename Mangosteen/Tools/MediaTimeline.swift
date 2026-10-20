@@ -69,7 +69,9 @@ final class MediaPlayerModel: ObservableObject {
         self.duration = duration
         frameRate = info.frameRate ?? 30
 
-        let asset = AVURLAsset(url: url)
+        // Precise timing: without it AVFoundation estimates positions in VBR MP3 from byte offsets,
+        // so the sound heard after a seek drifts away from the waveform.
+        let asset = Self.preciseAsset(url)
         self.asset = asset
         if (try? await asset.load(.isPlayable)) == true {
             canPlayOriginal = true
@@ -88,6 +90,10 @@ final class MediaPlayerModel: ObservableObject {
                 (try? MediaTools.waveform(url, duration: duration, buckets: 1600)) ?? []
             }.value
         }
+    }
+
+    private static func preciseAsset(_ url: URL) -> AVURLAsset {
+        AVURLAsset(url: url, options: [AVURLAssetPreferPreciseDurationAndTimingKey: true])
     }
 
     private func attachPlayer(item: AVPlayerItem) {
@@ -118,7 +124,7 @@ final class MediaPlayerModel: ObservableObject {
                     try track.insertTimeRange(CMTimeRange(start: .zero, duration: length), of: video, at: .zero)
                     track.preferredTransform = try await video.load(.preferredTransform)
                 }
-                let sound = AVURLAsset(url: audio)
+                let sound = Self.preciseAsset(audio)
                 if let audioTrack = try await sound.loadTracks(withMediaType: .audio).first,
                    let track = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid) {
                     let soundLength = try await sound.load(.duration)
@@ -127,7 +133,7 @@ final class MediaPlayerModel: ObservableObject {
                 item = AVPlayerItem(asset: composition)
             } else {
                 // Audio files, and videos AVFoundation cannot show (their frames come from ffmpeg).
-                item = AVPlayerItem(url: audio)
+                item = AVPlayerItem(asset: Self.preciseAsset(audio))
             }
         } else {
             guard canPlayOriginal, let asset else { return }

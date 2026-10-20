@@ -25,7 +25,7 @@ struct AboutView: View {
                     .foregroundStyle(.secondary)
                     .textSelection(.enabled)
             }
-            Text(String(localized: "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку колеса. Всё работает на этом Mac, без ограничений."))
+            Text(String(localized: "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений."))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
             Link(destination: Self.repositoryURL) {

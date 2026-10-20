@@ -12,7 +12,14 @@ derived = next((a for a in sys.argv[1:] if not a.startswith('--')), os.path.join
 table = json.load(open(os.path.join(root, 'scripts', 'translations.json')))
 cyrillic = re.compile('[А-Яа-яЁё]')
 keys = set()
+# Debug and Release builds (and each architecture) leave their own copy of every source file's data;
+# only the newest copy reflects the current source.
+newest = {}
 for path in glob.glob(os.path.join(derived, '**', 'Mangosteen.build', '**', '*.stringsdata'), recursive=True):
+    name = os.path.basename(path)
+    if name not in newest or os.path.getmtime(path) > os.path.getmtime(newest[name]):
+        newest[name] = path
+for path in newest.values():
     for entries in json.load(open(path)).get('tables', {}).values():
         keys.update(e['key'] for e in entries if cyrillic.search(e['key']))
 missing = sorted(k for k in keys if k not in table or not table[k].get('en') or not table[k].get('es'))

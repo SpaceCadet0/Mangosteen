@@ -149,7 +149,7 @@
 "Конвертация %@ → %@ не поддерживается." = "Converting %@ → %@ is not supported.";
 "Конвертация в %@" = "Converting to %@";
 "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений." = "Converting and file tools right while you drag. Everything runs on this Mac, with no limits.";
-"Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку колеса. Всё работает на этом Mac, без ограничений." = "Converters and tools for your files, right while you drag: start dragging a file, tap a key and drop it on a segment of the wheel. Everything runs on this Mac, with no limits.";
+"Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений." = "Converters and tools for your files, right while you drag: start dragging a file, tap a key and drop it on a segment. Everything runs locally, with no limits.";
 "Конец" = "End";
 "Конец = курсор" = "End = playhead";
 "Конец = положение курсора" = "End = playhead position";

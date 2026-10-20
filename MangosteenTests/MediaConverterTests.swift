@@ -109,4 +109,32 @@ final class MediaConverterTests: XCTestCase {
         let leftovers = try FileManager.default.contentsOfDirectory(atPath: directory.path)
         XCTAssertEqual(leftovers, [input.lastPathComponent])
     }
+
+    /// A VBR MP3 without its Xing header makes ffprobe guess the length from the bitrate; the timeline must
+    /// still get the real length, or the waveform is squeezed and drifts away from what plays.
+    func testMP3WithoutVBRHeaderReportsRealDuration() throws {
+        let encoded = directory.appendingPathComponent("vbr.mp3")
+        try ExternalTool.run("ffmpeg", [
+            "-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi",
+            "-i", "aevalsrc='if(lt(mod(t\\,10)\\,0.05)\\,0.9*sin(2*PI*1000*t)\\,0.01*sin(2*PI*220*t))':s=44100:d=61.3",
+            "-c:a", "libmp3lame", "-q:a", "2", encoded.path,
+        ])
+        let bare = directory.appendingPathComponent("bare.mp3")
+        try ExternalTool.run("ffmpeg", [
+            "-hide_banner", "-loglevel", "error", "-y", "-i", encoded.path, "-c", "copy", "-write_xing", "0", bare.path,
+        ])
+        let duration = try XCTUnwrap(MediaConverter.probe(bare).duration)
+        XCTAssertEqual(duration, 61.3, accuracy: 0.05)
+    }
+
+    /// Waveform buckets cover every sample, so a sound at 90 % of the file is drawn at 90 % of the timeline.
+    func testWaveformPeaksCoverTheWholeLength() {
+        var samples = [Float](repeating: 0, count: 10_799)
+        samples[9_719] = 1 // 90 % in
+        samples[10_798] = 0.5 // the very last sample
+        let peaks = MediaTools.peaks(samples, buckets: 1_600)
+        XCTAssertEqual(peaks.count, 1_600)
+        XCTAssertEqual(peaks.firstIndex(of: 1), 1_440)
+        XCTAssertEqual(peaks.last, 0.5)
+    }
 }
