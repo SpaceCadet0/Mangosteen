@@ -9,6 +9,9 @@ struct CropCanvas: View {
     @Binding var rect: CGRect
     let aspect: CGFloat?
     var message: String?
+    /// Split lines (columns × rows) drawn inside the frame; 1 × 1 shows the rule of thirds.
+    var columns = 1
+    var rows = 1
 
     @State private var dragStart: CGRect?
 
@@ -31,8 +34,13 @@ struct CropCanvas: View {
                     }
                     .fill(Color.black.opacity(0.55), style: FillStyle(eoFill: true))
 
-                    thirds(crop)
-                        .stroke(Color.white.opacity(0.35), lineWidth: 0.5)
+                    if columns * rows > 1 {
+                        grid(crop)
+                            .stroke(Color.white, style: StrokeStyle(lineWidth: 1.5, dash: [6, 4]))
+                    } else {
+                        thirds(crop)
+                            .stroke(Color.white.opacity(0.35), lineWidth: 0.5)
+                    }
                     Path { $0.addRect(crop) }
                         .stroke(Color.white, lineWidth: 1.5)
 
@@ -69,6 +77,21 @@ struct CropCanvas: View {
         let size = CGSize(width: imageSize.width * scale, height: imageSize.height * scale)
         return CGRect(x: (container.width - size.width) / 2, y: (container.height - size.height) / 2,
                       width: size.width, height: size.height)
+    }
+
+    private func grid(_ crop: CGRect) -> Path {
+        Path { path in
+            for column in 1..<max(columns, 1) {
+                let x = crop.minX + crop.width * CGFloat(column) / CGFloat(columns)
+                path.move(to: CGPoint(x: x, y: crop.minY))
+                path.addLine(to: CGPoint(x: x, y: crop.maxY))
+            }
+            for row in 1..<max(rows, 1) {
+                let y = crop.minY + crop.height * CGFloat(row) / CGFloat(rows)
+                path.move(to: CGPoint(x: crop.minX, y: y))
+                path.addLine(to: CGPoint(x: crop.maxX, y: y))
+            }
+        }
     }
 
     private func thirds(_ crop: CGRect) -> Path {

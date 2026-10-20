@@ -82,12 +82,86 @@ enum ImageCropper {
         return rect.intersection(CGRect(origin: .zero, size: size))
     }
 
-    /// Writes `<name> (обрезано).<ext>` next to the original, keeping its format and metadata.
-    /// `outputSize`, when given, scales the cropped area to exactly those pixels.
+    /// Rotation by quarter turns and mirroring, as shown on screen: the image is turned first, then mirrored.
+    struct Transform: Equatable {
+        /// Clockwise quarter turns, 0…3.
+        var quarterTurns = 0
+        var flipHorizontal = false
+        var flipVertical = false
+
+        var isIdentity: Bool { quarterTurns == 0 && !flipHorizontal && !flipVertical }
+
+        func size(for size: CGSize) -> CGSize {
+            quarterTurns % 2 == 1 ? CGSize(width: size.height, height: size.width) : size
+        }
+
+        /// Turns what is on screen by 90°. A mirror made before the turn now runs along the other axis.
+        mutating func rotate(clockwise: Bool) {
+            quarterTurns = (quarterTurns + (clockwise ? 1 : 3)) % 4
+            swap(&flipHorizontal, &flipVertical)
+        }
+    }
+
+    /// Draws `image` turned and mirrored by `transform`.
+    static func apply(_ transform: Transform, to image: CGImage) throws -> CGImage {
+        guard !transform.isIdentity else { return image }
+        let width = image.width, height = image.height
+        let size = transform.size(for: CGSize(width: width, height: height))
+        let space = image.colorSpace.flatMap { $0.model == .rgb ? $0 : nil } ?? CGColorSpace(name: CGColorSpace.sRGB)!
+        guard let context = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8,
+                                      bytesPerRow: 0, space: space,
+                                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
+            throw ConversionError.encodeFailed(.png)
+        }
+        // Core Graphics applies the last transform first: the mirror is set up before the turn.
+        if transform.flipHorizontal {
+            context.translateBy(x: size.width, y: 0)
+            context.scaleBy(x: -1, y: 1)
+        }
+        if transform.flipVertical {
+            context.translateBy(x: 0, y: size.height)
+            context.scaleBy(x: 1, y: -1)
+        }
+        switch transform.quarterTurns {
+        case 1:
+            context.translateBy(x: 0, y: size.height)
+            context.rotate(by: -.pi / 2)
+        case 2:
+            context.translateBy(x: size.width, y: size.height)
+            context.rotate(by: .pi)
+        case 3:
+            context.translateBy(x: size.width, y: 0)
+            context.rotate(by: .pi / 2)
+        default:
+            break
+        }
+        context.interpolationQuality = .none
+        context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+        guard let result = context.makeImage() else { throw ConversionError.encodeFailed(.png) }
+        return result
+    }
+
+    /// Cuts the image into a grid, row by row from the top-left; edges fall on whole pixels.
+    static func tiles(_ image: CGImage, columns: Int, rows: Int) -> [CGImage] {
+        let columns = max(columns, 1), rows = max(rows, 1)
+        return (0..<rows).flatMap { row in
+            (0..<columns).compactMap { column in
+                let x0 = column * image.width / columns, x1 = (column + 1) * image.width / columns
+                let y0 = row * image.height / rows, y1 = (row + 1) * image.height / rows
+                return image.cropping(to: CGRect(x: x0, y: y0, width: x1 - x0, height: y1 - y0))
+            }
+        }
+    }
+
+    /// Turns and mirrors the image, crops `rect` (normalised, in the turned image), scales it to `outputSize`
+    /// when given, and writes `<name> (обрезано).<ext>` next to the original, keeping its format and metadata.
+    /// With a grid larger than 1 × 1 the result is cut into parts saved in a `<name> (части)` folder.
     static func cropFile(_ input: URL, rect normalized: CGRect, outputSize: CGSize?,
+                         transform: Transform = Transform(), columns: Int = 1, rows: Int = 1,
                          options: ConversionOptions) throws -> URL {
         guard let source = FileFormat.detect(input) else { throw ConversionError.unrecognized(input) }
-        let (image, metadata) = try ImageConverter.load(input)
+        let (original, metadata) = try ImageConverter.load(input)
+        let image = try apply(transform, to: original)
         let size = CGSize(width: image.width, height: image.height)
         let area = pixelRect(normalized, imageSize: size)
         guard area.width >= 1, area.height >= 1, var cropped = image.cropping(to: area) else {
@@ -98,13 +172,31 @@ enum ImageCropper {
         }
         // Read-only formats (SVG, PSD…) are saved as PNG.
         let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
+        let baseName = OutputNaming.baseName(of: input)
+        let carried = options.preserveMetadata ? metadata : nil
+        let directory = input.deletingLastPathComponent()
+
+        if columns * rows > 1 {
+            let parts = tiles(cropped, columns: columns, rows: rows)
+            let digits = String(parts.count).count
+            return try OutputNaming.writeAtomically(
+                directory: directory, baseName: String(localized: "\(baseName) (части)"), pathExtension: ""
+            ) { folder in
+                try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+                for (index, part) in parts.enumerated() {
+                    let number = String(repeating: "0", count: digits - String(index + 1).count) + String(index + 1)
+                    let url = folder.appendingPathComponent("\(baseName) \(number)").appendingPathExtension(target.fileExtension)
+                    try ImageConverter.write(part, as: target, to: url, options: options, metadata: carried)
+                }
+            }
+        }
+
+        let isCrop = outputSize != nil || pixelRect(normalized, imageSize: size).size != size
+        let suffix = isCrop || transform.isIdentity ? String(localized: "\(baseName) (обрезано)") : String(localized: "\(baseName) (изменено)")
         return try OutputNaming.writeAtomically(
-            directory: input.deletingLastPathComponent(),
-            baseName: String(localized: "\(OutputNaming.baseName(of: input)) (обрезано)"),
-            pathExtension: target.fileExtension
+            directory: directory, baseName: suffix, pathExtension: target.fileExtension
         ) { url in
-            try ImageConverter.write(cropped, as: target, to: url, options: options,
-                                     metadata: options.preserveMetadata ? metadata : nil)
+            try ImageConverter.write(cropped, as: target, to: url, options: options, metadata: carried)
         }
     }
 }

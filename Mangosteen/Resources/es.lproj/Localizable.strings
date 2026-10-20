@@ -23,6 +23,8 @@
 "%lld байт" = "%lld bytes";
 "%lld из %lld" = "%lld de %lld";
 "%lld из %lld · %lld%%" = "%lld de %lld · %lld%%";
+"%lld по высоте" = "%lld en alto";
+"%lld по ширине" = "%lld a lo ancho";
 "%lld полей" = "%lld campos";
 "%lld стр." = "%lld págs.";
 "(%@). Выберите другой формат или меньший размер." = "(%@). Elige otro formato o un tamaño menor.";
@@ -229,6 +231,8 @@
 "Открыть" = "Abrir";
 "Отмена" = "Cancelar";
 "Отменить" = "Deshacer";
+"Отразить по вертикали" = "Voltear verticalmente";
+"Отразить по горизонтали" = "Voltear horizontalmente";
 "Отступ" = "Margen";
 "Оттенок" = "Matiz";
 "Оцениваю размер…" = "Calculando tamaño…";
@@ -245,6 +249,8 @@
 "Пик по курсору" = "Pitido en el cursor";
 "Пиксели" = "Píxeles";
 "По курсору" = "En el cursor";
+"Повернуть влево" = "Girar a la izquierda";
+"Повернуть вправо" = "Girar a la derecha";
 "Повторить" = "Rehacer";
 "Подкаст −16" = "Pódcast −16";
 "Поиск по полям" = "Buscar campos";
@@ -279,6 +285,8 @@
 "Размер файла" = "Tamaño de archivo";
 "Размытие" = "Desenfoque";
 "Разрез по курсору" = "Cortar en el cursor";
+"Разрезать" = "Dividir";
+"Разрезать на части:" = "Dividir en partes:";
 "Раскладка" = "Disposición";
 "Распаковать" = "Descomprimir";
 "Распаковка" = "Descomprimiendo";

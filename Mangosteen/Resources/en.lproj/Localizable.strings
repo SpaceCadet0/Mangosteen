@@ -23,6 +23,8 @@
 "%lld байт" = "%lld bytes";
 "%lld из %lld" = "%lld of %lld";
 "%lld из %lld · %lld%%" = "%lld of %lld · %lld%%";
+"%lld по высоте" = "%lld down";
+"%lld по ширине" = "%lld across";
 "%lld полей" = "%lld fields";
 "%lld стр." = "%lld pages";
 "(%@). Выберите другой формат или меньший размер." = "(%@). Choose another format or a smaller size.";
@@ -229,6 +231,8 @@
 "Открыть" = "Open";
 "Отмена" = "Cancel";
 "Отменить" = "Undo";
+"Отразить по вертикали" = "Flip vertically";
+"Отразить по горизонтали" = "Flip horizontally";
 "Отступ" = "Margin";
 "Оттенок" = "Tint";
 "Оцениваю размер…" = "Estimating size…";
@@ -245,6 +249,8 @@
 "Пик по курсору" = "Bleep at playhead";
 "Пиксели" = "Pixelate";
 "По курсору" = "At playhead";
+"Повернуть влево" = "Rotate left";
+"Повернуть вправо" = "Rotate right";
 "Повторить" = "Redo";
 "Подкаст −16" = "Podcast −16";
 "Поиск по полям" = "Search fields";
@@ -279,6 +285,8 @@
 "Размер файла" = "File size";
 "Размытие" = "Blur";
 "Разрез по курсору" = "Cut at playhead";
+"Разрезать" = "Split";
+"Разрезать на части:" = "Split into parts:";
 "Раскладка" = "Layout";
 "Распаковать" = "Extract";
 "Распаковка" = "Extracting";

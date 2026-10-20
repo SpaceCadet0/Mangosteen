@@ -1,6 +1,7 @@
 import SwiftUI
 
-/// Crop tool: drag the frame or its handles, pick an aspect ratio, or enter exact output pixels.
+/// Crop tool: drag the frame or its handles, pick an aspect ratio, or enter exact output pixels; turn and
+/// mirror the picture, and cut the result into a grid of parts.
 /// With several images, the frame drawn on the first one is used as is; the others get a centred
 /// crop of the same aspect ratio.
 struct CropView: View {
@@ -42,8 +43,13 @@ struct CropView: View {
         }
     }
 
+    @State private var sourceImage: CGImage?
+    @State private var sourceSize = CGSize(width: 1, height: 1)
     @State private var displayImage: CGImage?
     @State private var imageSize = CGSize(width: 1, height: 1)
+    @State private var transform = ImageCropper.Transform()
+    @State private var columns = 1
+    @State private var rows = 1
     @State private var rect = CGRect(x: 0, y: 0, width: 1, height: 1)
     @State private var aspectChoice = AspectChoice.free
     @State private var exactWidth = 1080
@@ -72,7 +78,7 @@ struct CropView: View {
                 .frame(minWidth: 620, minHeight: 420)
                 .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
             controls
-            ToolFooter(fileCount: images.count, actionTitle: String(localized: "Обрезать"),
+            ToolFooter(fileCount: images.count, actionTitle: columns * rows > 1 ? String(localized: "Разрезать") : String(localized: "Сохранить"),
                        actionDisabled: displayImage == nil, cancel: close, action: run)
         }
         .padding(20)
@@ -80,17 +86,49 @@ struct CropView: View {
         .onChange(of: aspectChoice) { _ in applyAspect() }
         .onChange(of: exactWidth) { _ in applyAspect() }
         .onChange(of: exactHeight) { _ in applyAspect() }
+        .onChange(of: transform) { _ in updateDisplay() }
     }
 
     // MARK: Canvas
 
     private var canvas: some View {
-        CropCanvas(image: displayImage, imageSize: imageSize, rect: $rect, aspect: normalizedAspect, message: loadError)
+        CropCanvas(image: displayImage, imageSize: imageSize, rect: $rect, aspect: normalizedAspect, message: loadError,
+                   columns: columns, rows: rows)
     }
 
     // MARK: Controls
 
     private var controls: some View {
+        VStack(spacing: 10) {
+            cropControls
+            HStack(spacing: 6) {
+                iconButton("rotate.left", String(localized: "Повернуть влево")) { transform.rotate(clockwise: false) }
+                iconButton("rotate.right", String(localized: "Повернуть вправо")) { transform.rotate(clockwise: true) }
+                iconButton("arrow.left.and.right.righttriangle.left.righttriangle.right",
+                           String(localized: "Отразить по горизонтали")) { transform.flipHorizontal.toggle() }
+                iconButton("arrow.up.and.down.righttriangle.up.righttriangle.down",
+                           String(localized: "Отразить по вертикали")) { transform.flipVertical.toggle() }
+                Spacer()
+                Text(String(localized: "Разрезать на части:"))
+                Stepper(value: $columns, in: 1...10) {
+                    Text(String(localized: "\(columns) по ширине")).monospacedDigit()
+                }
+                Stepper(value: $rows, in: 1...10) {
+                    Text(String(localized: "\(rows) по высоте")).monospacedDigit()
+                }
+            }
+        }
+    }
+
+    private func iconButton(_ symbol: String, _ help: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: symbol).frame(width: 22, height: 18)
+        }
+        .help(help)
+        .accessibilityLabel(help)
+    }
+
+    private var cropControls: some View {
         HStack(spacing: 12) {
             Picker(String(localized: "Пропорции"), selection: $aspectChoice) {
                 ForEach(AspectChoice.allCases) { Text($0.title).tag($0) }
@@ -114,9 +152,21 @@ struct CropView: View {
                 .foregroundStyle(.secondary)
             Button(String(localized: "Сбросить")) {
                 aspectChoice = .free
+                transform = ImageCropper.Transform()
+                columns = 1
+                rows = 1
                 rect = CGRect(x: 0, y: 0, width: 1, height: 1)
             }
         }
+    }
+
+    /// Shows the preview turned and mirrored; the frame starts over on the new picture.
+    private func updateDisplay() {
+        guard let sourceImage else { return }
+        displayImage = (try? ImageCropper.apply(transform, to: sourceImage)) ?? sourceImage
+        imageSize = transform.size(for: sourceSize)
+        rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        applyAspect()
     }
 
     private func applyAspect() {
@@ -136,8 +186,9 @@ struct CropView: View {
         }.value
         switch result {
         case .success(let (image, size)):
-            imageSize = size
-            displayImage = image
+            sourceImage = image
+            sourceSize = size
+            updateDisplay()
         case .failure(let error):
             loadError = error.localizedDescription
         }
@@ -150,10 +201,12 @@ struct CropView: View {
         let exact = CGSize(width: exactWidth, height: exactHeight)
         let outputSize: CGSize? = choice == .exact ? exact : nil
         let options = AppSettings.shared.conversionOptions
+        let transform = transform
+        let columns = columns, rows = rows
         ConversionService.shared.runEach(String(localized: "Обрезка"), inputs: images) { url in
             var cropRect = firstRect
             if url != first, choice != .free {
-                let size = try ImageCropper.uprightSize(url)
+                let size = transform.size(for: try ImageCropper.uprightSize(url))
                 let aspect: CGFloat = switch choice {
                 case .original: size.width / size.height
                 case .exact: exact.width / max(exact.height, 1)
@@ -161,7 +214,8 @@ struct CropView: View {
                 }
                 cropRect = ImageCropper.centeredRect(aspect: aspect, imageSize: size)
             }
-            return try ImageCropper.cropFile(url, rect: cropRect, outputSize: outputSize, options: options)
+            return try ImageCropper.cropFile(url, rect: cropRect, outputSize: outputSize, transform: transform,
+                                             columns: columns, rows: rows, options: options)
         }
         close()
     }

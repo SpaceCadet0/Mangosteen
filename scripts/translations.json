@@ -1658,5 +1658,37 @@
  "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений.": {
   "en": "Converters and tools for your files, right while you drag: start dragging a file, tap a key and drop it on a segment. Everything runs locally, with no limits.",
   "es": "Conversión y herramientas para tus archivos mientras los arrastras: empieza a arrastrar un archivo, pulsa una tecla y suéltalo en un segmento. Todo funciona en local, sin límites."
+ },
+ "%lld по высоте": {
+  "en": "%lld down",
+  "es": "%lld en alto"
+ },
+ "%lld по ширине": {
+  "en": "%lld across",
+  "es": "%lld a lo ancho"
+ },
+ "Отразить по вертикали": {
+  "en": "Flip vertically",
+  "es": "Voltear verticalmente"
+ },
+ "Отразить по горизонтали": {
+  "en": "Flip horizontally",
+  "es": "Voltear horizontalmente"
+ },
+ "Повернуть влево": {
+  "en": "Rotate left",
+  "es": "Girar a la izquierda"
+ },
+ "Повернуть вправо": {
+  "en": "Rotate right",
+  "es": "Girar a la derecha"
+ },
+ "Разрезать": {
+  "en": "Split",
+  "es": "Dividir"
+ },
+ "Разрезать на части:": {
+  "en": "Split into parts:",
+  "es": "Dividir en partes:"
  }
 }
