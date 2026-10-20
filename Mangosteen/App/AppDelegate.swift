@@ -112,7 +112,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         item.perform(inputs)
         // Conversions have no window of their own; capture the progress panel instead.
-        finishSnapshot(window: kind == .convert ? ProgressHUD.shared.debugWindow : nil)
+        let window: NSWindow? = switch itemID {
+        case "action.float": FloatShelf.shared.debugWindow
+        default: kind == .convert ? ProgressHUD.shared.debugWindow : nil
+        }
+        finishSnapshot(window: window)
         _ = output
     }
 

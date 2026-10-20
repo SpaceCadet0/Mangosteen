@@ -1,4 +1,5 @@
 import AppKit
+import QuickLookThumbnailing
 
 /// A floating shelf that holds references to files so they can be dragged into another app later.
 /// Files are never copied; the shelf only remembers their locations.
@@ -7,6 +8,10 @@ final class FloatShelf {
 
     private(set) var urls: [URL] = []
     private var panel: NSPanel?
+
+    #if DEBUG
+    var debugWindow: NSWindow? { panel }
+    #endif
     private var shelfView: FloatShelfView?
 
     func add(_ newURLs: [URL]) {
@@ -270,6 +275,9 @@ private final class FloatItemView: NSView, NSDraggingSource {
         layer?.cornerRadius = 8
 
         iconView.imageScaling = .scaleProportionallyUpOrDown
+        iconView.wantsLayer = true
+        iconView.layer?.cornerRadius = 4
+        iconView.layer?.masksToBounds = true
         nameLabel.lineBreakMode = .byTruncatingMiddle
         nameLabel.font = .systemFont(ofSize: 12)
         removeButton.image = NSImage(systemSymbolName: "xmark.circle.fill", accessibilityDescription: String(localized: "Убрать из Float"))
@@ -289,8 +297,8 @@ private final class FloatItemView: NSView, NSDraggingSource {
             row.trailingAnchor.constraint(equalTo: trailingAnchor),
             row.topAnchor.constraint(equalTo: topAnchor),
             row.bottomAnchor.constraint(equalTo: bottomAnchor),
-            iconView.widthAnchor.constraint(equalToConstant: 32),
-            iconView.heightAnchor.constraint(equalToConstant: 32),
+            iconView.widthAnchor.constraint(equalToConstant: FloatThumbnails.side),
+            iconView.heightAnchor.constraint(equalToConstant: FloatThumbnails.side),
         ])
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         refresh()
@@ -310,7 +318,13 @@ private final class FloatItemView: NSView, NSDraggingSource {
             layer?.backgroundColor = NSColor.labelColor.withAlphaComponent(0.06).cgColor
         } else if let url = urls.first {
             let exists = FileManager.default.fileExists(atPath: url.path)
-            iconView.image = NSWorkspace.shared.icon(forFile: url.path)
+            iconView.image = FloatThumbnails.cached(url) ?? NSWorkspace.shared.icon(forFile: url.path)
+            if exists, FloatThumbnails.cached(url) == nil {
+                FloatThumbnails.load(url) { [weak self] thumbnail in
+                    guard let self, !self.isGroup, self.urls.first == url else { return }
+                    self.iconView.image = thumbnail
+                }
+            }
             nameLabel.stringValue = exists ? url.lastPathComponent : String(localized: "\(url.lastPathComponent) — перемещён")
             nameLabel.textColor = exists ? .labelColor : .tertiaryLabelColor
             iconView.alphaValue = exists ? 1 : 0.4
@@ -337,9 +351,10 @@ private final class FloatItemView: NSView, NSDraggingSource {
 
         let items = available.enumerated().map { index, url in
             let item = NSDraggingItem(pasteboardWriter: url as NSURL)
-            let icon = NSWorkspace.shared.icon(forFile: url.path)
+            let icon = FloatThumbnails.cached(url) ?? NSWorkspace.shared.icon(forFile: url.path)
             let offset = CGFloat(min(index, 4)) * 4
-            item.setDraggingFrame(NSRect(x: 6 + offset, y: 4 - offset, width: 32, height: 32), contents: icon)
+            let side = FloatThumbnails.side
+            item.setDraggingFrame(NSRect(x: 6 + offset, y: 4 - offset, width: side, height: side), contents: icon)
             return item
         }
         let session = beginDraggingSession(with: items, event: event, source: self)
@@ -381,5 +396,37 @@ private final class FloatItemView: NSView, NSDraggingSource {
 
     func draggingSession(_ session: NSDraggingSession, endedAt screenPoint: NSPoint, operation: NSDragOperation) {
         FloatShelf.shared.refreshAfterDrag()
+    }
+}
+
+/// Quick Look previews for shelf items (photos, videos, PDFs and documents), made in the background and kept
+/// until the file changes. Items without a preview keep their Finder icon.
+private enum FloatThumbnails {
+    static let side: CGFloat = 40
+
+    private static let cache = NSCache<NSString, NSImage>()
+
+    private static func key(_ url: URL) -> NSString {
+        let modified = (try? url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate)?
+            .timeIntervalSinceReferenceDate ?? 0
+        return "\(url.path)|\(modified)" as NSString
+    }
+
+    static func cached(_ url: URL) -> NSImage? {
+        cache.object(forKey: key(url))
+    }
+
+    static func load(_ url: URL, completion: @escaping (NSImage) -> Void) {
+        let key = key(url)
+        let request = QLThumbnailGenerator.Request(fileAt: url, size: CGSize(width: side, height: side),
+                                                   scale: NSScreen.main?.backingScaleFactor ?? 2,
+                                                   representationTypes: .thumbnail)
+        QLThumbnailGenerator.shared.generateBestRepresentation(for: request) { representation, _ in
+            guard let image = representation?.nsImage else { return }
+            DispatchQueue.main.async {
+                cache.setObject(image, forKey: key)
+                completion(image)
+            }
+        }
     }
 }
