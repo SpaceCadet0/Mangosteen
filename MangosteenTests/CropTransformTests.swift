@@ -76,9 +76,17 @@ final class CropTransformTests: XCTestCase {
 
     func testTilesCoverEveryPixel() {
         let tiles = ImageCropper.tiles(sample(), columns: 2, rows: 2)
-        XCTAssertEqual(tiles.map(\.width), [1, 2, 1, 2])
+        XCTAssertEqual(tiles.map(\.width), [2, 1, 2, 1])
         XCTAssertEqual(tiles.map(\.height), [1, 1, 1, 1])
-        XCTAssertEqual(tiles.map { names($0) }, [[["R"]], [["G", "B"]], [["W"]], [["K", "Y"]]])
+        XCTAssertEqual(tiles.map { names($0) }, [[["R", "G"]], [["B"]], [["W", "K"]], [["Y"]]])
+    }
+
+    /// Moved lines cut where they are drawn, rounded to whole pixels.
+    func testTilesAtMovedCuts() {
+        let tiles = ImageCropper.tiles(sample(), columnCuts: [0.7], rowCuts: [])
+        XCTAssertEqual(tiles.map { names($0) }, [[["R", "G"], ["W", "K"]], [["B"], ["Y"]]])
+        XCTAssertEqual(ImageCropper.evenCuts(4), [0.25, 0.5, 0.75])
+        XCTAssertEqual(ImageCropper.evenCuts(1), [])
     }
 
     func testSplitWritesNumberedPartsInFolder() throws {

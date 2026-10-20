@@ -16,6 +16,8 @@ keys = set()
 # only the newest copy reflects the current source.
 newest = {}
 for path in glob.glob(os.path.join(derived, '**', 'Mangosteen.build', '**', '*.stringsdata'), recursive=True):
+    if 'MangosteenTests.build' in path:
+        continue  # test-only strings (file names in assertions) are not shown to users
     name = os.path.basename(path)
     if name not in newest or os.path.getmtime(path) > os.path.getmtime(newest[name]):
         newest[name] = path

@@ -50,6 +50,8 @@ struct CropView: View {
     @State private var transform = ImageCropper.Transform()
     @State private var columns = 1
     @State private var rows = 1
+    @State private var columnCuts: [CGFloat] = []
+    @State private var rowCuts: [CGFloat] = []
     @State private var rect = CGRect(x: 0, y: 0, width: 1, height: 1)
     @State private var aspectChoice = AspectChoice.free
     @State private var exactWidth = 1080
@@ -78,7 +80,7 @@ struct CropView: View {
                 .frame(minWidth: 620, minHeight: 420)
                 .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
             controls
-            ToolFooter(fileCount: images.count, actionTitle: columns * rows > 1 ? String(localized: "Разрезать") : String(localized: "Сохранить"),
+            ToolFooter(fileCount: images.count, actionTitle: !columnCuts.isEmpty || !rowCuts.isEmpty ? String(localized: "Разрезать") : String(localized: "Сохранить"),
                        actionDisabled: displayImage == nil, cancel: close, action: run)
         }
         .padding(20)
@@ -87,13 +89,15 @@ struct CropView: View {
         .onChange(of: exactWidth) { _ in applyAspect() }
         .onChange(of: exactHeight) { _ in applyAspect() }
         .onChange(of: transform) { _ in updateDisplay() }
+        .onChange(of: columns) { columnCuts = ImageCropper.evenCuts($0) }
+        .onChange(of: rows) { rowCuts = ImageCropper.evenCuts($0) }
     }
 
     // MARK: Canvas
 
     private var canvas: some View {
         CropCanvas(image: displayImage, imageSize: imageSize, rect: $rect, aspect: normalizedAspect, message: loadError,
-                   columns: columns, rows: rows)
+                   columnCuts: $columnCuts, rowCuts: $rowCuts)
     }
 
     // MARK: Controls
@@ -189,6 +193,11 @@ struct CropView: View {
             sourceImage = image
             sourceSize = size
             updateDisplay()
+            if ProcessInfo.processInfo.environment["MANGOSTEEN_DEMO"] != nil {
+                columns = 3
+                rows = 2
+                DispatchQueue.main.async { columnCuts[0] = 0.22 }
+            }
         case .failure(let error):
             loadError = error.localizedDescription
         }
@@ -202,7 +211,7 @@ struct CropView: View {
         let outputSize: CGSize? = choice == .exact ? exact : nil
         let options = AppSettings.shared.conversionOptions
         let transform = transform
-        let columns = columns, rows = rows
+        let columnCuts = columnCuts, rowCuts = rowCuts
         ConversionService.shared.runEach(String(localized: "Обрезка"), inputs: images) { url in
             var cropRect = firstRect
             if url != first, choice != .free {
@@ -215,7 +224,7 @@ struct CropView: View {
                 cropRect = ImageCropper.centeredRect(aspect: aspect, imageSize: size)
             }
             return try ImageCropper.cropFile(url, rect: cropRect, outputSize: outputSize, transform: transform,
-                                             columns: columns, rows: rows, options: options)
+                                             columnCuts: columnCuts, rowCuts: rowCuts, options: options)
         }
         close()
     }

@@ -141,24 +141,42 @@ enum ImageCropper {
         return result
     }
 
+    /// Cut positions (0…1) that divide a side into `parts` equal pieces.
+    static func evenCuts(_ parts: Int) -> [CGFloat] {
+        parts > 1 ? (1..<parts).map { CGFloat($0) / CGFloat(parts) } : []
+    }
+
     /// Cuts the image into a grid, row by row from the top-left; edges fall on whole pixels.
     static func tiles(_ image: CGImage, columns: Int, rows: Int) -> [CGImage] {
-        let columns = max(columns, 1), rows = max(rows, 1)
-        return (0..<rows).flatMap { row in
-            (0..<columns).compactMap { column in
-                let x0 = column * image.width / columns, x1 = (column + 1) * image.width / columns
-                let y0 = row * image.height / rows, y1 = (row + 1) * image.height / rows
-                return image.cropping(to: CGRect(x: x0, y: y0, width: x1 - x0, height: y1 - y0))
+        tiles(image, columnCuts: evenCuts(columns), rowCuts: evenCuts(rows))
+    }
+
+    /// Cuts the image at the given positions (fractions of its width and height), row by row from the top-left.
+    static func tiles(_ image: CGImage, columnCuts: [CGFloat], rowCuts: [CGFloat]) -> [CGImage] {
+        func edges(_ cuts: [CGFloat], length: Int) -> [Int] {
+            let inner = cuts.filter { $0 > 0 && $0 < 1 }.sorted().map { Int(($0 * CGFloat(length)).rounded()) }
+            var result = [0]
+            for edge in inner + [length] where edge > result.last! { result.append(edge) }
+            return result
+        }
+        let xs = edges(columnCuts, length: image.width), ys = edges(rowCuts, length: image.height)
+        return (0..<(ys.count - 1)).flatMap { row in
+            (0..<(xs.count - 1)).compactMap { column in
+                image.cropping(to: CGRect(x: xs[column], y: ys[row], width: xs[column + 1] - xs[column],
+                                          height: ys[row + 1] - ys[row]))
             }
         }
     }
 
     /// Turns and mirrors the image, crops `rect` (normalised, in the turned image), scales it to `outputSize`
     /// when given, and writes `<name> (обрезано).<ext>` next to the original, keeping its format and metadata.
-    /// With a grid larger than 1 × 1 the result is cut into parts saved in a `<name> (части)` folder.
+    /// With cut lines (even ones from `columns` × `rows`, or the given positions) the result is cut into parts
+    /// saved in a `<name> (части)` folder.
     static func cropFile(_ input: URL, rect normalized: CGRect, outputSize: CGSize?,
                          transform: Transform = Transform(), columns: Int = 1, rows: Int = 1,
+                         columnCuts: [CGFloat]? = nil, rowCuts: [CGFloat]? = nil,
                          options: ConversionOptions) throws -> URL {
+        let columnCuts = columnCuts ?? evenCuts(columns), rowCuts = rowCuts ?? evenCuts(rows)
         guard let source = FileFormat.detect(input) else { throw ConversionError.unrecognized(input) }
         let (original, metadata) = try ImageConverter.load(input)
         let image = try apply(transform, to: original)
@@ -176,8 +194,8 @@ enum ImageCropper {
         let carried = options.preserveMetadata ? metadata : nil
         let directory = input.deletingLastPathComponent()
 
-        if columns * rows > 1 {
-            let parts = tiles(cropped, columns: columns, rows: rows)
+        if !columnCuts.isEmpty || !rowCuts.isEmpty {
+            let parts = tiles(cropped, columnCuts: columnCuts, rowCuts: rowCuts)
             let digits = String(parts.count).count
             return try OutputNaming.writeAtomically(
                 directory: directory, baseName: String(localized: "\(baseName) (части)"), pathExtension: ""

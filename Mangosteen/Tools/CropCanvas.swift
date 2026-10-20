@@ -9,11 +9,15 @@ struct CropCanvas: View {
     @Binding var rect: CGRect
     let aspect: CGFloat?
     var message: String?
-    /// Split lines (columns × rows) drawn inside the frame; 1 × 1 shows the rule of thirds.
-    var columns = 1
-    var rows = 1
+    /// Split lines inside the frame as fractions of its width and height; they can be dragged.
+    /// Without any, the rule of thirds is shown.
+    var columnCuts: Binding<[CGFloat]>?
+    var rowCuts: Binding<[CGFloat]>?
 
     @State private var dragStart: CGRect?
+    @State private var cutDragStart: CGFloat?
+
+    private var hasCuts: Bool { !(columnCuts?.wrappedValue.isEmpty ?? true) || !(rowCuts?.wrappedValue.isEmpty ?? true) }
 
     var body: some View {
         GeometryReader { geometry in
@@ -34,7 +38,7 @@ struct CropCanvas: View {
                     }
                     .fill(Color.black.opacity(0.55), style: FillStyle(eoFill: true))
 
-                    if columns * rows > 1 {
+                    if hasCuts {
                         grid(crop)
                             .stroke(Color.white, style: StrokeStyle(lineWidth: 1.5, dash: [6, 4]))
                     } else {
@@ -49,6 +53,27 @@ struct CropCanvas: View {
                         .frame(width: crop.width, height: crop.height)
                         .position(x: crop.midX, y: crop.midY)
                         .gesture(moveGesture(frame))
+
+                    if let columnCuts {
+                        ForEach(columnCuts.wrappedValue.indices, id: \.self) { index in
+                            Rectangle()
+                                .fill(Color.white.opacity(0.001))
+                                .frame(width: 10, height: crop.height)
+                                .position(x: crop.minX + crop.width * columnCuts.wrappedValue[index], y: crop.midY)
+                                .onHover { inside in inside ? NSCursor.resizeLeftRight.push() : NSCursor.pop() }
+                                .gesture(cutGesture(columnCuts, index: index, length: crop.width, vertical: false))
+                        }
+                    }
+                    if let rowCuts {
+                        ForEach(rowCuts.wrappedValue.indices, id: \.self) { index in
+                            Rectangle()
+                                .fill(Color.white.opacity(0.001))
+                                .frame(width: crop.width, height: 10)
+                                .position(x: crop.midX, y: crop.minY + crop.height * rowCuts.wrappedValue[index])
+                                .onHover { inside in inside ? NSCursor.resizeUpDown.push() : NSCursor.pop() }
+                                .gesture(cutGesture(rowCuts, index: index, length: crop.height, vertical: true))
+                        }
+                    }
 
                     ForEach(ImageCropper.Handle.allCases, id: \.self) { handle in
                         RoundedRectangle(cornerRadius: 2)
@@ -81,17 +106,33 @@ struct CropCanvas: View {
 
     private func grid(_ crop: CGRect) -> Path {
         Path { path in
-            for column in 1..<max(columns, 1) {
-                let x = crop.minX + crop.width * CGFloat(column) / CGFloat(columns)
+            for cut in columnCuts?.wrappedValue ?? [] {
+                let x = crop.minX + crop.width * cut
                 path.move(to: CGPoint(x: x, y: crop.minY))
                 path.addLine(to: CGPoint(x: x, y: crop.maxY))
             }
-            for row in 1..<max(rows, 1) {
-                let y = crop.minY + crop.height * CGFloat(row) / CGFloat(rows)
+            for cut in rowCuts?.wrappedValue ?? [] {
+                let y = crop.minY + crop.height * cut
                 path.move(to: CGPoint(x: crop.minX, y: y))
                 path.addLine(to: CGPoint(x: crop.maxX, y: y))
             }
         }
+    }
+
+    /// Moves one cut line, keeping it between its neighbours (and the frame edges) with a small gap.
+    private func cutGesture(_ cuts: Binding<[CGFloat]>, index: Int, length: CGFloat, vertical: Bool) -> some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onChanged { value in
+                guard cuts.wrappedValue.indices.contains(index), length > 0 else { return }
+                let start = cutDragStart ?? cuts.wrappedValue[index]
+                cutDragStart = start
+                let gap: CGFloat = 0.03
+                let lower = (index > 0 ? cuts.wrappedValue[index - 1] : 0) + gap
+                let upper = (index < cuts.wrappedValue.count - 1 ? cuts.wrappedValue[index + 1] : 1) - gap
+                let moved = start + (vertical ? value.translation.height : value.translation.width) / length
+                cuts.wrappedValue[index] = min(max(moved, lower), max(lower, upper))
+            }
+            .onEnded { _ in cutDragStart = nil }
     }
 
     private func thirds(_ crop: CGRect) -> Path {

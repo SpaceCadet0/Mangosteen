@@ -57,12 +57,12 @@ Mangosteen живёт в строке меню и ждёт, когда вы чт
 |---|---|
 | Изображения | PNG, JPG, WebP, HEIC, TIFF, AVIF, BMP, GIF, PDF · также читает SVG, PSD, ICO и другие |
 | PDF | в изображения, текст или DOCX |
-| Документы | DOCX, ODT, RTF, RTFD, TXT, Markdown, HTML — друг в друга и в PDF |
 | Видео | MP4, MOV, MKV, WebM, AVI, WMV — друг в друга, в GIF и MP3 |
 | Аудио | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA |
 | Субтитры | SRT ⇄ VTT |
 | Таблицы | CSV, TSV, XLSX — друг в друга; книга с несколькими листами превращается в папку таблиц |
 | Архивы | ZIP, TAR, TAR.GZ — и папки в архив |
+| Документы | DOCX, ODT, RTF, RTFD, TXT, Markdown, HTML — друг в друга и в PDF / Скоро |
 
 Если новый контейнер принимает исходные потоки, видео копируется без перекодирования — мгновенно и без потерь.
 
