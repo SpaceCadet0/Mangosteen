@@ -1742,5 +1742,9 @@
  "Разрезать после этой страницы": {
   "en": "Cut after this page",
   "es": "Cortar después de esta página"
+ },
+ "Обрезать.изображение": {
+  "en": "Crop",
+  "es": "Recortar"
  }
 }

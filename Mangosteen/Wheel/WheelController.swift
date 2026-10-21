@@ -13,6 +13,7 @@ final class WheelController {
     #if DEBUG
     var debugWindow: NSWindow { panel }
     func debugHighlight(_ index: Int) { wheelView.debugHighlight(index) }
+    var debugAccessibilitySummary: String { wheelView.debugAccessibilitySummary }
     #endif
 
     init() {

@@ -42,7 +42,50 @@ final class WheelView: NSView {
         self.fileCount = fileCount
         highlighted = nil
         needsDisplay = true
+        rebuildAccessibility()
     }
+
+    // MARK: - Accessibility
+
+    /// One wheel segment as a VoiceOver button; pressing it does what a click or a drop on the segment does.
+    private final class SegmentElement: NSAccessibilityElement {
+        var press: (() -> Void)?
+
+        override func accessibilityPerformPress() -> Bool {
+            press?()
+            return press != nil
+        }
+    }
+
+    private var segmentElements: [SegmentElement] = []
+
+    private func rebuildAccessibility() {
+        segmentElements = items.indices.map { index in
+            let element = SegmentElement()
+            element.setAccessibilityRole(.button)
+            element.setAccessibilityLabel(items[index].title)
+            element.setAccessibilityParent(self)
+            element.setAccessibilityFrameInParentSpace(segmentPath(index).bounds)
+            element.press = { [weak self] in
+                guard let self, self.items.indices.contains(index) else { return }
+                self.onSelect?(self.items[index])
+            }
+            return element
+        }
+        NSAccessibility.post(element: self, notification: .layoutChanged)
+    }
+
+    override func isAccessibilityElement() -> Bool { true }
+    override func accessibilityRole() -> NSAccessibility.Role? { .group }
+    override func accessibilityLabel() -> String? { "\(kind.title), \(Self.filesLabel(fileCount))" }
+    override func accessibilityChildren() -> [Any]? { segmentElements }
+
+    #if DEBUG
+    /// Snapshot mode: what VoiceOver reads for the wheel and its buttons.
+    var debugAccessibilitySummary: String {
+        ([accessibilityLabel() ?? ""] + segmentElements.map { "[\($0.accessibilityLabel() ?? "")]" }).joined(separator: " ")
+    }
+    #endif
 
     private var ringCenter: NSPoint { NSPoint(x: bounds.midX, y: bounds.midY) }
     private var span: CGFloat { 2 * .pi / CGFloat(max(items.count, 1)) }

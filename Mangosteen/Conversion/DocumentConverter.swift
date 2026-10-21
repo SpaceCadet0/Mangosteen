@@ -48,8 +48,12 @@ enum DocumentConverter {
         return String(decoding: data, as: UTF8.self)
     }
 
-    /// The HTML importer uses WebKit and must run on the main thread.
+    /// The HTML importer uses WebKit and must run on the main thread. The page is made offline first: WebKit would
+    /// otherwise fetch remote pictures and stylesheets (a tracking pixel learns when the file was opened) and embed
+    /// local files from anywhere on disk.
     private static func readHTML(_ data: Data, baseURL: URL) throws -> NSAttributedString {
+        let html = String(data: data, encoding: .utf8) ?? String(decoding: data, as: UTF8.self)
+        let data = Data(offlineHTML(html, folder: baseURL).utf8)
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSAttributedString.DocumentType.html,
             .characterEncoding: String.Encoding.utf8.rawValue,
@@ -60,6 +64,69 @@ enum DocumentConverter {
             return try read()
         }
         return try DispatchQueue.main.sync(execute: read)
+    }
+
+    /// Removes everything that would make WebKit load a resource from the network or from outside `folder`:
+    /// remote, `file:` and absolute URLs in resource attributes, `<base>`, `<meta http-equiv=refresh>`, and CSS
+    /// `url(…)`/`@import`. Relative resources inside the folder, `data:` URIs and plain links stay.
+    static func offlineHTML(_ html: String, folder: URL) -> String {
+        let root = folder.standardizedFileURL.path
+        func isLocal(_ raw: String) -> Bool {
+            let value = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+            if value.isEmpty || value.hasPrefix("#") || value.lowercased().hasPrefix("data:") { return true }
+            if value.hasPrefix("/") || value.hasPrefix("\\") { return false }
+            if value.range(of: #"^[A-Za-z][A-Za-z0-9+.-]*:"#, options: .regularExpression) != nil { return false }
+            let path = folder.appendingPathComponent(value.components(separatedBy: CharacterSet(charactersIn: "?#"))[0])
+                .standardizedFileURL.path
+            return path == root || path.hasPrefix(root + "/")
+        }
+        func replace(_ pattern: String, in text: String, _ transform: ([String]) -> String) -> String {
+            guard let regex = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive, .dotMatchesLineSeparators]) else {
+                return text
+            }
+            let source = text as NSString
+            var result = ""
+            var last = 0
+            for match in regex.matches(in: text, range: NSRange(location: 0, length: source.length)) {
+                result += source.substring(with: NSRange(location: last, length: match.range.location - last))
+                let groups = (0..<match.numberOfRanges).map {
+                    match.range(at: $0).location == NSNotFound ? "" : source.substring(with: match.range(at: $0))
+                }
+                result += transform(groups)
+                last = match.range.location + match.range.length
+            }
+            return result + source.substring(from: last)
+        }
+
+        var text = replace(#"<base\b[^>]*>"#, in: html) { _ in "" }
+        text = replace(#"<meta\b[^>]*http-equiv\s*=\s*["']?refresh[^>]*>"#, in: text) { _ in "" }
+        // Resource attributes: src, srcset, poster, background, data (object) and href on <link>.
+        text = replace(#"(\s(?:src|poster|background|data)\s*=\s*)(["'])(.*?)\2"#, in: text) { groups in
+            isLocal(groups[3]) ? groups[0] : "\(groups[1])\(groups[2])\(groups[2])"
+        }
+        text = replace(#"(\ssrcset\s*=\s*)(["'])(.*?)\2"#, in: text) { groups in
+            let kept = groups[3].split(separator: ",").filter { candidate in
+                isLocal(candidate.trimmingCharacters(in: .whitespaces).components(separatedBy: " ")[0])
+            }
+            return "\(groups[1])\(groups[2])\(kept.joined(separator: ","))\(groups[2])"
+        }
+        text = replace(#"(\s(?:src|poster|background|data)\s*=\s*)([^\s"'>]+)"#, in: text) { groups in
+            isLocal(groups[2]) ? groups[0] : "\(groups[1])\"\""
+        }
+        text = replace(#"<link\b[^>]*>"#, in: text) { groups in
+            let href = groups[0].range(of: #"href\s*=\s*["']?([^"'\s>]+)"#, options: [.regularExpression, .caseInsensitive])
+                .map { String(groups[0][$0]) } ?? ""
+            let value = href.replacingOccurrences(of: #"^href\s*=\s*["']?"#, with: "", options: [.regularExpression, .caseInsensitive])
+            return isLocal(value) ? groups[0] : ""
+        }
+        // CSS in <style> blocks and style attributes.
+        text = replace(#"@import\s+(?:url\()?\s*["']?([^"')\s;]+)["']?\s*\)?[^;]*;"#, in: text) { groups in
+            isLocal(groups[1]) ? groups[0] : ""
+        }
+        text = replace(#"url\(\s*(["']?)([^"')]+)\1\s*\)"#, in: text) { groups in
+            isLocal(groups[2]) ? groups[0] : "none"
+        }
+        return text
     }
 
     // MARK: - Writing

@@ -51,7 +51,7 @@ enum PDFSplitter {
     /// `<name> 1.pdf`, `<name> 2.pdf`…; a single one becomes `<name> (страницы).pdf`.
     static func split(_ url: URL, cuts: Set<Int>, excluded: Set<Int>) throws -> URL {
         guard let document = PDFDocument(url: url) else { throw ConversionError.unreadable(url) }
-        guard !document.isLocked else { throw PDFToolError.writeFailed }
+        guard !document.isLocked else { throw PDFToolError.locked(url) }
         let groups = groups(pageCount: document.pageCount, cuts: cuts, excluded: excluded)
         guard !groups.isEmpty else { throw PDFToolError.nothingToDo }
         let baseName = OutputNaming.baseName(of: url)
@@ -74,14 +74,13 @@ enum PDFSplitter {
                 guard part.write(to: output) else { throw PDFToolError.writeFailed }
             }
         }
-        let digits = String(groups.count).count
         return try OutputNaming.writeAtomically(
             directory: directory, baseName: String(localized: "\(baseName) (части)"), pathExtension: ""
         ) { folder in
             try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
             for (index, pages) in groups.enumerated() {
-                let number = String(repeating: "0", count: digits - String(index + 1).count) + String(index + 1)
-                let file = folder.appendingPathComponent("\(baseName) \(number)").appendingPathExtension("pdf")
+                let file = folder.appendingPathComponent("\(baseName) \(OutputNaming.partNumber(index, of: groups.count))")
+                    .appendingPathExtension("pdf")
                 guard try build(pages).write(to: file) else { throw PDFToolError.writeFailed }
             }
         }

@@ -1,6 +1,6 @@
 import Foundation
 
-/// Locates and runs command-line tools (cwebp, ffmpeg, exiftool…).
+/// Locates and runs command-line tools (ffmpeg, ffprobe, cwebp, gif2webp…).
 ///
 /// Lookup order: binaries bundled in `Contents/Resources/Tools`, then Homebrew, then system paths.
 enum ExternalTool {
@@ -23,7 +23,8 @@ enum ExternalTool {
 
         static func formula(for tool: String) -> String {
             switch tool {
-            case "cwebp", "dwebp": "webp"
+            case "cwebp", "dwebp", "gif2webp": "webp"
+            case "ffprobe": "ffmpeg"
             default: tool
             }
         }

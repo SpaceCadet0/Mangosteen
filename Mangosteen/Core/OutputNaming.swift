@@ -17,6 +17,12 @@ enum OutputNaming {
         return candidate(index)
     }
 
+    /// 1-based number of a part, zero-padded to the width of `count` so parts sort in order: "03" of 12.
+    static func partNumber(_ index: Int, of count: Int) -> String {
+        let number = String(index + 1)
+        return String(repeating: "0", count: max(String(count).count - number.count, 0)) + number
+    }
+
     static func baseName(of url: URL) -> String {
         let name = url.lastPathComponent
         for doubleExtension in [".tar.gz", ".tar.bz2", ".tar.xz"] where name.lowercased().hasSuffix(doubleExtension) {

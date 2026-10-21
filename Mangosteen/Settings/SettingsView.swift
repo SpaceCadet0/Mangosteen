@@ -59,7 +59,7 @@ struct SettingsView: View {
             }
 
             Section {
-                ForEach(["cwebp", "ffmpeg", "exiftool"], id: \.self) { tool in
+                ForEach(["ffmpeg", "ffprobe", "cwebp", "gif2webp"], id: \.self) { tool in
                     LabeledContent(tool) {
                         if let path = ExternalTool.locate(tool)?.path {
                             Text(path).foregroundStyle(.secondary)

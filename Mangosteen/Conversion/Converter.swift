@@ -63,7 +63,8 @@ enum Converter {
             }
         }
 
-        // A workbook with several sheets becomes a folder with one table per sheet.
+        // A workbook with several sheets becomes a folder with one table per sheet; a single sheet is written
+        // straight from the rows already read, so the workbook is parsed only once.
         if source == .xlsx {
             let sheets = try XLSX.read(input).filter { !$0.rows.isEmpty }
             if sheets.count > 1 {
@@ -72,6 +73,11 @@ enum Converter {
                 ) { folder in
                     try TableConverter.writeSheets(sheets, as: target, into: folder)
                 }
+            }
+            return try OutputNaming.writeAtomically(
+                directory: directory, baseName: baseName, pathExtension: target.fileExtension
+            ) { output in
+                try TableConverter.write(sheets.first?.rows ?? [], as: target, sheetName: sheets.first?.name ?? baseName, to: output)
             }
         }
 

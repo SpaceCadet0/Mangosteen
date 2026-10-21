@@ -89,7 +89,9 @@ enum WheelItemProvider {
             })
         }
         if hasImages {
-            items.append(WheelItem(id: "tool.crop", title: String(localized: "Обрезать"), symbolName: "crop") { urls in
+            // Russian says «Обрезать» for both trimming media and cropping images; the other languages need two words.
+            items.append(WheelItem(id: "tool.crop", title: String(localized: "Обрезать.изображение", defaultValue: "Обрезать"),
+                                   symbolName: "crop") { urls in
                 ToolWindow.present(title: String(localized: "Обрезка"), files: urls) { CropView(urls: urls, close: $0) }
             })
         }

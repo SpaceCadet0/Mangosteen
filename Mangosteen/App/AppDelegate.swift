@@ -98,6 +98,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let center = NSScreen.main.map { NSPoint(x: $0.frame.midX, y: $0.frame.midY) } ?? .zero
             wheel.show(kind: kind, urls: inputs, at: center)
             wheel.debugHighlight(1)
+            print("snapshot: accessibility \(wheel.debugAccessibilitySummary)")
             finishSnapshot(window: wheel.debugWindow)
             return
         }

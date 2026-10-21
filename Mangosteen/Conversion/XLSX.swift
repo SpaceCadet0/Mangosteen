@@ -13,28 +13,40 @@ enum XLSX {
     /// Every worksheet of the workbook, in tab order.
     static func read(_ url: URL) throws -> [Sheet] {
         do {
-            return try read(parts: ZipArchive.read(Data(contentsOf: url)))
+            // Only the parts that hold cells are inflated; pictures and embedded files stay compressed.
+            let archive = try ZipArchive.Reader(Data(contentsOf: url))
+            var failure: Error?
+            let sheets = try read { name in
+                do { return try archive.data(name) } catch { failure = error; return nil }
+            }
+            if let failure { throw failure }
+            return sheets
         } catch {
             throw ConversionError.unreadable(url)
         }
     }
 
     static func read(parts: [String: Data]) throws -> [Sheet] {
-        let rootRelationships = relationships(of: "", in: parts)
+        try read { parts[$0] }
+    }
+
+    /// `part` returns a package part by its path inside the archive.
+    private static func read(part: (String) -> Data?) throws -> [Sheet] {
+        let rootRelationships = relationships(of: "", in: part)
         let workbookPath = rootRelationships.values.first { $0.type.hasSuffix("/officeDocument") }?.target ?? "xl/workbook.xml"
-        guard let workbookData = parts[workbookPath], let workbook = Element.parse(workbookData) else {
+        guard let workbookData = part(workbookPath), let workbook = Element.parse(workbookData) else {
             throw ConversionError.unreadable(URL(fileURLWithPath: workbookPath))
         }
-        let workbookRelationships = relationships(of: workbookPath, in: parts)
+        let workbookRelationships = relationships(of: workbookPath, in: part)
         let date1904 = workbook.descendants("workbookPr").first.map { ["1", "true"].contains($0.attribute("date1904")) } ?? false
         let sharedStrings = workbookRelationships.values.first { $0.type.hasSuffix("/sharedStrings") }
-            .flatMap { parts[$0.target] }.map(SharedStringsParser.parse) ?? []
+            .flatMap { part($0.target) }.map(SharedStringsParser.parse) ?? []
         let dateStyles = workbookRelationships.values.first { $0.type.hasSuffix("/styles") }
-            .flatMap { parts[$0.target] }.map(dateStyleIndices) ?? []
+            .flatMap { part($0.target) }.map(dateStyleIndices) ?? []
 
         return workbook.descendants("sheet").compactMap { sheet in
             guard let id = sheet.attribute("id"), let target = workbookRelationships[id]?.target,
-                  let data = parts[target] else { return nil }
+                  let data = part(target) else { return nil }
             let rows = SheetParser.parse(data, sharedStrings: sharedStrings, dateStyles: dateStyles, date1904: date1904)
             return Sheet(name: sheet.attribute("name") ?? "Sheet", rows: rows)
         }
@@ -46,11 +58,11 @@ enum XLSX {
     }
 
     /// The relationships of a package part (`""` for the package itself), with targets resolved to part paths.
-    private static func relationships(of part: String, in parts: [String: Data]) -> [String: Relationship] {
-        let folder = (part as NSString).deletingLastPathComponent
-        let name = (part as NSString).lastPathComponent
+    private static func relationships(of partPath: String, in part: (String) -> Data?) -> [String: Relationship] {
+        let folder = (partPath as NSString).deletingLastPathComponent
+        let name = (partPath as NSString).lastPathComponent
         let path = folder.isEmpty ? "_rels/\(name).rels" : "\(folder)/_rels/\(name).rels"
-        guard let data = parts[path], let root = Element.parse(data) else { return [:] }
+        guard let data = part(path), let root = Element.parse(data) else { return [:] }
         var result: [String: Relationship] = [:]
         for relationship in root.descendants("Relationship") {
             guard let id = relationship.attribute("Id"), let target = relationship.attribute("Target"),
@@ -118,8 +130,14 @@ enum XLSX {
 
     /// Spreadsheet serial day number → ISO text: a date, a time, or both.
     static func dateText(serial: Double, date1904: Bool) -> String {
+        // The 1900 system counts a 29 February 1900 that never existed (serial 60): it is shown as Excel shows it,
+        // and serials before it are counted from 1899-12-31 instead of 1899-12-30.
+        if !date1904, serial >= 60, serial < 61 {
+            let time = serial - 60
+            return time > 0 ? "1900-02-29 " + dateText(serial: time, date1904: false) : "1900-02-29"
+        }
         let seconds = Int((serial * 86_400).rounded())
-        let epoch = date1904 ? -2_082_844_800.0 : -2_209_161_600.0 // 1904-01-01 and 1899-12-30, UTC
+        let epoch = date1904 ? -2_082_844_800.0 : (serial < 60 ? -2_209_075_200.0 : -2_209_161_600.0) // 1904-01-01, 1899-12-31/30 UTC
         let date = Date(timeIntervalSince1970: epoch + Double(seconds))
         let hasTime = seconds % 86_400 != 0
         let format = serial < 1 ? "HH:mm:ss" : (hasTime ? "yyyy-MM-dd HH:mm:ss" : "yyyy-MM-dd")

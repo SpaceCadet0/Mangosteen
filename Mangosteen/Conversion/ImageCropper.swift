@@ -107,12 +107,7 @@ enum ImageCropper {
         guard !transform.isIdentity else { return image }
         let width = image.width, height = image.height
         let size = transform.size(for: CGSize(width: width, height: height))
-        let space = image.colorSpace.flatMap { $0.model == .rgb ? $0 : nil } ?? CGColorSpace(name: CGColorSpace.sRGB)!
-        guard let context = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8,
-                                      bytesPerRow: 0, space: space,
-                                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
-            throw ConversionError.encodeFailed(.png)
-        }
+        guard let context = losslessContext(like: image, size: size) else { throw ConversionError.encodeFailed(.png) }
         // Core Graphics applies the last transform first: the mirror is set up before the turn.
         if transform.flipHorizontal {
             context.translateBy(x: size.width, y: 0)
@@ -144,6 +139,32 @@ enum ImageCropper {
     /// Cut positions (0…1) that divide a side into `parts` equal pieces.
     static func evenCuts(_ parts: Int) -> [CGFloat] {
         parts > 1 ? (1..<parts).map { CGFloat($0) / CGFloat(parts) } : []
+    }
+
+    /// A bitmap context with the image's own bit depth, colour space and alpha, so turning and mirroring do not
+    /// reduce 16-bit or float images to 8 bits or convert CMYK and grayscale to RGB. Combinations Core Graphics cannot
+    /// draw into (grayscale with alpha, for one) fall back to RGB at the same depth.
+    private static func losslessContext(like image: CGImage, size: CGSize) -> CGContext? {
+        let hasAlpha = ![.none, .noneSkipFirst, .noneSkipLast].contains(image.alphaInfo)
+        let bits = image.bitsPerComponent
+        let float = image.bitmapInfo.contains(.floatComponents)
+        let source = image.colorSpace.flatMap { $0.supportsOutput ? $0 : nil }
+        func context(bits: Int, space: CGColorSpace, alpha: CGImageAlphaInfo, float: Bool) -> CGContext? {
+            var info = alpha.rawValue
+            if float { info |= CGBitmapInfo.floatComponents.rawValue | CGBitmapInfo.byteOrder32Little.rawValue }
+            return CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: bits,
+                             bytesPerRow: 0, space: space, bitmapInfo: info)
+        }
+        if let source {
+            let alpha: CGImageAlphaInfo = switch source.model {
+            case .rgb: hasAlpha ? .premultipliedLast : .noneSkipLast
+            default: hasAlpha ? .premultipliedLast : .none
+            }
+            if let made = context(bits: bits, space: source, alpha: alpha, float: float) { return made }
+        }
+        let rgb = source.flatMap { $0.model == .rgb ? $0 : nil } ?? CGColorSpace(name: CGColorSpace.sRGB)!
+        return context(bits: bits > 8 ? 16 : 8, space: rgb, alpha: .premultipliedLast, float: false)
+            ?? context(bits: 8, space: CGColorSpace(name: CGColorSpace.sRGB)!, alpha: .premultipliedLast, float: false)
     }
 
     /// Cuts the image into a grid, row by row from the top-left; edges fall on whole pixels.
@@ -196,14 +217,13 @@ enum ImageCropper {
 
         if !columnCuts.isEmpty || !rowCuts.isEmpty {
             let parts = tiles(cropped, columnCuts: columnCuts, rowCuts: rowCuts)
-            let digits = String(parts.count).count
             return try OutputNaming.writeAtomically(
                 directory: directory, baseName: String(localized: "\(baseName) (части)"), pathExtension: ""
             ) { folder in
                 try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
                 for (index, part) in parts.enumerated() {
-                    let number = String(repeating: "0", count: digits - String(index + 1).count) + String(index + 1)
-                    let url = folder.appendingPathComponent("\(baseName) \(number)").appendingPathExtension(target.fileExtension)
+                    let url = folder.appendingPathComponent("\(baseName) \(OutputNaming.partNumber(index, of: parts.count))")
+                        .appendingPathExtension(target.fileExtension)
                     try ImageConverter.write(part, as: target, to: url, options: options, metadata: carried)
                 }
             }

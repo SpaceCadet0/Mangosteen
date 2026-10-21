@@ -8,40 +8,83 @@ enum ZipArchive {
         case malformed
         case unsupportedMethod(UInt16)
         case inflateFailed(String)
+        /// An entry (or the whole archive) claims more data than a document needs; refusing protects against zip bombs.
+        case tooLarge(String)
+    }
+
+    /// Upper bounds for what one entry and a whole archive may inflate to.
+    static let maxEntrySize = 256 << 20
+    static let maxTotalSize = 1 << 30
+
+    /// The archive's table of contents. Entries are inflated only when asked for, so a workbook's pictures are never
+    /// decompressed just to read its cells.
+    struct Reader {
+        private struct Entry {
+            let method: UInt16
+            let start: Int
+            let compressedSize: Int
+            let size: Int
+        }
+
+        private let bytes: [UInt8]
+        private let entries: [String: Entry]
+
+        var names: [String] { Array(entries.keys) }
+
+        init(_ data: Data) throws {
+            let bytes = [UInt8](data)
+            guard let end = ZipArchive.endOfCentralDirectory(in: bytes) else { throw Failure.malformed }
+            let count = Int(bytes.uint16(at: end + 10))
+            var cursor = Int(bytes.uint32(at: end + 16))
+            var entries: [String: Entry] = [:]
+            for _ in 0..<count {
+                guard cursor + 46 <= bytes.count, bytes.uint32(at: cursor) == 0x0201_4B50 else { throw Failure.malformed }
+                let method = bytes.uint16(at: cursor + 10)
+                let compressedSize = Int(bytes.uint32(at: cursor + 20))
+                let size = Int(bytes.uint32(at: cursor + 24))
+                let nameLength = Int(bytes.uint16(at: cursor + 28))
+                let extraLength = Int(bytes.uint16(at: cursor + 30))
+                let commentLength = Int(bytes.uint16(at: cursor + 32))
+                let localHeader = Int(bytes.uint32(at: cursor + 42))
+                guard cursor + 46 + nameLength <= bytes.count else { throw Failure.malformed }
+                let name = String(decoding: bytes[(cursor + 46)..<(cursor + 46 + nameLength)], as: UTF8.self)
+                cursor += 46 + nameLength + extraLength + commentLength
+
+                guard !name.hasSuffix("/") else { continue }
+                guard localHeader + 30 <= bytes.count, bytes.uint32(at: localHeader) == 0x0403_4B50 else {
+                    throw Failure.malformed
+                }
+                let start = localHeader + 30 + Int(bytes.uint16(at: localHeader + 26)) + Int(bytes.uint16(at: localHeader + 28))
+                guard start + compressedSize <= bytes.count else { throw Failure.malformed }
+                entries[name] = Entry(method: method, start: start, compressedSize: compressedSize, size: size)
+            }
+            self.bytes = bytes
+            self.entries = entries
+        }
+
+        /// Declared uncompressed size of all entries.
+        var totalSize: Int { entries.values.reduce(0) { $0 + $1.size } }
+
+        /// The contents of one entry, or nil when the archive has no such entry.
+        func data(_ name: String) throws -> Data? {
+            guard let entry = entries[name] else { return nil }
+            guard entry.size <= ZipArchive.maxEntrySize else { throw Failure.tooLarge(name) }
+            let payload = bytes[entry.start..<(entry.start + entry.compressedSize)]
+            switch entry.method {
+            case 0: return Data(payload)
+            case 8: return try ZipArchive.inflate(payload, size: entry.size, name: name)
+            default: throw Failure.unsupportedMethod(entry.method)
+            }
+        }
     }
 
     /// Reads every file entry of the archive into memory, keyed by its path inside the archive.
     static func read(_ data: Data) throws -> [String: Data] {
-        let bytes = [UInt8](data)
-        guard let end = endOfCentralDirectory(in: bytes) else { throw Failure.malformed }
-        let count = Int(bytes.uint16(at: end + 10))
-        var cursor = Int(bytes.uint32(at: end + 16))
+        let reader = try Reader(data)
+        guard reader.totalSize <= maxTotalSize else { throw Failure.tooLarge("*") }
         var entries: [String: Data] = [:]
-        for _ in 0..<count {
-            guard cursor + 46 <= bytes.count, bytes.uint32(at: cursor) == 0x0201_4B50 else { throw Failure.malformed }
-            let method = bytes.uint16(at: cursor + 10)
-            let compressedSize = Int(bytes.uint32(at: cursor + 20))
-            let size = Int(bytes.uint32(at: cursor + 24))
-            let nameLength = Int(bytes.uint16(at: cursor + 28))
-            let extraLength = Int(bytes.uint16(at: cursor + 30))
-            let commentLength = Int(bytes.uint16(at: cursor + 32))
-            let localHeader = Int(bytes.uint32(at: cursor + 42))
-            guard cursor + 46 + nameLength <= bytes.count else { throw Failure.malformed }
-            let name = String(decoding: bytes[(cursor + 46)..<(cursor + 46 + nameLength)], as: UTF8.self)
-            cursor += 46 + nameLength + extraLength + commentLength
-
-            guard !name.hasSuffix("/") else { continue }
-            guard localHeader + 30 <= bytes.count, bytes.uint32(at: localHeader) == 0x0403_4B50 else {
-                throw Failure.malformed
-            }
-            let start = localHeader + 30 + Int(bytes.uint16(at: localHeader + 26)) + Int(bytes.uint16(at: localHeader + 28))
-            guard start + compressedSize <= bytes.count else { throw Failure.malformed }
-            let payload = bytes[start..<(start + compressedSize)]
-            switch method {
-            case 0: entries[name] = Data(payload)
-            case 8: entries[name] = try inflate(payload, size: size, name: name)
-            default: throw Failure.unsupportedMethod(method)
-            }
+        for name in reader.names {
+            entries[name] = try reader.data(name)
         }
         return entries
     }
@@ -99,7 +142,7 @@ enum ZipArchive {
         return archive
     }
 
-    private static func endOfCentralDirectory(in bytes: [UInt8]) -> Int? {
+    fileprivate static func endOfCentralDirectory(in bytes: [UInt8]) -> Int? {
         guard bytes.count >= 22 else { return nil }
         let lowest = max(0, bytes.count - 22 - 65_535)
         var index = bytes.count - 22
@@ -111,7 +154,7 @@ enum ZipArchive {
     }
 
     /// Raw DEFLATE (what ZIP stores) is Compression's `COMPRESSION_ZLIB`.
-    private static func inflate(_ payload: ArraySlice<UInt8>, size: Int, name: String) throws -> Data {
+    fileprivate static func inflate(_ payload: ArraySlice<UInt8>, size: Int, name: String) throws -> Data {
         if size == 0 { return Data() }
         guard !payload.isEmpty else { throw Failure.inflateFailed(name) }
         var output = [UInt8](repeating: 0, count: size)

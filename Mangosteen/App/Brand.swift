@@ -10,7 +10,7 @@ enum Brand {
     /// (button titles, links) stays readable on dark backgrounds.
     static let adaptive = NSColor(name: "MangosteenAccent") { appearance in
         appearance.bestMatch(from: [.darkAqua, .vibrantDark]) != nil
-            ? NSColor(srgbRed: 0xC0 / 255.0, green: 0x5A / 255.0, blue: 0x80 / 255.0, alpha: 1)
+            ? NSColor(srgbRed: 0xCC / 255.0, green: 0x68 / 255.0, blue: 0x90 / 255.0, alpha: 1) // 4.7:1 on dark windows
             : nsColor
     }
     static let color = Color(nsColor: adaptive)
