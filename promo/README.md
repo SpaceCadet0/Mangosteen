@@ -15,7 +15,7 @@ README animation (looping WebP, 1600 px, 30 fps, made from lossless PNG frames):
 
 ```bash
 npx remotion render MacDemo frames --sequence --image-format=png
-img2webp -loop 0 -lossy -q 92 -m 6 -d 33 frames/element-*.png -o out/MacDemo.webp
+img2webp -loop 0 -kmin 0 -kmax 1 -lossy -q 92 -m 6 -d 33 frames/element-*.png -o out/MacDemo.webp
 ```
 
 `public/mac-trim.png` is a snapshot of the app's Trim window (`Mangosteen --snapshot tool.trimMedia`);
