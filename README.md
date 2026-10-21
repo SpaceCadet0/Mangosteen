@@ -19,6 +19,14 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-671E38" alt="MIT License"></a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/SpaceCadet0/Mangosteen/releases/latest"><b>Download the latest version</b></a>
+</p>
+
+```
+0.0 % CPU at rest  ·  ≈90 MB memory  ·  48 MB app (20 MB download)  ·  nothing asked at launch
+```
+
 ---
 
 Mangosteen lives in the menu bar and waits for you to drag something. Grab a file in Finder, on the desktop or in
@@ -73,23 +81,21 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 ### Images
 
 <p align="center">
-  <img src="docs/images/en/annotate.png" width="49%" alt="Annotate">
-  <img src="docs/images/en/frame.png" width="49%" alt="Background">
+  <img src="docs/images/en/images-annotate-background.png" width="100%" alt="Annotate and Background">
 </p>
 
 - **Annotate** — arrows, shapes, text, numbered steps, pencil, highlighter, magnifier and pasted images.
 - **Background** — put a photo on a colour, gradient, image or a blurred copy of itself, with margin, rounded corners and shadow.
 - **Editor** — light, colour, detail and effects; hold the preview to compare with the original, double-click a slider to reset it.
 - **Compress** — presets, quality, target file size, resize and format change; works for PDF too.
-- **Crop** — free frame, aspect ratios or an exact size.
+- **Crop** — free frame, aspect ratios or an exact size; rotate, mirror, and split into a grid of parts with movable cut lines.
 - **Collage** — grid, row, column or a featured photo.
 - **Redact** — finds faces and text with Vision and hides them with a fill, blur or pixels.
 - **Metadata** — view everything, edit common fields, remove the location or all metadata.
 - **PDF from photos**.
 
 <p align="center">
-  <img src="docs/images/en/edit.png" width="49%" alt="Photo editor">
-  <img src="docs/images/en/compress.png" width="49%" alt="Compress">
+  <img src="docs/images/en/images-editor-compress.png" width="100%" alt="Photo editor and Compress">
 </p>
 
 ### PDF
@@ -100,8 +106,7 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 ### Video and audio
 
 <p align="center">
-  <img src="docs/images/en/bleep.png" width="49%" alt="Bleep">
-  <img src="docs/images/en/redact-video.png" width="49%" alt="Redact video">
+  <img src="docs/images/en/video-bleep-redact.png" width="100%" alt="Bleep and Redact video">
 </p>
 
 - **Trim** and **Split** on a zoomable timeline with frame previews.
@@ -118,7 +123,7 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 ## Actions
 
 - **AirDrop** the files straight away.
-- **Float** — a floating shelf that holds files until you drag them somewhere else, in copy or move mode.
+- **Float** — a floating shelf with previews that holds files until you drag them somewhere else, in copy or move mode.
 - **Copy** or **Move** to a folder, **copy the path**, **open in Terminal** or iTerm2.
 
 ## First launch

@@ -25,7 +25,7 @@ struct Annotation: Identifiable, Equatable {
 }
 
 enum AnnotationTool: String, CaseIterable, Identifiable {
-    case select, arrow, rectangle, ellipse, text, number, pen, highlight, magnifier, image
+    case select, pen, arrow, rectangle, ellipse, text, number, highlight, magnifier, image
 
     var id: String { rawValue }
 

@@ -54,7 +54,7 @@ struct AnnotateView: View {
     @State private var annotations: [Annotation] = []
     @State private var history: [[Annotation]] = []
     @State private var pictures: [URL: CGImage] = [:]
-    @State private var tool = AnnotationTool.arrow
+    @State private var tool = AnnotationTool.pen
     @State private var color = palette[0]
     @State private var stroke = StrokePreset.medium
     @State private var textScale = 0.045
