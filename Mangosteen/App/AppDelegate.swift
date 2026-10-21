@@ -101,6 +101,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             finishSnapshot(window: wheel.debugWindow)
             return
         }
+        if itemID == "menu" {
+            // The menu runs its own tracking loop; meanwhile draw its window (our own process) into `output`.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                let menuWindow = NSApp.windows.first { $0.isVisible && String(describing: type(of: $0)).contains("Menu") }
+                if let view = menuWindow?.contentView, let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) {
+                    view.cacheDisplay(in: view.bounds, to: bitmap)
+                    try? bitmap.representation(using: .png, properties: [:])?.write(to: output)
+                    print("snapshot: menu saved \(type(of: menuWindow!)) \(view.bounds.size)")
+                } else {
+                    print("snapshot: no menu window among \(NSApp.windows.map { String(describing: type(of: $0)) })")
+                }
+                exit(0)
+            }
+            menuBar?.debugOpenMenu()
+            return
+        }
         if itemID == "about" {
             showAbout()
             finishSnapshot(window: nil)
