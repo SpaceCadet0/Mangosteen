@@ -8,14 +8,14 @@ npm i
 swift scripts/export-assets.swift <photo.jpg>            # SF Symbols, Finder icons, photo thumbnail
 swift scripts/export-assets.swift <video-frame.jpg> video-thumb
 npx remotion studio                                       # preview
-npx remotion render MacDemo out/MacDemo.mp4 --codec=h264 --crf=16
+npx remotion render MacDemo out/MacDemo.mp4 --codec=h264 --crf=10 --scale=2 --image-format=png   # 3200 × 2000
 ```
 
-README animation (looping WebP, 1000 px, 25 fps):
+README animation (looping WebP, 1600 px, 30 fps, made from lossless PNG frames):
 
 ```bash
-ffmpeg -i out/MacDemo.mp4 -vf "fps=25,scale=1000:-1:flags=lanczos" frames/f%04d.png
-img2webp -loop 0 -lossy -q 72 -m 4 -d 40 frames/f*.png -o out/MacDemo.webp
+npx remotion render MacDemo frames --sequence --image-format=png
+img2webp -loop 0 -lossy -q 92 -m 6 -d 33 frames/element-*.png -o out/MacDemo.webp
 ```
 
 `public/mac-trim.png` is a snapshot of the app's Trim window (`Mangosteen --snapshot tool.trimMedia`);

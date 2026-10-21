@@ -170,7 +170,7 @@ const WHEEL: Record<Platform, WheelStyle> = {
     inner: 64,
     disc: "rgba(36,36,38,0.97)",
     ring: "rgba(255,255,255,0.03)",
-    segment: "rgba(255,255,255,0.06)",
+    segment: "#313133",
     hub: "transparent",
     text: "#ECECEE",
     secondary: "#9A9AA0",
