@@ -1,7 +1,9 @@
 /* Generated from scripts/translations.json. Keys are the Russian text. */
 "\n…и ещё %lld" = "\n…and %lld more";
 " (свёрнуто)" = " (minimized)";
+" и ещё %lld" = " and %lld more";
 " — не меньше оригинала, файл не будет сохранён" = " — not smaller than the original, the file will not be saved";
+"%@ (без фона)" = "%@ (no background)";
 "%@ (визуализация)" = "%@ (visualizer)";
 "%@ (изменено)" = "%@ (edited)";
 "%@ (кадрирование)" = "%@ (cropped video)";
@@ -13,6 +15,7 @@
 "%@ (скорость %@)" = "%@ (speed %@)";
 "%@ (скрыто)" = "%@ (redacted)";
 "%@ (страницы)" = "%@ (pages)";
+"%@ (текст)" = "%@ (text)";
 "%@ (фон)" = "%@ (background)";
 "%@ (части)" = "%@ (parts)";
 "%@ завершился с кодом %d" = "%@ exited with code %d";
@@ -51,6 +54,7 @@
 "Быстро, без перекодирования" = "Fast, without re-encoding";
 "Быстро, без перекодирования (разрез по ближайшему ключевому кадру)" = "Fast, without re-encoding (cut at the nearest keyframe)";
 "В PDF изображения будут пережаты в JPEG экранного разрешения." = "Images inside PDFs will be re-encoded as screen-resolution JPEG.";
+"В «%@» не найден текст." = "No text found in “%@”.";
 "В «%@» нет видео." = "“%@” has no video.";
 "В «%@» нет звуковой дорожки." = "“%@” has no audio track.";
 "Введите координаты в градусах, например 55.7558 и 37.6173" = "Enter coordinates in degrees, e.g. 55.7558 and 37.6173";
@@ -124,6 +128,7 @@
 "Исходная запись моно: оба канала получают один и тот же звук." = "The source is mono: both channels get the same sound.";
 "Исходное изображение" = "Original image";
 "Итого: %@" = "Total: %@";
+"Ищем объект…" = "Finding the subject…";
 "КБ" = "KB";
 "Кадр вперёд" = "Next frame";
 "Кадр для предпросмотра" = "Preview frame";
@@ -180,6 +185,8 @@
 "Модель камеры" = "Camera model";
 "Моментальный" = "Instant";
 "Моно" = "Mono";
+"На «%@» не найден объект, от которого можно отделить фон." = "No subject to separate from the background was found in “%@”.";
+"На фото не найден объект, от которого можно отделить фон." = "No subject to separate from the background was found in the photo.";
 "Найдено областей: %lld" = "Areas found: %lld";
 "Найдено областей: %lld. Проверьте их время на таймлайне." = "Areas found: %lld. Check their timing on the timeline.";
 "Найдите кадр (пробел — воспроизведение, ⏎ — добавить, кнопки ◀︎▶︎ — по одному кадру)." = "Find the frame (Space — play, ⏎ — add, ◀︎▶︎ buttons — one frame at a time).";
@@ -205,6 +212,7 @@
 "Не удалось прочитать файл" = "Could not read the file";
 "Не удалось сохранить PDF." = "Could not save the PDF.";
 "Не удалось сохранить файл в формате %@." = "Could not save the file as %@.";
+"Недавние результаты" = "Recent Results";
 "Неизвестный формат файла «%@»." = "Unknown file format: “%@”.";
 "Нет" = "None";
 "Нет вариантов" = "No options";
@@ -219,6 +227,7 @@
 "О Mangosteen" = "About Mangosteen";
 "О Mangosteen…" = "About Mangosteen…";
 "Обрезать" = "Trim";
+"Обрезать по объекту" = "Crop to subject";
 "Обрезать.изображение" = "Crop";
 "Обрезка" = "Trim";
 "Объединение PDF" = "Merging PDFs";
@@ -244,6 +253,7 @@
 "Оцениваю размер…" = "Estimating size…";
 "Оценка для первого файла." = "Estimate for the first file.";
 "Очистить" = "Clear";
+"Очистить историю" = "Clear History";
 "П" = "R";
 "Перезапустить" = "Restart";
 "Переместить" = "Move";
@@ -261,6 +271,7 @@
 "Повторить" = "Redo";
 "Подкаст −16" = "Podcast −16";
 "Поиск по полям" = "Search fields";
+"Пока пусто" = "Nothing yet";
 "Показать в Finder" = "Show in Finder";
 "Показать или скрыть Float" = "Show or Hide Float";
 "Показывать результат в Finder" = "Show the result in Finder";
@@ -280,6 +291,7 @@
 "Пробел — прослушать с пиками, ⏎ — пик по курсору." = "Space — listen with bleeps, ⏎ — bleep at playhead.";
 "Проверить кадр" = "Check frame";
 "Проверка" = "Check";
+"Прозрачный" = "Transparent";
 "Производитель камеры" = "Camera make";
 "Промежутки" = "Spacing";
 "Пропорции" = "Aspect ratio";
@@ -303,6 +315,7 @@
 "Раскладка" = "Layout";
 "Распаковать" = "Extract";
 "Распаковка" = "Extracting";
+"Распознавание текста" = "Text recognition";
 "Редактирование" = "Editing";
 "Редактор" = "Editor";
 "Редактор фото" = "Photo Editor";
@@ -386,12 +399,15 @@
 "Убрать дымку" = "Dehaze";
 "Убрать из Float" = "Remove from Float";
 "Убрать разрез" = "Remove cut";
+"Убрать фон" = "Remove background";
 "Угол" = "Angle";
+"Удаление фона" = "Remove Background";
 "Удалить" = "Delete";
 "Удалить все метаданные" = "Remove all metadata";
 "Удалить геопозицию" = "Remove location";
 "Удалить область" = "Delete area";
 "Удалить пик" = "Delete bleep";
+"Удалить результат" = "Delete Result";
 "Удерживайте, чтобы сравнить с оригиналом" = "Hold to compare with the original";
 "Уложиться в размер файла" = "Fit a file size";
 "Утилиты" = "Tools";

@@ -132,6 +132,7 @@ enum Feedback {
 
     static func finished(_ title: String, outputs: [URL], failures: [(URL, Error)]) {
         let settings = AppSettings.shared
+        OperationHistory.shared.record(title, outputs: outputs)
         if !outputs.isEmpty {
             if settings.playSounds, let sound = doneSound {
                 sound.stop()

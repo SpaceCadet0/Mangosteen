@@ -11,6 +11,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
     private let headerItem = NSMenuItem()
     private let header = NSHostingView(rootView: MenuHeader(hint: ""))
     private var wheelItems: [WheelKind: NSMenuItem] = [:]
+    private let historyItem = NSMenuItem()
 
     init(openFiles: @escaping (WheelKind) -> Void, openSettings: @escaping () -> Void, openWelcome: @escaping () -> Void,
          openAbout: @escaping () -> Void) {
@@ -36,6 +37,10 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             menu.addItem(item)
         }
         menu.addItem(makeItem(String(localized: "Показать или скрыть Float"), symbol: "tray.and.arrow.down", action: #selector(floatSelected)))
+        historyItem.title = String(localized: "Недавние результаты")
+        historyItem.image = Self.icon("clock.arrow.circlepath")
+        historyItem.submenu = NSMenu()
+        menu.addItem(historyItem)
         menu.addItem(.separator())
         menu.addItem(makeItem(String(localized: "Как пользоваться…"), symbol: "questionmark.circle", action: #selector(welcomeSelected)))
         menu.addItem(makeItem(String(localized: "О Mangosteen…"), symbol: "info.circle", action: #selector(aboutSelected)))
@@ -102,6 +107,81 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         windowItems = items
     }
 
+    // MARK: History
+
+    private static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.doesRelativeDateFormatting = true
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
+    /// Recent results, newest first: each with Show in Finder, Open and Delete result.
+    private func refreshHistory() {
+        guard let submenu = historyItem.submenu else { return }
+        submenu.removeAllItems()
+        let entries = OperationHistory.shared.current()
+        guard !entries.isEmpty else {
+            let empty = NSMenuItem(title: String(localized: "Пока пусто"), action: nil, keyEquivalent: "")
+            empty.isEnabled = false
+            submenu.addItem(empty)
+            return
+        }
+        for entry in entries.prefix(10) {
+            let first = entry.outputs[0].lastPathComponent
+            let more = entry.outputs.count > 1 ? String(localized: " и ещё \(entry.outputs.count - 1)") : ""
+            let item = NSMenuItem(title: "\(first)\(more)", action: nil, keyEquivalent: "")
+            item.image = NSWorkspace.shared.icon(forFile: entry.outputs[0].path)
+            item.image?.size = NSSize(width: 16, height: 16)
+            item.toolTip = "\(entry.title) · \(Self.timeFormatter.string(from: entry.date))"
+            let actions = NSMenu()
+            let header = NSMenuItem(title: "\(entry.title) · \(Self.timeFormatter.string(from: entry.date))", action: nil, keyEquivalent: "")
+            header.isEnabled = false
+            actions.addItem(header)
+            actions.addItem(.separator())
+            for (title, symbol, selector) in [
+                (String(localized: "Показать в Finder"), "folder", #selector(revealResult(_:))),
+                (String(localized: "Открыть"), "arrow.up.forward.app", #selector(openResult(_:))),
+            ] {
+                let action = makeItem(title, symbol: symbol, action: selector)
+                action.representedObject = entry.id
+                actions.addItem(action)
+            }
+            actions.addItem(.separator())
+            let delete = makeItem(String(localized: "Удалить результат"), symbol: "trash", action: #selector(deleteResult(_:)))
+            delete.representedObject = entry.id
+            actions.addItem(delete)
+            item.submenu = actions
+            submenu.addItem(item)
+        }
+        submenu.addItem(.separator())
+        submenu.addItem(makeItem(String(localized: "Очистить историю"), symbol: "xmark.circle", action: #selector(clearHistory)))
+    }
+
+    private func entry(for sender: NSMenuItem) -> OperationHistory.Entry? {
+        guard let id = sender.representedObject as? UUID else { return nil }
+        return OperationHistory.shared.entries.first { $0.id == id }
+    }
+
+    @objc private func revealResult(_ sender: NSMenuItem) {
+        guard let entry = entry(for: sender) else { return }
+        NSWorkspace.shared.activateFileViewerSelecting(entry.outputs)
+    }
+
+    @objc private func openResult(_ sender: NSMenuItem) {
+        entry(for: sender)?.outputs.forEach { NSWorkspace.shared.open($0) }
+    }
+
+    @objc private func deleteResult(_ sender: NSMenuItem) {
+        guard let entry = entry(for: sender) else { return }
+        OperationHistory.shared.deleteResults(of: entry.id)
+    }
+
+    @objc private func clearHistory() {
+        OperationHistory.shared.clear()
+    }
+
     @objc private func windowSelected(_ sender: NSMenuItem) {
         guard let window = sender.representedObject as? NSWindow else { return }
         AppPresence.bringBack(window)
@@ -109,6 +189,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
 
     func menuWillOpen(_ menu: NSMenu) {
         refreshWindowItems(in: menu)
+        refreshHistory()
         let settings = AppSettings.shared
         let modifiers: [WheelKind: ModifierChoice] = [
             .convert: settings.convertModifier, .tools: settings.toolsModifier, .actions: settings.actionsModifier,

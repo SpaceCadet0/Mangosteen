@@ -18,10 +18,13 @@ targets:
     type: application
     platform: macOS
     sources:
-      - Mangosteen
+      - path: Mangosteen
+        excludes:
+          - App/Info.plist
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.mangosteen.app
+        INFOPLIST_FILE: Mangosteen/App/Info.plist
         PRODUCT_NAME: Mangosteen
         MARKETING_VERSION: 0.10.1
         CURRENT_PROJECT_VERSION: 1
@@ -48,6 +51,7 @@ targets:
       - Mangosteen/Core
       - Mangosteen/Conversion
       - Mangosteen/Support
+      - Mangosteen/App/OperationHistory.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.mangosteen.tests

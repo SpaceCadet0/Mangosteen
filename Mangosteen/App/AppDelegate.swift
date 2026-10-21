@@ -18,8 +18,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     }
 
+    private var finderServices: FinderServices?
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.applicationIconImage = MangosteenArt.appIcon()
+        let services = FinderServices { [weak self] kind, urls in self?.wheel.show(kind: kind, urls: urls) }
+        finderServices = services
+        NSApp.servicesProvider = services
+        NSUpdateDynamicServices()
         NSApp.mainMenu = makeMainMenu()
         menuBar = MenuBarController(
             openFiles: { [weak self] kind in self?.chooseFiles(for: kind) },

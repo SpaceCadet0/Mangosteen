@@ -1746,5 +1746,69 @@
  "Обрезать.изображение": {
   "en": "Crop",
   "es": "Recortar"
+ },
+ " и ещё %lld": {
+  "en": " and %lld more",
+  "es": " y %lld más"
+ },
+ "%@ (без фона)": {
+  "en": "%@ (no background)",
+  "es": "%@ (sin fondo)"
+ },
+ "%@ (текст)": {
+  "en": "%@ (text)",
+  "es": "%@ (texto)"
+ },
+ "В «%@» не найден текст.": {
+  "en": "No text found in “%@”.",
+  "es": "No se encontró texto en «%@»."
+ },
+ "Ищем объект…": {
+  "en": "Finding the subject…",
+  "es": "Buscando el objeto…"
+ },
+ "На «%@» не найден объект, от которого можно отделить фон.": {
+  "en": "No subject to separate from the background was found in “%@”.",
+  "es": "No se encontró en «%@» un objeto que separar del fondo."
+ },
+ "На фото не найден объект, от которого можно отделить фон.": {
+  "en": "No subject to separate from the background was found in the photo.",
+  "es": "No se encontró en la foto un objeto que separar del fondo."
+ },
+ "Недавние результаты": {
+  "en": "Recent Results",
+  "es": "Resultados recientes"
+ },
+ "Обрезать по объекту": {
+  "en": "Crop to subject",
+  "es": "Recortar al objeto"
+ },
+ "Очистить историю": {
+  "en": "Clear History",
+  "es": "Borrar historial"
+ },
+ "Пока пусто": {
+  "en": "Nothing yet",
+  "es": "Todavía nada"
+ },
+ "Прозрачный": {
+  "en": "Transparent",
+  "es": "Transparente"
+ },
+ "Распознавание текста": {
+  "en": "Text recognition",
+  "es": "Reconocimiento de texto"
+ },
+ "Убрать фон": {
+  "en": "Remove background",
+  "es": "Quitar fondo"
+ },
+ "Удаление фона": {
+  "en": "Remove Background",
+  "es": "Quitar fondo"
+ },
+ "Удалить результат": {
+  "en": "Delete Result",
+  "es": "Eliminar resultado"
  }
 }

@@ -118,6 +118,19 @@ enum WheelItemProvider {
                 ToolWindow.present(title: String(localized: "Порядок страниц"), files: urls) { PDFOrganizeView(urls: urls, close: $0) }
             })
         }
+        if formats.contains(where: { ($0.category == .image && $0 != .svg) || $0 == .pdf }) {
+            items.append(WheelItem(id: "tool.recognizeText", title: String(localized: "Текст"), symbolName: "text.viewfinder") { urls in
+                let sources = urls.filter { FileFormat.detect($0).map { ($0.category == .image && $0 != .svg) || $0 == .pdf } ?? false }
+                ConversionService.shared.runEach(String(localized: "Распознавание текста"), inputs: sources) {
+                    try TextRecognizer.recognizeFile($0)
+                }
+            })
+        }
+        if formats.contains(where: { $0.category == .image && $0 != .svg }) {
+            items.append(WheelItem(id: "tool.removeBackground", title: String(localized: "Убрать фон"), symbolName: "wand.and.stars") { urls in
+                ToolWindow.present(title: String(localized: "Удаление фона"), files: urls) { BackgroundRemovalView(urls: urls, close: $0) }
+            })
+        }
         if hasImages {
             items.append(WheelItem(id: "tool.frame", title: String(localized: "Фон"), symbolName: "photo.artframe") { urls in
                 ToolWindow.present(title: String(localized: "Фон"), files: urls) { FrameView(urls: urls, close: $0) }

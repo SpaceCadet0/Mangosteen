@@ -1,0 +1,4 @@
+/* Finder Quick Actions (Services menu). Keys are the default titles from App/Info.plist. */
+"Mangosteen: Конвертация…" = "Mangosteen: Convert…";
+"Mangosteen: Инструменты…" = "Mangosteen: Tools…";
+"Mangosteen: Действия…" = "Mangosteen: Actions…";
