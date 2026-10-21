@@ -23,7 +23,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.mangosteen.app
         PRODUCT_NAME: Mangosteen
-        MARKETING_VERSION: 0.10.0
+        MARKETING_VERSION: 0.10.1
         CURRENT_PROJECT_VERSION: 1
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_LSUIElement: YES
