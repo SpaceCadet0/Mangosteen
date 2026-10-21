@@ -135,10 +135,10 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 ## First launch
 
 <p align="center">
-  <img src="docs/images/en/welcome.png" width="560" alt="Welcome window">
+  <img src="docs/images/en/welcome.png" width="100%" alt="Welcome window">
 </p>
 
-The welcome window explains the three wheels. You can reopen it any time from the menu bar icon.
+The welcome window explains the three wheels and plays the demo animation. You can reopen it any time from the menu bar icon.
 
 ## Install
 
