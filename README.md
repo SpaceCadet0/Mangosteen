@@ -34,6 +34,11 @@ any app, tap a modifier key without letting go, and a wheel opens right under th
 segment and the result appears next to the original. No windows to open, no save dialogs, no uploads, no limits.
 
 <p align="center">
+  <img src="docs/images/demo.webp" width="100%" alt="Mangosteen in action: convert, tools and actions wheels"><br>
+  <sub><a href="docs/media/mangosteen-demo.mp4">Watch it as MP4</a></sub>
+</p>
+
+<p align="center">
   <img src="docs/images/en/wheel-convert.png" width="260" alt="Convert wheel">
   <img src="docs/images/en/wheel-tools.png" width="260" alt="Tools wheel">
   <img src="docs/images/en/wheel-actions.png" width="260" alt="Actions wheel">

@@ -35,6 +35,11 @@ Mangosteen живёт в строке меню и ждёт, когда вы чт
 загрузок в интернет и лимитов.
 
 <p align="center">
+  <img src="docs/images/demo.webp" width="100%" alt="Mangosteen в работе: колёса конвертации, инструментов и действий"><br>
+  <sub><a href="docs/media/mangosteen-demo.mp4">Смотреть в MP4</a></sub>
+</p>
+
+<p align="center">
   <img src="docs/images/ru/wheel-convert.png" width="260" alt="Колесо конвертации">
   <img src="docs/images/ru/wheel-tools.png" width="260" alt="Колесо инструментов">
   <img src="docs/images/ru/wheel-actions.png" width="260" alt="Колесо действий">
