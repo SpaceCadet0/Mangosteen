@@ -15,8 +15,9 @@ struct WelcomeView: View {
                     header
                     steps
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 DemoVideo(resource: "demo")
-                    .frame(width: 440, height: 275)
+                    .frame(width: 300, height: 300)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.primary.opacity(0.08)))
                     .accessibilityLabel(String(localized: "Как пользоваться Mangosteen"))
@@ -26,7 +27,7 @@ struct WelcomeView: View {
             footer
         }
         .padding(24)
-        .frame(width: 1000)
+        .frame(width: 860)
         .onAppear { UserDefaults.standard.set(true, forKey: Self.shownKey) }
     }
 

@@ -604,13 +604,41 @@ const FloatPanel: React.FC<{ platform: Platform }> = ({ platform }) => {
 
 // MARK: - One wheel scene
 
-const FILE_X = 420;
-const FILE_Y = 330;
+/** Where things sit: "wide" (1600 × 1000) for the READMEs, "square" (1000 × 1000) for the apps' welcome windows. */
+export type LayoutName = "wide" | "square";
+type Layout = {
+  fileX: number;
+  fileY: number;
+  macAnchor: { x: number; y: number };
+  pointerStart: { x: number; y: number };
+  floatRight: number;
+  floatTop: number;
+};
+const LAYOUTS: Record<LayoutName, Layout> = {
+  wide: {
+    fileX: 420,
+    fileY: 330,
+    macAnchor: { x: 860, y: 430 },
+    pointerStart: { x: 1180, y: 820 },
+    floatRight: 120,
+    floatTop: 250,
+  },
+  square: {
+    fileX: 260,
+    fileY: 300,
+    macAnchor: { x: 650, y: 470 },
+    pointerStart: { x: 880, y: 880 },
+    floatRight: 28,
+    floatTop: 260,
+  },
+};
 
-const SceneView: React.FC<{ platform: Platform; scene: Scene }> = ({
-  platform,
-  scene,
-}) => {
+const SceneView: React.FC<{
+  platform: Platform;
+  scene: Scene;
+  layout: Layout;
+}> = ({ platform, scene, layout }) => {
+  const { fileX: FILE_X, fileY: FILE_Y } = layout;
   const frame = useCurrentFrame();
   const s = WHEEL[platform];
   const mac = platform === "mac";
@@ -644,7 +672,7 @@ const SceneView: React.FC<{ platform: Platform; scene: Scene }> = ({
       };
 
   // Where the wheel opens: next to the files on macOS (where the drag went), on the file on Windows.
-  const anchor = mac ? { x: 860, y: 430 } : { x: FILE_X + 64, y: FILE_Y + 64 };
+  const anchor = mac ? layout.macAnchor : { x: FILE_X + 64, y: FILE_Y + 64 };
   const fileCenter = { x: FILE_X + 64 + (count - 1) * 95, y: FILE_Y + 64 };
 
   // Pointer path: from the bottom right to the file, (macOS) drag to the anchor, then around the ring.
@@ -660,8 +688,8 @@ const SceneView: React.FC<{ platform: Platform; scene: Scene }> = ({
   let pointer: { x: number; y: number };
   if (frame < t.grab) {
     pointer = {
-      x: tween(frame, [0, t.reach], [1180, fileCenter.x]),
-      y: tween(frame, [0, t.reach], [820, fileCenter.y]),
+      x: tween(frame, [0, t.reach], [layout.pointerStart.x, fileCenter.x]),
+      y: tween(frame, [0, t.reach], [layout.pointerStart.y, fileCenter.y]),
     };
   } else if (mac && frame < t.move) {
     pointer = {
@@ -849,8 +877,8 @@ const SceneView: React.FC<{ platform: Platform; scene: Scene }> = ({
         <div
           style={{
             position: "absolute",
-            right: 120,
-            top: 250,
+            right: layout.floatRight,
+            top: layout.floatTop,
             translate: `${(1 - resultIn) * 200}px 0px`,
             opacity: resultIn,
           }}
@@ -972,7 +1000,10 @@ const SceneView: React.FC<{ platform: Platform; scene: Scene }> = ({
 
 // MARK: - Whole video
 
-export const Demo: React.FC<{ platform: Platform }> = ({ platform }) => (
+export const Demo: React.FC<{ platform: Platform; layout?: LayoutName }> = ({
+  platform,
+  layout = "wide",
+}) => (
   <AbsoluteFill
     style={{
       background:
@@ -986,7 +1017,7 @@ export const Demo: React.FC<{ platform: Platform }> = ({ platform }) => (
         durationInFrames={SCENE}
         layout="absolute-fill"
       >
-        <SceneView platform={platform} scene={scene} />
+        <SceneView platform={platform} scene={scene} layout={LAYOUTS[layout]} />
       </Sequence>
     ))}
   </AbsoluteFill>
