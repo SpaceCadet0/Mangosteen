@@ -27,7 +27,7 @@ struct WelcomeView: View {
             footer
         }
         .padding(24)
-        .frame(width: 860)
+        .frame(width: 720)
         .onAppear { UserDefaults.standard.set(true, forKey: Self.shownKey) }
     }
 
@@ -37,7 +37,9 @@ struct WelcomeView: View {
                 .resizable()
                 .frame(width: 72, height: 72)
             VStack(alignment: .leading, spacing: 4) {
-                Text(String(localized: "Добро пожаловать в Mangosteen")).font(.title2.weight(.semibold))
+                Text(String(localized: "Добро пожаловать в Mangosteen"))
+                    .font(.title2.weight(.semibold))
+                    .fixedSize(horizontal: false, vertical: true)
                 Text(String(localized: "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает локально, без сторонних сервисов, без ограничений."))
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
