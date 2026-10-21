@@ -20,6 +20,8 @@
 "%@ кадр %@" = "%@ frame %@";
 "%@ — перемещён" = "%@ — moved";
 "%@: не удалось обработать %@" = "%@: could not process %@";
+"%lld · док. %lld" = "%1$lld · doc %2$lld";
+"%lld · убрана" = "%lld · left out";
 "%lld байт" = "%lld bytes";
 "%lld из %lld" = "%lld of %lld";
 "%lld из %lld · %lld%%" = "%lld of %lld · %lld%%";
@@ -45,7 +47,7 @@
 "Альбомная 16:9" = "Landscape 16:9";
 "Без изменений" = "Unchanged";
 "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках." = "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.";
-"Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом, оригинал не меняется." = "Drop the file on a segment. The result appears next to the original; the original is not changed.";
+"Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется." = "Drop the file on a segment. The result appears next to the original file; the original itself is never changed.";
 "Быстро, без перекодирования" = "Fast, without re-encoding";
 "Быстро, без перекодирования (разрез по ближайшему ключевому кадру)" = "Fast, without re-encoding (cut at the nearest keyframe)";
 "В PDF изображения будут пережаты в JPEG экранного разрешения." = "Images inside PDFs will be re-encoded as screen-resolution JPEG.";
@@ -94,6 +96,7 @@
 "Длинная сторона" = "Longer side";
 "Добавить кадр" = "Add frame";
 "Добро пожаловать в Mangosteen" = "Welcome to Mangosteen";
+"Документов: %lld" = "Documents: %lld";
 "Долгота (−180…180)" = "Longitude (−180…180)";
 "Другой цвет" = "Other colour";
 "Дублировать" = "Duplicate";
@@ -129,6 +132,7 @@
 "Кадрировать" = "Crop video";
 "Кадры" = "Frames";
 "Кадры из видео" = "Frames from Video";
+"Каждая страница" = "Every page";
 "Как в системе" = "System default";
 "Как на плёнке: ускорение повышает тон, замедление понижает." = "Like tape: faster raises the pitch, slower lowers it.";
 "Как пользоваться Mangosteen" = "How to Use Mangosteen";
@@ -150,7 +154,7 @@
 "Конвертация" = "Convert";
 "Конвертация %@ → %@ не поддерживается." = "Converting %@ → %@ is not supported.";
 "Конвертация в %@" = "Converting to %@";
-"Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений." = "Converting and file tools right while you drag. Everything runs on this Mac, with no limits.";
+"Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает локально, без сторонних сервисов, без ограничений." = "Converters and tools for your files, right while you drag. Everything runs locally, with no third-party services and no limits.";
 "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений." = "Converters and tools for your files, right while you drag: start dragging a file, tap a key and drop it on a segment. Everything runs locally, with no limits.";
 "Конец" = "End";
 "Конец = курсор" = "End = playhead";
@@ -208,6 +212,7 @@
 "Нет изображений" = "No images";
 "Нет подходящих файлов." = "No suitable files.";
 "Ничего не найдено" = "Nothing found";
+"Ножницы — разрезать после страницы, клик по странице — убрать её." = "Scissors cut after a page; click a page to leave it out.";
 "Номер" = "Number";
 "Нормализовать" = "Normalize";
 "Нуар" = "Noir";
@@ -248,6 +253,7 @@
 "Пик" = "Peak";
 "Пик по курсору" = "Bleep at playhead";
 "Пиксели" = "Pixelate";
+"По %lld стр." = "Every %lld pages";
 "По курсору" = "At playhead";
 "Повернуть влево" = "Rotate left";
 "Повернуть вправо" = "Rotate right";
@@ -262,11 +268,14 @@
 "Поменять каналы местами" = "Swap channels";
 "Пометки" = "Annotate";
 "Пометки добавляются к первому изображению. " = "Annotations are added to the first image. ";
+"Пополам" = "In half";
 "Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, " = "Clip order — drag the rows. Frame size and rate come from the first clip, ";
+"Порядок страниц" = "Page order";
 "Порядок — перетаскивайте строки" = "Order — drag the rows";
 "Правка" = "Edit";
 "Правый канал" = "Right channel";
 "Пресет" = "Preset";
+"Применить" = "Apply";
 "Пробел — прослушать с пиками, ⏎ — пик по курсору." = "Space — listen with bleeps, ⏎ — bleep at playhead.";
 "Проверить кадр" = "Check frame";
 "Проверка" = "Check";
@@ -278,7 +287,9 @@
 "Путь" = "Path";
 "Равных частей: %lld" = "Equal parts: %lld";
 "Разделение" = "Split";
+"Разделение PDF" = "Split PDF";
 "Разделить" = "Split";
+"Разделить PDF" = "Split PDF";
 "Разделить на %lld" = "Split into %lld";
 "Разделить поровну" = "Split evenly";
 "Размер текста и номеров" = "Text and number size";
@@ -287,6 +298,7 @@
 "Разрез по курсору" = "Cut at playhead";
 "Разрезать" = "Split";
 "Разрезать на части:" = "Split into parts:";
+"Разрезать после этой страницы" = "Cut after this page";
 "Раскладка" = "Layout";
 "Распаковать" = "Extract";
 "Распаковка" = "Extracting";
@@ -372,6 +384,7 @@
 "Убрать ближайший" = "Remove nearest";
 "Убрать дымку" = "Dehaze";
 "Убрать из Float" = "Remove from Float";
+"Убрать разрез" = "Remove cut";
 "Угол" = "Angle";
 "Удалить" = "Delete";
 "Удалить все метаданные" = "Remove all metadata";

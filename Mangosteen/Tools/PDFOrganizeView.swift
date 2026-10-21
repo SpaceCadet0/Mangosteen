@@ -154,7 +154,7 @@ struct PDFOrganizeView: View {
         guard let first = pdfs.first else { return }
         let items = items
         let documents = documents
-        ConversionService.shared.runBatch(String(localized: "Страницы PDF"), inputs: [first]) { _ in
+        ConversionService.shared.runBatch(String(localized: "Порядок страниц"), inputs: [first]) { _ in
             [try PDFOrganizer.save(items, from: documents, nextTo: first)]
         }
         close()

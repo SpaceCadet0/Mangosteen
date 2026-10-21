@@ -20,6 +20,8 @@
 "%@ кадр %@" = "%@ fotograma %@";
 "%@ — перемещён" = "%@ — movido";
 "%@: не удалось обработать %@" = "%@: no se pudo procesar %@";
+"%lld · док. %lld" = "%1$lld · doc. %2$lld";
+"%lld · убрана" = "%lld · quitada";
 "%lld байт" = "%lld bytes";
 "%lld из %lld" = "%lld de %lld";
 "%lld из %lld · %lld%%" = "%lld de %lld · %lld%%";
@@ -45,7 +47,7 @@
 "Альбомная 16:9" = "Horizontal 16:9";
 "Без изменений" = "Sin cambios";
 "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках." = "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes.";
-"Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом, оригинал не меняется." = "Suelta el archivo en un segmento. El resultado aparece junto al original; el original no cambia.";
+"Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется." = "Suelta el archivo en un segmento. El resultado aparece junto al archivo original; el original nunca se modifica.";
 "Быстро, без перекодирования" = "Rápido, sin recodificar";
 "Быстро, без перекодирования (разрез по ближайшему ключевому кадру)" = "Rápido, sin recodificar (corte en el fotograma clave más cercano)";
 "В PDF изображения будут пережаты в JPEG экранного разрешения." = "Las imágenes de los PDF se recomprimirán en JPEG a resolución de pantalla.";
@@ -94,6 +96,7 @@
 "Длинная сторона" = "Lado mayor";
 "Добавить кадр" = "Añadir fotograma";
 "Добро пожаловать в Mangosteen" = "Bienvenido a Mangosteen";
+"Документов: %lld" = "Documentos: %lld";
 "Долгота (−180…180)" = "Longitud (−180…180)";
 "Другой цвет" = "Otro color";
 "Дублировать" = "Duplicar";
@@ -129,6 +132,7 @@
 "Кадрировать" = "Encuadrar";
 "Кадры" = "Fotogramas";
 "Кадры из видео" = "Fotogramas del vídeo";
+"Каждая страница" = "Cada página";
 "Как в системе" = "Como en el sistema";
 "Как на плёнке: ускорение повышает тон, замедление понижает." = "Como en cinta: acelerar sube el tono y ralentizar lo baja.";
 "Как пользоваться Mangosteen" = "Cómo usar Mangosteen";
@@ -150,7 +154,7 @@
 "Конвертация" = "Convertir";
 "Конвертация %@ → %@ не поддерживается." = "La conversión %@ → %@ no está disponible.";
 "Конвертация в %@" = "Convirtiendo a %@";
-"Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений." = "Conversión y herramientas para archivos mientras los arrastras. Todo funciona en este Mac, sin límites.";
+"Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает локально, без сторонних сервисов, без ограничений." = "Conversión y herramientas para tus archivos mientras los arrastras. Todo funciona en local, sin servicios de terceros y sin límites.";
 "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений." = "Conversión y herramientas para tus archivos mientras los arrastras: empieza a arrastrar un archivo, pulsa una tecla y suéltalo en un segmento. Todo funciona en local, sin límites.";
 "Конец" = "Fin";
 "Конец = курсор" = "Fin = cursor";
@@ -208,6 +212,7 @@
 "Нет изображений" = "No hay imágenes";
 "Нет подходящих файлов." = "No hay archivos adecuados.";
 "Ничего не найдено" = "No se encontró nada";
+"Ножницы — разрезать после страницы, клик по странице — убрать её." = "Las tijeras cortan tras una página; haz clic en una página para quitarla.";
 "Номер" = "Número";
 "Нормализовать" = "Normalizar";
 "Нуар" = "Noir";
@@ -248,6 +253,7 @@
 "Пик" = "Pico";
 "Пик по курсору" = "Pitido en el cursor";
 "Пиксели" = "Píxeles";
+"По %lld стр." = "Cada %lld págs.";
 "По курсору" = "En el cursor";
 "Повернуть влево" = "Girar a la izquierda";
 "Повернуть вправо" = "Girar a la derecha";
@@ -262,11 +268,14 @@
 "Поменять каналы местами" = "Intercambiar canales";
 "Пометки" = "Anotar";
 "Пометки добавляются к первому изображению. " = "Las anotaciones se añaden a la primera imagen. ";
+"Пополам" = "Por la mitad";
 "Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, " = "Orden de los clips: arrastra las filas. El tamaño y la frecuencia se toman del primer clip, ";
+"Порядок страниц" = "Orden de páginas";
 "Порядок — перетаскивайте строки" = "Orden: arrastra las filas";
 "Правка" = "Edición";
 "Правый канал" = "Canal derecho";
 "Пресет" = "Preajuste";
+"Применить" = "Aplicar";
 "Пробел — прослушать с пиками, ⏎ — пик по курсору." = "Espacio: escuchar con pitidos; ⏎: pitido en el cursor.";
 "Проверить кадр" = "Comprobar fotograma";
 "Проверка" = "Prueba";
@@ -278,7 +287,9 @@
 "Путь" = "Ruta";
 "Равных частей: %lld" = "Partes iguales: %lld";
 "Разделение" = "División";
+"Разделение PDF" = "Dividir PDF";
 "Разделить" = "Dividir";
+"Разделить PDF" = "Dividir PDF";
 "Разделить на %lld" = "Dividir en %lld";
 "Разделить поровну" = "Dividir en partes iguales";
 "Размер текста и номеров" = "Tamaño del texto y los números";
@@ -287,6 +298,7 @@
 "Разрез по курсору" = "Cortar en el cursor";
 "Разрезать" = "Dividir";
 "Разрезать на части:" = "Dividir en partes:";
+"Разрезать после этой страницы" = "Cortar después de esta página";
 "Раскладка" = "Disposición";
 "Распаковать" = "Descomprimir";
 "Распаковка" = "Descomprimiendo";
@@ -372,6 +384,7 @@
 "Убрать ближайший" = "Quitar el más cercano";
 "Убрать дымку" = "Quitar neblina";
 "Убрать из Float" = "Quitar de Float";
+"Убрать разрез" = "Quitar corte";
 "Угол" = "Ángulo";
 "Удалить" = "Eliminar";
 "Удалить все метаданные" = "Eliminar todos los metadatos";

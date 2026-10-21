@@ -15,7 +15,7 @@ struct WelcomeView: View {
                     .frame(width: 72, height: 72)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(String(localized: "Добро пожаловать в Mangosteen")).font(.title2.weight(.semibold))
-                    Text(String(localized: "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений."))
+                    Text(String(localized: "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает локально, без сторонних сервисов, без ограничений."))
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -24,7 +24,7 @@ struct WelcomeView: View {
             VStack(alignment: .leading, spacing: 10) {
                 step(1, String(localized: "Начните тащить файл — из Finder, с рабочего стола или из любого приложения."))
                 step(2, String(localized: "Не отпуская кнопку, коротко нажмите клавишу — у курсора откроется колесо."))
-                step(3, String(localized: "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом, оригинал не меняется."))
+                step(3, String(localized: "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется."))
             }
 
             HStack(alignment: .top, spacing: 12) {

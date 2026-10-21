@@ -103,4 +103,37 @@ final class RedactOrganizeTests: XCTestCase {
         XCTAssertEqual(result.page(at: 0)?.bounds(for: .mediaBox).height, 120) // a.pdf page 3
         XCTAssertEqual(result.page(at: 4)?.rotation, 270)
     }
+
+    // MARK: PDF split
+
+    func testSplitGroupsPresetsAndRanges() {
+        XCTAssertEqual(PDFSplitter.groups(pageCount: 5, cuts: [1], excluded: [4]), [[0, 1], [2, 3]])
+        XCTAssertEqual(PDFSplitter.groups(pageCount: 3, cuts: [0, 1], excluded: [1]), [[0], [2]])
+        XCTAssertEqual(PDFSplitter.groups(pageCount: 2, cuts: [], excluded: [0, 1]), [])
+        XCTAssertEqual(PDFSplitter.cuts(every: 3, pageCount: 8), [2, 5])
+        XCTAssertEqual(PDFSplitter.cuts(every: 1, pageCount: 3), [0, 1])
+        XCTAssertEqual(PDFSplitter.halfCut(pageCount: 5), [2])
+        XCTAssertEqual(PDFSplitter.halfCut(pageCount: 1), [])
+        XCTAssertEqual(PDFSplitter.rangesText([0, 1, 2, 4, 6, 7]), "1–3, 5, 7–8")
+        XCTAssertEqual(PDFSplitter.rangesText([3]), "4")
+    }
+
+    func testSplitWritesDocumentsInFolder() throws {
+        let input = try makePDF(pages: 5, named: "report.pdf")
+        let folder = try PDFSplitter.split(input, cuts: [1], excluded: [3])
+        XCTAssertEqual(folder.lastPathComponent, String(localized: "report (части)"))
+        let files = try FileManager.default.contentsOfDirectory(atPath: folder.path).sorted()
+        XCTAssertEqual(files, ["report 1.pdf", "report 2.pdf"])
+        let second = try XCTUnwrap(PDFDocument(url: folder.appendingPathComponent("report 2.pdf")))
+        // Pages 3 and 5 of the original (heights 120 and 140); page 4 was left out.
+        XCTAssertEqual((0..<second.pageCount).map { Int(second.page(at: $0)!.bounds(for: .mediaBox).height) }, [120, 140])
+        XCTAssertNotNil(PDFDocument(url: input), "the original stays")
+    }
+
+    func testSplitWithOnlyRemovedPagesWritesOneFile() throws {
+        let input = try makePDF(pages: 3, named: "scan.pdf")
+        let output = try PDFSplitter.split(input, cuts: [], excluded: [0])
+        XCTAssertEqual(output.lastPathComponent, String(localized: "scan (страницы)") + ".pdf")
+        XCTAssertEqual(PDFDocument(url: output)?.pageCount, 2)
+    }
 }

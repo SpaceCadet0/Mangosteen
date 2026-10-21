@@ -107,8 +107,13 @@ enum WheelItemProvider {
             })
         }
         if formats.contains(.pdf) {
-            items.append(WheelItem(id: "tool.organizePDF", title: String(localized: "Страницы"), symbolName: "doc.on.doc") { urls in
-                ToolWindow.present(title: String(localized: "Страницы PDF"), files: urls) { PDFOrganizeView(urls: urls, close: $0) }
+            // With media in the selection there is a "Split" for video too; say which one this is.
+            let splitTitle = formats.contains(where: { $0.category.isMedia }) ? String(localized: "Разделить PDF") : String(localized: "Разделить")
+            items.append(WheelItem(id: "tool.splitPDF", title: splitTitle, symbolName: "scissors") { urls in
+                ToolWindow.present(title: String(localized: "Разделение PDF"), files: urls) { PDFSplitView(urls: urls, close: $0) }
+            })
+            items.append(WheelItem(id: "tool.organizePDF", title: String(localized: "Порядок страниц"), symbolName: "list.number") { urls in
+                ToolWindow.present(title: String(localized: "Порядок страниц"), files: urls) { PDFOrganizeView(urls: urls, close: $0) }
             })
         }
         if hasImages {

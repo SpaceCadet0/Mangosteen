@@ -100,7 +100,8 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 
 ### PDF
 
-- **Pages** — reorder, rotate, duplicate and delete pages.
+- **Split** — cut a PDF into several documents: scissors between pages, leave out pages you don't need; presets for every page, in half or every N pages.
+- **Page order** — reorder, rotate, duplicate and delete pages.
 - **Merge** several PDFs into one.
 
 ### Video and audio

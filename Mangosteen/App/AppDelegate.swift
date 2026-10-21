@@ -64,6 +64,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private func runSnapshotIfRequested() {
         let arguments = ProcessInfo.processInfo.arguments
         guard let flag = arguments.firstIndex(of: "--snapshot"), arguments.count > flag + 3 else { return }
+        // MANGOSTEEN_APPEARANCE=light|dark captures a theme other than the system's.
+        switch ProcessInfo.processInfo.environment["MANGOSTEEN_APPEARANCE"] {
+        case "light": NSApp.appearance = NSAppearance(named: .aqua)
+        case "dark": NSApp.appearance = NSAppearance(named: .darkAqua)
+        default: break
+        }
         let itemID = arguments[flag + 1]
         let output = URL(fileURLWithPath: arguments[flag + 2])
         let inputs = arguments[(flag + 3)...].map { URL(fileURLWithPath: $0) }

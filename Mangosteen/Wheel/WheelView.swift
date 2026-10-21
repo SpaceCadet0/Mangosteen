@@ -137,13 +137,23 @@ final class WheelView: NSView {
             symbol.draw(in: NSRect(x: labelCenter.x - size.width / 2, y: labelCenter.y + 2,
                                    width: size.width, height: size.height))
         }
+        // Long titles ("Порядок страниц") wrap onto two centred lines instead of running past the segment.
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        paragraph.lineBreakMode = .byWordWrapping
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 11.5, weight: .semibold),
             .foregroundColor: tint,
+            .paragraphStyle: paragraph,
         ]
         let title = NSAttributedString(string: item.title, attributes: attributes)
-        let titleSize = title.size()
-        title.draw(at: NSPoint(x: labelCenter.x - titleSize.width / 2, y: labelCenter.y - titleSize.height - 2))
+        let maxWidth: CGFloat = 84
+        let bounds = title.boundingRect(with: NSSize(width: maxWidth, height: 100),
+                                        options: [.usesLineFragmentOrigin, .usesFontLeading])
+        let width = min(ceil(title.size().width), maxWidth)
+        let height = ceil(bounds.height)
+        title.draw(with: NSRect(x: labelCenter.x - width / 2, y: labelCenter.y - height - 2, width: width, height: height),
+                   options: [.usesLineFragmentOrigin, .usesFontLeading])
     }
 
     private func drawCenter() {

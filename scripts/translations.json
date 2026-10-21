@@ -171,10 +171,6 @@
   "en": "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.",
   "es": "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes."
  },
- "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом, оригинал не меняется.": {
-  "en": "Drop the file on a segment. The result appears next to the original; the original is not changed.",
-  "es": "Suelta el archivo en un segmento. El resultado aparece junto al original; el original no cambia."
- },
  "Быстро, без перекодирования": {
   "en": "Fast, without re-encoding",
   "es": "Rápido, sin recodificar"
@@ -582,10 +578,6 @@
  "Конвертация в %@": {
   "en": "Converting to %@",
   "es": "Convirtiendo a %@"
- },
- "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает на этом Mac, без ограничений.": {
-  "en": "Converting and file tools right while you drag. Everything runs on this Mac, with no limits.",
-  "es": "Conversión y herramientas para archivos mientras los arrastras. Todo funciona en este Mac, sin límites."
  },
  "Конец": {
   "en": "End",
@@ -1690,5 +1682,65 @@
  "Разрезать на части:": {
   "en": "Split into parts:",
   "es": "Dividir en partes:"
+ },
+ "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает локально, без сторонних сервисов, без ограничений.": {
+  "en": "Converters and tools for your files, right while you drag. Everything runs locally, with no third-party services and no limits.",
+  "es": "Conversión y herramientas para tus archivos mientras los arrastras. Todo funciona en local, sin servicios de terceros y sin límites."
+ },
+ "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется.": {
+  "en": "Drop the file on a segment. The result appears next to the original file; the original itself is never changed.",
+  "es": "Suelta el archivo en un segmento. El resultado aparece junto al archivo original; el original nunca se modifica."
+ },
+ "Разделить PDF": {
+  "en": "Split PDF",
+  "es": "Dividir PDF"
+ },
+ "Разделение PDF": {
+  "en": "Split PDF",
+  "es": "Dividir PDF"
+ },
+ "Порядок страниц": {
+  "en": "Page order",
+  "es": "Orden de páginas"
+ },
+ "Каждая страница": {
+  "en": "Every page",
+  "es": "Cada página"
+ },
+ "Пополам": {
+  "en": "In half",
+  "es": "Por la mitad"
+ },
+ "По %lld стр.": {
+  "en": "Every %lld pages",
+  "es": "Cada %lld págs."
+ },
+ "Применить": {
+  "en": "Apply",
+  "es": "Aplicar"
+ },
+ "Документов: %lld": {
+  "en": "Documents: %lld",
+  "es": "Documentos: %lld"
+ },
+ "Ножницы — разрезать после страницы, клик по странице — убрать её.": {
+  "en": "Scissors cut after a page; click a page to leave it out.",
+  "es": "Las tijeras cortan tras una página; haz clic en una página para quitarla."
+ },
+ "%lld · док. %lld": {
+  "en": "%1$lld · doc %2$lld",
+  "es": "%1$lld · doc. %2$lld"
+ },
+ "%lld · убрана": {
+  "en": "%lld · left out",
+  "es": "%lld · quitada"
+ },
+ "Убрать разрез": {
+  "en": "Remove cut",
+  "es": "Quitar corte"
+ },
+ "Разрезать после этой страницы": {
+  "en": "Cut after this page",
+  "es": "Cortar después de esta página"
  }
 }
