@@ -243,96 +243,113 @@ const Wheel: React.FC<{
   const span = (Math.PI * 2) / segments.length;
   const label = 0.5 * (s.inner + s.outer);
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
-      style={{ overflow: "visible" }}
-    >
-      <defs>
-        <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
-          <feDropShadow
-            dx="0"
-            dy="6"
-            stdDeviation="12"
-            floodColor="#000"
-            floodOpacity="0.45"
-          />
-        </filter>
-      </defs>
-      <circle
-        cx={c}
-        cy={c}
-        r={s.outer}
-        fill={s.disc}
-        stroke={s.border}
-        strokeWidth={s.border ? 1.5 : 0}
-        filter="url(#shadow)"
-      />
-      <path
-        d={`M${c - (s.outer - 4)},${c}a${s.outer - 4},${s.outer - 4} 0 1,0 ${2 * (s.outer - 4)},0a${s.outer - 4},${s.outer - 4} 0 1,0 ${-2 * (s.outer - 4)},0
+    <div style={{ position: "relative", width: size, height: size }}>
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        style={{ overflow: "visible" }}
+      >
+        <defs>
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow
+              dx="0"
+              dy="6"
+              stdDeviation="12"
+              floodColor="#000"
+              floodOpacity="0.45"
+            />
+          </filter>
+        </defs>
+        <circle
+          cx={c}
+          cy={c}
+          r={s.outer}
+          fill={s.disc}
+          stroke={s.border}
+          strokeWidth={s.border ? 1.5 : 0}
+          filter="url(#shadow)"
+        />
+        <path
+          d={`M${c - (s.outer - 4)},${c}a${s.outer - 4},${s.outer - 4} 0 1,0 ${2 * (s.outer - 4)},0a${s.outer - 4},${s.outer - 4} 0 1,0 ${-2 * (s.outer - 4)},0
             M${c - (s.inner + 4)},${c}a${s.inner + 4},${s.inner + 4} 0 1,0 ${2 * (s.inner + 4)},0a${s.inner + 4},${s.inner + 4} 0 1,0 ${-2 * (s.inner + 4)},0`}
-        fill={s.ring}
-        fillRule="evenodd"
-      />
-      {platform === "windows" && (
-        <circle cx={c} cy={c} r={s.inner - 4} fill={hubHover ? BRAND : s.hub} />
-      )}
+          fill={s.ring}
+          fillRule="evenodd"
+        />
+        {platform === "windows" && (
+          <circle
+            cx={c}
+            cy={c}
+            r={s.inner - 4}
+            fill={hubHover ? BRAND : s.hub}
+          />
+        )}
+        {segments.map((segment, index) => {
+          const start = index * span - span / 2;
+          const isOn = highlighted === index;
+          const fill = isOn ? BRAND : s.segment;
+          const d = segmentPath(c, c, s.inner, s.outer, start, start + span);
+          const at = polar(c, c, label, index * span);
+          return (
+            <g key={segment.title}>
+              <path
+                d={d}
+                fill={fill}
+                stroke={fill}
+                strokeWidth={20}
+                strokeLinejoin="round"
+              />
+              <text
+                x={at.x}
+                y={at.y + 14}
+                textAnchor="middle"
+                fill={isOn ? "#fff" : s.text}
+                style={{ font: `600 11.5px ${s.font}` }}
+              >
+                {segment.title}
+              </text>
+            </g>
+          );
+        })}
+        <text
+          x={c}
+          y={c - 1}
+          textAnchor="middle"
+          fill="#fff"
+          style={{ font: `700 ${platform === "mac" ? 12.5 : 14}px ${s.font}` }}
+        >
+          {scene.kind}
+        </text>
+        <text
+          x={c}
+          y={c + 15}
+          textAnchor="middle"
+          fill={s.secondary}
+          style={{ font: `400 11px ${s.font}` }}
+        >
+          {fileCount === 1 ? "1 file" : `${fileCount} files`}
+        </text>
+      </svg>
+      {/* Segment icons as <Img>, which Remotion waits for on every frame; an SVG <image> could miss a frame and flicker. */}
       {segments.map((segment, index) => {
-        const start = index * span - span / 2;
-        const isOn = highlighted === index;
-        const fill = isOn ? BRAND : s.segment;
-        const d = segmentPath(c, c, s.inner, s.outer, start, start + span);
         const at = polar(c, c, label, index * span);
         return (
-          <g key={segment.title}>
-            <path
-              d={d}
-              fill={fill}
-              stroke={fill}
-              strokeWidth={20}
-              strokeLinejoin="round"
-            />
-            <image
-              href={staticFile(`icons/${segment.icon}.png`)}
-              x={at.x - 12}
-              y={at.y - 25}
-              width={24}
-              height={20}
-              preserveAspectRatio="xMidYMid meet"
-              opacity={isOn ? 1 : 0.88}
-            />
-            <text
-              x={at.x}
-              y={at.y + 14}
-              textAnchor="middle"
-              fill={isOn ? "#fff" : s.text}
-              style={{ font: `600 11.5px ${s.font}` }}
-            >
-              {segment.title}
-            </text>
-          </g>
+          <Img
+            key={segment.title}
+            src={staticFile(`icons/${segment.icon}.png`)}
+            style={{
+              position: "absolute",
+              left: at.x - 12,
+              top: at.y - 25,
+              width: 24,
+              height: 20,
+              objectFit: "contain",
+              opacity: highlighted === index ? 1 : 0.88,
+            }}
+          />
         );
       })}
-      <text
-        x={c}
-        y={c - 1}
-        textAnchor="middle"
-        fill="#fff"
-        style={{ font: `700 ${platform === "mac" ? 12.5 : 14}px ${s.font}` }}
-      >
-        {scene.kind}
-      </text>
-      <text
-        x={c}
-        y={c + 15}
-        textAnchor="middle"
-        fill={s.secondary}
-        style={{ font: `400 11px ${s.font}` }}
-      >
-        {fileCount === 1 ? "1 file" : `${fileCount} files`}
-      </text>
-    </svg>
+    </div>
   );
 };
 
