@@ -26,7 +26,18 @@ enum WheelItemProvider {
         }
     }
 
+    /// The kinds of item in a selection: format categories, plus "folder" and "other" for the rest.
+    static func kinds(of urls: [URL]) -> Set<String> {
+        Set(urls.map { url in
+            if let format = FileFormat.detect(url) { return format.category.rawValue }
+            let isDirectory = (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? false
+            return isDirectory ? "folder" : "other"
+        })
+    }
+
     private static func toolItems(for urls: [URL]) -> [WheelItem] {
+        // Files of different kinds get only the tools that make sense for all of them.
+        if kinds(of: urls).count > 1 { return commonToolItems(for: urls) }
         let formats = urls.compactMap(FileFormat.detect)
         var items: [WheelItem] = []
         if formats.contains(where: { $0.category.isMedia }) {
@@ -126,14 +137,14 @@ enum WheelItemProvider {
                 }
             })
         }
-        if formats.contains(where: { $0.category == .image && $0 != .svg }) {
-            items.append(WheelItem(id: "tool.removeBackground", title: String(localized: "Убрать фон"), symbolName: "wand.and.stars") { urls in
-                ToolWindow.present(title: String(localized: "Удаление фона"), files: urls) { BackgroundRemovalView(urls: urls, close: $0) }
-            })
-        }
         if hasImages {
             items.append(WheelItem(id: "tool.frame", title: String(localized: "Фон"), symbolName: "photo.artframe") { urls in
                 ToolWindow.present(title: String(localized: "Фон"), files: urls) { FrameView(urls: urls, close: $0) }
+            })
+        }
+        if formats.contains(where: { $0.category == .image && $0 != .svg }) {
+            items.append(WheelItem(id: "tool.removeBackground", title: String(localized: "Убрать фон"), symbolName: "wand.and.stars") { urls in
+                ToolWindow.present(title: String(localized: "Удаление фона"), files: urls) { BackgroundRemovalView(urls: urls, close: $0) }
             })
         }
         if formats.filter({ $0.category == .image }).count >= 2 {
@@ -162,6 +173,47 @@ enum WheelItemProvider {
                 ConversionService.shared.runBatch(String(localized: "Объединение PDF"), inputs: urls) { [try PDFTools.merge($0)] }
             })
         }
+        return items
+    }
+
+    private static func isCompressible(_ url: URL) -> Bool {
+        guard let format = FileFormat.detect(url) else { return false }
+        return format.category.isMedia || (format.category == .image && format != .svg) || format == .pdf
+    }
+
+    /// Compress (each file its own way, default settings), Metadata for the photos, Text when everything is a
+    /// photo or PDF, and Add to archive.
+    private static func commonToolItems(for urls: [URL]) -> [WheelItem] {
+        let formats = urls.compactMap(FileFormat.detect)
+        var items: [WheelItem] = []
+        if urls.contains(where: isCompressible) {
+            items.append(WheelItem(id: "tool.compressAll", title: String(localized: "Сжать"), symbolName: "arrow.down.right.and.arrow.up.left") { urls in
+                let files = urls.filter(isCompressible)
+                let hasMedia = files.contains { FileFormat.detect($0)?.category.isMedia == true }
+                ConversionService.shared.runEach(String(localized: "Сжатие"), inputs: files, maxConcurrent: hasMedia ? 2 : nil) { url, progress, cancellation in
+                    if FileFormat.detect(url)?.category.isMedia == true {
+                        return try MediaEffects.compress(url, settings: MediaEffects.CompressionSettings(),
+                                                         progress: progress, cancellation: cancellation)
+                    }
+                    return try ImageCompression.compressFile(url, settings: CompressionSettings())
+                }
+            })
+        }
+        if formats.contains(where: { $0.category == .image && $0 != .svg }) {
+            items.append(WheelItem(id: "tool.metadata", title: String(localized: "Метаданные"), symbolName: "info.circle") { urls in
+                ToolWindow.present(title: String(localized: "Метаданные"), files: urls) { MetadataView(urls: urls, close: $0) }
+            })
+        }
+        if !formats.isEmpty, formats.count == urls.count, formats.allSatisfy({ ($0.category == .image && $0 != .svg) || $0 == .pdf }) {
+            items.append(WheelItem(id: "tool.recognizeText", title: String(localized: "Текст"), symbolName: "text.viewfinder") { urls in
+                ConversionService.shared.runEach(String(localized: "Распознавание текста"), inputs: urls) {
+                    try TextRecognizer.recognizeFile($0)
+                }
+            })
+        }
+        items.append(WheelItem(id: "tool.archiveAll", title: String(localized: "В архив"), symbolName: "archivebox") { urls in
+            ConversionService.shared.runBatch(String(localized: "Архивация"), inputs: urls) { [try ArchiveConverter.archiveSelection($0)] }
+        })
         return items
     }
 

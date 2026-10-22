@@ -1800,7 +1800,7 @@
   "es": "Reconocimiento de texto"
  },
  "Убрать фон": {
-  "en": "Remove background",
+  "en": "Remove bg",
   "es": "Quitar fondo"
  },
  "Удаление фона": {
@@ -1810,5 +1810,13 @@
  "Удалить результат": {
   "en": "Delete Result",
   "es": "Eliminar resultado"
+ },
+ "В архив": {
+  "en": "Archive",
+  "es": "Archivar"
+ },
+ "Архивация": {
+  "en": "Archiving",
+  "es": "Archivando"
  }
 }

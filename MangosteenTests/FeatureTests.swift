@@ -101,6 +101,32 @@ final class FeatureTests: XCTestCase {
         XCTAssertEqual(output.lastPathComponent, String(localized: "fruit (без фона)") + ".png")
     }
 
+    // MARK: Archive of a selection
+
+    func testArchiveHoldsOnlyTheSelectedItems() throws {
+        let photo = directory.appendingPathComponent("photo.jpg")
+        let notes = directory.appendingPathComponent("notes.txt")
+        let other = directory.appendingPathComponent("other.txt")
+        for url in [photo, notes, other] { try Data(url.lastPathComponent.utf8).write(to: url) }
+
+        let archive = try ArchiveConverter.archiveSelection([photo, notes])
+        XCTAssertEqual(archive.deletingLastPathComponent().standardizedFileURL, directory.standardizedFileURL)
+        XCTAssertEqual(archive.lastPathComponent, directory.lastPathComponent + ".zip")
+
+        let listing = Process()
+        let pipe = Pipe()
+        listing.executableURL = URL(fileURLWithPath: "/usr/bin/zipinfo")
+        listing.arguments = ["-1", archive.path]
+        listing.standardOutput = pipe
+        try listing.run()
+        listing.waitUntilExit()
+        let names = String(decoding: pipe.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self)
+            .split(separator: "\n").map(String.init).filter { !$0.hasPrefix("__MACOSX/") }
+        XCTAssertEqual(Set(names), ["photo.jpg", "notes.txt"])
+        let leftovers = try FileManager.default.contentsOfDirectory(atPath: directory.path).filter { $0.hasPrefix(".mangosteen") }
+        XCTAssertTrue(leftovers.isEmpty, "the staging folder is removed")
+    }
+
     // MARK: History
 
     func testHistoryKeepsRecentExistingResults() throws {

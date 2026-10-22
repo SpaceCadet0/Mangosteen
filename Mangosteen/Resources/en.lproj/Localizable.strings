@@ -48,6 +48,7 @@
 "Автор" = "Author";
 "Авторские права" = "Copyright";
 "Альбомная 16:9" = "Landscape 16:9";
+"Архивация" = "Archiving";
 "Без изменений" = "Unchanged";
 "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках." = "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.";
 "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется." = "Drop the file on a segment. The result appears next to the original file; the original itself is never changed.";
@@ -57,6 +58,7 @@
 "В «%@» не найден текст." = "No text found in “%@”.";
 "В «%@» нет видео." = "“%@” has no video.";
 "В «%@» нет звуковой дорожки." = "“%@” has no audio track.";
+"В архив" = "Archive";
 "Введите координаты в градусах, например 55.7558 и 37.6173" = "Enter coordinates in degrees, e.g. 55.7558 and 37.6173";
 "Версия %@" = "Version %@";
 "Вертикальная 9:16" = "Portrait 9:16";
@@ -399,7 +401,7 @@
 "Убрать дымку" = "Dehaze";
 "Убрать из Float" = "Remove from Float";
 "Убрать разрез" = "Remove cut";
-"Убрать фон" = "Remove background";
+"Убрать фон" = "Remove bg";
 "Угол" = "Angle";
 "Удаление фона" = "Remove Background";
 "Удалить" = "Delete";

@@ -43,6 +43,28 @@ enum ArchiveConverter {
         }
     }
 
+    /// Puts exactly the selected files and folders (from one or several folders) into one ZIP next to the first,
+    /// named after their folder. They are staged as APFS clones in a hidden folder, so nothing else from the
+    /// folder gets in and nothing large is copied.
+    static func archiveSelection(_ items: [URL]) throws -> URL {
+        guard let first = items.first else { throw ConversionError.encodeFailed(.zip) }
+        let directory = first.deletingLastPathComponent()
+        let name = items.count == 1 ? OutputNaming.baseName(of: first)
+            : (directory.lastPathComponent.isEmpty || directory.path == "/" ? "Archive" : directory.lastPathComponent)
+        let fileManager = FileManager.default
+        let staging = directory.appendingPathComponent(".mangosteen-\(UUID().uuidString)")
+        try fileManager.createDirectory(at: staging, withIntermediateDirectories: false)
+        defer { try? fileManager.removeItem(at: staging) }
+        for item in items {
+            let destination = OutputNaming.uniqueURL(in: staging, baseName: item.deletingPathExtension().lastPathComponent,
+                                                     pathExtension: item.pathExtension)
+            try fileManager.copyItem(at: item, to: destination)
+        }
+        return try OutputNaming.writeAtomically(directory: directory, baseName: name, pathExtension: "zip") { output in
+            try ExternalTool.run("ditto", ["-c", "-k", "--sequesterRsrc", staging.path, output.path])
+        }
+    }
+
     /// All items must share a parent folder.
     private static func pack(items: [URL], as target: FileFormat, to output: URL) throws {
         guard let parent = items.first?.deletingLastPathComponent() else { throw ConversionError.encodeFailed(target) }

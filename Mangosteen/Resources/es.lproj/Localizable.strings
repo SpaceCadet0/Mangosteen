@@ -48,6 +48,7 @@
 "Автор" = "Autor";
 "Авторские права" = "Derechos de autor";
 "Альбомная 16:9" = "Horizontal 16:9";
+"Архивация" = "Archivando";
 "Без изменений" = "Sin cambios";
 "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках." = "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes.";
 "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется." = "Suelta el archivo en un segmento. El resultado aparece junto al archivo original; el original nunca se modifica.";
@@ -57,6 +58,7 @@
 "В «%@» не найден текст." = "No se encontró texto en «%@».";
 "В «%@» нет видео." = "«%@» no tiene vídeo.";
 "В «%@» нет звуковой дорожки." = "«%@» no tiene pista de audio.";
+"В архив" = "Archivar";
 "Введите координаты в градусах, например 55.7558 и 37.6173" = "Introduce las coordenadas en grados, p. ej. 55.7558 y 37.6173";
 "Версия %@" = "Versión %@";
 "Вертикальная 9:16" = "Vertical 9:16";

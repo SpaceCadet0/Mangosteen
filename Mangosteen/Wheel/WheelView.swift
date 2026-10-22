@@ -169,34 +169,87 @@ final class WheelView: NSView {
 
         let item = items[index]
         let middle = CGFloat(index) * span
-        let radius = (Self.innerRadius + Self.outerRadius) / 2
-        let labelCenter = NSPoint(x: ringCenter.x + radius * sin(middle), y: ringCenter.y + radius * cos(middle))
         let tint: NSColor = isHighlighted ? .white : .labelColor
+        let baseRadius = (Self.innerRadius + Self.outerRadius) / 2
 
-        if let symbol = NSImage(systemSymbolName: item.symbolName, accessibilityDescription: item.title)?
-            .withSymbolConfiguration(.init(pointSize: 18, weight: .medium)
-                .applying(.init(paletteColors: [tint]))) {
-            let size = symbol.size
-            symbol.draw(in: NSRect(x: labelCenter.x - size.width / 2, y: labelCenter.y + 2,
-                                   width: size.width, height: size.height))
-        }
-        // Long titles ("Порядок страниц") wrap onto two centred lines instead of running past the segment.
+        // Dense wheels (10+ segments) use a slightly smaller icon so the title has room.
+        let symbol = NSImage(systemSymbolName: item.symbolName, accessibilityDescription: item.title)?
+            .withSymbolConfiguration(.init(pointSize: items.count >= 10 ? 14 : 18, weight: .medium)
+                .applying(.init(paletteColors: [tint])))
+        let fullIconSize = symbol?.size ?? .zero
+
+        // Icon and title are centred together on the segment. The title gets the largest font (11.5 → 9 pt) and the
+        // widest wrap (≤ 2 lines, no word broken) for which both boxes lie entirely within the segment's ring sector.
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
         paragraph.lineBreakMode = .byWordWrapping
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 11.5, weight: .semibold),
-            .foregroundColor: tint,
-            .paragraphStyle: paragraph,
-        ]
-        let title = NSAttributedString(string: item.title, attributes: attributes)
-        let maxWidth: CGFloat = 84
-        let bounds = title.boundingRect(with: NSSize(width: maxWidth, height: 100),
-                                        options: [.usesLineFragmentOrigin, .usesFontLeading])
-        let width = min(ceil(title.size().width), maxWidth)
-        let height = ceil(bounds.height)
-        title.draw(with: NSRect(x: labelCenter.x - width / 2, y: labelCenter.y - height - 2, width: width, height: height),
-                   options: [.usesLineFragmentOrigin, .usesFontLeading])
+        var chosen: (title: NSAttributedString, text: NSRect, icon: NSRect)?
+        // Every segment keeps its icon; crowded wheels get a smaller font instead (down to 8 pt).
+        let iconSize = fullIconSize
+        let gap: CGFloat = 3
+        // Font size first, then wrap width, then how far out the label sits: the segment widens outwards, and a long
+        // word fits better there, but a tall block can run past the outer edge, so a few radii are tried.
+        layout: for size in stride(from: 11.5, through: 8, by: -0.5) {
+            let font = NSFont.systemFont(ofSize: size, weight: .semibold)
+            let attributes: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: tint, .paragraphStyle: paragraph]
+            let title = NSAttributedString(string: item.title, attributes: attributes)
+            let longestWord = item.title.split(separator: " ").map {
+                ceil(NSAttributedString(string: String($0), attributes: [.font: font]).size().width)
+            }.max() ?? 0
+            for maxWidth in stride(from: CGFloat(84), through: 44, by: -8) where longestWord <= maxWidth {
+                let bounds = title.boundingRect(with: NSSize(width: maxWidth, height: 200),
+                                                options: [.usesLineFragmentOrigin, .usesFontLeading])
+                let lineHeight = ceil(font.ascender - font.descender + font.leading)
+                guard bounds.height <= lineHeight * 2 + 1 else { continue }
+                let width = min(ceil(title.size().width), maxWidth)
+                let height = ceil(bounds.height)
+                for shift: CGFloat in [0, 6, -6, 10, -10, 14] {
+                    let radius = baseRadius + shift
+                    let labelCenter = NSPoint(x: ringCenter.x + radius * sin(middle), y: ringCenter.y + radius * cos(middle))
+                    let top = labelCenter.y + (iconSize.height + gap + height) / 2
+                    let icon = NSRect(x: labelCenter.x - iconSize.width / 2, y: top - iconSize.height,
+                                      width: iconSize.width, height: iconSize.height)
+                    let text = NSRect(x: labelCenter.x - width / 2, y: icon.minY - gap - height, width: width, height: height)
+                    if chosen == nil || shift == 0 { chosen = (title, text, icon) }
+                    if labelFits(text, segment: index), labelFits(icon, segment: index) {
+                        chosen = (title, text, icon)
+                        break layout
+                    }
+                }
+            }
+        }
+        guard let chosen else { return }
+        symbol?.draw(in: chosen.icon)
+        chosen.title.draw(with: chosen.text, options: [.usesLineFragmentOrigin, .usesFontLeading])
+        #if DEBUG
+        if !labelFits(chosen.text, segment: index) || !labelFits(chosen.icon, segment: index) {
+            let failing = [chosen.text, chosen.icon].flatMap { r in
+                [NSPoint(x: r.minX, y: r.minY), NSPoint(x: r.maxX, y: r.minY), NSPoint(x: r.minX, y: r.maxY), NSPoint(x: r.maxX, y: r.maxY)]
+            }.filter { !labelFits(NSRect(origin: $0, size: .zero), segment: index) }.map { point -> String in
+                let dx = point.x - ringCenter.x, dy = point.y - ringCenter.y
+                let offset = abs(remainder(atan2(dx, dy) - middle, 2 * .pi))
+                return String(format: "r=%.0f off=%.1f° limit=%.1f°", hypot(dx, dy), offset * 180 / .pi,
+                              (span / 2 - 4 / hypot(dx, dy)) * 180 / .pi)
+            }
+            print("snapshot: label overflow «\(item.title)» seg \(index)/\(items.count) text \(chosen.text) \(failing)")
+        }
+        #endif
+    }
+
+    /// Whether `rect` (view coordinates) lies inside segment `index`'s ring sector, away from its edges and gaps.
+    func labelFits(_ rect: NSRect, segment index: Int) -> Bool {
+        let middle = CGFloat(index) * span
+        let corners = [NSPoint(x: rect.minX, y: rect.minY), NSPoint(x: rect.maxX, y: rect.minY),
+                       NSPoint(x: rect.minX, y: rect.maxY), NSPoint(x: rect.maxX, y: rect.maxY)]
+        for corner in corners {
+            let dx = corner.x - ringCenter.x, dy = corner.y - ringCenter.y
+            let radius = hypot(dx, dy)
+            guard radius >= Self.innerRadius + 6, radius <= Self.outerRadius - 6 else { return false }
+            let angle = atan2(dx, dy) // 0 at 12 o'clock, clockwise
+            let offset = abs(remainder(angle - middle, 2 * .pi))
+            if offset > span / 2 - 4 / radius { return false }
+        }
+        return true
     }
 
     private func drawCenter() {
