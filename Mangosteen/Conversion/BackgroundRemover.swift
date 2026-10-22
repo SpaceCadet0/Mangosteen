@@ -71,7 +71,7 @@ enum BackgroundRemover {
         }
         let result = try compose(subject, fill: options.fill)
         let source = FileFormat.detect(input)
-        let target: FileFormat = options.fill != nil && source.map { FormatCatalog.imageOutputs.contains($0) && $0 != .pdf } == true
+        let target: FileFormat = options.fill != nil && source.map { FormatCatalog.editableImageFormats.contains($0) } == true
             ? source! : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),

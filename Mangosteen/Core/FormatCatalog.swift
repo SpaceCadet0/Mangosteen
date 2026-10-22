@@ -2,7 +2,9 @@ import Foundation
 
 /// Which output formats are offered for which inputs.
 enum FormatCatalog {
-    static let imageOutputs: [FileFormat] = [.png, .jpg, .webp, .heic, .tiff, .avif, .bmp, .gif, .pdf]
+    static let imageOutputs: [FileFormat] = [.png, .jpg, .webp, .heic, .tiff, .avif, .gif, .pdf]
+    /// Formats an edited image is saved back in; BMP is not offered on the wheel but is still kept.
+    static let editableImageFormats: [FileFormat] = imageOutputs.filter { $0 != .pdf } + [.bmp]
     static let documentOutputs: [FileFormat] = [.pdf, .docx, .odt, .rtf, .rtfd, .txt, .md, .html]
     static let pdfOutputs: [FileFormat] = [.png, .jpg, .txt, .md, .rtf, .docx, .html]
     static let subtitleOutputs: [FileFormat] = [.srt, .vtt, .txt]
@@ -13,7 +15,7 @@ enum FormatCatalog {
 
     /// Order of segments on the wheel when the selection mixes kinds of files.
     private static let displayOrder: [FileFormat] = [
-        .png, .jpg, .webp, .heic, .tiff, .avif, .bmp, .gif, .pdf,
+        .png, .jpg, .webp, .heic, .tiff, .avif, .gif, .pdf,
         .docx, .odt, .rtf, .rtfd, .txt, .md, .html,
         .srt, .vtt, .csv, .tsv, .xlsx,
         .mp4, .mov, .mkv, .webm, .avi, .wmv,

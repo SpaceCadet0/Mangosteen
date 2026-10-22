@@ -89,7 +89,7 @@ enum Redactor {
         guard let source = FileFormat.detect(input) else { throw ConversionError.unrecognized(input) }
         let (image, _) = try ImageConverter.load(input)
         let result = try apply(regions, style: style, color: color, to: image)
-        let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
+        let target = FormatCatalog.editableImageFormats.contains(source) ? source : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
             baseName: String(localized: "\(OutputNaming.baseName(of: input)) (скрыто)"),

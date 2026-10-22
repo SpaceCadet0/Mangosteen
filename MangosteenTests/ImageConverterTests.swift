@@ -40,11 +40,13 @@ final class ImageConverterTests: XCTestCase {
 
     func testConvertsPNGToEveryImageIOFormat() throws {
         let input = try makeSamplePNG()
-        for target in [FileFormat.jpg, .heic, .tiff, .avif, .bmp, .gif] {
+        for target in [FileFormat.jpg, .heic, .tiff, .avif, .gif] {
             let output = try XCTUnwrap(Converter.convert(input, to: target, options: ConversionOptions()))
             XCTAssertEqual(output.lastPathComponent, "sample.\(target.fileExtension)")
             assertDecodes(output, width: 64, height: 32)
         }
+        XCTAssertFalse(FormatCatalog.targets(for: .png).contains(.bmp), "BMP is not offered on the wheel")
+        XCTAssertTrue(FormatCatalog.editableImageFormats.contains(.bmp), "edited BMP files stay BMP")
     }
 
     func testConvertsPNGToPDF() throws {

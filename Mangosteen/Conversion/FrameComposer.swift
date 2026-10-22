@@ -206,7 +206,7 @@ enum FrameComposer {
         let (photo, metadata) = try ImageConverter.load(input)
         let backdrop = try settings.backgroundImage.map { try ImageConverter.load($0, maxPixelSize: 4096).image }
         let result = try compose(photo, settings: settings, backgroundImage: backdrop)
-        let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
+        let target = FormatCatalog.editableImageFormats.contains(source) ? source : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
             baseName: String(localized: "\(OutputNaming.baseName(of: input)) (фон)"),

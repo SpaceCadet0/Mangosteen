@@ -210,7 +210,7 @@ enum ImageCropper {
             cropped = try ImageCompression.resized(cropped, width: Int(outputSize.width), height: Int(outputSize.height))
         }
         // Read-only formats (SVG, PSD…) are saved as PNG.
-        let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
+        let target = FormatCatalog.editableImageFormats.contains(source) ? source : .png
         let baseName = OutputNaming.baseName(of: input)
         let carried = options.preserveMetadata ? metadata : nil
         let directory = input.deletingLastPathComponent()

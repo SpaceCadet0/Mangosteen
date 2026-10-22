@@ -325,7 +325,7 @@ enum AnnotationRenderer {
         let (image, metadata) = try ImageConverter.load(input)
         let result = try render(annotations, on: image, fullSize: CGSize(width: image.width, height: image.height),
                                 images: images)
-        let target = FormatCatalog.imageOutputs.contains(source) && source != .pdf ? source : .png
+        let target = FormatCatalog.editableImageFormats.contains(source) ? source : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
             baseName: String(localized: "\(OutputNaming.baseName(of: input)) (пометки)"),
