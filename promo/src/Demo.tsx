@@ -87,7 +87,6 @@ const SCENES: Scene[] = [
       photo("WebP"),
       photo("TIFF"),
       photo("AVIF"),
-      photo("BMP"),
       photo("GIF"),
       { title: "PDF", icon: "sf-doc-richtext" },
     ]),
