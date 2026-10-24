@@ -60,7 +60,7 @@ struct WelcomeView: View {
             card(settings.convertModifier, String(localized: "Конвертация"),
                  String(localized: "Изображения, PDF, документы, видео, аудио, субтитры, таблицы и архивы в другие форматы."))
             card(settings.toolsModifier, String(localized: "Инструменты"),
-                 String(localized: "Сжатие, обрезка, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое."))
+                 String(localized: "Сжатие, обрезка и размер в пикселях, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое."))
             card(settings.actionsModifier, String(localized: "Действия"),
                  String(localized: "Полка Float, AirDrop, копирование, перемещение, путь к файлу, терминал."))
         }

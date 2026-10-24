@@ -74,6 +74,11 @@
 "Воспроизведение (пробел)" = "Play (Space)";
 "Вправо" = "Right";
 "Все окна на передний план" = "Bring All to Front";
+"Все файлы: %lld × %lld px" = "All files: %lld × %lld px";
+"Все файлы: %lld%% от размера" = "All files: %lld%% of their size";
+"Все файлы: высота %lld px, ширина по пропорциям" = "All files: %lld px high, width to scale";
+"Все файлы: длинная сторона %lld px" = "All files: long side %lld px";
+"Все файлы: ширина %lld px, высота по пропорциям" = "All files: %lld px wide, height to scale";
 "Вставить" = "Paste";
 "Выбор" = "Select";
 "Выбрать" = "Choose";
@@ -120,8 +125,10 @@
 "Звуки" = "Sounds";
 "Здесь уже есть пик — он выделен." = "There is already a bleep here — it is selected.";
 "Зерно" = "Grain";
+"Изменение размера" = "Resizing";
 "Изменения применятся ко всем %@. Справа показаны данные первого." = "Changes apply to all %@. The first one is shown on the right.";
 "Изменить дату" = "Change date";
+"Изменить размер" = "Resize";
 "Изменить скорость" = "Change speed";
 "Измеряю…" = "Measuring…";
 "Изображение" = "Image";
@@ -307,6 +314,7 @@
 "Разделить PDF" = "Split PDF";
 "Разделить на %lld" = "Split into %lld";
 "Разделить поровну" = "Split evenly";
+"Размер" = "Size";
 "Размер текста и номеров" = "Text and number size";
 "Размер файла" = "File size";
 "Размытие" = "Blur";
@@ -321,6 +329,7 @@
 "Редактирование" = "Editing";
 "Редактор" = "Editor";
 "Редактор фото" = "Photo Editor";
+"Режим" = "Mode";
 "Резкость" = "Sharpness";
 "Результат" = "Result";
 "Ряд" = "Row";
@@ -333,10 +342,12 @@
 "Светлые участки" = "Highlights";
 "Свободно" = "Free";
 "Своя" = "Custom";
+"Своя длинная сторона" = "Custom long side";
+"Своё…" = "Custom…";
 "Сейчас" = "Now";
 "Сетка" = "Grid";
 "Сжатие" = "Compress";
-"Сжатие, обрезка, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое." = "Compress, crop, photo editor, annotate, redact, collage; for video and audio — trim, speed, loudness and more.";
+"Сжатие, обрезка и размер в пикселях, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое." = "Compress, crop and resize in pixels, photo editor, annotate, redact, collage; for video and audio — trim, speed, loudness and more.";
 "Сжатый файл (%@) не меньше оригинала " = "The compressed file (%@) is not smaller than the original ";
 "Сжать" = "Compress";
 "Система" = "System";
@@ -366,6 +377,7 @@
 "Сохранять высоту звука" = "Preserve pitch";
 "Сохранять метаданные" = "Keep metadata";
 "Сохранять метаданные (EXIF, GPS, цветовой профиль)" = "Keep metadata (EXIF, GPS, colour profile)";
+"Сохранять пропорции" = "Keep proportions";
 "Сочность" = "Vibrance";
 "Спектр" = "Spectrum";
 "Способ" = "Method";

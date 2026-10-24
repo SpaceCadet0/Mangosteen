@@ -112,4 +112,32 @@ final class CropTransformTests: XCTestCase {
                                                transform: transform, options: ConversionOptions())
         XCTAssertEqual(output.lastPathComponent, String(localized: "photo (изменено)") + ".png")
     }
+
+    // MARK: Resize
+
+    func testResizeRules() {
+        let landscape = CGSize(width: 4032, height: 3024)
+        XCTAssertEqual(ImageCropper.Resize.percent(50).size(for: landscape), CGSize(width: 2016, height: 1512))
+        XCTAssertEqual(ImageCropper.Resize.longSide(1920).size(for: landscape), CGSize(width: 1920, height: 1440))
+        XCTAssertEqual(ImageCropper.Resize.longSide(1920).size(for: CGSize(width: 3024, height: 4032)),
+                       CGSize(width: 1440, height: 1920), "a portrait picture limits its height")
+        XCTAssertEqual(ImageCropper.Resize.longSide(1920).size(for: CGSize(width: 800, height: 600)),
+                       CGSize(width: 800, height: 600), "small pictures are not enlarged")
+        XCTAssertEqual(ImageCropper.Resize.width(1000).size(for: landscape), CGSize(width: 1000, height: 750))
+        XCTAssertEqual(ImageCropper.Resize.height(300).size(for: landscape), CGSize(width: 400, height: 300))
+        XCTAssertEqual(ImageCropper.Resize.exact(width: 500, height: 500).size(for: landscape), CGSize(width: 500, height: 500))
+        XCTAssertEqual(ImageCropper.Resize.percent(0.001).size(for: landscape), CGSize(width: 1, height: 1))
+        XCTAssertEqual(ImageCropper.Resize.width(1_000_000).size(for: landscape).width, CGFloat(ImageCropper.Resize.maxSide))
+    }
+
+    func testResizeFileWritesNewSizeNextToOriginal() throws {
+        let input = directory.appendingPathComponent("photo.png")
+        try ImageConverter.write(sample(), as: .png, to: input, options: ConversionOptions(), metadata: nil)
+        var transform = ImageCropper.Transform()
+        transform.rotate(clockwise: true)
+        let output = try ImageCropper.resizeFile(input, to: .percent(200), transform: transform, options: ConversionOptions())
+        XCTAssertEqual(output.lastPathComponent, "photo (4×6).png")
+        let image = try ImageConverter.load(output).image
+        XCTAssertEqual([image.width, image.height], [4, 6])
+    }
 }

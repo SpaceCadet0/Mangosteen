@@ -4,9 +4,24 @@ import SwiftUI
 /// mirror the picture, and cut the result into a grid of parts.
 /// With several images, the frame drawn on the first one is used as is; the others get a centred
 /// crop of the same aspect ratio.
+/// The Size tab scales whole pictures instead: by pixels, percent or the long side, one rule for every file.
 struct CropView: View {
     let urls: [URL]
     let close: () -> Void
+
+    enum Mode: String, CaseIterable, Identifiable {
+        case crop, size
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .crop: String(localized: "Обрезка")
+            case .size: String(localized: "Размер")
+            }
+        }
+    }
+
+    static let longSides = [3840, 2560, 1920, 1280, 1080, 800]
+    static let percents = [25, 50, 75]
 
     enum AspectChoice: String, CaseIterable, Identifiable {
         case free, original, square, r4x3, r3x2, r16x9, r9x16, r3x4, r2x3, r4x5, exact
@@ -57,6 +72,10 @@ struct CropView: View {
     @State private var exactWidth = 1080
     @State private var exactHeight = 1080
     @State private var loadError: String?
+    /// The window opens on the tab used last time.
+    @AppStorage("cropToolMode") private var mode = Mode.crop
+    @State private var resize = ImageCropper.Resize.percent(100)
+    @State private var keepAspect = true
 
     private var images: [URL] { urls.filter { FileFormat.detect($0)?.category == .image } }
 
@@ -76,11 +95,19 @@ struct CropView: View {
 
     var body: some View {
         VStack(spacing: 14) {
-            canvas
-                .frame(minWidth: 620, minHeight: 420)
-                .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
+            Picker(String(localized: "Режим"), selection: $mode) {
+                ForEach(Mode.allCases) { Text($0.title).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .frame(width: 240)
+            Group {
+                if mode == .crop { canvas } else { sizePreview }
+            }
+            .frame(minWidth: 620, minHeight: 420)
+            .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary))
             controls
-            ToolFooter(fileCount: images.count, actionTitle: !columnCuts.isEmpty || !rowCuts.isEmpty ? String(localized: "Разрезать") : String(localized: "Сохранить"),
+            ToolFooter(fileCount: images.count, actionTitle: actionTitle,
                        actionDisabled: displayImage == nil, cancel: close, action: run)
         }
         .padding(20)
@@ -102,9 +129,14 @@ struct CropView: View {
 
     // MARK: Controls
 
+    private var actionTitle: String {
+        if mode == .size { return String(localized: "Изменить размер") }
+        return !columnCuts.isEmpty || !rowCuts.isEmpty ? String(localized: "Разрезать") : String(localized: "Сохранить")
+    }
+
     private var controls: some View {
         VStack(spacing: 10) {
-            cropControls
+            if mode == .crop { cropControls } else { sizeControls }
             HStack(spacing: 6) {
                 iconButton("rotate.left", String(localized: "Повернуть влево")) { transform.rotate(clockwise: false) }
                 iconButton("rotate.right", String(localized: "Повернуть вправо")) { transform.rotate(clockwise: true) }
@@ -113,13 +145,114 @@ struct CropView: View {
                 iconButton("arrow.up.and.down.righttriangle.up.righttriangle.down",
                            String(localized: "Отразить по вертикали")) { transform.flipVertical.toggle() }
                 Spacer()
-                Text(String(localized: "Разрезать на части:"))
-                Stepper(value: $columns, in: 1...10) {
-                    Text(String(localized: "\(columns) по ширине")).monospacedDigit()
+                if mode == .crop {
+                    Text(String(localized: "Разрезать на части:"))
+                    Stepper(value: $columns, in: 1...10) {
+                        Text(String(localized: "\(columns) по ширине")).monospacedDigit()
+                    }
+                    Stepper(value: $rows, in: 1...10) {
+                        Text(String(localized: "\(rows) по высоте")).monospacedDigit()
+                    }
+                } else {
+                    ForEach(Self.percents, id: \.self) { percent in
+                        Button { resize = .percent(Double(percent)) } label: { Text(verbatim: "\(percent)%") }
+                    }
+                    Menu(String(localized: "Длинная сторона")) {
+                        ForEach(Self.longSides, id: \.self) { side in
+                            Button { resize = .longSide(side) } label: { Text(verbatim: "\(side) px") }
+                        }
+                    }
+                    .fixedSize()
                 }
-                Stepper(value: $rows, in: 1...10) {
-                    Text(String(localized: "\(rows) по высоте")).monospacedDigit()
-                }
+            }
+        }
+    }
+
+    // MARK: Size
+
+    private var resultSize: CGSize { resize.size(for: imageSize) }
+
+    private var sizePreview: some View {
+        ZStack(alignment: .bottomTrailing) {
+            if let displayImage {
+                Image(decorative: displayImage, scale: 1)
+                    .resizable()
+                    .scaledToFit()
+                    .padding(16)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                Text(loadError ?? "")
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            if displayImage != nil {
+                Text(verbatim: "\(Int(imageSize.width)) × \(Int(imageSize.height)) → \(Int(resultSize.width)) × \(Int(resultSize.height)) px")
+                    .monospacedDigit()
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 6))
+                    .padding(10)
+            }
+        }
+    }
+
+    private var widthField: Binding<Int> {
+        Binding(get: { Int(resultSize.width) }, set: { value in
+            // The field commits what it shows on focus changes; only a real edit changes the rule.
+            guard displayImage != nil, value != Int(resultSize.width) else { return }
+            let width = min(max(value, 1), ImageCropper.Resize.maxSide)
+            resize = keepAspect ? .width(width) : .exact(width: width, height: Int(resultSize.height))
+        })
+    }
+
+    private var heightField: Binding<Int> {
+        Binding(get: { Int(resultSize.height) }, set: { value in
+            guard displayImage != nil, value != Int(resultSize.height) else { return }
+            let height = min(max(value, 1), ImageCropper.Resize.maxSide)
+            resize = keepAspect ? .height(height) : .exact(width: Int(resultSize.width), height: height)
+        })
+    }
+
+    /// What happens to every file when there are several; the fields show the first one.
+    private var batchNote: String {
+        switch resize {
+        case .percent(let percent): String(localized: "Все файлы: \(Int(percent))% от размера")
+        case .longSide(let side): String(localized: "Все файлы: длинная сторона \(side) px")
+        case .width(let width): String(localized: "Все файлы: ширина \(width) px, высота по пропорциям")
+        case .height(let height): String(localized: "Все файлы: высота \(height) px, ширина по пропорциям")
+        case .exact(let width, let height): String(localized: "Все файлы: \(width) × \(height) px")
+        }
+    }
+
+    private var sizeControls: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            sizeFields
+            if images.count > 1 {
+                Text(batchNote).foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private var sizeFields: some View {
+        HStack(spacing: 8) {
+            Text(String(localized: "Ширина"))
+            TextField(String(localized: "Ширина"), value: widthField, format: .number.grouping(.never))
+                .labelsHidden()
+                .frame(width: 70)
+            iconButton(keepAspect ? "lock" : "lock.open", String(localized: "Сохранять пропорции")) {
+                keepAspect.toggle()
+                if keepAspect { resize = .width(Int(resultSize.width)) }
+            }
+            Text(String(localized: "Высота"))
+            TextField(String(localized: "Высота"), value: heightField, format: .number.grouping(.never))
+                .labelsHidden()
+                .frame(width: 70)
+            Text("px").foregroundStyle(.secondary)
+            Spacer()
+            Button(String(localized: "Сбросить")) {
+                resize = .percent(100)
+                keepAspect = true
+                transform = ImageCropper.Transform()
             }
         }
     }
@@ -205,6 +338,15 @@ struct CropView: View {
 
     private func run() {
         guard let first = images.first else { return }
+        if mode == .size {
+            let resize = resize, transform = transform
+            let options = AppSettings.shared.conversionOptions
+            ConversionService.shared.runEach(String(localized: "Изменение размера"), inputs: images) {
+                try ImageCropper.resizeFile($0, to: resize, transform: transform, options: options)
+            }
+            close()
+            return
+        }
         let firstRect = rect
         let choice = aspectChoice
         let exact = CGSize(width: exactWidth, height: exactHeight)

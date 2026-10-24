@@ -74,6 +74,11 @@
 "Воспроизведение (пробел)" = "Reproducir (espacio)";
 "Вправо" = "Derecha";
 "Все окна на передний план" = "Traer todo al frente";
+"Все файлы: %lld × %lld px" = "Todos los archivos: %lld × %lld px";
+"Все файлы: %lld%% от размера" = "Todos los archivos: %lld%% de su tamaño";
+"Все файлы: высота %lld px, ширина по пропорциям" = "Todos los archivos: %lld px de alto, ancho proporcional";
+"Все файлы: длинная сторона %lld px" = "Todos los archivos: lado largo de %lld px";
+"Все файлы: ширина %lld px, высота по пропорциям" = "Todos los archivos: %lld px de ancho, alto proporcional";
 "Вставить" = "Pegar";
 "Выбор" = "Seleccionar";
 "Выбрать" = "Elegir";
@@ -120,8 +125,10 @@
 "Звуки" = "Sonidos";
 "Здесь уже есть пик — он выделен." = "Aquí ya hay un pitido; está seleccionado.";
 "Зерно" = "Grano";
+"Изменение размера" = "Cambiando tamaño";
 "Изменения применятся ко всем %@. Справа показаны данные первого." = "Los cambios se aplican a los %@. A la derecha se muestran los datos del primero.";
 "Изменить дату" = "Cambiar fecha";
+"Изменить размер" = "Redimensionar";
 "Изменить скорость" = "Cambiar velocidad";
 "Измеряю…" = "Midiendo…";
 "Изображение" = "Imagen";
@@ -307,6 +314,7 @@
 "Разделить PDF" = "Dividir PDF";
 "Разделить на %lld" = "Dividir en %lld";
 "Разделить поровну" = "Dividir en partes iguales";
+"Размер" = "Tamaño";
 "Размер текста и номеров" = "Tamaño del texto y los números";
 "Размер файла" = "Tamaño de archivo";
 "Размытие" = "Desenfoque";
@@ -321,6 +329,7 @@
 "Редактирование" = "Editando";
 "Редактор" = "Editor";
 "Редактор фото" = "Editor de fotos";
+"Режим" = "Modo";
 "Резкость" = "Nitidez";
 "Результат" = "Resultado";
 "Ряд" = "Fila";
@@ -333,10 +342,12 @@
 "Светлые участки" = "Luces";
 "Свободно" = "Libre";
 "Своя" = "Personalizado";
+"Своя длинная сторона" = "Lado largo personalizado";
+"Своё…" = "Personalizado…";
 "Сейчас" = "Ahora";
 "Сетка" = "Cuadrícula";
 "Сжатие" = "Compresión";
-"Сжатие, обрезка, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое." = "Comprimir, recortar, editor de fotos, anotar, ocultar, collage; para vídeo y audio: recortar, velocidad, volumen y más.";
+"Сжатие, обрезка и размер в пикселях, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое." = "Comprimir, recortar y cambiar el tamaño en píxeles, editor de fotos, anotar, ocultar, collage; para vídeo y audio: recortar, velocidad, volumen y más.";
 "Сжатый файл (%@) не меньше оригинала " = "El archivo comprimido (%@) no es más pequeño que el original ";
 "Сжать" = "Comprimir";
 "Система" = "Sistema";
@@ -366,6 +377,7 @@
 "Сохранять высоту звука" = "Mantener el tono";
 "Сохранять метаданные" = "Conservar metadatos";
 "Сохранять метаданные (EXIF, GPS, цветовой профиль)" = "Conservar metadatos (EXIF, GPS, perfil de color)";
+"Сохранять пропорции" = "Mantener proporciones";
 "Сочность" = "Intensidad";
 "Спектр" = "Espectro";
 "Способ" = "Método";

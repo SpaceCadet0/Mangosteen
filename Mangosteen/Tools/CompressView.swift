@@ -25,6 +25,21 @@ struct CompressView: View {
     @State private var isEstimating = false
 
     private static let sizeLimits = [4096, 3840, 2560, 1920, 1600, 1280, 1024, 800]
+    /// Picker tag for «Своё…»; the number itself goes in a field below.
+    private static let customSide = -1
+    @State private var customLongSide = false
+
+    private var longSideChoice: Binding<Int?> {
+        Binding(get: { customLongSide ? Self.customSide : settings.maxPixelSize }, set: { choice in
+            customLongSide = choice == Self.customSide
+            settings.maxPixelSize = customLongSide ? (settings.maxPixelSize ?? 1600) : choice
+        })
+    }
+
+    private var customSideValue: Binding<Int> {
+        Binding(get: { settings.maxPixelSize ?? 1600 },
+                set: { settings.maxPixelSize = min(max($0, 16), ImageCropper.Resize.maxSide) })
+    }
 
     private var images: [URL] { urls.filter { FileFormat.detect($0)?.category == .image } }
     private var pdfs: [URL] { urls.filter { FileFormat.detect($0) == .pdf } }
@@ -115,11 +130,22 @@ struct CompressView: View {
                 }
             }
 
-            Picker(String(localized: "Длинная сторона"), selection: $settings.maxPixelSize) {
+            Picker(String(localized: "Длинная сторона"), selection: longSideChoice) {
                 Text(String(localized: "Без изменений")).tag(Int?.none)
                 ForEach(Self.sizeLimits, id: \.self) { Text("\($0) px").tag(Optional($0)) }
+                Text(String(localized: "Своё…")).tag(Optional(Self.customSide))
             }
             .disabled(settings.mode == .preset && settings.preset.maxPixelSize != nil)
+            if customLongSide {
+                LabeledContent(String(localized: "Своя длинная сторона")) {
+                    HStack {
+                        TextField("", value: customSideValue, format: .number.grouping(.never))
+                            .frame(width: 80)
+                        Text("px").foregroundStyle(.secondary)
+                    }
+                }
+                .disabled(settings.mode == .preset && settings.preset.maxPixelSize != nil)
+            }
 
             Picker(String(localized: "Формат"), selection: $settings.format) {
                 Text(String(localized: "Как у оригинала")).tag(FileFormat?.none)

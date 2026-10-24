@@ -7,9 +7,17 @@
   "en": " (minimized)",
   "es": " (minimizada)"
  },
+ " и ещё %lld": {
+  "en": " and %lld more",
+  "es": " y %lld más"
+ },
  " — не меньше оригинала, файл не будет сохранён": {
   "en": " — not smaller than the original, the file will not be saved",
   "es": " — no es más pequeño que el original, el archivo no se guardará"
+ },
+ "%@ (без фона)": {
+  "en": "%@ (no background)",
+  "es": "%@ (sin fondo)"
  },
  "%@ (визуализация)": {
   "en": "%@ (visualizer)",
@@ -55,6 +63,10 @@
   "en": "%@ (pages)",
   "es": "%@ (páginas)"
  },
+ "%@ (текст)": {
+  "en": "%@ (text)",
+  "es": "%@ (texto)"
+ },
  "%@ (фон)": {
   "en": "%@ (background)",
   "es": "%@ (fondo)"
@@ -83,6 +95,14 @@
   "en": "%@: could not process %@",
   "es": "%@: no se pudo procesar %@"
  },
+ "%lld · док. %lld": {
+  "en": "%1$lld · doc %2$lld",
+  "es": "%1$lld · doc. %2$lld"
+ },
+ "%lld · убрана": {
+  "en": "%lld · left out",
+  "es": "%lld · quitada"
+ },
  "%lld байт": {
   "en": "%lld bytes",
   "es": "%lld bytes"
@@ -94,6 +114,14 @@
  "%lld из %lld · %lld%%": {
   "en": "%lld of %lld · %lld%%",
   "es": "%lld de %lld · %lld%%"
+ },
+ "%lld по высоте": {
+  "en": "%lld down",
+  "es": "%lld en alto"
+ },
+ "%lld по ширине": {
+  "en": "%lld across",
+  "es": "%lld a lo ancho"
  },
  "%lld полей": {
   "en": "%lld fields",
@@ -122,6 +150,10 @@
  "HEVC (H.265) — меньше файл, сжатие дольше": {
   "en": "HEVC (H.265) — smaller file, slower to compress",
   "es": "HEVC (H.265) — archivo más pequeño, compresión más lenta"
+ },
+ "Mangosteen на GitHub": {
+  "en": "Mangosteen on GitHub",
+  "es": "Mangosteen en GitHub"
  },
  "PDF защищён паролем": {
   "en": "The PDF is password protected",
@@ -163,6 +195,10 @@
   "en": "Landscape 16:9",
   "es": "Horizontal 16:9"
  },
+ "Архивация": {
+  "en": "Archiving",
+  "es": "Archivando"
+ },
  "Без изменений": {
   "en": "Unchanged",
   "es": "Sin cambios"
@@ -170,6 +206,10 @@
  "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках.": {
   "en": "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.",
   "es": "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes."
+ },
+ "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется.": {
+  "en": "Drop the file on a segment. The result appears next to the original file; the original itself is never changed.",
+  "es": "Suelta el archivo en un segmento. El resultado aparece junto al archivo original; el original nunca se modifica."
  },
  "Быстро, без перекодирования": {
   "en": "Fast, without re-encoding",
@@ -183,6 +223,10 @@
   "en": "Images inside PDFs will be re-encoded as screen-resolution JPEG.",
   "es": "Las imágenes de los PDF se recomprimirán en JPEG a resolución de pantalla."
  },
+ "В «%@» не найден текст.": {
+  "en": "No text found in “%@”.",
+  "es": "No se encontró texto en «%@»."
+ },
  "В «%@» нет видео.": {
   "en": "“%@” has no video.",
   "es": "«%@» no tiene vídeo."
@@ -191,9 +235,17 @@
   "en": "“%@” has no audio track.",
   "es": "«%@» no tiene pista de audio."
  },
+ "В архив": {
+  "en": "Archive",
+  "es": "Archivar"
+ },
  "Введите координаты в градусах, например 55.7558 и 37.6173": {
   "en": "Enter coordinates in degrees, e.g. 55.7558 and 37.6173",
   "es": "Introduce las coordenadas en grados, p. ej. 55.7558 y 37.6173"
+ },
+ "Версия %@": {
+  "en": "Version %@",
+  "es": "Versión %@"
  },
  "Вертикальная 9:16": {
   "en": "Portrait 9:16",
@@ -246,6 +298,26 @@
  "Все окна на передний план": {
   "en": "Bring All to Front",
   "es": "Traer todo al frente"
+ },
+ "Все файлы: %lld × %lld px": {
+  "en": "All files: %lld × %lld px",
+  "es": "Todos los archivos: %lld × %lld px"
+ },
+ "Все файлы: %lld%% от размера": {
+  "en": "All files: %lld%% of their size",
+  "es": "Todos los archivos: %lld%% de su tamaño"
+ },
+ "Все файлы: высота %lld px, ширина по пропорциям": {
+  "en": "All files: %lld px high, width to scale",
+  "es": "Todos los archivos: %lld px de alto, ancho proporcional"
+ },
+ "Все файлы: длинная сторона %lld px": {
+  "en": "All files: long side %lld px",
+  "es": "Todos los archivos: lado largo de %lld px"
+ },
+ "Все файлы: ширина %lld px, высота по пропорциям": {
+  "en": "All files: %lld px wide, height to scale",
+  "es": "Todos los archivos: %lld px de ancho, alto proporcional"
  },
  "Вставить": {
   "en": "Paste",
@@ -359,6 +431,10 @@
   "en": "Welcome to Mangosteen",
   "es": "Bienvenido a Mangosteen"
  },
+ "Документов: %lld": {
+  "en": "Documents: %lld",
+  "es": "Documentos: %lld"
+ },
  "Долгота (−180…180)": {
   "en": "Longitude (−180…180)",
   "es": "Longitud (−180…180)"
@@ -427,6 +503,10 @@
   "en": "Grain",
   "es": "Grano"
  },
+ "Изменение размера": {
+  "en": "Resizing",
+  "es": "Cambiando tamaño"
+ },
  "Изменения применятся ко всем %@. Справа показаны данные первого.": {
   "en": "Changes apply to all %@. The first one is shown on the right.",
   "es": "Los cambios se aplican a los %@. A la derecha se muestran los datos del primero."
@@ -434,6 +514,10 @@
  "Изменить дату": {
   "en": "Change date",
   "es": "Cambiar fecha"
+ },
+ "Изменить размер": {
+  "en": "Resize",
+  "es": "Redimensionar"
  },
  "Изменить скорость": {
   "en": "Change speed",
@@ -467,6 +551,10 @@
   "en": "Total: %@",
   "es": "Total: %@"
  },
+ "Ищем объект…": {
+  "en": "Finding the subject…",
+  "es": "Buscando el objeto…"
+ },
  "КБ": {
   "en": "KB",
   "es": "KB"
@@ -498,6 +586,14 @@
  "Кадры из видео": {
   "en": "Frames from Video",
   "es": "Fotogramas del vídeo"
+ },
+ "Каждая страница": {
+  "en": "Every page",
+  "es": "Cada página"
+ },
+ "Как в системе": {
+  "en": "System default",
+  "es": "Como en el sistema"
  },
  "Как на плёнке: ускорение повышает тон, замедление понижает.": {
   "en": "Like tape: faster raises the pitch, slower lowers it.",
@@ -578,6 +674,14 @@
  "Конвертация в %@": {
   "en": "Converting to %@",
   "es": "Convirtiendo a %@"
+ },
+ "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает локально, без сторонних сервисов, без ограничений.": {
+  "en": "Converters and tools for your files, right while you drag. Everything runs locally, with no third-party services and no limits.",
+  "es": "Conversión y herramientas para tus archivos mientras los arrastras. Todo funciona en local, sin servicios de terceros y sin límites."
+ },
+ "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений.": {
+  "en": "Converters and tools for your files, right while you drag: start dragging a file, tap a key and drop it on a segment. Everything runs locally, with no limits.",
+  "es": "Conversión y herramientas para tus archivos mientras los arrastras: empieza a arrastrar un archivo, pulsa una tecla y suéltalo en un segmento. Todo funciona en local, sin límites."
  },
  "Конец": {
   "en": "End",
@@ -674,6 +778,14 @@
  "Моно": {
   "en": "Mono",
   "es": "Mono"
+ },
+ "На «%@» не найден объект, от которого можно отделить фон.": {
+  "en": "No subject to separate from the background was found in “%@”.",
+  "es": "No se encontró en «%@» un objeto que separar del fondo."
+ },
+ "На фото не найден объект, от которого можно отделить фон.": {
+  "en": "No subject to separate from the background was found in the photo.",
+  "es": "No se encontró en la foto un objeto que separar del fondo."
  },
  "Найдено областей: %lld": {
   "en": "Areas found: %lld",
@@ -775,6 +887,10 @@
   "en": "Could not save the file as %@.",
   "es": "No se pudo guardar el archivo en formato %@."
  },
+ "Недавние результаты": {
+  "en": "Recent Results",
+  "es": "Resultados recientes"
+ },
  "Неизвестный формат файла «%@».": {
   "en": "Unknown file format: “%@”.",
   "es": "Formato de archivo desconocido: «%@»."
@@ -803,6 +919,10 @@
   "en": "Nothing found",
   "es": "No se encontró nada"
  },
+ "Ножницы — разрезать после страницы, клик по странице — убрать её.": {
+  "en": "Scissors cut after a page; click a page to leave it out.",
+  "es": "Las tijeras cortan tras una página; haz clic en una página para quitarla."
+ },
  "Номер": {
   "en": "Number",
   "es": "Número"
@@ -819,8 +939,20 @@
   "en": "About Mangosteen",
   "es": "Acerca de Mangosteen"
  },
+ "О Mangosteen…": {
+  "en": "About Mangosteen…",
+  "es": "Acerca de Mangosteen…"
+ },
  "Обрезать": {
   "en": "Trim",
+  "es": "Recortar"
+ },
+ "Обрезать по объекту": {
+  "en": "Crop to subject",
+  "es": "Recortar al objeto"
+ },
+ "Обрезать.изображение": {
+  "en": "Crop",
   "es": "Recortar"
  },
  "Обрезка": {
@@ -891,6 +1023,14 @@
   "en": "Undo",
   "es": "Deshacer"
  },
+ "Отразить по вертикали": {
+  "en": "Flip vertically",
+  "es": "Voltear verticalmente"
+ },
+ "Отразить по горизонтали": {
+  "en": "Flip horizontally",
+  "es": "Voltear horizontalmente"
+ },
  "Отступ": {
   "en": "Margin",
   "es": "Margen"
@@ -911,9 +1051,17 @@
   "en": "Clear",
   "es": "Borrar"
  },
+ "Очистить историю": {
+  "en": "Clear History",
+  "es": "Borrar historial"
+ },
  "П": {
   "en": "R",
   "es": "D"
+ },
+ "Перезапустить": {
+  "en": "Restart",
+  "es": "Reiniciar"
  },
  "Переместить": {
   "en": "Move",
@@ -947,9 +1095,21 @@
   "en": "Pixelate",
   "es": "Píxeles"
  },
+ "По %lld стр.": {
+  "en": "Every %lld pages",
+  "es": "Cada %lld págs."
+ },
  "По курсору": {
   "en": "At playhead",
   "es": "En el cursor"
+ },
+ "Повернуть влево": {
+  "en": "Rotate left",
+  "es": "Girar a la izquierda"
+ },
+ "Повернуть вправо": {
+  "en": "Rotate right",
+  "es": "Girar a la derecha"
  },
  "Повторить": {
   "en": "Redo",
@@ -962,6 +1122,10 @@
  "Поиск по полям": {
   "en": "Search fields",
   "es": "Buscar campos"
+ },
+ "Пока пусто": {
+  "en": "Nothing yet",
+  "es": "Todavía nada"
  },
  "Показать в Finder": {
   "en": "Show in Finder",
@@ -995,9 +1159,17 @@
   "en": "Annotations are added to the first image. ",
   "es": "Las anotaciones se añaden a la primera imagen. "
  },
+ "Пополам": {
+  "en": "In half",
+  "es": "Por la mitad"
+ },
  "Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, ": {
   "en": "Clip order — drag the rows. Frame size and rate come from the first clip, ",
   "es": "Orden de los clips: arrastra las filas. El tamaño y la frecuencia se toman del primer clip, "
+ },
+ "Порядок страниц": {
+  "en": "Page order",
+  "es": "Orden de páginas"
  },
  "Порядок — перетаскивайте строки": {
   "en": "Order — drag the rows",
@@ -1015,6 +1187,10 @@
   "en": "Preset",
   "es": "Preajuste"
  },
+ "Применить": {
+  "en": "Apply",
+  "es": "Aplicar"
+ },
  "Пробел — прослушать с пиками, ⏎ — пик по курсору.": {
   "en": "Space — listen with bleeps, ⏎ — bleep at playhead.",
   "es": "Espacio: escuchar con pitidos; ⏎: pitido en el cursor."
@@ -1026,6 +1202,10 @@
  "Проверка": {
   "en": "Check",
   "es": "Prueba"
+ },
+ "Прозрачный": {
+  "en": "Transparent",
+  "es": "Transparente"
  },
  "Производитель камеры": {
   "en": "Camera make",
@@ -1059,9 +1239,17 @@
   "en": "Split",
   "es": "División"
  },
+ "Разделение PDF": {
+  "en": "Split PDF",
+  "es": "Dividir PDF"
+ },
  "Разделить": {
   "en": "Split",
   "es": "Dividir"
+ },
+ "Разделить PDF": {
+  "en": "Split PDF",
+  "es": "Dividir PDF"
  },
  "Разделить на %lld": {
   "en": "Split into %lld",
@@ -1070,6 +1258,10 @@
  "Разделить поровну": {
   "en": "Split evenly",
   "es": "Dividir en partes iguales"
+ },
+ "Размер": {
+  "en": "Size",
+  "es": "Tamaño"
  },
  "Размер текста и номеров": {
   "en": "Text and number size",
@@ -1087,6 +1279,18 @@
   "en": "Cut at playhead",
   "es": "Cortar en el cursor"
  },
+ "Разрезать": {
+  "en": "Split",
+  "es": "Dividir"
+ },
+ "Разрезать на части:": {
+  "en": "Split into parts:",
+  "es": "Dividir en partes:"
+ },
+ "Разрезать после этой страницы": {
+  "en": "Cut after this page",
+  "es": "Cortar después de esta página"
+ },
  "Раскладка": {
   "en": "Layout",
   "es": "Disposición"
@@ -1099,6 +1303,10 @@
   "en": "Extracting",
   "es": "Descomprimiendo"
  },
+ "Распознавание текста": {
+  "en": "Text recognition",
+  "es": "Reconocimiento de texto"
+ },
  "Редактирование": {
   "en": "Editing",
   "es": "Editando"
@@ -1110,6 +1318,10 @@
  "Редактор фото": {
   "en": "Photo Editor",
   "es": "Editor de fotos"
+ },
+ "Режим": {
+  "en": "Mode",
+  "es": "Modo"
  },
  "Резкость": {
   "en": "Sharpness",
@@ -1159,6 +1371,14 @@
   "en": "Custom",
   "es": "Personalizado"
  },
+ "Своя длинная сторона": {
+  "en": "Custom long side",
+  "es": "Lado largo personalizado"
+ },
+ "Своё…": {
+  "en": "Custom…",
+  "es": "Personalizado…"
+ },
  "Сейчас": {
   "en": "Now",
   "es": "Ahora"
@@ -1171,9 +1391,9 @@
   "en": "Compress",
   "es": "Compresión"
  },
- "Сжатие, обрезка, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое.": {
-  "en": "Compress, crop, photo editor, annotate, redact, collage; for video and audio — trim, speed, loudness and more.",
-  "es": "Comprimir, recortar, editor de fotos, anotar, ocultar, collage; para vídeo y audio: recortar, velocidad, volumen y más."
+ "Сжатие, обрезка и размер в пикселях, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое.": {
+  "en": "Compress, crop and resize in pixels, photo editor, annotate, redact, collage; for video and audio — trim, speed, loudness and more.",
+  "es": "Comprimir, recortar y cambiar el tamaño en píxeles, editor de fotos, anotar, ocultar, collage; para vídeo y audio: recortar, velocidad, volumen y más."
  },
  "Сжатый файл (%@) не меньше оригинала ": {
   "en": "The compressed file (%@) is not smaller than the original ",
@@ -1290,6 +1510,10 @@
  "Сохранять метаданные (EXIF, GPS, цветовой профиль)": {
   "en": "Keep metadata (EXIF, GPS, colour profile)",
   "es": "Conservar metadatos (EXIF, GPS, perfil de color)"
+ },
+ "Сохранять пропорции": {
+  "en": "Keep proportions",
+  "es": "Mantener proporciones"
  },
  "Сочность": {
   "en": "Vibrance",
@@ -1427,9 +1651,21 @@
   "en": "Remove from Float",
   "es": "Quitar de Float"
  },
+ "Убрать разрез": {
+  "en": "Remove cut",
+  "es": "Quitar corte"
+ },
+ "Убрать фон": {
+  "en": "Remove bg",
+  "es": "Quitar fondo"
+ },
  "Угол": {
   "en": "Angle",
   "es": "Ángulo"
+ },
+ "Удаление фона": {
+  "en": "Remove Background",
+  "es": "Quitar fondo"
  },
  "Удалить": {
   "en": "Delete",
@@ -1450,6 +1686,10 @@
  "Удалить пик": {
   "en": "Delete bleep",
   "es": "Eliminar pitido"
+ },
+ "Удалить результат": {
+  "en": "Delete Result",
+  "es": "Eliminar resultado"
  },
  "Удерживайте, чтобы сравнить с оригиналом": {
   "en": "Hold to compare with the original",
@@ -1551,6 +1791,14 @@
   "en": "Effects",
   "es": "Efectos"
  },
+ "Язык": {
+  "en": "Language",
+  "es": "Idioma"
+ },
+ "Язык изменится после перезапуска.": {
+  "en": "The language changes after a restart.",
+  "es": "El idioma cambiará al reiniciar."
+ },
  "Яркость": {
   "en": "Brightness",
   "es": "Brillo"
@@ -1618,205 +1866,5 @@
  "холст": {
   "en": "canvas",
   "es": "lienzo"
- },
- "Как в системе": {
-  "en": "System default",
-  "es": "Como en el sistema"
- },
- "Язык": {
-  "en": "Language",
-  "es": "Idioma"
- },
- "Язык изменится после перезапуска.": {
-  "en": "The language changes after a restart.",
-  "es": "El idioma cambiará al reiniciar."
- },
- "Перезапустить": {
-  "en": "Restart",
-  "es": "Reiniciar"
- },
- "О Mangosteen…": {
-  "en": "About Mangosteen…",
-  "es": "Acerca de Mangosteen…"
- },
- "Версия %@": {
-  "en": "Version %@",
-  "es": "Versión %@"
- },
- "Mangosteen на GitHub": {
-  "en": "Mangosteen on GitHub",
-  "es": "Mangosteen en GitHub"
- },
- "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений.": {
-  "en": "Converters and tools for your files, right while you drag: start dragging a file, tap a key and drop it on a segment. Everything runs locally, with no limits.",
-  "es": "Conversión y herramientas para tus archivos mientras los arrastras: empieza a arrastrar un archivo, pulsa una tecla y suéltalo en un segmento. Todo funciona en local, sin límites."
- },
- "%lld по высоте": {
-  "en": "%lld down",
-  "es": "%lld en alto"
- },
- "%lld по ширине": {
-  "en": "%lld across",
-  "es": "%lld a lo ancho"
- },
- "Отразить по вертикали": {
-  "en": "Flip vertically",
-  "es": "Voltear verticalmente"
- },
- "Отразить по горизонтали": {
-  "en": "Flip horizontally",
-  "es": "Voltear horizontalmente"
- },
- "Повернуть влево": {
-  "en": "Rotate left",
-  "es": "Girar a la izquierda"
- },
- "Повернуть вправо": {
-  "en": "Rotate right",
-  "es": "Girar a la derecha"
- },
- "Разрезать": {
-  "en": "Split",
-  "es": "Dividir"
- },
- "Разрезать на части:": {
-  "en": "Split into parts:",
-  "es": "Dividir en partes:"
- },
- "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает локально, без сторонних сервисов, без ограничений.": {
-  "en": "Converters and tools for your files, right while you drag. Everything runs locally, with no third-party services and no limits.",
-  "es": "Conversión y herramientas para tus archivos mientras los arrastras. Todo funciona en local, sin servicios de terceros y sin límites."
- },
- "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется.": {
-  "en": "Drop the file on a segment. The result appears next to the original file; the original itself is never changed.",
-  "es": "Suelta el archivo en un segmento. El resultado aparece junto al archivo original; el original nunca se modifica."
- },
- "Разделить PDF": {
-  "en": "Split PDF",
-  "es": "Dividir PDF"
- },
- "Разделение PDF": {
-  "en": "Split PDF",
-  "es": "Dividir PDF"
- },
- "Порядок страниц": {
-  "en": "Page order",
-  "es": "Orden de páginas"
- },
- "Каждая страница": {
-  "en": "Every page",
-  "es": "Cada página"
- },
- "Пополам": {
-  "en": "In half",
-  "es": "Por la mitad"
- },
- "По %lld стр.": {
-  "en": "Every %lld pages",
-  "es": "Cada %lld págs."
- },
- "Применить": {
-  "en": "Apply",
-  "es": "Aplicar"
- },
- "Документов: %lld": {
-  "en": "Documents: %lld",
-  "es": "Documentos: %lld"
- },
- "Ножницы — разрезать после страницы, клик по странице — убрать её.": {
-  "en": "Scissors cut after a page; click a page to leave it out.",
-  "es": "Las tijeras cortan tras una página; haz clic en una página para quitarla."
- },
- "%lld · док. %lld": {
-  "en": "%1$lld · doc %2$lld",
-  "es": "%1$lld · doc. %2$lld"
- },
- "%lld · убрана": {
-  "en": "%lld · left out",
-  "es": "%lld · quitada"
- },
- "Убрать разрез": {
-  "en": "Remove cut",
-  "es": "Quitar corte"
- },
- "Разрезать после этой страницы": {
-  "en": "Cut after this page",
-  "es": "Cortar después de esta página"
- },
- "Обрезать.изображение": {
-  "en": "Crop",
-  "es": "Recortar"
- },
- " и ещё %lld": {
-  "en": " and %lld more",
-  "es": " y %lld más"
- },
- "%@ (без фона)": {
-  "en": "%@ (no background)",
-  "es": "%@ (sin fondo)"
- },
- "%@ (текст)": {
-  "en": "%@ (text)",
-  "es": "%@ (texto)"
- },
- "В «%@» не найден текст.": {
-  "en": "No text found in “%@”.",
-  "es": "No se encontró texto en «%@»."
- },
- "Ищем объект…": {
-  "en": "Finding the subject…",
-  "es": "Buscando el objeto…"
- },
- "На «%@» не найден объект, от которого можно отделить фон.": {
-  "en": "No subject to separate from the background was found in “%@”.",
-  "es": "No se encontró en «%@» un objeto que separar del fondo."
- },
- "На фото не найден объект, от которого можно отделить фон.": {
-  "en": "No subject to separate from the background was found in the photo.",
-  "es": "No se encontró en la foto un objeto que separar del fondo."
- },
- "Недавние результаты": {
-  "en": "Recent Results",
-  "es": "Resultados recientes"
- },
- "Обрезать по объекту": {
-  "en": "Crop to subject",
-  "es": "Recortar al objeto"
- },
- "Очистить историю": {
-  "en": "Clear History",
-  "es": "Borrar historial"
- },
- "Пока пусто": {
-  "en": "Nothing yet",
-  "es": "Todavía nada"
- },
- "Прозрачный": {
-  "en": "Transparent",
-  "es": "Transparente"
- },
- "Распознавание текста": {
-  "en": "Text recognition",
-  "es": "Reconocimiento de texto"
- },
- "Убрать фон": {
-  "en": "Remove bg",
-  "es": "Quitar fondo"
- },
- "Удаление фона": {
-  "en": "Remove Background",
-  "es": "Quitar fondo"
- },
- "Удалить результат": {
-  "en": "Delete Result",
-  "es": "Eliminar resultado"
- },
- "В архив": {
-  "en": "Archive",
-  "es": "Archivar"
- },
- "Архивация": {
-  "en": "Archiving",
-  "es": "Archivando"
  }
 }

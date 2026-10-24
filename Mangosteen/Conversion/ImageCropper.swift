@@ -237,4 +237,66 @@ enum ImageCropper {
             try ImageConverter.write(cropped, as: target, to: url, options: options, metadata: carried)
         }
     }
+
+    // MARK: Resize
+
+    /// How the Size tab scales each picture; one rule works for any number of files.
+    enum Resize: Equatable {
+        case percent(Double)
+        /// The longer side becomes this many pixels; smaller pictures are not enlarged.
+        case longSide(Int)
+        /// Width or height in pixels, the other side follows the picture's proportions.
+        case width(Int)
+        case height(Int)
+        case exact(width: Int, height: Int)
+
+        static let maxSide = 20_000
+
+        func size(for size: CGSize) -> CGSize {
+            guard size.width >= 1, size.height >= 1 else { return size }
+            let width: CGFloat, height: CGFloat
+            switch self {
+            case .percent(let percent):
+                width = size.width * percent / 100
+                height = size.height * percent / 100
+            case .longSide(let side):
+                let scale = min(1, CGFloat(side) / max(size.width, size.height))
+                width = size.width * scale
+                height = size.height * scale
+            case .width(let value):
+                width = CGFloat(value)
+                height = size.height * CGFloat(value) / size.width
+            case .height(let value):
+                width = size.width * CGFloat(value) / size.height
+                height = CGFloat(value)
+            case .exact(let exactWidth, let exactHeight):
+                width = CGFloat(exactWidth)
+                height = CGFloat(exactHeight)
+            }
+            let side = CGFloat(Self.maxSide)
+            return CGSize(width: min(max(width.rounded(), 1), side), height: min(max(height.rounded(), 1), side))
+        }
+    }
+
+    /// Turns and mirrors the image, scales it by `resize` and writes `<name> (W×H).<ext>` next to the original,
+    /// keeping its format and metadata.
+    static func resizeFile(_ input: URL, to resize: Resize, transform: Transform = Transform(),
+                           options: ConversionOptions) throws -> URL {
+        guard let source = FileFormat.detect(input) else { throw ConversionError.unrecognized(input) }
+        let (original, metadata) = try ImageConverter.load(input)
+        let image = try apply(transform, to: original)
+        let size = resize.size(for: CGSize(width: image.width, height: image.height))
+        let width = Int(size.width), height = Int(size.height)
+        let result = width == image.width && height == image.height ? image
+            : try ImageCompression.resized(image, width: width, height: height)
+        let target = FormatCatalog.editableImageFormats.contains(source) ? source : .png
+        return try OutputNaming.writeAtomically(
+            directory: input.deletingLastPathComponent(),
+            baseName: "\(OutputNaming.baseName(of: input)) (\(width)×\(height))",
+            pathExtension: target.fileExtension
+        ) { url in
+            try ImageConverter.write(result, as: target, to: url, options: options,
+                                     metadata: options.preserveMetadata ? metadata : nil)
+        }
+    }
 }
