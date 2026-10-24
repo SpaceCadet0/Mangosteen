@@ -219,6 +219,8 @@
 "Не удалось прочитать «%@»." = "No se pudo leer «%@».";
 "Не удалось прочитать видео" = "No se pudo leer el vídeo";
 "Не удалось прочитать файл" = "No se pudo leer el archivo";
+"Не удалось распознать текст в «%@» за минуту, распознавание остановлено." = "No se pudo reconocer el texto de «%@» en un minuto; el reconocimiento se detuvo.";
+"Не удалось распознать текст за минуту, распознавание остановлено." = "No se pudo reconocer el texto en un minuto; el reconocimiento se detuvo.";
 "Не удалось сохранить PDF." = "No se pudo guardar el PDF.";
 "Не удалось сохранить файл в формате %@." = "No se pudo guardar el archivo en formato %@.";
 "Недавние результаты" = "Resultados recientes";

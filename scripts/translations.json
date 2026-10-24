@@ -1870,5 +1870,13 @@
  "Обрезать фото до квадрата по центру и сделать круглым": {
   "en": "Crop the photo to a centred square and make it round",
   "es": "Recortar la foto a un cuadrado centrado y hacerla redonda"
+ },
+ "Не удалось распознать текст в «%@» за минуту, распознавание остановлено.": {
+  "en": "Couldn't recognise text in “%@” within a minute, so recognition was stopped.",
+  "es": "No se pudo reconocer el texto de «%@» en un minuto; el reconocimiento se detuvo."
+ },
+ "Не удалось распознать текст за минуту, распознавание остановлено.": {
+  "en": "Couldn't recognise text within a minute, so recognition was stopped.",
+  "es": "No se pudo reconocer el texto en un minuto; el reconocimiento se detuvo."
  }
 }

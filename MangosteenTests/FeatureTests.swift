@@ -56,6 +56,21 @@ final class FeatureTests: XCTestCase {
         XCTAssertTrue(text.contains("\u{0C}"), "pages are separated by a page break")
     }
 
+    func testRecognitionStopsAtTimeLimit() throws {
+        let image = try textImage(["Mangosteen converter"])
+        XCTAssertThrowsError(try TextRecognizer.recognize(image, timeLimit: 0)) { error in
+            guard case TextRecognizer.Failure.timedOut = error else { return XCTFail("\(error)") }
+        }
+    }
+
+    func testRecognitionStopsWhenCancelled() throws {
+        let token = CancellationToken()
+        token.cancel()
+        XCTAssertThrowsError(try TextRecognizer.recognize(textImage(["Mangosteen converter"]), cancellation: token)) { error in
+            XCTAssertTrue(error is CancellationError, "\(error)")
+        }
+    }
+
     func testBlankImageHasNoText() throws {
         let url = directory.appendingPathComponent("blank.png")
         try ImageConverter.write(textImage([""]), as: .png, to: url, options: ConversionOptions(), metadata: nil)

@@ -219,6 +219,8 @@
 "Не удалось прочитать «%@»." = "Could not read “%@”.";
 "Не удалось прочитать видео" = "Could not read the video";
 "Не удалось прочитать файл" = "Could not read the file";
+"Не удалось распознать текст в «%@» за минуту, распознавание остановлено." = "Couldn't recognise text in “%@” within a minute, so recognition was stopped.";
+"Не удалось распознать текст за минуту, распознавание остановлено." = "Couldn't recognise text within a minute, so recognition was stopped.";
 "Не удалось сохранить PDF." = "Could not save the PDF.";
 "Не удалось сохранить файл в формате %@." = "Could not save the file as %@.";
 "Недавние результаты" = "Recent Results";

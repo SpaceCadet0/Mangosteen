@@ -132,8 +132,8 @@ enum WheelItemProvider {
         if formats.contains(where: { ($0.category == .image && $0 != .svg) || $0 == .pdf }) {
             items.append(WheelItem(id: "tool.recognizeText", title: String(localized: "Текст"), symbolName: "text.viewfinder") { urls in
                 let sources = urls.filter { FileFormat.detect($0).map { ($0.category == .image && $0 != .svg) || $0 == .pdf } ?? false }
-                ConversionService.shared.runEach(String(localized: "Распознавание текста"), inputs: sources) {
-                    try TextRecognizer.recognizeFile($0)
+                ConversionService.shared.runEach(String(localized: "Распознавание текста"), inputs: sources, maxConcurrent: nil) {
+                    try TextRecognizer.recognizeFile($0, progress: $1, cancellation: $2)
                 }
             })
         }
@@ -203,8 +203,8 @@ enum WheelItemProvider {
         }
         if !formats.isEmpty, formats.count == urls.count, formats.allSatisfy({ ($0.category == .image && $0 != .svg) || $0 == .pdf }) {
             items.append(WheelItem(id: "tool.recognizeText", title: String(localized: "Текст"), symbolName: "text.viewfinder") { urls in
-                ConversionService.shared.runEach(String(localized: "Распознавание текста"), inputs: urls) {
-                    try TextRecognizer.recognizeFile($0)
+                ConversionService.shared.runEach(String(localized: "Распознавание текста"), inputs: urls, maxConcurrent: nil) {
+                    try TextRecognizer.recognizeFile($0, progress: $1, cancellation: $2)
                 }
             })
         }
