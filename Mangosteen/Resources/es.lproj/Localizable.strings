@@ -174,6 +174,7 @@
 "Конец = положение курсора" = "Fin = posición del cursor";
 "Контраст" = "Contraste";
 "Копировать" = "Copiar";
+"Круг" = "Círculo";
 "Куда переместить: %@" = "Mover %@ a:";
 "Л" = "I";
 "Левый канал" = "Canal izquierdo";
@@ -236,6 +237,7 @@
 "О Mangosteen…" = "Acerca de Mangosteen…";
 "Обрезать" = "Recortar";
 "Обрезать по объекту" = "Recortar al objeto";
+"Обрезать фото до квадрата по центру и сделать круглым" = "Recortar la foto a un cuadrado centrado y hacerla redonda";
 "Обрезать.изображение" = "Recortar";
 "Обрезка" = "Recorte";
 "Объединение PDF" = "Combinando PDF";

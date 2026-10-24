@@ -68,6 +68,9 @@ struct FrameView: View {
             labeledSlider(String(localized: "Отступ"), value: $settings.padding, range: 0...0.4)
             // Half the shorter side rounds the photo fully: a square becomes a circle. The label reads 100% there.
             labeledSlider(String(localized: "Скругление"), value: $settings.cornerRadius, range: 0...0.5, shownMaximum: 0.5)
+                .disabled(settings.circle)
+            Toggle(String(localized: "Круг"), isOn: $settings.circle)
+                .help(String(localized: "Обрезать фото до квадрата по центру и сделать круглым"))
             labeledSlider(String(localized: "Тень"), value: $settings.shadow, range: 0...1)
         }
         .toolForm()

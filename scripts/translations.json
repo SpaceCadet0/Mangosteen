@@ -1862,5 +1862,13 @@
  "холст": {
   "en": "canvas",
   "es": "lienzo"
+ },
+ "Круг": {
+  "en": "Circle",
+  "es": "Círculo"
+ },
+ "Обрезать фото до квадрата по центру и сделать круглым": {
+  "en": "Crop the photo to a centred square and make it round",
+  "es": "Recortar la foto a un cuadrado centrado y hacerla redonda"
  }
 }

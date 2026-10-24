@@ -59,6 +59,35 @@ final class CompositionTests: XCTestCase {
         XCTAssertLessThan(red(margin + 2, result.height / 2), 30, "the circle touches the photo's edge")
     }
 
+    func testCircleCropsCentredSquare() throws {
+        // 300 × 200: red 50-pixel strips at the sides, black in the middle square.
+        let context = CGContext(data: nil, width: 300, height: 200, bitsPerComponent: 8, bytesPerRow: 0,
+                                space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        context.setFillColor(CGColor(red: 1, green: 0, blue: 0, alpha: 1))
+        context.fill(CGRect(x: 0, y: 0, width: 300, height: 200))
+        context.setFillColor(CGColor(red: 0, green: 0, blue: 0, alpha: 1))
+        context.fill(CGRect(x: 50, y: 0, width: 200, height: 200))
+        var settings = FrameSettings()
+        settings.background = .color
+        settings.color = RGBAColor(red: 1, green: 1, blue: 1)
+        settings.padding = 0.1
+        settings.circle = true
+        settings.shadow = 0
+        let result = try FrameComposer.compose(context.makeImage()!, settings: settings)
+        XCTAssertEqual([result.width, result.height], [240, 240], "the square photo plus its margin")
+
+        var pixels = [UInt8](repeating: 0, count: result.width * result.height * 4)
+        let reader = CGContext(data: &pixels, width: result.width, height: result.height, bitsPerComponent: 8,
+                               bytesPerRow: result.width * 4, space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                               bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        reader.draw(result, in: CGRect(x: 0, y: 0, width: result.width, height: result.height))
+        func pixel(_ x: Int, _ y: Int) -> [UInt8] { Array(pixels[((y * result.width + x) * 4)..<((y * result.width + x) * 4 + 3)]) }
+        XCTAssertEqual(pixel(23, 23), [255, 255, 255], "corner of the square is cut off")
+        XCTAssertLessThan(pixel(22, 120)[0], 30, "the red sides are cropped away")
+        XCTAssertLessThan(pixel(120, 120)[0], 30)
+    }
+
     func testCanvasAddsMarginAndHonoursAspect() {
         var settings = FrameSettings()
         settings.padding = 0.1

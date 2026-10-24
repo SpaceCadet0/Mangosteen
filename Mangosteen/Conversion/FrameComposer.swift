@@ -97,6 +97,8 @@ struct FrameSettings: Equatable {
     var padding = 0.08
     /// Corner radius as a fraction of the photo's shorter side.
     var cornerRadius = 0.03
+    /// «Круг»: the photo is cut to its centred square and fully rounded; `cornerRadius` is not used.
+    var circle = false
     /// 0…1
     var shadow = 0.5
 }
@@ -116,7 +118,8 @@ enum FrameComposer {
         return CGSize(width: size.width.rounded(), height: size.height.rounded())
     }
 
-    static func compose(_ photo: CGImage, settings: FrameSettings, backgroundImage: CGImage? = nil) throws -> CGImage {
+    static func compose(_ source: CGImage, settings: FrameSettings, backgroundImage: CGImage? = nil) throws -> CGImage {
+        let photo = settings.circle ? (centredSquare(source) ?? source) : source
         let photoSize = CGSize(width: photo.width, height: photo.height)
         let size = canvasSize(photo: photoSize, settings: settings)
         guard let context = CGContext(
@@ -144,7 +147,7 @@ enum FrameComposer {
 
         let photoRect = CGRect(x: (size.width - photoSize.width) / 2, y: (size.height - photoSize.height) / 2,
                                width: photoSize.width, height: photoSize.height)
-        let radius = settings.cornerRadius * min(photoSize.width, photoSize.height)
+        let radius = (settings.circle ? 0.5 : settings.cornerRadius) * min(photoSize.width, photoSize.height)
         let shape = CGPath(roundedRect: photoRect, cornerWidth: radius, cornerHeight: radius, transform: nil)
 
         context.saveGState()
@@ -198,6 +201,13 @@ enum FrameComposer {
             .applyingGaussianBlur(sigma: radius)
             .cropped(to: input.extent)
         return try PhotoEditor.render(output)
+    }
+
+    /// The largest square from the middle of `image`.
+    private static func centredSquare(_ image: CGImage) -> CGImage? {
+        let side = min(image.width, image.height)
+        guard side != image.width || side != image.height else { return image }
+        return image.cropping(to: CGRect(x: (image.width - side) / 2, y: (image.height - side) / 2, width: side, height: side))
     }
 
     /// Writes `<name> (фон).<ext>` next to the original.
