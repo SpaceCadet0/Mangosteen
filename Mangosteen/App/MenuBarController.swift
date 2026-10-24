@@ -40,6 +40,8 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         historyItem.title = String(localized: "Недавние результаты")
         historyItem.image = Self.icon("clock.arrow.circlepath")
         historyItem.submenu = NSMenu()
+        historyItem.submenu?.delegate = self
+        historyItem.withBrandRow()
         menu.addItem(historyItem)
         menu.addItem(.separator())
         menu.addItem(makeItem(String(localized: "Как пользоваться…"), symbol: "questionmark.circle", action: #selector(welcomeSelected)))
@@ -48,7 +50,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         menu.addItem(.separator())
         let quit = NSMenuItem(title: String(localized: "Выйти из Mangosteen"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         quit.image = Self.icon("power")
-        menu.addItem(quit)
+        menu.addItem(quit.withBrandRow())
         statusItem.menu = menu
     }
 
@@ -69,7 +71,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         let item = NSMenuItem(title: title, action: action, keyEquivalent: key)
         item.target = self
         item.image = Self.icon(symbol)
-        return item
+        return item.withBrandRow()
     }
 
 
@@ -97,8 +99,8 @@ final class MenuBarController: NSObject, NSMenuDelegate {
                                   action: #selector(windowSelected(_:)), keyEquivalent: "")
             item.target = self
             item.representedObject = window
-            item.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: nil)
-            items.append(item)
+            item.image = Self.icon("macwindow")
+            items.append(item.withBrandRow())
         }
         items.append(.separator())
         for (offset, item) in items.enumerated() {
@@ -152,8 +154,9 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             let delete = makeItem(String(localized: "Удалить результат"), symbol: "trash", action: #selector(deleteResult(_:)))
             delete.representedObject = entry.id
             actions.addItem(delete)
+            actions.delegate = self
             item.submenu = actions
-            submenu.addItem(item)
+            submenu.addItem(item.withBrandRow())
         }
         submenu.addItem(.separator())
         submenu.addItem(makeItem(String(localized: "Очистить историю"), symbol: "xmark.circle", action: #selector(clearHistory)))
@@ -187,7 +190,13 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         AppPresence.bringBack(window)
     }
 
+    /// Rows draw their own highlight, so they repaint as it moves.
+    func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
+        menu.items.forEach { $0.view?.needsDisplay = true }
+    }
+
     func menuWillOpen(_ menu: NSMenu) {
+        guard menu === statusItem.menu else { return }
         refreshWindowItems(in: menu)
         refreshHistory()
         let settings = AppSettings.shared
