@@ -66,7 +66,8 @@ struct FrameView: View {
                 }
             }
             labeledSlider(String(localized: "Отступ"), value: $settings.padding, range: 0...0.4)
-            labeledSlider(String(localized: "Скругление"), value: $settings.cornerRadius, range: 0...0.25)
+            // Half the shorter side rounds the photo fully: a square becomes a circle. The label reads 100% there.
+            labeledSlider(String(localized: "Скругление"), value: $settings.cornerRadius, range: 0...0.5, shownMaximum: 0.5)
             labeledSlider(String(localized: "Тень"), value: $settings.shadow, range: 0...1)
         }
         .toolForm()
@@ -74,12 +75,12 @@ struct FrameView: View {
     }
 
     private func labeledSlider(_ title: String, value: Binding<Double>, range: ClosedRange<Double>,
-                               format: String? = nil) -> some View {
+                               format: String? = nil, shownMaximum: Double = 1) -> some View {
         LabeledContent(title) {
             HStack {
                 Slider(value: value, in: range)
                 Text(format.map { String(format: $0, value.wrappedValue) }
-                     ?? "\(Int((value.wrappedValue * 100).rounded()))%")
+                     ?? "\(Int((value.wrappedValue / shownMaximum * 100).rounded()))%")
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
                     .frame(width: 40, alignment: .trailing)

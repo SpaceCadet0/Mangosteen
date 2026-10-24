@@ -32,6 +32,33 @@ final class CompositionTests: XCTestCase {
 
     // MARK: Background
 
+    func testFullRoundingMakesSquarePhotoACircle() throws {
+        let side = 200
+        let context = CGContext(data: nil, width: side, height: side, bitsPerComponent: 8, bytesPerRow: 0,
+                                space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        context.setFillColor(CGColor(red: 0, green: 0, blue: 0, alpha: 1))
+        context.fill(CGRect(x: 0, y: 0, width: side, height: side))
+        var settings = FrameSettings()
+        settings.background = .color
+        settings.color = RGBAColor(red: 1, green: 1, blue: 1)
+        settings.padding = 0.1
+        settings.cornerRadius = 0.5
+        settings.shadow = 0
+        let result = try FrameComposer.compose(context.makeImage()!, settings: settings)
+
+        var pixels = [UInt8](repeating: 0, count: result.width * result.height * 4)
+        let reader = CGContext(data: &pixels, width: result.width, height: result.height, bitsPerComponent: 8,
+                               bytesPerRow: result.width * 4, space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                               bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        reader.draw(result, in: CGRect(x: 0, y: 0, width: result.width, height: result.height))
+        func red(_ x: Int, _ y: Int) -> UInt8 { pixels[(y * result.width + x) * 4] }
+        let margin = (result.width - side) / 2
+        XCTAssertGreaterThan(red(margin + 3, margin + 3), 200, "the photo's corner is cut off, the background shows")
+        XCTAssertLessThan(red(result.width / 2, result.height / 2), 30, "the centre is the photo")
+        XCTAssertLessThan(red(margin + 2, result.height / 2), 30, "the circle touches the photo's edge")
+    }
+
     func testCanvasAddsMarginAndHonoursAspect() {
         var settings = FrameSettings()
         settings.padding = 0.1
