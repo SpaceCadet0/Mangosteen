@@ -164,7 +164,7 @@ struct CompressView: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .formStyle(.grouped)
+        .toolForm()
         .frame(width: 400)
     }
 

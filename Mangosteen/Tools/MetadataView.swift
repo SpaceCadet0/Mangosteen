@@ -107,7 +107,7 @@ struct MetadataView: View {
             }
             .disabled(removeAll || removeLocation)
         }
-        .formStyle(.grouped)
+        .toolForm(windowEdge: .leading)
         .frame(width: 380, height: 520)
     }
 

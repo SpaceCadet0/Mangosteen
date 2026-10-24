@@ -69,7 +69,7 @@ struct FrameView: View {
             labeledSlider(String(localized: "Скругление"), value: $settings.cornerRadius, range: 0...0.25)
             labeledSlider(String(localized: "Тень"), value: $settings.shadow, range: 0...1)
         }
-        .formStyle(.grouped)
+        .toolForm()
         .frame(width: 340)
     }
 

@@ -98,6 +98,19 @@ enum AppPresence {
 }
 
 /// Bottom bar shared by tool windows: file count, Cancel and the main action.
+extension View {
+    /// Grouped settings form beside a preview. The grouped style insets its cards by 20 pt on every side;
+    /// pulling the top and the window-side edge out by that much lines the first card up with the preview's top
+    /// and with the window padding. The side facing the preview keeps its inset, so the form never covers it.
+    func toolForm(windowEdge: HorizontalEdge = .trailing) -> some View {
+        formStyle(.grouped)
+            .padding(.top, -Self.groupedFormInset)
+            .padding(windowEdge == .trailing ? .trailing : .leading, -Self.groupedFormInset)
+    }
+
+    private static var groupedFormInset: CGFloat { 20 }
+}
+
 struct ToolFooter: View {
     let fileCount: Int
     let actionTitle: String

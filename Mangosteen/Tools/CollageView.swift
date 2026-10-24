@@ -70,7 +70,7 @@ struct CollageView: View {
                 ForEach(Self.formats) { Text($0.displayName).tag($0) }
             }
         }
-        .formStyle(.grouped)
+        .toolForm()
         // Tall enough for every row, so nothing hides behind an inner scroll bar.
         .frame(height: settings.layout == .grid ? 430 : 385)
     }
