@@ -67,7 +67,7 @@ then click a segment.
 
 | Kind | Formats |
 |---|---|
-| Images | PNG, JPG, WebP, HEIC, TIFF, AVIF, BMP, GIF, PDF · also reads SVG, PSD, ICO and more |
+| Images | PNG, JPG, WebP, HEIC, TIFF, AVIF, GIF, PDF (several photos make one PDF) · also reads BMP, SVG, PSD, ICO and more |
 | PDF | to images, text or DOCX |
 | Video | MP4, MOV, MKV, WebM, AVI, WMV — into each other, GIF and MP3 |
 | Audio | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA |
@@ -93,11 +93,10 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 - **Background** — put a photo on a colour, gradient, image or a blurred copy of itself, with margin, rounded corners and shadow.
 - **Editor** — light, colour, detail and effects; hold the preview to compare with the original, double-click a slider to reset it.
 - **Compress** — presets, quality, target file size, resize and format change; works for PDF too.
-- **Crop** — free frame, aspect ratios or an exact size; rotate, mirror, and split into a grid of parts with movable cut lines.
+- **Crop** — free frame, aspect ratios or an exact size; rotate, mirror, and split into a grid of parts with movable cut lines. The Size tab resizes in pixels, percent or by the long side.
 - **Collage** — grid, row, column or a featured photo.
 - **Redact** — finds faces and text with Vision and hides them with a fill, blur or pixels.
 - **Metadata** — view everything, edit common fields, remove the location or all metadata.
-- **PDF from photos**.
 
 <p align="center">
   <img src="docs/images/en/images-editor-compress.png" width="100%" alt="Photo editor and Compress">

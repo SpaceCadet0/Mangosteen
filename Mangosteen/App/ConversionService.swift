@@ -7,6 +7,20 @@ final class ConversionService {
     private let queue = DispatchQueue(label: "dev.mangosteen.jobs", qos: .userInitiated, attributes: .concurrent)
 
     func convert(_ urls: [URL], to target: FileFormat) {
+        // Several photos to PDF make one document with a page per photo; other files still convert one by one.
+        if target == .pdf {
+            let photos = urls.filter(PDFTools.isPageImage)
+            if photos.count > 1 {
+                runBatch(String(localized: "Создание PDF"), inputs: photos) { [try PDFTools.createPDF(fromImages: $0)] }
+                let others = urls.filter { !photos.contains($0) }
+                if !others.isEmpty { convertEach(others, to: target) }
+                return
+            }
+        }
+        convertEach(urls, to: target)
+    }
+
+    private func convertEach(_ urls: [URL], to target: FileFormat) {
         let options = AppSettings.shared.conversionOptions
         // ffmpeg already uses every core; two at a time keeps the Mac responsive.
         let hasMedia = urls.contains { FileFormat.detect($0)?.category.isMedia == true }

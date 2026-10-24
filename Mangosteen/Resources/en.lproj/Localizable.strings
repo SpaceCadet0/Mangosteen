@@ -39,7 +39,6 @@
 "HEVC (H.265) — меньше файл, сжатие дольше" = "HEVC (H.265) — smaller file, slower to compress";
 "Mangosteen на GitHub" = "Mangosteen on GitHub";
 "PDF защищён паролем" = "The PDF is password protected";
-"PDF из фото" = "PDF from photos";
 "PNG, TIFF и другие форматы без потерь будут сохранены как %@." = "PNG, TIFF and other lossless formats will be saved as %@.";
 "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате." = "WAV, FLAC and AIFF are saved as M4A (AAC); other formats stay as they are.";
 "«%@» защищён паролем." = "“%@” is password protected.";

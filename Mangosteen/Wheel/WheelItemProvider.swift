@@ -156,9 +156,6 @@ enum WheelItemProvider {
             items.append(WheelItem(id: "tool.metadata", title: String(localized: "Метаданные"), symbolName: "info.circle") { urls in
                 ToolWindow.present(title: String(localized: "Метаданные"), files: urls) { MetadataView(urls: urls, close: $0) }
             })
-            items.append(WheelItem(id: "tool.createPDF", title: String(localized: "PDF из фото"), symbolName: "doc.badge.plus") { urls in
-                ConversionService.shared.runBatch(String(localized: "Создание PDF"), inputs: urls) { [try PDFTools.createPDF(fromImages: $0)] }
-            })
         }
         if formats.contains(where: { $0.category == .archive }) {
             items.append(WheelItem(id: "tool.extract", title: String(localized: "Распаковать"), symbolName: "archivebox") { urls in

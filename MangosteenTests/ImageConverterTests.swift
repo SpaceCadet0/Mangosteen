@@ -79,6 +79,10 @@ final class ImageConverterTests: XCTestCase {
         let images = [try makeSamplePNG(named: "a"), try makeSamplePNG(named: "b")]
         let combined = try PDFTools.createPDF(fromImages: images)
         XCTAssertEqual(PDFDocument(url: combined)?.pageCount, 2)
+        XCTAssertEqual(combined.lastPathComponent, "Images.pdf")
+        XCTAssertTrue(PDFTools.isPageImage(images[0]))
+        XCTAssertFalse(PDFTools.isPageImage(directory.appendingPathComponent("logo.svg")), "SVG converts on its own")
+        XCTAssertFalse(PDFTools.isPageImage(directory.appendingPathComponent("notes.txt")))
 
         let copy = directory.appendingPathComponent("copy.pdf")
         try FileManager.default.copyItem(at: combined, to: copy)

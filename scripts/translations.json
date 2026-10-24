@@ -159,10 +159,6 @@
   "en": "The PDF is password protected",
   "es": "El PDF está protegido con contraseña"
  },
- "PDF из фото": {
-  "en": "PDF from photos",
-  "es": "PDF de fotos"
- },
  "PNG, TIFF и другие форматы без потерь будут сохранены как %@.": {
   "en": "PNG, TIFF and other lossless formats will be saved as %@.",
   "es": "PNG, TIFF y otros formatos sin pérdida se guardarán como %@."

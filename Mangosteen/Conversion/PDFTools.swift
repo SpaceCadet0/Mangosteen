@@ -19,9 +19,15 @@ enum PDFToolError: LocalizedError {
 
 /// Multi-file PDF tools. Results are written next to the first file.
 enum PDFTools {
+    /// Raster images that can become a PDF page (SVG converts on its own, as vectors).
+    static func isPageImage(_ url: URL) -> Bool {
+        guard let format = FileFormat.detect(url) else { return false }
+        return format.category == .image && format != .svg
+    }
+
     /// One page per image, page size equal to the image size in points (72 dpi).
     static func createPDF(fromImages urls: [URL]) throws -> URL {
-        let images = urls.filter { FileFormat.detect($0)?.category == .image && FileFormat.detect($0) != .svg }
+        let images = urls.filter(isPageImage)
         guard let first = images.first else { throw PDFToolError.nothingToDo }
         let document = PDFDocument()
         for url in images {
