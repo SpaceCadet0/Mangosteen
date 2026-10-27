@@ -46,6 +46,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         menu.addItem(.separator())
         menu.addItem(makeItem(String(localized: "Как пользоваться…"), symbol: "questionmark.circle", action: #selector(welcomeSelected)))
         menu.addItem(makeItem(String(localized: "О Mangosteen…"), symbol: "info.circle", action: #selector(aboutSelected)))
+        menu.addItem(makeItem(String(localized: "Проверить обновления…"), symbol: "arrow.down.circle", action: #selector(checkForUpdatesSelected)))
         menu.addItem(makeItem(String(localized: "Настройки…"), symbol: "gearshape", action: #selector(settingsSelected), key: ","))
         menu.addItem(.separator())
         let quit = NSMenuItem(title: String(localized: "Выйти из Mangosteen"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
@@ -230,6 +231,10 @@ final class MenuBarController: NSObject, NSMenuDelegate {
 
     @objc private func aboutSelected() {
         openAbout()
+    }
+
+    @objc private func checkForUpdatesSelected() {
+        UpdateChecker.checkAndReport()
     }
 
     @objc private func settingsSelected() {

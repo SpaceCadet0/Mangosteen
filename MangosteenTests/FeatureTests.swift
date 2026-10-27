@@ -142,6 +142,64 @@ final class FeatureTests: XCTestCase {
         XCTAssertTrue(leftovers.isEmpty, "the staging folder is removed")
     }
 
+    // MARK: Updates
+
+    func testVersionComparison() {
+        XCTAssertTrue(AppVersion.isNewer("v0.10.2", than: "0.10.1"))
+        XCTAssertTrue(AppVersion.isNewer("0.10.0", than: "0.9.9"), "numeric, not alphabetical")
+        XCTAssertTrue(AppVersion.isNewer("1.0", than: "0.12.4"))
+        XCTAssertFalse(AppVersion.isNewer("0.10.1", than: "0.10.1"))
+        XCTAssertFalse(AppVersion.isNewer("1.0", than: "1.0.0"))
+        XCTAssertFalse(AppVersion.isNewer("v0.9.9", than: "0.10.0"))
+    }
+
+    // MARK: PDF compression
+
+    /// A one-page PDF holding a 300 dpi photo-like scan (no text), or a page of text.
+    private func makePDF(_ name: String, scan: Bool) throws -> URL {
+        let url = directory.appendingPathComponent(name)
+        var media = CGRect(x: 0, y: 0, width: 595, height: 842)
+        let context = try XCTUnwrap(CGContext(url as CFURL, mediaBox: &media, nil))
+        context.beginPage(mediaBox: &media)
+        if scan {
+            let width = 2480, height = 3508
+            let bitmap = try XCTUnwrap(CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0,
+                                                 space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                                 bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue))
+            var generator = SystemRandomNumberGenerator()
+            for _ in 0..<4000 {
+                bitmap.setFillColor(CGColor(red: .random(in: 0...1, using: &generator), green: .random(in: 0...1, using: &generator),
+                                            blue: .random(in: 0...1, using: &generator), alpha: 1))
+                bitmap.fillEllipse(in: CGRect(x: .random(in: 0...2480), y: .random(in: 0...3508), width: 160, height: 160))
+            }
+            context.draw(try XCTUnwrap(bitmap.makeImage()), in: media)
+        } else {
+            let line = NSAttributedString(string: "Mangosteen contract text", attributes: [.font: NSFont.systemFont(ofSize: 18)])
+            let frame = CTFramesetterCreateFrame(CTFramesetterCreateWithAttributedString(line), CFRange(),
+                                                 CGPath(rect: CGRect(x: 40, y: 700, width: 500, height: 100), transform: nil), nil)
+            CTFrameDraw(frame, context)
+        }
+        context.endPage()
+        context.closePDF()
+        return url
+    }
+
+    func testScannedPDFPagesBecomeJPEG() throws {
+        let scan = try makePDF("scan.pdf", scan: true)
+        let output = try ImageCompression.compressFile(scan, settings: CompressionSettings())
+        XCTAssertLessThan(ImageCompression.fileSize(output), ImageCompression.fileSize(scan) / 2)
+        let document = try XCTUnwrap(PDFDocument(url: output))
+        XCTAssertEqual(document.pageCount, 1)
+        XCTAssertEqual(document.page(at: 0)?.bounds(for: .mediaBox).size, CGSize(width: 595, height: 842))
+        let raw = try Data(contentsOf: output)
+        XCTAssertNotNil(raw.range(of: Data("/DCTDecode".utf8)), "the page image is stored as JPEG")
+    }
+
+    func testTextPagesAreNotRasterised() throws {
+        let page = try XCTUnwrap(PDFDocument(url: try makePDF("text.pdf", scan: false))?.page(at: 0))
+        XCTAssertFalse(ImageCompression.isScan(page))
+    }
+
     // MARK: History
 
     func testHistoryKeepsRecentExistingResults() throws {

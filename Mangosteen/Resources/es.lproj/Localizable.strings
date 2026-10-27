@@ -37,6 +37,7 @@
 "1500 Гц" = "1500 Hz";
 "800 Гц" = "800 Hz";
 "HEVC (H.265) — меньше файл, сжатие дольше" = "HEVC (H.265) — archivo más pequeño, compresión más lenta";
+"Mangosteen %@ — самая новая версия." = "Mangosteen %@ es la versión más reciente.";
 "Mangosteen на GitHub" = "Mangosteen en GitHub";
 "PDF защищён паролем" = "El PDF está protegido con contraseña";
 "PNG, TIFF и другие форматы без потерь будут сохранены как %@." = "PNG, TIFF y otros formatos sin pérdida se guardarán como %@.";
@@ -108,6 +109,7 @@
 "Добро пожаловать в Mangosteen" = "Bienvenido a Mangosteen";
 "Документов: %lld" = "Documentos: %lld";
 "Долгота (−180…180)" = "Longitud (−180…180)";
+"Доступна версия %@" = "La versión %@ está disponible";
 "Другой цвет" = "Otro color";
 "Дублировать" = "Duplicar";
 "Задать координаты" = "Definir coordenadas";
@@ -216,6 +218,7 @@
 "Не удалось открыть PDF" = "No se pudo abrir el PDF";
 "Не удалось открыть «%@»." = "No se pudo abrir «%@».";
 "Не удалось построить кадр." = "No se pudo generar el fotograma.";
+"Не удалось проверить обновления" = "No se pudieron buscar actualizaciones";
 "Не удалось прочитать «%@»." = "No se pudo leer «%@».";
 "Не удалось прочитать видео" = "No se pudo leer el vídeo";
 "Не удалось прочитать файл" = "No se pudo leer el archivo";
@@ -282,6 +285,7 @@
 "Повернуть вправо" = "Girar a la derecha";
 "Повторить" = "Rehacer";
 "Подкаст −16" = "Pódcast −16";
+"Позже" = "Más tarde";
 "Поиск по полям" = "Buscar campos";
 "Пока пусто" = "Todavía nada";
 "Показать в Finder" = "Mostrar en el Finder";
@@ -302,7 +306,9 @@
 "Применить" = "Aplicar";
 "Пробел — прослушать с пиками, ⏎ — пик по курсору." = "Espacio: escuchar con pitidos; ⏎: pitido en el cursor.";
 "Проверить кадр" = "Comprobar fotograma";
+"Проверить обновления…" = "Buscar actualizaciones…";
 "Проверка" = "Prueba";
+"Проверьте подключение к интернету и попробуйте ещё раз." = "Comprueba la conexión a internet e inténtalo de nuevo.";
 "Прозрачный" = "Transparente";
 "Производитель камеры" = "Fabricante de la cámara";
 "Промежутки" = "Separación";
@@ -354,6 +360,7 @@
 "Сжатый файл (%@) не меньше оригинала " = "El archivo comprimido (%@) no es más pequeño que el original ";
 "Сжать" = "Comprimir";
 "Система" = "Sistema";
+"Скачать" = "Descargar";
 "Склеить" = "Unir";
 "Склейка видео" = "Unir vídeos";
 "Скорость" = "Velocidad";
@@ -412,6 +419,8 @@
 "Точный размер…" = "Tamaño exacto…";
 "Тяните по видео, чтобы добавить область. Время выбранной области — жёлтый диапазон на таймлайне." = "Arrastra sobre el vídeo para añadir un área. El tiempo del área seleccionada es el rango amarillo de la línea de tiempo.";
 "Тяните по фото, чтобы добавить область. Метаданные в результате удаляются." = "Arrastra sobre la foto para añadir un área. Los metadatos se eliminan del resultado.";
+"У вас последняя версия" = "Tienes la última versión";
+"У вас установлена версия %@. Скачайте новую со страницы релиза и замените приложение в папке «Программы»." = "Tienes la versión %@. Descarga la nueva desde la página de la versión y sustituye la app en Aplicaciones.";
 "Убрать ближайший" = "Quitar el más cercano";
 "Убрать дымку" = "Quitar neblina";
 "Убрать из Float" = "Quitar de Float";

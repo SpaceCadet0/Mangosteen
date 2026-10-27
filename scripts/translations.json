@@ -1878,5 +1878,41 @@
  "Не удалось распознать текст за минуту, распознавание остановлено.": {
   "en": "Couldn't recognise text within a minute, so recognition was stopped.",
   "es": "No se pudo reconocer el texto en un minuto; el reconocimiento se detuvo."
+ },
+ "Mangosteen %@ — самая новая версия.": {
+  "en": "Mangosteen %@ is the latest version.",
+  "es": "Mangosteen %@ es la versión más reciente."
+ },
+ "Доступна версия %@": {
+  "en": "Version %@ is available",
+  "es": "La versión %@ está disponible"
+ },
+ "Не удалось проверить обновления": {
+  "en": "Couldn't check for updates",
+  "es": "No se pudieron buscar actualizaciones"
+ },
+ "Позже": {
+  "en": "Later",
+  "es": "Más tarde"
+ },
+ "Проверить обновления…": {
+  "en": "Check for Updates…",
+  "es": "Buscar actualizaciones…"
+ },
+ "Проверьте подключение к интернету и попробуйте ещё раз.": {
+  "en": "Check your internet connection and try again.",
+  "es": "Comprueba la conexión a internet e inténtalo de nuevo."
+ },
+ "Скачать": {
+  "en": "Download",
+  "es": "Descargar"
+ },
+ "У вас последняя версия": {
+  "en": "You're up to date",
+  "es": "Tienes la última versión"
+ },
+ "У вас установлена версия %@. Скачайте новую со страницы релиза и замените приложение в папке «Программы».": {
+  "en": "You have version %@. Download the new one from the release page and replace the app in Applications.",
+  "es": "Tienes la versión %@. Descarga la nueva desde la página de la versión y sustituye la app en Aplicaciones."
  }
 }

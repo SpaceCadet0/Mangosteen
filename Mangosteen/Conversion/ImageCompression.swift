@@ -153,7 +153,7 @@ enum ImageCompression {
     static func compressFile(_ input: URL, settings: CompressionSettings) throws -> URL {
         let original = fileSize(input)
         if FileFormat.detect(input) == .pdf {
-            return try compressPDF(input, originalSize: original)
+            return try compressPDF(input, settings: settings, originalSize: original)
         }
         let (data, format) = try compress(input, settings: settings)
         guard Int64(data.count) < original else {
@@ -166,23 +166,101 @@ enum ImageCompression {
         ) { try data.write(to: $0) }
     }
 
-    /// Re-encodes embedded images as JPEG at screen resolution.
-    static func compressPDF(_ input: URL, originalSize: Int64) throws -> URL {
-        guard let document = PDFDocument(url: input) else { throw ConversionError.unreadable(input) }
-        let output = try OutputNaming.writeAtomically(
+    /// Scanned pages (no text layer) are drawn again as a single JPEG each: PDFKit's own image options leave
+    /// uncompressed scans as they are. Pages with text keep their content; PDFKit re-encodes their images.
+    /// In target-size mode the scans get smaller steps until the file fits.
+    static func compressPDF(_ input: URL, settings: CompressionSettings, originalSize: Int64) throws -> URL {
+        guard PDFDocument(url: input) != nil else { throw ConversionError.unreadable(input) }
+        let steps: [ScanStep] = switch settings.mode {
+        case .preset: [ScanStep(preset: settings.preset)]
+        case .quality: [ScanStep(dpi: 150, quality: settings.quality)]
+        case .targetSize: [ScanStep(dpi: 200, quality: 0.8), ScanStep(dpi: 150, quality: 0.7), ScanStep(dpi: 120, quality: 0.55),
+                           ScanStep(dpi: 100, quality: 0.4), ScanStep(dpi: 72, quality: 0.3)]
+        }
+        var best: Data?
+        for step in steps {
+            // A fresh copy each time: pages are replaced in place.
+            guard let document = PDFDocument(url: input) else { throw ConversionError.unreadable(input) }
+            guard !document.isLocked else { throw PDFToolError.locked(input) }
+            for index in 0..<document.pageCount {
+                guard let page = document.page(at: index), isScan(page),
+                      let replacement = jpegPage(page, step: step, maxPixelSize: settings.maxPixelSize) else { continue }
+                document.removePage(at: index)
+                document.insert(replacement, at: index)
+            }
+            let options: [PDFDocumentWriteOption: Any] = [.saveImagesAsJPEGOption: true, .optimizeImagesForScreenOption: true]
+            guard let data = document.dataRepresentation(options: options) else { throw PDFToolError.writeFailed }
+            if best.map({ data.count < $0.count }) ?? true { best = data }
+            if settings.mode != .targetSize || Int64(data.count) <= settings.targetBytes { break }
+        }
+        guard let data = best, Int64(data.count) < originalSize else {
+            throw CompressionError.notSmaller(original: originalSize, result: Int64(best?.count ?? 0))
+        }
+        return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
             baseName: String(localized: "\(OutputNaming.baseName(of: input)) (сжатый)"),
             pathExtension: "pdf"
-        ) { url in
-            let options: [PDFDocumentWriteOption: Any] = [.saveImagesAsJPEGOption: true, .optimizeImagesForScreenOption: true]
-            guard document.write(to: url, withOptions: options) else { throw PDFToolError.writeFailed }
+        ) { try data.write(to: $0) }
+    }
+
+    /// Resolution and JPEG quality for a scanned page.
+    struct ScanStep {
+        var dpi: CGFloat
+        var quality: Double
+
+        init(dpi: CGFloat, quality: Double) {
+            self.dpi = dpi
+            self.quality = quality
         }
-        let result = fileSize(output)
-        if result >= originalSize {
-            try? FileManager.default.removeItem(at: output)
-            throw CompressionError.notSmaller(original: originalSize, result: result)
+
+        init(preset: CompressionSettings.Preset) {
+            switch preset {
+            case .high: self.init(dpi: 200, quality: 0.8)
+            case .balanced: self.init(dpi: 150, quality: 0.7)
+            case .small: self.init(dpi: 110, quality: 0.5)
+            }
         }
-        return output
+    }
+
+    /// A page with no text layer: a scan or a photo placed on a page.
+    static func isScan(_ page: PDFPage) -> Bool {
+        (page.string ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// The page drawn at `step.dpi` and stored as one JPEG on a page of the same size and rotation.
+    /// Quartz keeps JPEG-backed images as JPEG in the PDF, so the page holds exactly these bytes.
+    static func jpegPage(_ page: PDFPage, step: ScanStep, maxPixelSize: Int?) -> PDFPage? {
+        let box = page.bounds(for: .mediaBox)
+        guard box.width > 0, box.height > 0 else { return nil }
+        var scale = step.dpi / 72
+        if let maxPixelSize, maxPixelSize > 0 {
+            scale = min(scale, CGFloat(maxPixelSize) / max(box.width, box.height))
+        }
+        let width = max(1, Int(box.width * scale)), height = max(1, Int(box.height * scale))
+        guard let bitmap = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0,
+                                     space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                     bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue) else { return nil }
+        bitmap.setFillColor(.white)
+        bitmap.fill(CGRect(x: 0, y: 0, width: width, height: height))
+        bitmap.interpolationQuality = .high
+        bitmap.scaleBy(x: CGFloat(width) / box.width, y: CGFloat(height) / box.height)
+        page.draw(with: .mediaBox, to: bitmap)
+        guard let raster = bitmap.makeImage(),
+              let jpeg = try? ImageConverter.encode(raster, as: .jpg, quality: step.quality, metadata: nil),
+              let source = CGImageSourceCreateWithData(jpeg as CFData, nil),
+              let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else { return nil }
+
+        let pageData = NSMutableData()
+        guard let consumer = CGDataConsumer(data: pageData) else { return nil }
+        var media = CGRect(origin: .zero, size: box.size)
+        guard let context = CGContext(consumer: consumer, mediaBox: &media, nil) else { return nil }
+        context.beginPage(mediaBox: &media)
+        context.draw(image, in: media)
+        context.endPage()
+        context.closePDF()
+        guard let replacement = PDFDocument(data: pageData as Data)?.page(at: 0) else { return nil }
+        replacement.rotation = page.rotation
+        return replacement
     }
 
     static func fileSize(_ url: URL) -> Int64 {

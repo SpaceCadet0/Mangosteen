@@ -37,6 +37,7 @@
 "1500 Гц" = "1500 Hz";
 "800 Гц" = "800 Hz";
 "HEVC (H.265) — меньше файл, сжатие дольше" = "HEVC (H.265) — smaller file, slower to compress";
+"Mangosteen %@ — самая новая версия." = "Mangosteen %@ is the latest version.";
 "Mangosteen на GitHub" = "Mangosteen on GitHub";
 "PDF защищён паролем" = "The PDF is password protected";
 "PNG, TIFF и другие форматы без потерь будут сохранены как %@." = "PNG, TIFF and other lossless formats will be saved as %@.";
@@ -108,6 +109,7 @@
 "Добро пожаловать в Mangosteen" = "Welcome to Mangosteen";
 "Документов: %lld" = "Documents: %lld";
 "Долгота (−180…180)" = "Longitude (−180…180)";
+"Доступна версия %@" = "Version %@ is available";
 "Другой цвет" = "Other colour";
 "Дублировать" = "Duplicate";
 "Задать координаты" = "Set coordinates";
@@ -216,6 +218,7 @@
 "Не удалось открыть PDF" = "Could not open the PDF";
 "Не удалось открыть «%@»." = "Could not open “%@”.";
 "Не удалось построить кадр." = "Could not render the frame.";
+"Не удалось проверить обновления" = "Couldn't check for updates";
 "Не удалось прочитать «%@»." = "Could not read “%@”.";
 "Не удалось прочитать видео" = "Could not read the video";
 "Не удалось прочитать файл" = "Could not read the file";
@@ -282,6 +285,7 @@
 "Повернуть вправо" = "Rotate right";
 "Повторить" = "Redo";
 "Подкаст −16" = "Podcast −16";
+"Позже" = "Later";
 "Поиск по полям" = "Search fields";
 "Пока пусто" = "Nothing yet";
 "Показать в Finder" = "Show in Finder";
@@ -302,7 +306,9 @@
 "Применить" = "Apply";
 "Пробел — прослушать с пиками, ⏎ — пик по курсору." = "Space — listen with bleeps, ⏎ — bleep at playhead.";
 "Проверить кадр" = "Check frame";
+"Проверить обновления…" = "Check for Updates…";
 "Проверка" = "Check";
+"Проверьте подключение к интернету и попробуйте ещё раз." = "Check your internet connection and try again.";
 "Прозрачный" = "Transparent";
 "Производитель камеры" = "Camera make";
 "Промежутки" = "Spacing";
@@ -354,6 +360,7 @@
 "Сжатый файл (%@) не меньше оригинала " = "The compressed file (%@) is not smaller than the original ";
 "Сжать" = "Compress";
 "Система" = "System";
+"Скачать" = "Download";
 "Склеить" = "Join";
 "Склейка видео" = "Join Videos";
 "Скорость" = "Speed";
@@ -412,6 +419,8 @@
 "Точный размер…" = "Exact size…";
 "Тяните по видео, чтобы добавить область. Время выбранной области — жёлтый диапазон на таймлайне." = "Drag on the video to add an area. The selected area's time is the yellow range on the timeline.";
 "Тяните по фото, чтобы добавить область. Метаданные в результате удаляются." = "Drag on the photo to add an area. Metadata is removed from the result.";
+"У вас последняя версия" = "You're up to date";
+"У вас установлена версия %@. Скачайте новую со страницы релиза и замените приложение в папке «Программы»." = "You have version %@. Download the new one from the release page and replace the app in Applications.";
 "Убрать ближайший" = "Remove nearest";
 "Убрать дымку" = "Dehaze";
 "Убрать из Float" = "Remove from Float";

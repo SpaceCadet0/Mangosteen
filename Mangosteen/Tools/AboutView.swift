@@ -28,8 +28,12 @@ struct AboutView: View {
             Text(String(localized: "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений."))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-            Link(destination: Self.repositoryURL) {
-                Label(String(localized: "Mangosteen на GitHub"), systemImage: "arrow.up.right.square")
+            VStack(spacing: 6) {
+                Link(destination: Self.repositoryURL) {
+                    Label(String(localized: "Mangosteen на GitHub"), systemImage: "arrow.up.right.square")
+                }
+                Button(String(localized: "Проверить обновления…")) { UpdateChecker.checkAndReport() }
+                    .buttonStyle(.link)
             }
             Text(verbatim: "© 2026 Igor Rusakov (SpaceCadet) · MIT License")
                 .font(.caption)
