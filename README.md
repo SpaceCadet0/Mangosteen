@@ -59,6 +59,8 @@ then click a segment.
 - **Never touches the original.** Results are written next to the source; names never clash.
 - **Fully offline.** Everything runs on your Mac. Nothing is uploaded, nothing is tracked.
 - **No limits.** Any number of files, any size, as often as you like.
+- **Finder too.** Right-click files → Services → Mangosteen opens the same wheels, and Recent Results in the menu bar lists what was made (deleting sends files to the Trash).
+- **Quiet.** The only network request is Check for Updates, and only when you click it: it opens the releases page.
 - **Self-contained.** ffmpeg, ffprobe, cwebp and gif2webp are bundled inside the app.
 - **Native.** SwiftUI and AppKit, ImageIO, PDFKit, Core Image and Vision.
 - **Three languages.** English, Spanish and Russian, switchable in Settings.
@@ -90,9 +92,11 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 </p>
 
 - **Annotate** — arrows, shapes, text, numbered steps, pencil, highlighter, magnifier and pasted images.
-- **Background** — put a photo on a colour, gradient, image or a blurred copy of itself, with margin, rounded corners and shadow.
+- **Background** — put a photo on a colour, gradient, image or a blurred copy of itself, with margin, rounded corners (up to a circle) and shadow.
 - **Editor** — light, colour, detail and effects; hold the preview to compare with the original, double-click a slider to reset it.
-- **Compress** — presets, quality, target file size, resize and format change; works for PDF too.
+- **Compress** — presets, quality, target file size, resize and format change. Works for PDF too: scanned pages are redrawn as JPEG, and images on pages with text (Google Docs, Word exports) are re-encoded while the text and links stay.
+- **Remove bg** — cuts the subject out of a photo with Vision and leaves the background transparent (PNG) or fills it with a colour.
+- **Text** — recognises text in photos and scanned PDF pages (OCR) with progress and a Stop button, and saves it as a text file.
 - **Crop** — free frame, aspect ratios or an exact size; rotate, mirror, and split into a grid of parts with movable cut lines. The Size tab resizes in pixels, percent or by the long side.
 - **Collage** — grid, row, column or a featured photo.
 - **Redact** — finds faces and text with Vision and hides them with a fill, blur or pixels.
