@@ -195,6 +195,39 @@ final class FeatureTests: XCTestCase {
         XCTAssertNotNil(raw.range(of: Data("/DCTDecode".utf8)), "the page image is stored as JPEG")
     }
 
+    /// A page with a text line and a lossless screenshot, like exports from Google Docs: it has a text layer, so
+    /// it is not a scan, and PDFKit alone leaves the image as it is.
+    func testImagesOnTextPagesAreReencodedAndTextStays() throws {
+        let url = directory.appendingPathComponent("mixed.pdf")
+        var media = CGRect(x: 0, y: 0, width: 595, height: 842)
+        let context = try XCTUnwrap(CGContext(url as CFURL, mediaBox: &media, nil))
+        context.beginPage(mediaBox: &media)
+        let line = NSAttributedString(string: "Mangosteen contract text", attributes: [.font: NSFont.systemFont(ofSize: 18)])
+        let frame = CTFramesetterCreateFrame(CTFramesetterCreateWithAttributedString(line), CFRange(),
+                                             CGPath(rect: CGRect(x: 40, y: 780, width: 500, height: 40), transform: nil), nil)
+        CTFrameDraw(frame, context)
+        let bitmap = try XCTUnwrap(CGContext(data: nil, width: 1200, height: 900, bitsPerComponent: 8, bytesPerRow: 0,
+                                             space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                             bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue))
+        var generator = SystemRandomNumberGenerator()
+        for _ in 0..<1500 {
+            bitmap.setFillColor(CGColor(red: .random(in: 0...1, using: &generator), green: .random(in: 0...1, using: &generator),
+                                        blue: .random(in: 0...1, using: &generator), alpha: 1))
+            bitmap.fillEllipse(in: CGRect(x: .random(in: 0...1200), y: .random(in: 0...900), width: 60, height: 60))
+        }
+        context.draw(try XCTUnwrap(bitmap.makeImage()), in: CGRect(x: 40, y: 100, width: 500, height: 375))
+        context.endPage()
+        context.closePDF()
+        XCTAssertFalse(ImageCompression.isScan(try XCTUnwrap(PDFDocument(url: url)?.page(at: 0))))
+
+        let output = try ImageCompression.compressFile(url, settings: CompressionSettings())
+        XCTAssertLessThan(ImageCompression.fileSize(output), ImageCompression.fileSize(url) * 9 / 10)
+        let document = try XCTUnwrap(PDFDocument(url: output))
+        XCTAssertEqual(document.pageCount, 1)
+        XCTAssertTrue(document.string?.contains("Mangosteen contract text") ?? false, "the text layer stays")
+        XCTAssertNotNil(try Data(contentsOf: output).range(of: Data("/DCTDecode".utf8)), "the image is stored as JPEG")
+    }
+
     func testTextPagesAreNotRasterised() throws {
         let page = try XCTUnwrap(PDFDocument(url: try makePDF("text.pdf", scan: false))?.page(at: 0))
         XCTAssertFalse(ImageCompression.isScan(page))

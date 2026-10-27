@@ -1,5 +1,6 @@
 import Foundation
 import PDFKit
+import Quartz
 
 enum CompressionError: LocalizedError {
     case notSmaller(original: Int64, result: Int64)
@@ -167,8 +168,9 @@ enum ImageCompression {
     }
 
     /// Scanned pages (no text layer) are drawn again as a single JPEG each: PDFKit's own image options leave
-    /// uncompressed scans as they are. Pages with text keep their content; PDFKit re-encodes their images.
-    /// In target-size mode the scans get smaller steps until the file fits.
+    /// uncompressed scans as they are. Pages with text keep their text and vectors; their images are re-encoded
+    /// as JPEG by a Quartz filter (the same mechanism as Preview's "Reduce File Size").
+    /// In target-size mode the pages get smaller steps until the file fits.
     static func compressPDF(_ input: URL, settings: CompressionSettings, originalSize: Int64) throws -> URL {
         guard PDFDocument(url: input) != nil else { throw ConversionError.unreadable(input) }
         let steps: [ScanStep] = switch settings.mode {
@@ -182,11 +184,18 @@ enum ImageCompression {
             // A fresh copy each time: pages are replaced in place.
             guard let document = PDFDocument(url: input) else { throw ConversionError.unreadable(input) }
             guard !document.isLocked else { throw PDFToolError.locked(input) }
+            // Text pages come from the filtered copy; scans are drawn from the original so they are encoded once.
+            let filtered = filteredCopy(of: input, step: step, originalSize: originalSize)
             for index in 0..<document.pageCount {
-                guard let page = document.page(at: index), isScan(page),
-                      let replacement = jpegPage(page, step: step, maxPixelSize: settings.maxPixelSize) else { continue }
-                document.removePage(at: index)
-                document.insert(replacement, at: index)
+                guard let page = document.page(at: index) else { continue }
+                if isScan(page) {
+                    guard let replacement = jpegPage(page, step: step, maxPixelSize: settings.maxPixelSize) else { continue }
+                    document.removePage(at: index)
+                    document.insert(replacement, at: index)
+                } else if let smaller = filtered?.page(at: index) {
+                    document.removePage(at: index)
+                    document.insert(smaller, at: index)
+                }
             }
             let options: [PDFDocumentWriteOption: Any] = [.saveImagesAsJPEGOption: true, .optimizeImagesForScreenOption: true]
             guard let data = document.dataRepresentation(options: options) else { throw PDFToolError.writeFailed }
@@ -201,6 +210,31 @@ enum ImageCompression {
             baseName: String(localized: "\(OutputNaming.baseName(of: input)) (сжатый)"),
             pathExtension: "pdf"
         ) { try data.write(to: $0) }
+    }
+
+    /// The document written through a Quartz filter that re-encodes every image as JPEG at `step`. Text, fonts,
+    /// vectors and links are kept. Nil when the filter is unavailable or does not make the file smaller.
+    static func filteredCopy(of input: URL, step: ScanStep, originalSize: Int64) -> PDFDocument? {
+        let settings: [String: Any] = [
+            "Compression Quality": step.quality,
+            "ImageCompression": "ImageJPEGCompress",
+            "ImageScaleSettings": [
+                "ImageResolution": Int(step.dpi), "ImageScaleInterpolate": true, "ImageSizeMax": 100_000, "ImageSizeMin": 0,
+            ] as [String: Any],
+        ]
+        let properties: [String: Any] = [
+            "Name": "Mangosteen", "FilterType": 1, "Domains": ["Applications": true, "Printing": true],
+            "FilterData": ["ColorSettings": ["ImageSettings": settings] as [String: Any]] as [String: Any],
+        ]
+        guard let filter = QuartzFilter(properties: properties), let source = PDFDocument(url: input) else { return nil }
+        let temporary = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).pdf")
+        defer { try? FileManager.default.removeItem(at: temporary) }
+        guard source.write(to: temporary, withOptions: [PDFDocumentWriteOption(rawValue: "QuartzFilter"): filter]),
+              fileSize(temporary) < originalSize,
+              let result = PDFDocument(url: temporary), result.pageCount == source.pageCount else { return nil }
+        // PDFKit reads pages lazily from the file; load the bytes so the copy outlives the temporary file.
+        guard let data = try? Data(contentsOf: temporary) else { return nil }
+        return PDFDocument(data: data)
     }
 
     /// Resolution and JPEG quality for a scanned page.
