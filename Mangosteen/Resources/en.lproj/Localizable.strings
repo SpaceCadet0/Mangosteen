@@ -299,7 +299,7 @@
 "Пополам" = "In half";
 "Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, " = "Clip order — drag the rows. Frame size and rate come from the first clip, ";
 "Порядок страниц" = "Page order";
-"Порядок — перетаскивайте строки" = "Order — drag the rows";
+"Порядок — перетаскивайте строки или фото в превью" = "Order — drag the rows or the photos in the preview";
 "Правка" = "Edit";
 "Правый канал" = "Right channel";
 "Пресет" = "Preset";

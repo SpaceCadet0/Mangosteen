@@ -98,7 +98,7 @@ Every tool opens a small window with a live preview. Close it and nothing is cha
 - **Remove bg** — cuts the subject out of a photo with Vision and leaves the background transparent (PNG) or fills it with a colour.
 - **Text** — recognises text in photos and scanned PDF pages (OCR) with progress and a Stop button, and saves it as a text file.
 - **Crop** — free frame, aspect ratios or an exact size; rotate, mirror, and split into a grid of parts with movable cut lines. The Size tab resizes in pixels, percent or by the long side.
-- **Collage** — grid, row, column or a featured photo.
+- **Collage** — grid, row, column or a featured photo on a colour or gradient, with optional shadows; drag photos in the preview or rows in the list to reorder them.
 - **Redact** — finds faces and text with Vision and hides them with a fill, blur or pixels.
 - **Metadata** — view everything, edit common fields, remove the location or all metadata.
 

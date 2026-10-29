@@ -148,4 +148,46 @@ final class CompositionTests: XCTestCase {
             try FileManager.default.removeItem(at: output)
         }
     }
+    /// Two white squares on a red → blue gradient with a wide gap: the gradient reaches the corners and the
+    /// shadow darkens the gap right below a photo.
+    func testCollageGradientAndShadow() throws {
+        let tile = try XCTUnwrap(CGContext(data: nil, width: 100, height: 100, bitsPerComponent: 8, bytesPerRow: 0,
+                                           space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                           bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue))
+        tile.setFillColor(CGColor(gray: 1, alpha: 1))
+        tile.fill(CGRect(x: 0, y: 0, width: 100, height: 100))
+        let white = try XCTUnwrap(tile.makeImage())
+        var settings = CollageSettings()
+        settings.layout = .row
+        settings.aspect = .square
+        settings.width = 400
+        settings.spacing = 0.1
+        settings.fill = .gradient
+        settings.gradientStart = RGBAColor(red: 1, green: 0, blue: 0)
+        settings.gradientEnd = RGBAColor(red: 0, green: 0, blue: 1)
+        settings.gradientAngle = 0
+
+        func render(shadow: Double) throws -> (CGImage, (Int, Int) -> [Int]) {
+            settings.shadow = shadow
+            let result = try CollageComposer.compose([white, white], settings: settings)
+            var pixels = [UInt8](repeating: 0, count: result.width * result.height * 4)
+            let reader = try XCTUnwrap(CGContext(data: &pixels, width: result.width, height: result.height, bitsPerComponent: 8,
+                                                 bytesPerRow: result.width * 4, space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                                 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue))
+            reader.draw(result, in: CGRect(x: 0, y: 0, width: result.width, height: result.height))
+            let copy = pixels
+            return (result, { x, y in Array(copy[((y * result.width + x) * 4)..<((y * result.width + x) * 4 + 3)]).map(Int.init) })
+        }
+        let (flat, plain) = try render(shadow: 0)
+        XCTAssertEqual(flat.width, 400)
+        XCTAssertGreaterThan(plain(2, 200)[0], 200, "red on the left")
+        XCTAssertGreaterThan(plain(397, 200)[2], 200, "blue on the right")
+        XCTAssertEqual(plain(100, 200), [255, 255, 255], "the photo itself")
+        // Row cells span y 40…360 (top-left origin); just below the first photo is the gap.
+        let below = (100, 364)
+        let (_, shaded) = try render(shadow: 1)
+        XCTAssertLessThan(shaded(below.0, below.1).reduce(0, +), plain(below.0, below.1).reduce(0, +) - 30,
+                          "the shadow darkens the gap under the photo")
+        XCTAssertEqual(shaded(100, 200), [255, 255, 255], "no shadow on the photo")
+    }
 }

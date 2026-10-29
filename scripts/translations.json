@@ -1167,9 +1167,9 @@
   "en": "Page order",
   "es": "Orden de páginas"
  },
- "Порядок — перетаскивайте строки": {
-  "en": "Order — drag the rows",
-  "es": "Orden: arrastra las filas"
+ "Порядок — перетаскивайте строки или фото в превью": {
+  "en": "Order — drag the rows or the photos in the preview",
+  "es": "Orden: arrastra las filas o las fotos de la vista previa"
  },
  "Правка": {
   "en": "Edit",

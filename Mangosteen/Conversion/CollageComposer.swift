@@ -25,7 +25,25 @@ struct CollageSettings: Equatable {
     var spacing = 0.015
     /// Corner radius as a fraction of each cell's shorter side.
     var cornerRadius = 0.0
+    enum Fill: String, CaseIterable, Identifiable {
+        case color, gradient
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .color: String(localized: "Цвет")
+            case .gradient: String(localized: "Градиент")
+            }
+        }
+    }
+
+    var fill = Fill.color
     var background = RGBAColor.white
+    var gradientStart = FrameSettings().gradientStart
+    var gradientEnd = FrameSettings().gradientEnd
+    /// Degrees, 0 = left → right, 90 = bottom → top.
+    var gradientAngle = FrameSettings().gradientAngle
+    /// 0…1, a soft shadow under every photo.
+    var shadow = 0.0
     var format = FileFormat.jpg
 }
 
@@ -126,17 +144,40 @@ enum CollageComposer {
             throw ConversionError.encodeFailed(settings.format)
         }
         context.interpolationQuality = .high
-        context.setFillColor(settings.background.cgColor)
-        context.fill(CGRect(origin: .zero, size: size))
+        let canvas = CGRect(origin: .zero, size: size)
+        switch settings.fill {
+        case .color:
+            context.setFillColor(settings.background.cgColor)
+            context.fill(canvas)
+        case .gradient:
+            FrameComposer.drawGradient(in: context, rect: canvas, from: settings.gradientStart, to: settings.gradientEnd,
+                                       angle: settings.gradientAngle)
+        }
 
-        for (image, cell) in zip(images, cells) {
-            // Layout uses a top-left origin; Core Graphics draws from the bottom-left.
+        // Layout uses a top-left origin; Core Graphics draws from the bottom-left.
+        let shapes = cells.map { cell -> (rect: CGRect, path: CGPath) in
             let rect = CGRect(x: cell.minX, y: size.height - cell.maxY, width: cell.width, height: cell.height)
             let radius = settings.cornerRadius * min(rect.width, rect.height)
+            return (rect, CGPath(roundedRect: rect, cornerWidth: radius, cornerHeight: radius, transform: nil))
+        }
+        // All shadows first, so no shadow falls on a neighbouring photo; the photos then cover the shapes.
+        if settings.shadow > 0 {
+            for shape in shapes {
+                let blur = settings.shadow * min(shape.rect.width, shape.rect.height) * 0.08
+                context.saveGState()
+                context.setShadow(offset: CGSize(width: 0, height: -blur * 0.35), blur: blur,
+                                  color: CGColor(gray: 0, alpha: 0.25 + settings.shadow * 0.3))
+                context.setFillColor(CGColor(gray: 0, alpha: 1))
+                context.addPath(shape.path)
+                context.fillPath()
+                context.restoreGState()
+            }
+        }
+        for (image, shape) in zip(images, shapes) {
             context.saveGState()
-            context.addPath(CGPath(roundedRect: rect, cornerWidth: radius, cornerHeight: radius, transform: nil))
+            context.addPath(shape.path)
             context.clip()
-            FrameComposer.drawAspectFill(image, in: context, rect: rect)
+            FrameComposer.drawAspectFill(image, in: context, rect: shape.rect)
             context.restoreGState()
         }
         guard let result = context.makeImage() else { throw ConversionError.encodeFailed(settings.format) }
