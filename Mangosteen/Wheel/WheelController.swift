@@ -31,9 +31,11 @@ final class WheelController {
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .transient, .ignoresCycle]
         panel.contentView = wheelView
 
-        wheelView.onSelect = { [weak self] item in
+        wheelView.onSelect = { [weak self] item, dropped in
             guard let self else { return }
-            let urls = self.urls
+            // The drop carries the complete list; the one read when the wheel opened may be partial.
+            let urls = (dropped?.count ?? 0) > self.urls.count ? dropped ?? [] : self.urls
+            DragMonitor.log.info("Wheel: \(self.urls.count) files when opened, \(dropped?.count ?? -1) dropped, \(urls.count) used")
             self.hide()
             // Leave the drag-and-drop callback before running anything that may show UI.
             DispatchQueue.main.async { item.perform(urls) }

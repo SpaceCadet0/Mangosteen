@@ -1,4 +1,5 @@
 import AppKit
+import os
 
 /// Watches system-wide file drags and reports modifier-key taps made while a drag is in progress.
 ///
@@ -6,6 +7,7 @@ import AppKit
 /// Input Monitoring permission is required.
 final class DragMonitor {
     static let shared = DragMonitor()
+    static let log = Logger(subsystem: "dev.mangosteen.app", category: "drag")
 
     /// Called on the main thread when the user taps a modifier combination during a file drag.
     var onModifierTap: ((NSEvent.ModifierFlags, [URL]) -> Void)?
@@ -61,7 +63,9 @@ final class DragMonitor {
         let pasteboard = NSPasteboard(name: .drag)
         // The drag pasteboard is only rewritten when a real drag session starts.
         guard pasteboard.changeCount != baselineChangeCount else { return }
-        beginDrag(urls: Self.fileURLs(on: pasteboard))
+        let urls = Self.fileURLs(on: pasteboard)
+        if !urls.isEmpty { Self.log.info("Drag start: \(urls.count) files") }
+        beginDrag(urls: urls)
     }
 
     /// Called directly by Mangosteen's own drag sources (the Float shelf), whose drags the event
@@ -114,6 +118,10 @@ final class DragMonitor {
             pressStart = Date()
         } else if flags.isEmpty {
             if let start = pressStart, Date().timeIntervalSince(start) <= maximumTapDuration {
+                // Finder may still be filling the pasteboard when the drag starts; read it again.
+                let current = Self.fileURLs(on: NSPasteboard(name: .drag))
+                if current.count > draggedURLs.count { draggedURLs = current }
+                Self.log.info("Drag tap: \(current.count) files on the pasteboard, \(self.draggedURLs.count) used")
                 onModifierTap?(pressedFlags, draggedURLs)
             }
             pressedFlags = []

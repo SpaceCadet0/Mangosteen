@@ -9,7 +9,8 @@ final class WheelView: NSView {
     static let hitSlop: CGFloat = 26
     static let diameter = (outerRadius + hitSlop) * 2
 
-    var onSelect: ((WheelItem) -> Void)?
+    /// The item and, for a drop, the files that were dropped.
+    var onSelect: ((WheelItem, [URL]?) -> Void)?
     var onHoverChange: (() -> Void)?
 
     private(set) var items: [WheelItem] = []
@@ -68,7 +69,7 @@ final class WheelView: NSView {
             element.setAccessibilityFrameInParentSpace(segmentPath(index).bounds)
             element.press = { [weak self] in
                 guard let self, self.items.indices.contains(index) else { return }
-                self.onSelect?(self.items[index])
+                self.onSelect?(self.items[index], nil)
             }
             return element
         }
@@ -313,7 +314,7 @@ final class WheelView: NSView {
 
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         guard let index = segmentIndex(at: convert(sender.draggingLocation, from: nil)) else { return false }
-        onSelect?(items[index])
+        onSelect?(items[index], DragMonitor.fileURLs(on: sender.draggingPasteboard))
         return true
     }
 
@@ -338,6 +339,6 @@ final class WheelView: NSView {
 
     override func mouseUp(with event: NSEvent) {
         guard let index = segmentIndex(at: convert(event.locationInWindow, from: nil)) else { return }
-        onSelect?(items[index])
+        onSelect?(items[index], nil)
     }
 }
