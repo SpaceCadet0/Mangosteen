@@ -47,6 +47,10 @@ enum MediaConverter {
                 let avg_frame_rate: String?
                 let sample_rate: String?
                 let r_frame_rate: String?
+                let side_data_list: [SideData]?
+            }
+            struct SideData: Decodable {
+                let rotation: Double?
             }
             struct Format: Decodable {
                 let duration: String?
@@ -65,12 +69,16 @@ enum MediaConverter {
         if video == nil, audio?.codec_name == "mp3", let counted = try? countedDuration(url) {
             duration = counted
         }
+        // Phones store portrait video as landscape frames plus a rotation; ffmpeg turns the frames upright before
+        // any filter, so the size reported here is the upright one too.
+        let rotation = video?.side_data_list?.compactMap(\.rotation).first ?? 0
+        let turned = Int(rotation.rounded()) % 180 != 0
         return MediaInfo(
             duration: duration,
             videoCodec: video?.codec_name,
             audioCodec: audio?.codec_name,
-            width: video?.width,
-            height: video?.height,
+            width: turned ? video?.height : video?.width,
+            height: turned ? video?.width : video?.height,
             audioChannels: audio?.channels,
             frameRate: rate(video?.avg_frame_rate) ?? rate(video?.r_frame_rate),
             sampleRate: audio?.sample_rate.flatMap { Int($0) }

@@ -4,10 +4,35 @@ import Foundation
 /// workbooks with several sheets into a folder.
 enum TableConverter {
     static func convert(_ input: URL, from source: FileFormat, to target: FileFormat, output: URL) throws {
-        let rows = source == .xlsx
-            ? try XLSX.read(input).first { !$0.rows.isEmpty }?.rows ?? []
-            : parse(try DocumentConverter.readText(input), separator: separator(for: source))
+        let rows: [[String]]
+        if source == .xlsx {
+            rows = try XLSX.read(input).first { !$0.rows.isEmpty }?.rows ?? []
+        } else {
+            let text = try DocumentConverter.readText(input)
+            rows = parse(text, separator: source == .csv ? detectedSeparator(in: text) : separator(for: source))
+        }
         try write(rows, as: target, sheetName: OutputNaming.baseName(of: input), to: output)
+    }
+
+    /// The separator a CSV file really uses. Spreadsheets in locales with a decimal comma (Russian, Spanish…)
+    /// save "CSV" with semicolons, and some tools write tabs. The one that splits the first line into the most
+    /// fields wins (counted outside quotes); a comma when there is no difference.
+    static func detectedSeparator(in text: String) -> Character {
+        let firstLine = text.split(omittingEmptySubsequences: true, whereSeparator: \.isNewline).first.map(String.init) ?? ""
+        var counts: [Character: Int] = [",": 0, ";": 0, "\t": 0]
+        var inQuotes = false
+        for character in firstLine {
+            if character == "\"" {
+                inQuotes.toggle()
+            } else if !inQuotes, counts[character] != nil {
+                counts[character, default: 0] += 1
+            }
+        }
+        var best: Character = ","
+        for candidate: Character in [";", "\t"] where counts[candidate, default: 0] > counts[best, default: 0] {
+            best = candidate
+        }
+        return best
     }
 
     static func write(_ rows: [[String]], as target: FileFormat, sheetName: String, to output: URL) throws {

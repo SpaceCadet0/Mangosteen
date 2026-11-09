@@ -84,6 +84,9 @@ enum ImageCompression {
     /// Compresses one image in memory.
     static func compress(_ input: URL, settings: CompressionSettings) throws -> (data: Data, format: FileFormat) {
         guard let source = FileFormat.detect(input) else { throw ConversionError.unrecognized(input) }
+        if source == .gif, isAnimated(input), ExternalTool.isAvailable("gif2webp") {
+            return (try compressAnimatedGIF(input, settings: settings), .webp)
+        }
         let format = outputFormat(for: source, settings: settings)
         let maxPixelSize = settings.mode == .preset ? (settings.preset.maxPixelSize ?? settings.maxPixelSize) : settings.maxPixelSize
         let loaded = try ImageConverter.load(input, maxPixelSize: maxPixelSize)
@@ -108,6 +111,36 @@ enum ImageCompression {
                 image = try resized(image, width: width, height: height)
             }
             return (try ImageConverter.encode(image, as: format, quality: 0.05, metadata: keptMetadata), format)
+        }
+    }
+
+    static func isAnimated(_ url: URL) -> Bool {
+        CGImageSourceCreateWithURL(url as CFURL, nil).map { CGImageSourceGetCount($0) > 1 } ?? false
+    }
+
+    /// An animated GIF becomes an animated WebP with every frame kept: the still-image path would save only the
+    /// first frame. `gif2webp` cannot resize or write other formats, so the size limit and the format setting do
+    /// not apply. In target-size mode the quality goes down in steps until the file fits.
+    private static func compressAnimatedGIF(_ input: URL, settings: CompressionSettings) throws -> Data {
+        let workspace = FileManager.default.temporaryDirectory.appendingPathComponent("mangosteen-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let output = workspace.appendingPathComponent("out.webp")
+        func encode(_ quality: Double) throws -> Data {
+            try ExternalTool.run("gif2webp", ["-quiet", "-lossy", "-q", String(Int((quality * 100).rounded())),
+                                              input.path, "-o", output.path])
+            return try Data(contentsOf: output)
+        }
+        switch settings.mode {
+        case .preset: return try encode(settings.preset.quality)
+        case .quality: return try encode(settings.quality)
+        case .targetSize:
+            var data = Data()
+            for quality in [0.8, 0.6, 0.4, 0.2, 0.05] {
+                data = try encode(quality)
+                if Int64(data.count) <= settings.targetBytes { break }
+            }
+            return data
         }
     }
 

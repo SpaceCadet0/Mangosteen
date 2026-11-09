@@ -30,9 +30,32 @@ enum DocumentConverter {
         }
     }
 
-    /// UTF-8 (with or without BOM), UTF-16 with BOM, then Windows-1251 and Latin-1 as fallbacks.
+    /// UTF-8 (with or without BOM), UTF-16 with BOM, then Windows-1251 or Windows-1252, whichever the bytes look like.
     static func readText(_ url: URL) throws -> String {
-        let data = try Data(contentsOf: url)
+        decodeText(try Data(contentsOf: url))
+    }
+
+    /// Whether single-byte text reads as Western European (Windows-1252) rather than Cyrillic (Windows-1251).
+    /// An accented Latin letter sits inside a word of plain ASCII letters ("año", "más"); Cyrillic words are runs
+    /// of bytes above 0x7F. Each such byte votes by its neighbours; Cyrillic wins a tie, as it did before.
+    static func looksWesternEuropean(_ data: Data) -> Bool {
+        let bytes = [UInt8](data)
+        func isHigh(_ index: Int) -> Bool { bytes.indices.contains(index) && bytes[index] >= 0x80 }
+        func isASCIILetter(_ index: Int) -> Bool {
+            bytes.indices.contains(index) && ((0x41...0x5A).contains(bytes[index]) || (0x61...0x7A).contains(bytes[index]))
+        }
+        var western = 0, cyrillic = 0
+        for index in bytes.indices where bytes[index] >= 0x80 {
+            if isHigh(index - 1) || isHigh(index + 1) {
+                cyrillic += 1
+            } else if isASCIILetter(index - 1) || isASCIILetter(index + 1) {
+                western += 1
+            }
+        }
+        return western > cyrillic
+    }
+
+    static func decodeText(_ data: Data) -> String {
         if data.starts(with: [0xFF, 0xFE]) || data.starts(with: [0xFE, 0xFF]),
            let text = String(data: data, encoding: .utf16) {
             return text
@@ -42,6 +65,9 @@ enum DocumentConverter {
         }
         let cp1251 = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(
             CFStringEncoding(CFStringEncodings.windowsCyrillic.rawValue)))
+        if looksWesternEuropean(data), let text = String(data: data, encoding: .windowsCP1252) {
+            return text
+        }
         if let text = String(data: data, encoding: cp1251) {
             return text
         }

@@ -257,4 +257,70 @@ final class FeatureTests: XCTestCase {
         history.clear()
         XCTAssertTrue(history.current().isEmpty)
     }
+
+    // MARK: Fixes after the 2026-11-09 review
+
+    func testRotatedVideoReportsUprightSizeAndJoinsUpright() throws {
+        try XCTSkipUnless(ExternalTool.isAvailable("ffmpeg") && ExternalTool.isAvailable("ffprobe"), "ffmpeg is not installed")
+        let plain = directory.appendingPathComponent("plain.mp4")
+        try ExternalTool.run("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi",
+                                        "-i", "testsrc2=size=320x180:rate=25:duration=1",
+                                        "-c:v", "libx264", "-pix_fmt", "yuv420p", plain.path])
+        // What a phone held upright records: landscape frames and a quarter-turn flag.
+        let portrait = directory.appendingPathComponent("portrait.mp4")
+        try ExternalTool.run("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-display_rotation", "90",
+                                        "-i", plain.path, "-c", "copy", portrait.path])
+        let info = try MediaConverter.probe(portrait)
+        XCTAssertEqual(info.width, 180)
+        XCTAssertEqual(info.height, 320)
+        XCTAssertEqual(try MediaConverter.probe(plain).width, 320)
+
+        let joined = try MediaConverter.probe(MediaEffects.join([portrait, portrait]))
+        XCTAssertEqual(joined.width, 180, "the canvas follows the upright first clip")
+        XCTAssertEqual(joined.height, 320)
+    }
+
+    func testCSVWithSemicolonsSplitsIntoColumns() throws {
+        XCTAssertEqual(TableConverter.detectedSeparator(in: "Имя;Цена;Кол-во\nЧай;1,5;2\n"), ";")
+        XCTAssertEqual(TableConverter.detectedSeparator(in: "\"a,b,c\";d\n"), ";", "separators inside quotes do not count")
+        XCTAssertEqual(TableConverter.detectedSeparator(in: "a,b;c,d\n"), ",")
+        XCTAssertEqual(TableConverter.detectedSeparator(in: "a\tb\tc\n"), "\t")
+        XCTAssertEqual(TableConverter.detectedSeparator(in: "single\n"), ",")
+
+        let input = directory.appendingPathComponent("prices.csv")
+        try "Имя;Цена\nЧай;1,5\n".write(to: input, atomically: true, encoding: .utf8)
+        let output = try XCTUnwrap(Converter.convert(input, to: .tsv, options: ConversionOptions()))
+        XCTAssertEqual(try String(contentsOf: output, encoding: .utf8), "Имя\tЦена\nЧай\t1,5\n")
+    }
+
+    func testSingleByteTextIsReadInItsOwnEncoding() throws {
+        let spanish = "El niño está en España; mañana habrá más café."
+        XCTAssertEqual(DocumentConverter.decodeText(try XCTUnwrap(spanish.data(using: .windowsCP1252))), spanish)
+        let russian = "Привет, мир! Это Windows-версия файла, v2."
+        XCTAssertEqual(DocumentConverter.decodeText(try XCTUnwrap(russian.data(using: .windowsCP1251))), russian)
+        let short = "Я и ты"
+        XCTAssertEqual(DocumentConverter.decodeText(try XCTUnwrap(short.data(using: .windowsCP1251))), short)
+    }
+
+    func testCompressedAnimatedGIFKeepsItsFrames() throws {
+        try XCTSkipUnless(ExternalTool.isAvailable("gif2webp"), "gif2webp is not installed")
+        let url = directory.appendingPathComponent("moving.gif")
+        let destination = try XCTUnwrap(CGImageDestinationCreateWithURL(url as CFURL, "com.compuserve.gif" as CFString, 5, nil))
+        for frame in 0..<5 {
+            let image = NSImage(size: NSSize(width: 240, height: 160))
+            image.lockFocus()
+            NSGradient(starting: NSColor(hue: CGFloat(frame) / 5, saturation: 0.8, brightness: 0.9, alpha: 1), ending: .black)?
+                .draw(in: NSRect(x: 0, y: 0, width: 240, height: 160), angle: CGFloat(frame) * 40)
+            image.unlockFocus()
+            let cgImage = try XCTUnwrap(image.cgImage(forProposedRect: nil, context: nil, hints: nil))
+            CGImageDestinationAddImage(destination, cgImage, [kCGImagePropertyGIFDictionary: [kCGImagePropertyGIFDelayTime: 0.2]] as CFDictionary)
+        }
+        XCTAssertTrue(CGImageDestinationFinalize(destination))
+        XCTAssertTrue(ImageCompression.isAnimated(url))
+
+        let (data, format) = try ImageCompression.compress(url, settings: CompressionSettings())
+        XCTAssertEqual(format, .webp)
+        let source = try XCTUnwrap(CGImageSourceCreateWithData(data as CFData, nil))
+        XCTAssertEqual(CGImageSourceGetCount(source), 5, "every frame survives")
+    }
 }
