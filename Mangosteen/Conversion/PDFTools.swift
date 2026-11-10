@@ -31,9 +31,18 @@ enum PDFTools {
         guard let first = images.first else { throw PDFToolError.nothingToDo }
         let document = PDFDocument()
         for url in images {
-            guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
-                  let cgImage = ImageConverter.orientedImage(source, at: CGImageSourceGetPrimaryImageIndex(source)) else {
-                throw PDFToolError.unreadable(url)
+            // Every page stays in memory until the document is written; a camera RAW is decoded at most 4096 pixels
+            // on its longer side, so twenty of them do not take gigabytes.
+            let cgImage: CGImage
+            if FileFormat.detect(url) == .raw {
+                guard let image = try? ImageConverter.load(url, maxPixelSize: 4096).image else { throw PDFToolError.unreadable(url) }
+                cgImage = image
+            } else {
+                guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
+                      let image = ImageConverter.orientedImage(source, at: CGImageSourceGetPrimaryImageIndex(source)) else {
+                    throw PDFToolError.unreadable(url)
+                }
+                cgImage = image
             }
             let image = NSImage(cgImage: cgImage, size: NSSize(width: cgImage.width, height: cgImage.height))
             guard let page = PDFPage(image: image) else { throw PDFToolError.unreadable(url) }

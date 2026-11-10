@@ -41,8 +41,13 @@ enum ExternalTool {
         return directories
     }()
 
+    /// `name` may also be an absolute path, for system tools that must not be replaced by a same-named one from
+    /// Homebrew (GNU tar cannot read 7z, RAR or ISO).
     static func locate(_ name: String) -> URL? {
-        searchDirectories
+        if name.hasPrefix("/") {
+            return FileManager.default.isExecutableFile(atPath: name) ? URL(fileURLWithPath: name) : nil
+        }
+        return searchDirectories
             .map { $0.appendingPathComponent(name) }
             .first { FileManager.default.isExecutableFile(atPath: $0.path) }
     }
@@ -123,6 +128,30 @@ enum ExternalTool {
             throw Failure(tool: name, status: process.terminationStatus, output: String(message.suffix(800)))
         }
         return data
+    }
+
+    /// Runs the tool with its stdout written straight into `output` (created or emptied first), so a large result
+    /// never sits in memory.
+    static func runToFile(_ name: String, _ arguments: [String], output: URL) throws {
+        guard let executable = locate(name) else { throw Missing(tool: name) }
+        guard FileManager.default.createFile(atPath: output.path, contents: nil) else {
+            throw CocoaError(.fileWriteUnknown)
+        }
+        let handle = try FileHandle(forWritingTo: output)
+        defer { try? handle.close() }
+        let process = Process()
+        process.executableURL = executable
+        process.arguments = arguments
+        process.standardOutput = handle
+        let errors = Pipe()
+        process.standardError = errors
+        try process.run()
+        let message = errors.fileHandleForReading.readDataToEndOfFile()
+        process.waitUntilExit()
+        guard process.terminationStatus == 0 else {
+            throw Failure(tool: name, status: process.terminationStatus,
+                          output: String(String(decoding: message, as: UTF8.self).suffix(800)))
+        }
     }
 
     /// Runs the tool synchronously and returns its combined output. Arguments are passed directly,

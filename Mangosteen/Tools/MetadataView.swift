@@ -19,7 +19,7 @@ struct MetadataView: View {
     @State private var hasLocation = false
 
     private var images: [URL] {
-        urls.filter { FileFormat.detect($0).map { $0.category == .image && $0 != .svg } ?? false }
+        urls.filter { FileFormat.detect($0)?.canRewriteImageMetadata ?? false }
     }
 
     private var coordinates: (Double, Double)? {

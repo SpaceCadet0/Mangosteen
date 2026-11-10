@@ -48,6 +48,7 @@
 "Автор" = "Autor";
 "Авторские права" = "Derechos de autor";
 "Альбомная 16:9" = "Horizontal 16:9";
+"Архив «%@» пуст." = "El archivo comprimido «%@» está vacío.";
 "Архивация" = "Archivando";
 "Без изменений" = "Sin cambios";
 "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках." = "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes.";
@@ -56,6 +57,7 @@
 "Быстро, без перекодирования (разрез по ближайшему ключевому кадру)" = "Rápido, sin recodificar (corte en el fotograma clave más cercano)";
 "В PDF изображения будут пережаты в JPEG экранного разрешения." = "Las imágenes de los PDF se recomprimirán en JPEG a resolución de pantalla.";
 "В «%@» не найден текст." = "No se encontró texto en «%@».";
+"В «%@» не нашлось файлов, которые можно распаковать. Образы дисков только в формате UDF, например установочные образы Windows, не поддерживаются." = "«%@» no tiene archivos que se puedan extraer. Las imágenes de disco solo en formato UDF, como las de instalación de Windows, no son compatibles.";
 "В «%@» нет видео." = "«%@» no tiene vídeo.";
 "В «%@» нет звуковой дорожки." = "«%@» no tiene pista de audio.";
 "В архив" = "Archivar";

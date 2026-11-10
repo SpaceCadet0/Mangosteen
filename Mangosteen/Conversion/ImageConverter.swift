@@ -23,8 +23,9 @@ enum ImageConverter {
             return
         }
 
-        // Keep every frame/page where the target can hold several (animated GIF, multi-page TIFF/PDF).
-        let keepsAllFrames = [.gif, .tiff, .pdf].contains(target) && count > 1
+        // Keep every frame/page where the target can hold several (animated GIF, multi-page TIFF/PDF). A camera RAW
+        // file also holds several images, but the others are its own previews.
+        let keepsAllFrames = [.gif, .tiff, .pdf].contains(target) && count > 1 && FileFormat.detect(input) != .raw
         let indices = keepsAllFrames ? Array(0..<count) : [CGImageSourceGetPrimaryImageIndex(source)]
 
         guard let destination = CGImageDestinationCreateWithURL(

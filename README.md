@@ -69,13 +69,13 @@ then click a segment.
 
 | Kind | Formats |
 |---|---|
-| Images | PNG, JPG, WebP, HEIC, TIFF, AVIF, GIF, PDF (several photos make one PDF) · also reads BMP, SVG, PSD, ICO and more |
+| Images | PNG, JPG, WebP, HEIC, TIFF, AVIF, GIF, PDF (several photos make one PDF) · also reads camera RAW (CR2, CR3, NEF, ARW, DNG…), JPEG XL, BMP, SVG, PSD, ICO and more |
 | PDF | to images, text or DOCX |
-| Video | MP4, MOV, MKV, WebM, AVI, WMV — into each other, GIF and MP3 |
-| Audio | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA |
+| Video | MP4, MOV, MKV, WebM, AVI, WMV — into each other, GIF and MP3 · also reads FLV, MPEG, VOB, TS, M2TS, 3GP, OGV |
+| Audio | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA · also reads APE, WavPack, AMR, AC3, DTS |
 | Subtitles | SRT ⇄ VTT |
 | Tables | CSV, TSV, XLSX — into each other; a workbook with several sheets becomes a folder of tables |
-| Archives | ZIP, TAR, TAR.GZ — and folders into archives |
+| Archives | ZIP, TAR, TAR.GZ — and folders into archives · also unpacks 7Z, RAR, ISO, TAR.XZ, TAR.BZ2 and single GZ files |
 | Documents | DOCX, ODT, RTF, RTFD, TXT, Markdown, HTML — into each other and into PDF / Soon |
 
 When the target container accepts the original streams, video is copied without re-encoding, so it is instant and

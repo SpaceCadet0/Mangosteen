@@ -44,7 +44,10 @@ final class ConversionService {
             let lock = NSLock()
             var outputs: [URL] = []
             var failures: [(URL, Error)] = []
-            let slots = DispatchSemaphore(value: max(1, maxConcurrent ?? inputs.count))
+            // A decoded 50-megapixel camera RAW takes hundreds of megabytes; two at a time keeps memory in check.
+            let hasRAW = inputs.contains { FileFormat.detect($0) == .raw }
+            let limit = maxConcurrent.map { hasRAW ? min($0, 2) : $0 } ?? (hasRAW ? 2 : inputs.count)
+            let slots = DispatchSemaphore(value: max(1, limit))
             DispatchQueue.concurrentPerform(iterations: inputs.count) { index in
                 slots.wait()
                 defer { slots.signal() }

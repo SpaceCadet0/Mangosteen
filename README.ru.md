@@ -70,13 +70,13 @@ Mangosteen живёт в строке меню и ждёт, когда вы чт
 
 | Тип | Форматы |
 |---|---|
-| Изображения | PNG, JPG, WebP, HEIC, TIFF, AVIF, GIF, PDF (несколько фото — в один PDF) · также читает BMP, SVG, PSD, ICO и другие |
+| Изображения | PNG, JPG, WebP, HEIC, TIFF, AVIF, GIF, PDF (несколько фото — в один PDF) · также читает RAW с фотоаппаратов (CR2, CR3, NEF, ARW, DNG…), JPEG XL, BMP, SVG, PSD, ICO и другие |
 | PDF | в изображения, текст или DOCX |
-| Видео | MP4, MOV, MKV, WebM, AVI, WMV — друг в друга, в GIF и MP3 |
-| Аудио | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA |
+| Видео | MP4, MOV, MKV, WebM, AVI, WMV — друг в друга, в GIF и MP3 · также читает FLV, MPEG, VOB, TS, M2TS, 3GP, OGV |
+| Аудио | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA · также читает APE, WavPack, AMR, AC3, DTS |
 | Субтитры | SRT ⇄ VTT |
 | Таблицы | CSV, TSV, XLSX — друг в друга; книга с несколькими листами превращается в папку таблиц |
-| Архивы | ZIP, TAR, TAR.GZ — и папки в архив |
+| Архивы | ZIP, TAR, TAR.GZ — и папки в архив · также распаковывает 7Z, RAR, ISO, TAR.XZ, TAR.BZ2 и одиночные файлы GZ |
 | Документы | DOCX, ODT, RTF, RTFD, TXT, Markdown, HTML — друг в друга и в PDF / Скоро |
 
 Если новый контейнер принимает исходные потоки, видео копируется без перекодирования — мгновенно и без потерь.

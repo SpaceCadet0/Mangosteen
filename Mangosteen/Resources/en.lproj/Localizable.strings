@@ -48,6 +48,7 @@
 "Автор" = "Author";
 "Авторские права" = "Copyright";
 "Альбомная 16:9" = "Landscape 16:9";
+"Архив «%@» пуст." = "The archive “%@” is empty.";
 "Архивация" = "Archiving";
 "Без изменений" = "Unchanged";
 "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках." = "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.";
@@ -56,6 +57,7 @@
 "Быстро, без перекодирования (разрез по ближайшему ключевому кадру)" = "Fast, without re-encoding (cut at the nearest keyframe)";
 "В PDF изображения будут пережаты в JPEG экранного разрешения." = "Images inside PDFs will be re-encoded as screen-resolution JPEG.";
 "В «%@» не найден текст." = "No text found in “%@”.";
+"В «%@» не нашлось файлов, которые можно распаковать. Образы дисков только в формате UDF, например установочные образы Windows, не поддерживаются." = "“%@” has no files that can be extracted. Disc images in UDF format only, such as Windows installation images, are not supported.";
 "В «%@» нет видео." = "“%@” has no video.";
 "В «%@» нет звуковой дорожки." = "“%@” has no audio track.";
 "В архив" = "Archive";

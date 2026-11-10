@@ -152,7 +152,8 @@ enum WheelItemProvider {
                 ToolWindow.present(title: String(localized: "Коллаж"), files: urls) { CollageView(urls: urls, close: $0) }
             })
         }
-        if formats.contains(where: { $0.category == .image && $0 != .svg }) {
+        // Metadata is rewritten in the picture's own format, which ImageIO cannot write for RAW, JPEG XL or SVG.
+        if formats.contains(where: \.canRewriteImageMetadata) {
             items.append(WheelItem(id: "tool.metadata", title: String(localized: "Метаданные"), symbolName: "info.circle") { urls in
                 ToolWindow.present(title: String(localized: "Метаданные"), files: urls) { MetadataView(urls: urls, close: $0) }
             })
@@ -196,7 +197,7 @@ enum WheelItemProvider {
                 }
             })
         }
-        if formats.contains(where: { $0.category == .image && $0 != .svg }) {
+        if formats.contains(where: \.canRewriteImageMetadata) {
             items.append(WheelItem(id: "tool.metadata", title: String(localized: "Метаданные"), symbolName: "info.circle") { urls in
                 ToolWindow.present(title: String(localized: "Метаданные"), files: urls) { MetadataView(urls: urls, close: $0) }
             })

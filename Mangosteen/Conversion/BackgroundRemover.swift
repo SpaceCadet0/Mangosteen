@@ -71,8 +71,8 @@ enum BackgroundRemover {
         }
         let result = try compose(subject, fill: options.fill)
         let source = FileFormat.detect(input)
-        let target: FileFormat = options.fill != nil && source.map { FormatCatalog.editableImageFormats.contains($0) } == true
-            ? source! : .png
+        // Transparency needs PNG; on a colour the original's format is kept (HEIC for RAW and JPEG XL).
+        let target: FileFormat = options.fill != nil ? source.map(FormatCatalog.editedFormat(for:)) ?? .png : .png
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
             baseName: String(localized: "\(OutputNaming.baseName(of: input)) (без фона)"),

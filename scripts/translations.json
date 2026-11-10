@@ -1914,5 +1914,13 @@
  "У вас установлена версия %@. Скачайте новую со страницы релиза и замените приложение в папке «Программы».": {
   "en": "You have version %@. Download the new one from the release page and replace the app in Applications.",
   "es": "Tienes la versión %@. Descarga la nueva desde la página de la versión y sustituye la app en Aplicaciones."
+ },
+ "В «%@» не нашлось файлов, которые можно распаковать. Образы дисков только в формате UDF, например установочные образы Windows, не поддерживаются.": {
+  "en": "“%@” has no files that can be extracted. Disc images in UDF format only, such as Windows installation images, are not supported.",
+  "es": "«%@» no tiene archivos que se puedan extraer. Las imágenes de disco solo en formato UDF, como las de instalación de Windows, no son compatibles."
+ },
+ "Архив «%@» пуст.": {
+  "en": "The archive “%@” is empty.",
+  "es": "El archivo comprimido «%@» está vacío."
  }
 }

@@ -5,6 +5,13 @@ enum FormatCatalog {
     static let imageOutputs: [FileFormat] = [.png, .jpg, .webp, .heic, .tiff, .avif, .gif, .pdf]
     /// Formats an edited image is saved back in; BMP is not offered on the wheel but is still kept.
     static let editableImageFormats: [FileFormat] = imageOutputs.filter { $0 != .pdf } + [.bmp]
+
+    /// The format a tool saves an edited picture in: the original's when it can be written, HEIC for camera RAW and
+    /// JPEG XL (a PNG of a 50-megapixel photo runs to 100 MB and more), PNG for the other read-only formats.
+    static func editedFormat(for source: FileFormat) -> FileFormat {
+        if editableImageFormats.contains(source) { return source }
+        return source == .raw || source == .jxl ? .heic : .png
+    }
     static let documentOutputs: [FileFormat] = [.pdf, .docx, .odt, .rtf, .rtfd, .txt, .md, .html]
     static let pdfOutputs: [FileFormat] = [.png, .jpg, .txt, .md, .rtf, .docx, .html]
     static let subtitleOutputs: [FileFormat] = [.srt, .vtt, .txt]

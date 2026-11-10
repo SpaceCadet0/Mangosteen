@@ -65,8 +65,10 @@ enum VideoRedactor {
         let info = try MediaConverter.probe(input)
         let format = MediaTools.outputFormat(for: source)
         let graph = filterGraph(regions: regions, style: style, color: color, frameSize: try frameSize(input))
+        // The sound is copied when the output container takes it (an AMR track in a 3GP cannot go into MP4).
+        let audio = MediaTools.canCopyStreams(from: source, to: format) ? ["-c:a", "copy"] : AudioTools.audioCodecArguments(forVideo: format)
         var arguments = ["-i", input.path, "-filter_complex", graph, "-map", "[v]", "-map", "0:a?"]
-            + videoCodecArguments(for: format) + ["-c:a", "copy"]
+            + videoCodecArguments(for: format) + audio
         if format == .mp4 { arguments += ["-movflags", "+faststart"] }
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
@@ -83,9 +85,8 @@ enum VideoRedactor {
                              frameSize: CGSize, at time: Double) throws -> CGImage {
         let graph = filterGraph(regions: regions, style: style, color: color, frameSize: frameSize)
         // -copyts keeps the original timestamps so the time ranges in the graph still match.
-        let data = try ExternalTool.runData("ffmpeg", [
-            "-hide_banner", "-nostdin", "-loglevel", "error", "-ss", String(format: "%.3f", time), "-copyts",
-            "-i", input.path, "-filter_complex", graph, "-map", "[v]", "-frames:v", "1",
+        let data = try ExternalTool.runData("ffmpeg", ["-hide_banner", "-nostdin", "-loglevel", "error"]
+            + MediaTools.inputSeek(time) + ["-copyts", "-i", input.path, "-filter_complex", graph, "-map", "[v]", "-frames:v", "1",
             "-f", "image2pipe", "-c:v", "png", "-",
         ])
         guard let source = CGImageSourceCreateWithData(data as CFData, nil),

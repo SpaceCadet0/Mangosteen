@@ -210,7 +210,7 @@ enum ImageCropper {
             cropped = try ImageCompression.resized(cropped, width: Int(outputSize.width), height: Int(outputSize.height))
         }
         // Read-only formats (SVG, PSD…) are saved as PNG.
-        let target = FormatCatalog.editableImageFormats.contains(source) ? source : .png
+        let target = FormatCatalog.editedFormat(for: source)
         let baseName = OutputNaming.baseName(of: input)
         let carried = options.preserveMetadata ? metadata : nil
         let directory = input.deletingLastPathComponent()
@@ -289,7 +289,7 @@ enum ImageCropper {
         let width = Int(size.width), height = Int(size.height)
         let result = width == image.width && height == image.height ? image
             : try ImageCompression.resized(image, width: width, height: height)
-        let target = FormatCatalog.editableImageFormats.contains(source) ? source : .png
+        let target = FormatCatalog.editedFormat(for: source)
         return try OutputNaming.writeAtomically(
             directory: input.deletingLastPathComponent(),
             baseName: "\(OutputNaming.baseName(of: input)) (\(width)×\(height))",

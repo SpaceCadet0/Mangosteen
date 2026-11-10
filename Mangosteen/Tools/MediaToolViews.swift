@@ -4,6 +4,13 @@ private func firstMedia(_ urls: [URL]) -> URL {
     urls.first { FileFormat.detect($0)?.category.isMedia == true } ?? urls[0]
 }
 
+/// Whether a cut can copy the streams of `url` without re-encoding (not for FLV, VOB and other read-only containers,
+/// which are saved as MP4).
+private func canCutFast(_ url: URL) -> Bool {
+    guard let source = FileFormat.detect(url) else { return false }
+    return MediaTools.canCopyStreams(from: source, to: MediaTools.outputFormat(for: source))
+}
+
 // MARK: - Trim
 
 /// Keep one section of a video or recording.
@@ -46,7 +53,7 @@ struct TrimMediaView: View {
             }
             .disabled(!model.isLoaded)
             HStack {
-                if model.isVideo {
+                if model.isVideo, canCutFast(model.url) {
                     Toggle(String(localized: "Быстро, без перекодирования (разрез по ближайшему ключевому кадру)"), isOn: $fast)
                 }
                 Spacer()
@@ -137,7 +144,7 @@ struct SplitMediaView: View {
                     points = MediaTools.equalSplitPoints(duration: model.duration, parts: equalParts)
                 }
                 Spacer()
-                if model.isVideo {
+                if model.isVideo, canCutFast(model.url) {
                     Toggle(String(localized: "Быстро, без перекодирования"), isOn: $fast)
                 }
             }

@@ -34,7 +34,11 @@ enum AudioTools {
             if let filter { arguments += ["-af", filter] }
         }
         if isVideo {
-            arguments += ["-map", "0:v:0", "-c:v", "copy"] + audioCodecArguments(forVideo: format)
+            // The picture is copied when the output container takes it; an FLV or VOB going to MP4 is re-encoded.
+            let video = MediaTools.canCopyStreams(from: source, to: format)
+                ? ["-c:v", "copy"]
+                : VideoRedactor.videoCodecArguments(for: format) + ["-pix_fmt", "yuv420p"]
+            arguments += ["-map", "0:v:0"] + video + audioCodecArguments(forVideo: format)
         } else {
             // The audio encoders' own arguments; drop "-vn" and maps that assume a single input.
             arguments += MediaConverter.encodeArguments(for: format, info: info).filter { $0 != "-vn" }

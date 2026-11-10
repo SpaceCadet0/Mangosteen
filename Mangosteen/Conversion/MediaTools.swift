@@ -27,32 +27,41 @@ enum MediaTools {
 
     // MARK: - Output
 
-    /// Trimmed or split parts keep the source format (read-only containers map to a writable one).
+    /// Trimmed or split parts keep the source format; read-only containers map to a writable one (lossless audio
+    /// stays lossless).
     static func outputFormat(for source: FileFormat) -> FileFormat {
         switch source {
-        case .m4v: .mp4
-        case .aac: .m4a
+        case .m4v, .flv, .mpg, .ts, .m2ts, .vob, .ogv, .threeGP: .mp4
+        case .aac, .amr, .ac3, .dts: .m4a
+        case .ape, .wv: .flac
         default: source
         }
     }
 
+    /// Whether streams can be copied from `source` into `output` as they are. Only within the same container, plus
+    /// the read-only containers whose streams the target always accepts.
+    static func canCopyStreams(from source: FileFormat, to output: FileFormat) -> Bool {
+        source == output || (source == .m4v && output == .mp4) || (source == .aac && output == .m4a)
+    }
+
     /// Codec arguments for a cut. `fast` copies streams (cuts land on keyframes); otherwise re-encodes
-    /// so the cut is frame-accurate. Lossless audio is always exact, so it is copied.
-    static func cutArguments(format: FileFormat, info: MediaInfo, fast: Bool) -> [String] {
+    /// so the cut is frame-accurate. Lossless audio is always exact, so it is copied. Streams are copied only when
+    /// the output container takes them (an APE becomes FLAC, an FLV becomes MP4).
+    static func cutArguments(source: FileFormat, format: FileFormat, info: MediaInfo, fast: Bool) -> [String] {
         let lossless: Set<FileFormat> = [.wav, .aiff, .flac]
-        if fast || lossless.contains(format) {
+        if canCopyStreams(from: source, to: format), fast || lossless.contains(format) {
             return ["-map", "0:v?", "-map", "0:a?", "-c", "copy", "-avoid_negative_ts", "make_zero"]
         }
         return MediaConverter.encodeArguments(for: format, info: info)
     }
 
-    private static func cut(_ input: URL, info: MediaInfo, format: FileFormat, start: Double, end: Double,
+    private static func cut(_ input: URL, info: MediaInfo, source: FileFormat, format: FileFormat, start: Double, end: Double,
                             fast: Bool, to output: URL, progress: ((Double) -> Void)?,
                             cancellation: CancellationToken?) throws {
         let length = max(end - start, 0.01)
         try MediaConverter.run(
             input: input, output: output,
-            codecArguments: ["-t", String(format: "%.3f", length)] + cutArguments(format: format, info: info, fast: fast),
+            codecArguments: ["-t", String(format: "%.3f", length)] + cutArguments(source: source, format: format, info: info, fast: fast),
             duration: length,
             extraInputArguments: ["-ss", String(format: "%.3f", max(start, 0))],
             progress: progress, cancellation: cancellation
@@ -70,7 +79,7 @@ enum MediaTools {
             baseName: String(localized: "\(OutputNaming.baseName(of: input)) (обрезано)"),
             pathExtension: format.fileExtension
         ) { output in
-            try cut(input, info: info, format: format, start: start, end: end, fast: fast, to: output,
+            try cut(input, info: info, source: source, format: format, start: start, end: end, fast: fast, to: output,
                     progress: progress, cancellation: cancellation)
         }
     }
@@ -100,7 +109,7 @@ enum MediaTools {
                 let number = String(format: "%0\(digits)d", index + 1)
                 let output = folder.appendingPathComponent("\(baseName) \(number)").appendingPathExtension(format.fileExtension)
                 let partCount = Double(bounds.count - 1)
-                try cut(input, info: info, format: format, start: bounds[index], end: bounds[index + 1], fast: fast,
+                try cut(input, info: info, source: source, format: format, start: bounds[index], end: bounds[index + 1], fast: fast,
                         to: output, progress: { progress?((Double(index) + $0) / partCount) }, cancellation: cancellation)
             }
         }
@@ -108,12 +117,17 @@ enum MediaTools {
 
     // MARK: - Frames
 
+    /// Seeks the input to `time`. Nothing at the very start: seeking an FLV to 0 lands after its first keyframe and
+    /// gives a broken first picture, and reading from the start needs no seek anyway.
+    static func inputSeek(_ time: Double) -> [String] {
+        time > 0.0005 ? ["-ss", String(format: "%.3f", time)] : []
+    }
+
     /// Full-resolution PNG of the frame at `time`.
     static func frameData(_ input: URL, at time: Double, maxHeight: Int? = nil) throws -> Data {
         var filters: [String] = []
         if let maxHeight { filters = ["-vf", "scale=-2:'min(\(maxHeight),ih)'"] }
-        return try ExternalTool.runData("ffmpeg", [
-            "-hide_banner", "-nostdin", "-loglevel", "error", "-ss", String(format: "%.3f", max(time, 0)),
+        return try ExternalTool.runData("ffmpeg", ["-hide_banner", "-nostdin", "-loglevel", "error"] + inputSeek(time) + [
             "-i", input.path, "-frames:v", "1", "-an"] + filters + ["-f", "image2pipe", "-c:v", "png", "-",
         ])
     }
