@@ -2,9 +2,11 @@ import Foundation
 
 /// Which output formats are offered for which inputs.
 enum FormatCatalog {
-    static let imageOutputs: [FileFormat] = [.png, .jpg, .webp, .heic, .tiff, .avif, .gif, .pdf]
-    /// Formats an edited image is saved back in; BMP is not offered on the wheel but is still kept.
-    static let editableImageFormats: [FileFormat] = imageOutputs.filter { $0 != .pdf } + [.bmp]
+    /// ICO, ICNS, PSD, TGA and OpenEXR are written by ImageIO too; their slices start on the wheel's back.
+    static let imageOutputs: [FileFormat] = [.png, .jpg, .webp, .heic, .tiff, .avif, .gif, .pdf, .ico, .icns, .psd, .tga, .exr]
+    /// Formats an edited image is saved back in; BMP is not offered on the wheel but is still kept. Icons, layered
+    /// and HDR formats are saved as PNG: an edit would flatten them anyway.
+    static let editableImageFormats: [FileFormat] = [.png, .jpg, .webp, .heic, .tiff, .avif, .gif, .bmp]
 
     /// The format a tool saves an edited picture in: the original's when it can be written, HEIC for camera RAW and
     /// JPEG XL (a PNG of a 50-megapixel photo runs to 100 MB and more), PNG for the other read-only formats.
@@ -16,18 +18,18 @@ enum FormatCatalog {
     static let pdfOutputs: [FileFormat] = [.png, .jpg, .txt, .md, .rtf, .docx, .html]
     static let subtitleOutputs: [FileFormat] = [.srt, .vtt, .ass, .txt]
     static let tableOutputs: [FileFormat] = [.csv, .tsv, .xlsx, .json]
-    static let archiveOutputs: [FileFormat] = [.zip, .tar, .tgz]
+    static let archiveOutputs: [FileFormat] = [.zip, .tar, .tgz, .sevenZip, .iso]
     static let videoOutputs: [FileFormat] = [.mp4, .mov, .mkv, .webm, .avi, .wmv, .gif, .mp3]
     static let audioOutputs: [FileFormat] = [.mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma]
 
     /// Order of segments on the wheel when the selection mixes kinds of files.
     private static let displayOrder: [FileFormat] = [
-        .png, .jpg, .webp, .heic, .tiff, .avif, .gif, .pdf,
+        .png, .jpg, .webp, .heic, .tiff, .avif, .gif, .pdf, .ico, .icns, .psd, .tga, .exr,
         .docx, .odt, .rtf, .rtfd, .txt, .md, .html,
         .srt, .vtt, .ass, .csv, .tsv, .xlsx, .json,
         .mp4, .mov, .mkv, .webm, .avi, .wmv,
         .mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma,
-        .zip, .tar, .tgz,
+        .zip, .tar, .tgz, .sevenZip, .iso,
     ]
 
     static func outputs(for category: FormatCategory) -> [FileFormat] {

@@ -107,6 +107,11 @@ enum WheelItemProvider {
                 }
             })
         }
+        if formats.contains(where: { $0.category.isMedia }) {
+            items.append(WheelItem(id: "tool.speechSubtitles", title: String(localized: "Речь в текст"), symbolName: "waveform.and.mic") { urls in
+                ToolWindow.present(title: String(localized: "Субтитры из речи"), files: urls) { SpeechSubtitlesView(urls: urls, close: $0) }
+            })
+        }
         let hasImages = formats.contains { $0.category == .image }
         if hasImages || formats.contains(.pdf) {
             items.append(WheelItem(id: "tool.compress", title: String(localized: "Сжать"), symbolName: "arrow.down.right.and.arrow.up.left") { urls in

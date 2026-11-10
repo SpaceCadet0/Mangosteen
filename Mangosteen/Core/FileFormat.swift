@@ -20,7 +20,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
     // Images (read + write)
     case jpg, png, webp, heic, tiff, avif, bmp, gif
     // Images (read only). `raw` stands for every camera RAW extension; RAW and JPEG XL are decoded by macOS.
-    case svg, ico, icns, psd, jp2, tga, exr, raw, jxl
+    case svg, ico, icns, psd, jp2, tga, exr, raw, jxl, dds
+    case dicom = "dcm"
     case pdf
     // Documents
     case docx, doc, odt, rtf, rtfd, txt, md, html
@@ -31,7 +32,7 @@ enum FileFormat: String, CaseIterable, Identifiable {
     // Archives (7z, rar, iso, tar.xz, tar.bz2 and a single gzipped file are read only)
     case zip, tar, tgz
     case sevenZip = "7z"
-    case rar, iso, txz, tbz, gz
+    case rar, iso, txz, tbz, gz, cab, dmg
     // Video (m4v and the second line are read only)
     case mp4, mov, mkv, webm, avi, wmv, m4v
     case flv, mpg, ts, m2ts, vob, ogv
@@ -57,6 +58,7 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .webp: "WebP"
         case .jp2: "JPEG 2000"
         case .jxl: "JPEG XL"
+        case .dicom: "DICOM"
         case .md: "Markdown"
         case .tgz: "TAR.GZ"
         case .txz: "TAR.XZ"
@@ -75,7 +77,7 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .docx, .doc, .odt, .rtf, .rtfd, .txt, .md, .html: .document
         case .srt, .vtt, .ass: .subtitle
         case .csv, .tsv, .xlsx, .json: .table
-        case .zip, .tar, .tgz, .sevenZip, .rar, .iso, .txz, .tbz, .gz: .archive
+        case .zip, .tar, .tgz, .sevenZip, .rar, .iso, .txz, .tbz, .gz, .cab, .dmg: .archive
         case .mp4, .mov, .mkv, .webm, .avi, .wmv, .m4v, .flv, .mpg, .ts, .m2ts, .vob, .ogv, .threeGP: .video
         case .mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma, .aac, .ape, .wv, .amr, .ac3, .dts: .audio
         default: .image
@@ -101,6 +103,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .exr: UTType("com.ilm.openexr-image") ?? .image
         case .raw: .rawImage
         case .jxl: UTType("public.jpeg-xl") ?? Self.byExtension("jxl")
+        case .dds: UTType("com.microsoft.dds") ?? Self.byExtension("dds")
+        case .dicom: UTType("org.nema.dicom") ?? Self.byExtension("dcm")
         case .pdf: .pdf
         case .docx: UTType("org.openxmlformats.wordprocessingml.document") ?? .data
         case .doc: UTType("com.microsoft.word.doc") ?? .data
@@ -123,7 +127,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .gz: Self.byExtension("gz")
         case .txz: Self.byExtension("txz")
         case .tbz: Self.byExtension("tbz2")
-        case .sevenZip, .rar, .iso: Self.byExtension(rawValue)
+        case .sevenZip, .rar, .iso, .cab: Self.byExtension(rawValue)
+        case .dmg: UTType("com.apple.disk-image-udif") ?? Self.byExtension("dmg")
         case .mp4: .mpeg4Movie
         case .mov: .quickTimeMovie
         case .avi: .avi
@@ -176,6 +181,7 @@ enum FileFormat: String, CaseIterable, Identifiable {
     private static let extensionAliases: [String: FileFormat] = [
         "jpeg": .jpg, "jpe": .jpg, "jfif": .jpg,
         "tif": .tiff,
+        "dicom": .dicom,
         "heif": .heic, "hif": .heic,
         "j2k": .jp2, "jpf": .jp2, "jpx": .jp2,
         "dib": .bmp,
@@ -221,6 +227,9 @@ enum FileFormat: String, CaseIterable, Identifiable {
         let ext = url.pathExtension.lowercased()
         if rawExtensions.contains(ext) { return systemCanRead(extension: ext) ? .raw : nil }
         if ext == "jxl" { return systemCanRead(extension: ext) ? .jxl : nil }
+        if ext == "dds" || ext == "dcm" || ext == "dicom" {
+            return systemCanRead(extension: ext) ? (ext == "dds" ? .dds : .dicom) : nil
+        }
         if ext == "ts" || ext == "mts" || ext == "m2ts" {
             // Never fall back to the content type: macOS calls every .ts file a transport stream.
             return isTransportStream(url) ? (ext == "ts" ? .ts : .m2ts) : nil

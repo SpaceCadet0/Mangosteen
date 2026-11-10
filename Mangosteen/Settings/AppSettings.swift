@@ -3,7 +3,10 @@ import ServiceManagement
 
 /// The interface language. Applied by writing AppleLanguages for this app; takes effect after a relaunch.
 enum AppLanguage: String, CaseIterable, Identifiable {
-    case system, ru, en, es
+    case system, ru, en, es, de, fr
+    case ptBR = "pt-BR"
+    case zhHans = "zh-Hans"
+    case ja
 
     var id: String { rawValue }
 
@@ -14,6 +17,11 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         case .ru: "Русский"
         case .en: "English"
         case .es: "Español"
+        case .de: "Deutsch"
+        case .fr: "Français"
+        case .ptBR: "Português (Brasil)"
+        case .zhHans: "简体中文"
+        case .ja: "日本語"
         }
     }
 
@@ -87,6 +95,12 @@ final class AppSettings: ObservableObject {
         static let accentHex = "accentHex"
         static let wheelOpacity = "wheelOpacity"
         static let wheelGlass = "wheelGlass"
+        static let saveMode = "saveMode"
+        static let saveFolder = "saveFolder"
+        static let nameTemplate = "nameTemplate"
+        static let keepDates = "keepDates"
+        static let presets = "conversionPresets"
+        static let activePreset = "activePreset"
     }
 
     private let defaults: UserDefaults
@@ -126,6 +140,36 @@ final class AppSettings: ObservableObject {
     /// Frosted glass behind the wheel.
     @Published var wheelGlass: Bool { didSet { defaults.set(wheelGlass, forKey: Key.wheelGlass) } }
 
+    // Saving: the standard values, used while no preset is active.
+    @Published var saveMode: SaveMode { didSet { defaults.set(saveMode.rawValue, forKey: Key.saveMode); applyOutputPolicy() } }
+    /// Path of the folder for `SaveMode.folder`; empty until one is chosen.
+    @Published var saveFolder: String { didSet { defaults.set(saveFolder, forKey: Key.saveFolder); applyOutputPolicy() } }
+    @Published var nameTemplate: String { didSet { defaults.set(nameTemplate, forKey: Key.nameTemplate); applyOutputPolicy() } }
+    @Published var keepDates: Bool { didSet { defaults.set(keepDates, forKey: Key.keepDates); applyOutputPolicy() } }
+
+    /// The user's presets, and the active one (nil: the standard settings).
+    @Published var presets: [ConversionPreset] {
+        didSet {
+            defaults.set(try? JSONEncoder().encode(presets), forKey: Key.presets)
+            if let id = activePresetID, !presets.contains(where: { $0.id == id }) { activePresetID = nil }
+            applyOutputPolicy()
+        }
+    }
+    @Published var activePresetID: UUID? {
+        didSet { defaults.set(activePresetID?.uuidString, forKey: Key.activePreset); applyOutputPolicy() }
+    }
+
+    var activePreset: ConversionPreset? { activePresetID.flatMap { id in presets.first { $0.id == id } } }
+
+    /// Save folder, name and dates from the active preset or the standard settings.
+    var outputPolicy: OutputPolicy {
+        if let activePreset { return activePreset.policy }
+        return OutputPolicy(mode: saveMode, folder: saveFolder.isEmpty ? nil : URL(fileURLWithPath: saveFolder),
+                            nameTemplate: nameTemplate, keepDates: keepDates)
+    }
+
+    private func applyOutputPolicy() { OutputLocation.policy = outputPolicy }
+
     @Published var launchAtLogin: Bool {
         didSet {
             guard launchAtLogin != oldValue else { return }
@@ -158,6 +202,7 @@ final class AppSettings: ObservableObject {
             Key.preserveMetadata: fallback.preserveMetadata,
             Key.terminalApp: TerminalChoice.terminal.rawValue,
             Key.wheelOpacity: 0.96,
+            Key.nameTemplate: OutputLocation.defaultTemplate,
         ])
         convertModifier = ModifierChoice(rawValue: defaults.string(forKey: Key.convertModifier) ?? "") ?? .shift
         toolsModifier = ModifierChoice(rawValue: defaults.string(forKey: Key.toolsModifier) ?? "") ?? .command
@@ -179,9 +224,17 @@ final class AppSettings: ObservableObject {
         accentHex = defaults.string(forKey: Key.accentHex) ?? ""
         wheelOpacity = min(max(defaults.double(forKey: Key.wheelOpacity), 0.4), 1)
         wheelGlass = defaults.bool(forKey: Key.wheelGlass)
+        saveMode = SaveMode(rawValue: defaults.string(forKey: Key.saveMode) ?? "") ?? .nextToOriginal
+        saveFolder = defaults.string(forKey: Key.saveFolder) ?? ""
+        nameTemplate = defaults.string(forKey: Key.nameTemplate) ?? OutputLocation.defaultTemplate
+        keepDates = defaults.bool(forKey: Key.keepDates)
+        presets = defaults.data(forKey: Key.presets).flatMap { try? JSONDecoder().decode([ConversionPreset].self, from: $0) } ?? []
+        activePresetID = defaults.string(forKey: Key.activePreset).flatMap(UUID.init(uuidString:))
         launchAtLogin = SMAppService.mainApp.status == .enabled
-        // didSet does not run in init; hand the saved choice to the converters now.
+        // didSet does not run in init; hand the saved choices to the converters now.
         VideoEncoding.current = videoEncoding
+        if let id = activePresetID, !presets.contains(where: { $0.id == id }) { activePresetID = nil }
+        applyOutputPolicy()
     }
 
     /// The wheel opened by tapping exactly `flags`. The first matching wheel wins if two share a key.
@@ -192,8 +245,15 @@ final class AppSettings: ObservableObject {
         return assignments.first { $0.0.flags == flags }?.1
     }
 
+    /// Picture quality, size and metadata from the active preset, or the standard settings.
     var conversionOptions: ConversionOptions {
-        ConversionOptions(jpegQuality: jpegQuality, heicQuality: heicQuality, avifQuality: avifQuality,
-                          webpQuality: webpQuality, preserveMetadata: preserveMetadata)
+        if let preset = activePreset {
+            return ConversionOptions(jpegQuality: preset.quality, heicQuality: preset.quality, avifQuality: preset.quality,
+                                     webpQuality: Int((preset.quality * 100).rounded()),
+                                     preserveMetadata: preset.preserveMetadata,
+                                     maxPixelSize: preset.maxPixelSize > 0 ? preset.maxPixelSize : nil)
+        }
+        return ConversionOptions(jpegQuality: jpegQuality, heicQuality: heicQuality, avifQuality: avifQuality,
+                                 webpQuality: webpQuality, preserveMetadata: preserveMetadata)
     }
 }

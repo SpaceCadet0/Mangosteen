@@ -1,0 +1,2 @@
+/* Texts of Info.plist keys. */
+"NSSpeechRecognitionUsageDescription" = "Mangosteen erkennt Sprache auf diesem Mac, um Untertitel zu erstellen. Nichts wird über das Netzwerk gesendet.";

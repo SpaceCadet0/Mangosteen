@@ -1,6 +1,6 @@
 import Foundation
 
-/// Chooses where results go: next to the original, never overwriting anything.
+/// Chooses where results go: next to the original unless Settings say otherwise, never overwriting anything.
 enum OutputNaming {
     /// `photo.png` → `photo.png`, or `photo 2.png`, `photo 3.png`… when taken.
     static func uniqueURL(in directory: URL, baseName: String, pathExtension: String,
@@ -31,12 +31,15 @@ enum OutputNaming {
         return url.deletingPathExtension().lastPathComponent
     }
 
-    /// Runs `produce` against a hidden temporary file in `directory`, then moves the result to a unique
-    /// final name. Nothing visible is left behind if `produce` throws.
+    /// Runs `produce` against a hidden temporary file, then moves the result to a unique final name. Nothing
+    /// visible is left behind if `produce` throws. `directory` is the original's folder: the save folder and the
+    /// name template from Settings (`OutputLocation`) decide where the result really goes and what it is called.
     @discardableResult
-    static func writeAtomically(directory: URL, baseName: String, pathExtension: String,
+    static func writeAtomically(directory original: URL, baseName rawName: String, pathExtension: String,
                                 fileManager: FileManager = .default,
                                 produce: (URL) throws -> Void) throws -> URL {
+        let directory = OutputLocation.directory(for: original, fileManager: fileManager)
+        let baseName = OutputLocation.name(rawName, pathExtension: pathExtension)
         var temp = directory.appendingPathComponent(".mangosteen-\(UUID().uuidString)")
         if !pathExtension.isEmpty {
             temp.appendPathExtension(pathExtension)

@@ -21,7 +21,10 @@ enum SlicePlacement: String, CaseIterable, Identifiable {
 enum WheelLayout {
     static let maxFront = 10
     /// Slices added after the wheels were settled; they start on the back so the familiar faces stay as they were.
-    static let defaultBack: Set<String> = ["tool.extractSubtitles"]
+    static let defaultBack: Set<String> = [
+        "tool.extractSubtitles", "tool.speechSubtitles",
+        "convert.ico", "convert.icns", "convert.psd", "convert.tga", "convert.exr", "convert.7z", "convert.iso",
+    ]
 
     static func placement(of id: String, choices: [String: SlicePlacement]) -> SlicePlacement {
         choices[id] ?? (defaultBack.contains(id) ? .back : .front)

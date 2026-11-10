@@ -1,0 +1,2 @@
+/* Texts of Info.plist keys. */
+"NSSpeechRecognitionUsageDescription" = "Mangosteen 在此 Mac 上识别语音以生成字幕，不会通过网络发送任何内容。";

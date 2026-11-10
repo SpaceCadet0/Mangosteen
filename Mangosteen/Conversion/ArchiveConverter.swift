@@ -15,8 +15,8 @@ enum ArchiveError: LocalizedError {
     }
 }
 
-/// ZIP, TAR and TAR.GZ via the system `ditto` and `tar`; 7Z, RAR, ISO, TAR.XZ and TAR.BZ2 are read by the system
-/// `tar` (libarchive), a single gzipped file by `gzip`.
+/// ZIP, TAR and TAR.GZ via the system `ditto` and `tar`; 7Z, RAR, ISO, CAB, TAR.XZ and TAR.BZ2 are read by the system
+/// `tar` (libarchive), which also writes 7Z and ISO; a single gzipped file by `gzip`, a Mac disk image by `hdiutil`.
 enum ArchiveConverter {
     /// Always the system tar: a GNU tar from Homebrew earlier in the search path cannot read 7z, RAR or ISO.
     static let tar = "/usr/bin/tar"
@@ -67,8 +67,10 @@ enum ArchiveConverter {
         switch format {
         case .zip:
             try ExternalTool.run("ditto", ["-x", "-k", archive.path, folder.path])
-        case .tar, .tgz, .txz, .tbz, .sevenZip, .rar, .iso:
+        case .tar, .tgz, .txz, .tbz, .sevenZip, .rar, .iso, .cab:
             try ExternalTool.run(tar, ["-xf", archive.path, "-C", folder.path])
+        case .dmg:
+            try extractDiskImage(archive, into: folder)
         case .gz:
             try gunzip(archive, to: folder.appendingPathComponent(archive.deletingPathExtension().lastPathComponent))
         default:
@@ -86,6 +88,23 @@ enum ArchiveConverter {
         if isDiscImage, items.count == 1, items[0].lastPathComponent.uppercased() == "README.TXT",
            let text = try? String(contentsOf: items[0], encoding: .ascii), text.contains("UDF") {
             throw ArchiveError.nothingExtracted(archive)
+        }
+    }
+
+    /// A Mac disk image is mounted read-only out of sight (not in Finder's sidebar), its contents are copied, and
+    /// it is ejected again. An encrypted image or one with a licence to accept fails with hdiutil's message.
+    private static func extractDiskImage(_ image: URL, into folder: URL) throws {
+        let mountPoint = FileManager.default.temporaryDirectory.appendingPathComponent("mangosteen-dmg-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: mountPoint, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: mountPoint) }
+        try ExternalTool.run("/usr/bin/hdiutil", ["attach", "-readonly", "-nobrowse", "-noautoopen", "-noverify",
+                                                  "-mountpoint", mountPoint.path, image.path])
+        defer { _ = try? ExternalTool.run("/usr/bin/hdiutil", ["detach", "-force", mountPoint.path]) }
+        let items = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil)
+            // Volume housekeeping that Finder hides.
+            .filter { ![".Trashes", ".fseventsd", ".Spotlight-V100", ".DS_Store", ".VolumeIcon.icns"].contains($0.lastPathComponent) }
+        for item in items {
+            try ExternalTool.run("/usr/bin/ditto", [item.path, folder.appendingPathComponent(item.lastPathComponent).path])
         }
     }
 
@@ -135,6 +154,11 @@ enum ArchiveConverter {
             try ExternalTool.run(tar, ["-cf", output.path, "-C", parent.path] + names)
         case .tgz:
             try ExternalTool.run(tar, ["-czf", output.path, "-C", parent.path] + names)
+        case .sevenZip:
+            try ExternalTool.run(tar, ["--format", "7zip", "-cf", output.path, "-C", parent.path] + names)
+        case .iso:
+            // ISO 9660 with Joliet and Rock Ridge names, so long and non-Latin names survive.
+            try ExternalTool.run(tar, ["--format", "iso9660", "-cf", output.path, "-C", parent.path] + names)
         default:
             throw ConversionError.encodeFailed(target)
         }

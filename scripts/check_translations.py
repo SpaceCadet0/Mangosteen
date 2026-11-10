@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Checks that every localizable key the compiler extracted has an English and Spanish translation.
+"""Checks that every localizable key the compiler extracted has a translation into every language in LANGUAGES.
 
 Run after a build (SWIFT_EMIT_LOC_STRINGS=YES writes .stringsdata files):
     scripts/check_translations.py [derived data path, default build.noindex]
@@ -8,8 +8,10 @@ New Russian strings go into scripts/translations.json; Localizable.strings are g
 import glob, json, os, re, sys
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-derived = next((a for a in sys.argv[1:] if not a.startswith('--')), os.path.join(root, 'build.noindex'))
+args = [a for i, a in enumerate(sys.argv[1:], 1) if not a.startswith('--') and sys.argv[i - 1] != '--lang']
+derived = args[0] if args else os.path.join(root, 'build.noindex')
 table = json.load(open(os.path.join(root, 'scripts', 'translations.json')))
+LANGUAGES = ('en', 'es', 'de', 'fr', 'pt-BR', 'zh-Hans', 'ja')
 cyrillic = re.compile('[А-Яа-яЁё]')
 keys = set()
 # Debug and Release builds (and each architecture) leave their own copy of every source file's data;
@@ -24,10 +26,17 @@ for path in glob.glob(os.path.join(derived, '**', 'Mangosteen.build', '**', '*.s
 for path in newest.values():
     for entries in json.load(open(path)).get('tables', {}).values():
         keys.update(e['key'] for e in entries if cyrillic.search(e['key']))
-missing = sorted(k for k in keys if k not in table or not table[k].get('en') or not table[k].get('es'))
+missing = sorted(k for k in keys if k not in table or any(not table[k].get(lang) for lang in LANGUAGES))
+if '--lang' in sys.argv:
+    only = sys.argv[sys.argv.index('--lang') + 1]
+    missing = sorted(k for k in keys if k not in table or not table[k].get(only))
 if '--write' in sys.argv:
     def esc(s): return s.replace('\\', '\\\\').replace('"', '\\"').replace('\n', '\\n')
-    for lang in ('en', 'es'):
+    for lang in LANGUAGES:
+        if not all(table[k].get(lang) for k in table):
+            print(f'not writing {lang}: some keys are not translated yet')
+            continue
+        os.makedirs(os.path.join(root, 'Mangosteen', 'Resources', f'{lang}.lproj'), exist_ok=True)
         lines = ['/* Generated from scripts/translations.json. Keys are the Russian text. */']
         lines += [f'"{esc(k)}" = "{esc(table[k][lang])}";' for k in sorted(table)]
         with open(os.path.join(root, 'Mangosteen', 'Resources', f'{lang}.lproj', 'Localizable.strings'), 'w') as f:

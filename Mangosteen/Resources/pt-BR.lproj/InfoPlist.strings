@@ -1,0 +1,2 @@
+/* Texts of Info.plist keys. */
+"NSSpeechRecognitionUsageDescription" = "O Mangosteen reconhece a fala neste Mac para criar legendas. Nada é enviado pela rede.";

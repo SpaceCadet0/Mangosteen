@@ -11,6 +11,7 @@
 "%@ (метаданные)" = "%@ (metadatos)";
 "%@ (обрезано)" = "%@ (recortado)";
 "%@ (пометки)" = "%@ (anotado)";
+"%@ (речь)" = "%@ (voz)";
 "%@ (сжатый)" = "%@ (comprimido)";
 "%@ (скорость %@)" = "%@ (velocidad %@)";
 "%@ (скрыто)" = "%@ (oculto)";
@@ -40,9 +41,11 @@
 "HEVC (H.265) — меньше файл, сжатие дольше" = "HEVC (H.265) — archivo más pequeño, compresión más lenta";
 "Mangosteen %@ — самая новая версия." = "Mangosteen %@ es la versión más reciente.";
 "Mangosteen на GitHub" = "Mangosteen en GitHub";
+"Mangosteen не разрешено распознавать речь. Разрешите в «Системные настройки → Конфиденциальность и безопасность → Распознавание речи»." = "Mangosteen no tiene permiso para reconocer voz. Permítelo en Ajustes del Sistema → Privacidad y seguridad → Reconocimiento de voz.";
 "PDF защищён паролем" = "El PDF está protegido con contraseña";
 "PNG, TIFF и другие форматы без потерь будут сохранены как %@." = "PNG, TIFF y otros formatos sin pérdida se guardarán como %@.";
 "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате." = "WAV, FLAC y AIFF se guardan como M4A (AAC); el resto mantiene su formato.";
+"{name} — имя оригинала, {date} — дата, {time} — время, {format} — формат результата. Если имя занято, добавляется номер: «фото 2»." = "{name} es el nombre del original, {date} la fecha, {time} la hora, {format} el formato del resultado. Si el nombre ya existe, se añade un número: «foto 2».";
 "«%@» защищён паролем." = "«%@» está protegido con contraseña.";
 "«%@» не читается как JSON." = "«%@» no se puede leer como JSON.";
 "Авто" = "Auto";
@@ -67,10 +70,12 @@
 "В «%@» данные не в виде таблицы. Нужен массив записей, например [{\"имя\": \"Чай\", \"цена\": 1.5}]." = "Los datos de «%@» no son una tabla. Hace falta una lista de registros, por ejemplo [{\"nombre\": \"Té\", \"precio\": 1.5}].";
 "В «%@» не найден текст." = "No se encontró texto en «%@».";
 "В «%@» не нашлось файлов, которые можно распаковать. Образы дисков только в формате UDF, например установочные образы Windows, не поддерживаются." = "«%@» no tiene archivos que se puedan extraer. Las imágenes de disco solo en formato UDF, como las de instalación de Windows, no son compatibles.";
+"В «%@» не удалось распознать речь." = "No se pudo reconocer voz en «%@».";
 "В «%@» нет видео." = "«%@» no tiene vídeo.";
 "В «%@» нет звуковой дорожки." = "«%@» no tiene pista de audio.";
 "В «%@» нет субтитров." = "«%@» no tiene subtítulos.";
 "В архив" = "Archivar";
+"В выбранную папку" = "En una carpeta elegida";
 "Введите координаты в градусах, например 55.7558 и 37.6173" = "Introduce las coordenadas en grados, p. ej. 55.7558 y 37.6173";
 "Вернуть как было" = "Restablecer";
 "Версия %@" = "Versión %@";
@@ -87,6 +92,7 @@
 "Волна" = "Onda";
 "Воспроизведение (пробел)" = "Reproducir (espacio)";
 "Вправо" = "Derecha";
+"Время" = "Hora";
 "Все окна на передний план" = "Traer todo al frente";
 "Все файлы: %lld × %lld px" = "Todos los archivos: %lld × %lld px";
 "Все файлы: %lld%% от размера" = "Todos los archivos: %lld%% de su tamaño";
@@ -95,6 +101,7 @@
 "Все файлы: ширина %lld px, высота по пропорциям" = "Todos los archivos: %lld px de ancho, alto proporcional";
 "Вставить" = "Pegar";
 "Выбор" = "Seleccionar";
+"Выбранный набор действует на все конвертации, пока его не сменить. «Стандартный» берёт качество картинок и метаданные с вкладки «Основные»." = "El ajuste elegido se aplica a todas las conversiones hasta que lo cambies. «Estándar» toma la calidad de imagen y los metadatos de la pestaña General.";
 "Выбрать" = "Elegir";
 "Выбрать…" = "Elegir…";
 "Выделить все" = "Seleccionar todo";
@@ -132,6 +139,7 @@
 "Другая сторона колеса" = "Otra cara de la rueda";
 "Другой цвет" = "Otro color";
 "Дублировать" = "Duplicar";
+"Если в папку нельзя записывать, например это образ диска, результат сохраняется в «Загрузки». Оригинал никогда не меняется." = "Si no se puede escribir en la carpeta, por ejemplo una imagen de disco, el resultado se guarda en Descargas. El original nunca cambia.";
 "Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите над ним колёсико мыши или нажмите Tab, пока держите файл; без файла можно щёлкнуть по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад." = "Si una rueda tiene reverso, en su centro se ve «↻ N más». Para darle la vuelta, desplaza la rueda del ratón sobre ella o pulsa Tab mientras sostienes el archivo; sin archivo, haz clic en el centro. La cara de cada sector vale para todos los archivos: PNG, por ejemplo, está en la misma cara para fotos y para PDF. En el anverso caben hasta 10 sectores; el resto pasa al reverso.";
 "Задать координаты" = "Definir coordenadas";
 "Задач: %lld" = "Tareas: %lld";
@@ -156,6 +164,8 @@
 "Измеряю…" = "Midiendo…";
 "Изображение" = "Imagen";
 "Изображения, PDF, документы, видео, аудио, субтитры, таблицы и архивы в другие форматы." = "Imágenes, PDF, documentos, vídeo, audio, subtítulos, tablas y archivos comprimidos a otros formatos.";
+"Имя" = "Nombre";
+"Имя результата" = "Nombre del resultado";
 "Инструменты" = "Herramientas";
 "Исходная запись моно: оба канала получают один и тот же звук." = "La grabación original es mono: ambos canales reciben el mismo sonido.";
 "Исходное изображение" = "Imagen original";
@@ -180,6 +190,7 @@
 "Карандаш" = "Lápiz";
 "Картинка" = "Imagen fija";
 "Картинка из браузера" = "Imagen del navegador";
+"Картинки" = "Imágenes";
 "Качество" = "Calidad";
 "Качество изображений" = "Calidad de imagen";
 "Квадрат" = "Cuadrado";
@@ -203,7 +214,10 @@
 "Контраст" = "Contraste";
 "Копировать" = "Copiar";
 "Круг" = "Círculo";
+"Куда" = "Dónde";
 "Куда переместить: %@" = "Mover %@ a:";
+"Куда сохранить результат?" = "¿Dónde guardar el resultado?";
+"Куда сохранять" = "Dónde guardar";
 "Л" = "I";
 "Левый канал" = "Canal izquierdo";
 "Линия" = "Línea";
@@ -226,6 +240,11 @@
 "Моно" = "Mono";
 "На «%@» не найден объект, от которого можно отделить фон." = "No se encontró en «%@» un objeto que separar del fondo.";
 "На фото не найден объект, от которого можно отделить фон." = "No se encontró en la foto un objeto que separar del fondo.";
+"На этом Mac нет языков для распознавания речи без сети. Добавьте язык в «Системные настройки → Клавиатура → Диктовка»." = "Este Mac no tiene idiomas para reconocer voz sin conexión. Añade uno en Ajustes del Sistema → Teclado → Dictado.";
+"Набор" = "Ajuste";
+"Набор %lld" = "Ajuste %lld";
+"Набор настроек" = "Ajuste predefinido";
+"Название" = "Nombre";
 "Найдено областей: %lld" = "Áreas encontradas: %lld";
 "Найдено областей: %lld. Проверьте их время на таймлайне." = "Áreas encontradas: %lld. Revisa su tiempo en la línea de tiempo.";
 "Найдите кадр (пробел — воспроизведение, ⏎ — добавить, кнопки ◀︎▶︎ — по одному кадру)." = "Busca el fotograma (espacio: reproducir, ⏎: añadir, botones ◀︎▶︎: de uno en uno).";
@@ -241,6 +260,8 @@
 "Начните перетаскивать файл и коротко нажмите клавишу. Колесо останется открытым, пока вы не отпустите файл." = "Empieza a arrastrar un archivo y pulsa brevemente una tecla. La rueda queda abierta hasta que sueltes el archivo.";
 "Начните тащить файл — из Finder, с рабочего стола или из любого приложения." = "Empieza a arrastrar un archivo desde el Finder, el escritorio o cualquier app.";
 "Не больше" = "Como máximo";
+"Не больше %lld пикс." = "Hasta %lld px";
+"Не менять" = "Sin cambios";
 "Не найдена утилита «%@». Установите её: brew install %@" = "No se encontró la herramienta «%@». Instálala con: brew install %@";
 "Не отпуская кнопку, коротко нажмите клавишу — у курсора откроется колесо." = "Sin soltar el botón, pulsa brevemente una tecla: se abrirá una rueda junto al puntero.";
 "Не удалось открыть PDF" = "No se pudo abrir el PDF";
@@ -263,6 +284,7 @@
 "Нет изображений" = "No hay imágenes";
 "Нет подходящих файлов." = "No hay archivos adecuados.";
 "Ничего не найдено" = "No se encontró nada";
+"Новый набор" = "Nuevo ajuste";
 "Ножницы — разрезать после страницы, клик по странице — убрать её." = "Las tijeras cortan tras una página; haz clic en una página para quitarla.";
 "Номер" = "Número";
 "Нормализовать" = "Normalizar";
@@ -303,6 +325,7 @@
 "Очистить" = "Borrar";
 "Очистить историю" = "Borrar historial";
 "П" = "D";
+"Папка" = "Carpeta";
 "Перезапустить" = "Reiniciar";
 "Переместить" = "Mover";
 "Перемещение" = "Moviendo";
@@ -338,6 +361,7 @@
 "Правый канал" = "Canal derecho";
 "Пресет" = "Preajuste";
 "Применить" = "Aplicar";
+"Пример" = "Ejemplo";
 "Пробел — прослушать с пиками, ⏎ — пик по курсору." = "Espacio: escuchar con pitidos; ⏎: pitido en el cursor.";
 "Проверить кадр" = "Comprobar fotograma";
 "Проверить обновления…" = "Buscar actualizaciones…";
@@ -369,6 +393,7 @@
 "Раскладка" = "Disposición";
 "Распаковать" = "Descomprimir";
 "Распаковка" = "Descomprimiendo";
+"Распознавание речи на этом Mac не поддерживает язык «%@». Скачайте его в «Системные настройки → Клавиатура → Диктовка»." = "El reconocimiento de voz de este Mac no admite «%@». Descárgalo en Ajustes del Sistema → Teclado → Dictado.";
 "Распознавание текста" = "Reconocimiento de texto";
 "Редактирование" = "Editando";
 "Редактор" = "Editor";
@@ -376,8 +401,11 @@
 "Режим" = "Modo";
 "Резкость" = "Nitidez";
 "Результат" = "Resultado";
+"Речь в текст" = "Voz a texto";
+"Речь распознаётся на этом Mac, ничего не отправляется в сеть. Модель языка система может один раз скачать сама. Точность зависит от записи: музыка и шум мешают." = "La voz se reconoce en este Mac; no se envía nada por la red. El sistema puede descargar el modelo del idioma una vez por su cuenta. La precisión depende de la grabación: la música y el ruido la empeoran.";
 "Розовый" = "Rosa";
 "Ряд" = "Fila";
+"Рядом с оригиналом" = "Junto al original";
 "Самые маленькие файлы, потери качества заметнее" = "Archivos más pequeños, pérdida de calidad más visible";
 "Сбалансированно" = "Equilibrado";
 "Сбросить" = "Restablecer";
@@ -417,6 +445,8 @@
 "Создание PDF" = "Creando PDF";
 "Создать видео" = "Crear vídeo";
 "Создать коллаж" = "Crear collage";
+"Создать субтитры" = "Crear subtítulos";
+"Сохранение" = "Guardado";
 "Сохранение кадров" = "Guardando fotogramas";
 "Сохранение картинки" = "Guardar la imagen";
 "Сохранить" = "Guardar";
@@ -424,17 +454,19 @@
 "Сохранить кадр" = "Guardar fotograma";
 "Сохранить кадры (%lld)" = "Guardar fotogramas (%lld)";
 "Сохранить копию" = "Guardar una copia";
+"Сохранить сюда" = "Guardar aquí";
 "Сохранять высоту звука" = "Mantener el tono";
+"Сохранять даты создания и изменения оригинала" = "Conservar las fechas de creación y modificación del original";
 "Сохранять метаданные" = "Conservar metadatos";
 "Сохранять метаданные (EXIF, GPS, цветовой профиль)" = "Conservar metadatos (EXIF, GPS, perfil de color)";
 "Сохранять пропорции" = "Mantener proporciones";
 "Сочность" = "Intensidad";
 "Спектр" = "Espectro";
 "Способ" = "Método";
+"Спрашивать каждый раз" = "Preguntar cada vez";
 "Средняя" = "Media";
+"Стандартный" = "Estándar";
 "Станет" = "Objetivo";
-"Стекло размывает то, что под колесом. С ним колесо можно сделать прозрачнее." = "El cristal desenfoca lo que hay bajo la rueda, así que la rueda puede ser más transparente.";
-"Стекло — системное Liquid Glass. С ним колесо можно сделать прозрачнее: то, что под ним, размывается." = "El cristal es el Liquid Glass del sistema. Con él la rueda puede ser más transparente: lo que hay debajo se desenfoca.";
 "Стерео" = "Estéreo";
 "Стиль" = "Estilo";
 "Страницы" = "Páginas";
@@ -444,6 +476,7 @@
 "Субтитры" = "Subtítulos";
 "Субтитры в «%@» — картинки (как на DVD и Blu-ray), их нельзя сохранить текстом." = "Los subtítulos de «%@» son imágenes (como en DVD y Blu-ray) y no se pueden guardar como texto.";
 "Субтитры из видео" = "Subtítulos del vídeo";
+"Субтитры из речи" = "Subtítulos desde la voz";
 "ТВ и радио −23" = "TV y radio −23";
 "Таблицы" = "Tablas";
 "Так будет выглядеть этот кадр. Кадр сбросится при перемотке." = "Así se verá este fotograma. Se restablece al mover el cursor.";
@@ -478,6 +511,7 @@
 "Удалить" = "Eliminar";
 "Удалить все метаданные" = "Eliminar todos los metadatos";
 "Удалить геопозицию" = "Eliminar ubicación";
+"Удалить набор" = "Eliminar ajuste";
 "Удалить область" = "Eliminar área";
 "Удалить пик" = "Eliminar pitido";
 "Удалить результат" = "Eliminar resultado";
@@ -503,6 +537,7 @@
 "Часть %lld" = "Parte %lld";
 "Чтобы передвинуть или изменить пометку, выберите инструмент «Выбор». ⌫ удаляет выделенное, ⌘Z — отмена." = "Para mover o cambiar una anotación, elige la herramienta Seleccionar. ⌫ elimina la selección, ⌘Z deshace.";
 "Чёткость" = "Claridad";
+"Шаблон" = "Plantilla";
 "Ширина" = "Ancho";
 "Широта (−90…90)" = "Latitud (−90…90)";
 "Шумоподавление" = "Reducción de ruido";
@@ -512,6 +547,7 @@
 "Эффекты" = "Efectos";
 "Язык" = "Idioma";
 "Язык изменится после перезапуска." = "El idioma cambiará al reiniciar.";
+"Язык речи" = "Idioma hablado";
 "Яркость" = "Brillo";
 "без звука" = "sin sonido";
 "громкость" = "volumen";
@@ -520,6 +556,7 @@
 "ещё %lld" = "%lld más";
 "запикано" = "con pitido";
 "каналы" = "canales";
+"не выбрана" = "sin elegir";
 "не задано" = "sin definir";
 "не найдено — brew install %@" = "no encontrado: brew install %@";
 "не удалось измерить" = "no se pudo medir";
@@ -529,4 +566,5 @@
 "файл" = "archivo";
 "файла" = "archivos";
 "файлов" = "archivos";
+"фото" = "foto";
 "холст" = "lienzo";

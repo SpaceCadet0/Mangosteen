@@ -8,6 +8,8 @@ struct ConversionOptions {
     /// 0…100 for cwebp.
     var webpQuality = 80
     var preserveMetadata = true
+    /// A preset's limit for the longer side of converted pictures, in pixels; nil keeps their size.
+    var maxPixelSize: Int?
     /// Resolution used when rendering PDF pages to images.
     var pdfRenderDPI: CGFloat = 300
 

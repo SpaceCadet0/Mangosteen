@@ -38,6 +38,8 @@ final class ConversionService {
     /// cancellation token wired to the progress panel's Stop button.
     func runEach(_ title: String, inputs: [URL], maxConcurrent: Int?,
                  work: @escaping (URL, @escaping (Double) -> Void, CancellationToken) throws -> URL?) {
+        guard chooseDestination(for: inputs) else { return }
+        let policy = OutputLocation.policy
         let cancellation = CancellationToken()
         let job = ProgressHUD.shared.begin(title, total: inputs.count, cancel: { cancellation.cancel() })
         queue.async {
@@ -59,6 +61,7 @@ final class ConversionService {
                     }
                     do {
                         let output = try work(input, report, cancellation)
+                        if let output { OutputLocation.keepDates(of: input, on: output, policy: policy) }
                         lock.withLock {
                             if let output {
                                 outputs.append(output)
@@ -82,11 +85,34 @@ final class ConversionService {
         }
     }
 
+    /// With "ask every time" in Settings, asks where this job's results go; false when the user cancels.
+    private func chooseDestination(for inputs: [URL]) -> Bool {
+        guard OutputLocation.policy.mode == .ask else { return true }
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.canCreateDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = String(localized: "Сохранить сюда")
+        panel.message = String(localized: "Куда сохранить результат?")
+        panel.directoryURL = inputs.first?.deletingLastPathComponent()
+        NSApp.activate(ignoringOtherApps: true)
+        guard panel.runModal() == .OK, let folder = panel.url else { return false }
+        OutputLocation.askedFolder = folder
+        return true
+    }
+
     /// Runs one job that consumes all inputs at once (merge, collage…).
     func runBatch(_ title: String, inputs: [URL], work: @escaping ([URL]) throws -> [URL]) {
+        guard chooseDestination(for: inputs) else { return }
+        let policy = OutputLocation.policy
         let job = ProgressHUD.shared.begin(title, total: 1)
         queue.async {
             let result = Result { try work(inputs) }
+            // A merged result takes the dates of the first original.
+            if case .success(let outputs) = result, let first = inputs.first {
+                outputs.forEach { OutputLocation.keepDates(of: first, on: $0, policy: policy) }
+            }
             if case .success(let outputs) = result, !outputs.isEmpty { WebImageDrop.discardOriginals(of: inputs) }
             DispatchQueue.main.async {
                 ProgressHUD.shared.end(job)

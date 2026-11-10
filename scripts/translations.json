@@ -1,2126 +1,5123 @@
 {
  "\n…и ещё %lld": {
   "en": "\n…and %lld more",
-  "es": "\n…y %lld más"
+  "es": "\n…y %lld más",
+  "de": "\n…und %lld weitere",
+  "fr": "\n…et %lld de plus",
+  "pt-BR": "\n…e mais %lld",
+  "zh-Hans": "\n…还有 %lld 个",
+  "ja": "\n…ほか %lld 件"
  },
  " (свёрнуто)": {
   "en": " (minimized)",
-  "es": " (minimizada)"
+  "es": " (minimizada)",
+  "de": " (minimiert)",
+  "fr": " (réduite)",
+  "pt-BR": " (minimizada)",
+  "zh-Hans": "（已最小化）",
+  "ja": "（しまってあります）"
  },
  " и ещё %lld": {
   "en": " and %lld more",
-  "es": " y %lld más"
+  "es": " y %lld más",
+  "de": " und %lld weitere",
+  "fr": " et %lld de plus",
+  "pt-BR": " e mais %lld",
+  "zh-Hans": " 及另外 %lld 个",
+  "ja": " ほか %lld 件"
  },
  " — не меньше оригинала, файл не будет сохранён": {
   "en": " — not smaller than the original, the file will not be saved",
-  "es": " — no es más pequeño que el original, el archivo no se guardará"
+  "es": " — no es más pequeño que el original, el archivo no se guardará",
+  "de": " — nicht kleiner als das Original, die Datei wird nicht gespeichert",
+  "fr": " — pas plus petit que l’original, le fichier ne sera pas enregistré",
+  "pt-BR": " — não é menor que o original, o arquivo não será salvo",
+  "zh-Hans": " — 不比原文件小，不会保存",
+  "ja": " — 元のファイルより小さくならないため保存しません"
  },
  "%@ (без фона)": {
   "en": "%@ (no background)",
-  "es": "%@ (sin fondo)"
+  "es": "%@ (sin fondo)",
+  "de": "%@ (ohne Hintergrund)",
+  "fr": "%@ (sans arrière-plan)",
+  "pt-BR": "%@ (sem fundo)",
+  "zh-Hans": "%@（无背景）",
+  "ja": "%@（背景なし）"
  },
  "%@ (визуализация)": {
   "en": "%@ (visualizer)",
-  "es": "%@ (visualización)"
+  "es": "%@ (visualización)",
+  "de": "%@ (Visualisierung)",
+  "fr": "%@ (visualisation)",
+  "pt-BR": "%@ (visualizador)",
+  "zh-Hans": "%@（可视化）",
+  "ja": "%@（ビジュアライザ）"
  },
  "%@ (изменено)": {
   "en": "%@ (edited)",
-  "es": "%@ (editado)"
+  "es": "%@ (editado)",
+  "de": "%@ (bearbeitet)",
+  "fr": "%@ (modifié)",
+  "pt-BR": "%@ (editado)",
+  "zh-Hans": "%@（已编辑）",
+  "ja": "%@（編集済み）"
  },
  "%@ (кадрирование)": {
   "en": "%@ (cropped video)",
-  "es": "%@ (encuadrado)"
+  "es": "%@ (encuadrado)",
+  "de": "%@ (zugeschnittenes Video)",
+  "fr": "%@ (vidéo recadrée)",
+  "pt-BR": "%@ (vídeo cortado)",
+  "zh-Hans": "%@（裁剪后的视频）",
+  "ja": "%@（切り抜いたビデオ）"
  },
  "%@ (кадры)": {
   "en": "%@ (frames)",
-  "es": "%@ (fotogramas)"
+  "es": "%@ (fotogramas)",
+  "de": "%@ (Bilder)",
+  "fr": "%@ (images)",
+  "pt-BR": "%@ (quadros)",
+  "zh-Hans": "%@（帧）",
+  "ja": "%@（フレーム）"
  },
  "%@ (метаданные)": {
   "en": "%@ (metadata)",
-  "es": "%@ (metadatos)"
+  "es": "%@ (metadatos)",
+  "de": "%@ (Metadaten)",
+  "fr": "%@ (métadonnées)",
+  "pt-BR": "%@ (metadados)",
+  "zh-Hans": "%@（元数据）",
+  "ja": "%@（メタデータ）"
  },
  "%@ (обрезано)": {
   "en": "%@ (trimmed)",
-  "es": "%@ (recortado)"
+  "es": "%@ (recortado)",
+  "de": "%@ (gekürzt)",
+  "fr": "%@ (raccourci)",
+  "pt-BR": "%@ (aparado)",
+  "zh-Hans": "%@（已修剪）",
+  "ja": "%@（トリム済み）"
  },
  "%@ (пометки)": {
   "en": "%@ (annotated)",
-  "es": "%@ (anotado)"
+  "es": "%@ (anotado)",
+  "de": "%@ (markiert)",
+  "fr": "%@ (annoté)",
+  "pt-BR": "%@ (anotado)",
+  "zh-Hans": "%@（已标注）",
+  "ja": "%@（注釈付き）"
+ },
+ "%@ (речь)": {
+  "en": "%@ (speech)",
+  "es": "%@ (voz)",
+  "de": "%@ (Sprache)",
+  "fr": "%@ (parole)",
+  "pt-BR": "%@ (fala)",
+  "zh-Hans": "%@（语音）",
+  "ja": "%@（音声）"
  },
  "%@ (сжатый)": {
   "en": "%@ (compressed)",
-  "es": "%@ (comprimido)"
+  "es": "%@ (comprimido)",
+  "de": "%@ (komprimiert)",
+  "fr": "%@ (compressé)",
+  "pt-BR": "%@ (comprimido)",
+  "zh-Hans": "%@（已压缩）",
+  "ja": "%@（圧縮済み）"
  },
  "%@ (скорость %@)": {
   "en": "%@ (speed %@)",
-  "es": "%@ (velocidad %@)"
+  "es": "%@ (velocidad %@)",
+  "de": "%@ (Tempo %@)",
+  "fr": "%@ (vitesse %@)",
+  "pt-BR": "%@ (velocidade %@)",
+  "zh-Hans": "%@（速度 %@）",
+  "ja": "%@（速度 %@）"
  },
  "%@ (скрыто)": {
   "en": "%@ (redacted)",
-  "es": "%@ (oculto)"
+  "es": "%@ (oculto)",
+  "de": "%@ (geschwärzt)",
+  "fr": "%@ (caviardé)",
+  "pt-BR": "%@ (ocultado)",
+  "zh-Hans": "%@（已遮盖）",
+  "ja": "%@（墨消し済み）"
  },
  "%@ (страницы)": {
   "en": "%@ (pages)",
-  "es": "%@ (páginas)"
+  "es": "%@ (páginas)",
+  "de": "%@ (Seiten)",
+  "fr": "%@ (pages)",
+  "pt-BR": "%@ (páginas)",
+  "zh-Hans": "%@（页面）",
+  "ja": "%@（ページ）"
  },
  "%@ (субтитры)": {
   "en": "%@ (subtitles)",
-  "es": "%@ (subtítulos)"
+  "es": "%@ (subtítulos)",
+  "de": "%@ (Untertitel)",
+  "fr": "%@ (sous-titres)",
+  "pt-BR": "%@ (legendas)",
+  "zh-Hans": "%@（字幕）",
+  "ja": "%@（字幕）"
  },
  "%@ (текст)": {
   "en": "%@ (text)",
-  "es": "%@ (texto)"
+  "es": "%@ (texto)",
+  "de": "%@ (Text)",
+  "fr": "%@ (texte)",
+  "pt-BR": "%@ (texto)",
+  "zh-Hans": "%@（文本）",
+  "ja": "%@（テキスト）"
  },
  "%@ (фон)": {
   "en": "%@ (background)",
-  "es": "%@ (fondo)"
+  "es": "%@ (fondo)",
+  "de": "%@ (Hintergrund)",
+  "fr": "%@ (arrière-plan)",
+  "pt-BR": "%@ (fundo)",
+  "zh-Hans": "%@（背景）",
+  "ja": "%@（背景）"
  },
  "%@ (части)": {
   "en": "%@ (parts)",
-  "es": "%@ (partes)"
+  "es": "%@ (partes)",
+  "de": "%@ (Teile)",
+  "fr": "%@ (parties)",
+  "pt-BR": "%@ (partes)",
+  "zh-Hans": "%@（片段）",
+  "ja": "%@（パート）"
  },
  "%@ завершился с кодом %d": {
   "en": "%@ exited with code %d",
-  "es": "%@ terminó con el código %d"
+  "es": "%@ terminó con el código %d",
+  "de": "%@ wurde mit Code %d beendet",
+  "fr": "%@ s’est terminé avec le code %d",
+  "pt-BR": "%@ terminou com o código %d",
+  "zh-Hans": "%@ 已退出，代码 %d",
+  "ja": "%@ がコード %d で終了しました"
  },
  "%@ и ещё %lld": {
   "en": "%@ and %lld more",
-  "es": "%@ y %lld más"
+  "es": "%@ y %lld más",
+  "de": "%@ und %lld weitere",
+  "fr": "%@ et %lld de plus",
+  "pt-BR": "%@ e mais %lld",
+  "zh-Hans": "%@ 及另外 %lld 个",
+  "ja": "%@ ほか %lld 件"
  },
  "%@ кадр %@": {
   "en": "%@ frame %@",
-  "es": "%@ fotograma %@"
+  "es": "%@ fotograma %@",
+  "de": "%@ Bild %@",
+  "fr": "%@ image %@",
+  "pt-BR": "%@ quadro %@",
+  "zh-Hans": "%@ 帧 %@",
+  "ja": "%@ フレーム %@"
  },
  "%@ — перемещён": {
   "en": "%@ — moved",
-  "es": "%@ — movido"
+  "es": "%@ — movido",
+  "de": "%@ — verschoben",
+  "fr": "%@ — déplacé",
+  "pt-BR": "%@ — movido",
+  "zh-Hans": "%@ — 已移动",
+  "ja": "%@ — 移動しました"
  },
  "%@: не удалось обработать %@": {
   "en": "%@: could not process %@",
-  "es": "%@: no se pudo procesar %@"
+  "es": "%@: no se pudo procesar %@",
+  "de": "%@: %@ konnte nicht verarbeitet werden",
+  "fr": "%@ : impossible de traiter %@",
+  "pt-BR": "%@: não foi possível processar %@",
+  "zh-Hans": "%@：无法处理 %@",
+  "ja": "%@：%@ を処理できませんでした"
  },
  "%lld · док. %lld": {
   "en": "%1$lld · doc %2$lld",
-  "es": "%1$lld · doc. %2$lld"
+  "es": "%1$lld · doc. %2$lld",
+  "de": "%1$lld · Dok. %2$lld",
+  "fr": "%1$lld · doc. %2$lld",
+  "pt-BR": "%1$lld · doc. %2$lld",
+  "zh-Hans": "%1$lld · 文档 %2$lld",
+  "ja": "%1$lld · 書類 %2$lld"
  },
  "%lld · убрана": {
   "en": "%lld · left out",
-  "es": "%lld · quitada"
+  "es": "%lld · quitada",
+  "de": "%lld · ausgelassen",
+  "fr": "%lld · ignoré",
+  "pt-BR": "%lld · deixado de fora",
+  "zh-Hans": "%lld · 已略过",
+  "ja": "%lld · 除外"
  },
  "%lld байт": {
   "en": "%lld bytes",
-  "es": "%lld bytes"
+  "es": "%lld bytes",
+  "de": "%lld Byte",
+  "fr": "%lld octets",
+  "pt-BR": "%lld bytes",
+  "zh-Hans": "%lld 字节",
+  "ja": "%lld バイト"
  },
  "%lld из %lld": {
   "en": "%lld of %lld",
-  "es": "%lld de %lld"
+  "es": "%lld de %lld",
+  "de": "%lld von %lld",
+  "fr": "%lld sur %lld",
+  "pt-BR": "%lld de %lld",
+  "zh-Hans": "第 %lld 个，共 %lld 个",
+  "ja": "%lld / %lld"
  },
  "%lld из %lld · %lld%%": {
   "en": "%lld of %lld · %lld%%",
-  "es": "%lld de %lld · %lld%%"
+  "es": "%lld de %lld · %lld%%",
+  "de": "%lld von %lld · %lld %%",
+  "fr": "%lld sur %lld · %lld %%",
+  "pt-BR": "%lld de %lld · %lld%%",
+  "zh-Hans": "第 %lld 个，共 %lld 个 · %lld%%",
+  "ja": "%lld / %lld · %lld%%"
  },
  "%lld по высоте": {
   "en": "%lld down",
-  "es": "%lld en alto"
+  "es": "%lld en alto",
+  "de": "%lld untereinander",
+  "fr": "%lld en hauteur",
+  "pt-BR": "%lld na vertical",
+  "zh-Hans": "纵向 %lld 个",
+  "ja": "縦に %lld"
  },
  "%lld по ширине": {
   "en": "%lld across",
-  "es": "%lld a lo ancho"
+  "es": "%lld a lo ancho",
+  "de": "%lld nebeneinander",
+  "fr": "%lld en largeur",
+  "pt-BR": "%lld na horizontal",
+  "zh-Hans": "横向 %lld 个",
+  "ja": "横に %lld"
  },
  "%lld полей": {
   "en": "%lld fields",
-  "es": "%lld campos"
+  "es": "%lld campos",
+  "de": "%lld Felder",
+  "fr": "%lld champs",
+  "pt-BR": "%lld campos",
+  "zh-Hans": "%lld 个字段",
+  "ja": "%lld 個のフィールド"
  },
  "%lld стр.": {
   "en": "%lld pages",
-  "es": "%lld págs."
+  "es": "%lld págs.",
+  "de": "%lld Seiten",
+  "fr": "%lld pages",
+  "pt-BR": "%lld páginas",
+  "zh-Hans": "%lld 页",
+  "ja": "%lld ページ"
  },
  "(%@). Выберите другой формат или меньший размер.": {
   "en": "(%@). Choose another format or a smaller size.",
-  "es": "(%@). Elige otro formato o un tamaño menor."
+  "es": "(%@). Elige otro formato o un tamaño menor.",
+  "de": "(%@). Wählen Sie ein anderes Format oder eine kleinere Größe.",
+  "fr": "(%@). Choisissez un autre format ou une taille plus petite.",
+  "pt-BR": "(%@). Escolha outro formato ou um tamanho menor.",
+  "zh-Hans": "（%@）。请选择其他格式或更小的尺寸。",
+  "ja": "（%@）。別の形式か小さいサイズを選んでください。"
  },
  "1000 Гц": {
   "en": "1000 Hz",
-  "es": "1000 Hz"
+  "es": "1000 Hz",
+  "de": "1000 Hz",
+  "fr": "1000 Hz",
+  "pt-BR": "1000 Hz",
+  "zh-Hans": "1000 Hz",
+  "ja": "1000 Hz"
  },
  "1500 Гц": {
   "en": "1500 Hz",
-  "es": "1500 Hz"
+  "es": "1500 Hz",
+  "de": "1500 Hz",
+  "fr": "1500 Hz",
+  "pt-BR": "1500 Hz",
+  "zh-Hans": "1500 Hz",
+  "ja": "1500 Hz"
  },
  "800 Гц": {
   "en": "800 Hz",
-  "es": "800 Hz"
+  "es": "800 Hz",
+  "de": "800 Hz",
+  "fr": "800 Hz",
+  "pt-BR": "800 Hz",
+  "zh-Hans": "800 Hz",
+  "ja": "800 Hz"
  },
  "HEVC (H.265) — меньше файл, сжатие дольше": {
   "en": "HEVC (H.265) — smaller file, slower to compress",
-  "es": "HEVC (H.265) — archivo más pequeño, compresión más lenta"
+  "es": "HEVC (H.265) — archivo más pequeño, compresión más lenta",
+  "de": "HEVC (H.265) — kleinere Datei, langsamere Komprimierung",
+  "fr": "HEVC (H.265) — fichier plus petit, compression plus lente",
+  "pt-BR": "HEVC (H.265) — arquivo menor, compressão mais lenta",
+  "zh-Hans": "HEVC (H.265) — 文件更小，压缩更慢",
+  "ja": "HEVC（H.265）— ファイルは小さく、圧縮は遅め"
  },
  "Mangosteen %@ — самая новая версия.": {
   "en": "Mangosteen %@ is the latest version.",
-  "es": "Mangosteen %@ es la versión más reciente."
+  "es": "Mangosteen %@ es la versión más reciente.",
+  "de": "Mangosteen %@ ist die neueste Version.",
+  "fr": "Mangosteen %@ est la dernière version.",
+  "pt-BR": "Mangosteen %@ é a versão mais recente.",
+  "zh-Hans": "Mangosteen %@ 已是最新版本。",
+  "ja": "Mangosteen %@ は最新バージョンです。"
  },
  "Mangosteen на GitHub": {
   "en": "Mangosteen on GitHub",
-  "es": "Mangosteen en GitHub"
+  "es": "Mangosteen en GitHub",
+  "de": "Mangosteen auf GitHub",
+  "fr": "Mangosteen sur GitHub",
+  "pt-BR": "Mangosteen no GitHub",
+  "zh-Hans": "GitHub 上的 Mangosteen",
+  "ja": "GitHub の Mangosteen"
+ },
+ "Mangosteen не разрешено распознавать речь. Разрешите в «Системные настройки → Конфиденциальность и безопасность → Распознавание речи».": {
+  "en": "Mangosteen is not allowed to recognise speech. Allow it in System Settings → Privacy & Security → Speech Recognition.",
+  "es": "Mangosteen no tiene permiso para reconocer voz. Permítelo en Ajustes del Sistema → Privacidad y seguridad → Reconocimiento de voz.",
+  "de": "Mangosteen darf keine Sprache erkennen. Erlauben Sie es unter Systemeinstellungen → Datenschutz & Sicherheit → Spracherkennung.",
+  "fr": "Mangosteen n’est pas autorisé à reconnaître la parole. Autorisez-le dans Réglages Système → Confidentialité et sécurité → Reconnaissance vocale.",
+  "pt-BR": "O Mangosteen não tem permissão para reconhecer fala. Permita em Ajustes do Sistema → Privacidade e Segurança → Reconhecimento de Fala.",
+  "zh-Hans": "Mangosteen 未获准识别语音。请在“系统设置”→“隐私与安全性”→“语音识别”中允许。",
+  "ja": "Mangosteen には音声認識が許可されていません。「システム設定」→「プライバシーとセキュリティ」→「音声認識」で許可してください。"
  },
  "PDF защищён паролем": {
   "en": "The PDF is password protected",
-  "es": "El PDF está protegido con contraseña"
+  "es": "El PDF está protegido con contraseña",
+  "de": "Das PDF ist passwortgeschützt",
+  "fr": "Le PDF est protégé par un mot de passe",
+  "pt-BR": "O PDF está protegido por senha",
+  "zh-Hans": "PDF 受密码保护",
+  "ja": "PDF はパスワードで保護されています"
  },
  "PNG, TIFF и другие форматы без потерь будут сохранены как %@.": {
   "en": "PNG, TIFF and other lossless formats will be saved as %@.",
-  "es": "PNG, TIFF y otros formatos sin pérdida se guardarán como %@."
+  "es": "PNG, TIFF y otros formatos sin pérdida se guardarán como %@.",
+  "de": "PNG, TIFF und andere verlustfreie Formate werden als %@ gespeichert.",
+  "fr": "PNG, TIFF et les autres formats sans perte seront enregistrés en %@.",
+  "pt-BR": "PNG, TIFF e outros formatos sem perdas serão salvos como %@.",
+  "zh-Hans": "PNG、TIFF 等无损格式将保存为 %@。",
+  "ja": "PNG、TIFF などのロスレス形式は %@ で保存されます。"
  },
  "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате.": {
   "en": "WAV, FLAC and AIFF are saved as M4A (AAC); other formats stay as they are.",
-  "es": "WAV, FLAC y AIFF se guardan como M4A (AAC); el resto mantiene su formato."
+  "es": "WAV, FLAC y AIFF se guardan como M4A (AAC); el resto mantiene su formato.",
+  "de": "WAV, FLAC und AIFF werden als M4A (AAC) gespeichert; andere Formate bleiben, wie sie sind.",
+  "fr": "WAV, FLAC et AIFF sont enregistrés en M4A (AAC) ; les autres formats restent tels quels.",
+  "pt-BR": "WAV, FLAC e AIFF são salvos como M4A (AAC); os outros formatos ficam como estão.",
+  "zh-Hans": "WAV、FLAC 和 AIFF 保存为 M4A (AAC)；其他格式保持不变。",
+  "ja": "WAV、FLAC、AIFF は M4A（AAC）で保存され、ほかの形式はそのままです。"
+ },
+ "{name} — имя оригинала, {date} — дата, {time} — время, {format} — формат результата. Если имя занято, добавляется номер: «фото 2».": {
+  "en": "{name} is the original's name, {date} the date, {time} the time, {format} the result's format. If the name is taken, a number is added: “photo 2”.",
+  "es": "{name} es el nombre del original, {date} la fecha, {time} la hora, {format} el formato del resultado. Si el nombre ya existe, se añade un número: «foto 2».",
+  "de": "{name} ist der Name des Originals, {date} das Datum, {time} die Uhrzeit, {format} das Format des Ergebnisses. Ist der Name vergeben, wird eine Zahl angehängt: „Foto 2“.",
+  "fr": "{name} est le nom de l’original, {date} la date, {time} l’heure, {format} le format du résultat. Si le nom est pris, un numéro est ajouté : « photo 2 ».",
+  "pt-BR": "{name} é o nome do original, {date} a data, {time} a hora, {format} o formato do resultado. Se o nome já existir, um número é acrescentado: “foto 2”.",
+  "zh-Hans": "{name} 为原文件名，{date} 为日期，{time} 为时间，{format} 为结果格式。若名称已被占用，会加上编号：“照片 2”。",
+  "ja": "{name} は元の名前、{date} は日付、{time} は時刻、{format} は結果の形式です。名前が使われている場合は番号が付きます：「写真 2」。"
  },
  "«%@» защищён паролем.": {
   "en": "“%@” is password protected.",
-  "es": "«%@» está protegido con contraseña."
+  "es": "«%@» está protegido con contraseña.",
+  "de": "„%@“ ist passwortgeschützt.",
+  "fr": "« %@ » est protégé par un mot de passe.",
+  "pt-BR": "“%@” está protegido por senha.",
+  "zh-Hans": "“%@”受密码保护。",
+  "ja": "「%@」はパスワードで保護されています。"
  },
  "«%@» не читается как JSON.": {
   "en": "“%@” cannot be read as JSON.",
-  "es": "«%@» no se puede leer como JSON."
+  "es": "«%@» no se puede leer como JSON.",
+  "de": "„%@“ kann nicht als JSON gelesen werden.",
+  "fr": "« %@ » ne peut pas être lu comme JSON.",
+  "pt-BR": "“%@” não pode ser lido como JSON.",
+  "zh-Hans": "无法将“%@”读取为 JSON。",
+  "ja": "「%@」を JSON として読み込めません。"
  },
  "Авто": {
   "en": "Auto",
-  "es": "Auto"
+  "es": "Auto",
+  "de": "Automatisch",
+  "fr": "Auto",
+  "pt-BR": "Automático",
+  "zh-Hans": "自动",
+  "ja": "自動"
  },
  "Автозапуск": {
   "en": "Launch at login",
-  "es": "Inicio automático"
+  "es": "Inicio automático",
+  "de": "Beim Anmelden starten",
+  "fr": "Ouvrir à l’ouverture de session",
+  "pt-BR": "Abrir ao iniciar sessão",
+  "zh-Hans": "登录时启动",
+  "ja": "ログイン時に開く"
  },
  "Автор": {
   "en": "Author",
-  "es": "Autor"
+  "es": "Autor",
+  "de": "Autor",
+  "fr": "Auteur",
+  "pt-BR": "Autor",
+  "zh-Hans": "作者",
+  "ja": "作成者"
  },
  "Авторские права": {
   "en": "Copyright",
-  "es": "Derechos de autor"
+  "es": "Derechos de autor",
+  "de": "Urheberrecht",
+  "fr": "Copyright",
+  "pt-BR": "Direitos autorais",
+  "zh-Hans": "版权",
+  "ja": "著作権"
  },
  "Альбомная 16:9": {
   "en": "Landscape 16:9",
-  "es": "Horizontal 16:9"
+  "es": "Horizontal 16:9",
+  "de": "Querformat 16:9",
+  "fr": "Paysage 16:9",
+  "pt-BR": "Paisagem 16:9",
+  "zh-Hans": "横向 16:9",
+  "ja": "横長 16:9"
  },
  "Аппаратное кодирование": {
   "en": "Hardware encoding",
-  "es": "Codificación por hardware"
+  "es": "Codificación por hardware",
+  "de": "Hardware-Kodierung",
+  "fr": "Encodage matériel",
+  "pt-BR": "Codificação por hardware",
+  "zh-Hans": "硬件编码",
+  "ja": "ハードウェアエンコード"
  },
  "Архив «%@» пуст.": {
   "en": "The archive “%@” is empty.",
-  "es": "El archivo comprimido «%@» está vacío."
+  "es": "El archivo comprimido «%@» está vacío.",
+  "de": "Das Archiv „%@“ ist leer.",
+  "fr": "L’archive « %@ » est vide.",
+  "pt-BR": "O arquivo compactado “%@” está vazio.",
+  "zh-Hans": "归档“%@”为空。",
+  "ja": "アーカイブ「%@」は空です。"
  },
  "Архивация": {
   "en": "Archiving",
-  "es": "Archivando"
+  "es": "Archivando",
+  "de": "Archivieren",
+  "fr": "Archivage",
+  "pt-BR": "Compactação",
+  "zh-Hans": "归档",
+  "ja": "アーカイブ作成"
  },
  "Архивы": {
   "en": "Archives",
-  "es": "Archivos comprimidos"
+  "es": "Archivos comprimidos",
+  "de": "Archive",
+  "fr": "Archives",
+  "pt-BR": "Arquivos compactados",
+  "zh-Hans": "归档",
+  "ja": "アーカイブ"
  },
  "Аудио": {
   "en": "Audio",
-  "es": "Audio"
+  "es": "Audio",
+  "de": "Audio",
+  "fr": "Audio",
+  "pt-BR": "Áudio",
+  "zh-Hans": "音频",
+  "ja": "オーディオ"
  },
  "Без изменений": {
   "en": "Unchanged",
-  "es": "Sin cambios"
+  "es": "Sin cambios",
+  "de": "Unverändert",
+  "fr": "Inchangé",
+  "pt-BR": "Sem alteração",
+  "zh-Hans": "不变",
+  "ja": "変更なし"
  },
  "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках.": {
   "en": "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.",
-  "es": "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes."
+  "es": "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes.",
+  "de": "Ohne Ziehen: Klicken Sie auf das Segment-Symbol in der Menüleiste → wählen Sie ein Rad → wählen Sie Dateien und klicken Sie auf ein Segment. Die Tasten lassen sich in den Einstellungen ändern.",
+  "fr": "Sans glisser : cliquez sur l’icône des segments dans la barre des menus → choisissez une roue → choisissez des fichiers et cliquez sur un segment. Les touches se changent dans les Réglages.",
+  "pt-BR": "Sem arrastar: clique no ícone de segmentos na barra de menus → escolha uma roda → escolha arquivos e clique em um segmento. As teclas podem ser alteradas nos Ajustes.",
+  "zh-Hans": "无需拖移：点按菜单栏中的扇区图标 → 选择一个转盘 → 选择文件并点按一个扇区。按键可在设置中更改。",
+  "ja": "ドラッグしない場合：メニューバーのセグメントアイコンをクリック → ホイールを選択 → ファイルを選んでセグメントをクリック。キーは設定で変更できます。"
  },
  "Без стекла то, что под колесом, размывается, а непрозрачность решает, сколько его видно. Со стеклом каждая долька — системное Liquid Glass: ниже 70% оно прозрачное, выше — матовое.": {
   "en": "Without glass, what lies under the wheel is blurred, and the opacity decides how much of it shows. With glass, every segment is the system's Liquid Glass: clear below 70%, frosted above.",
-  "es": "Sin cristal, lo que hay bajo la rueda se desenfoca y la opacidad decide cuánto se ve. Con cristal, cada sector es Liquid Glass del sistema: transparente por debajo del 70 %, esmerilado por encima."
+  "es": "Sin cristal, lo que hay bajo la rueda se desenfoca y la opacidad decide cuánto se ve. Con cristal, cada sector es Liquid Glass del sistema: transparente por debajo del 70 %, esmerilado por encima.",
+  "de": "Ohne Glas wird verwischt, was unter dem Rad liegt, und die Deckkraft bestimmt, wie viel davon zu sehen ist. Mit Glas ist jedes Segment das Liquid Glass des Systems: unter 70 % klar, darüber matt.",
+  "fr": "Sans verre, ce qui se trouve sous la roue est flouté, et l’opacité règle combien on en voit. Avec le verre, chaque segment est le Liquid Glass du système : transparent sous 70 %, dépoli au-dessus.",
+  "pt-BR": "Sem vidro, o que está sob a roda fica desfocado, e a opacidade define o quanto aparece. Com vidro, cada segmento é o Liquid Glass do sistema: transparente abaixo de 70%, fosco acima.",
+  "zh-Hans": "不使用玻璃时，转盘下方的内容会被模糊，不透明度决定能看到多少。使用玻璃时，每个扇区都是系统的 Liquid Glass：低于 70% 为透明，高于则为磨砂。",
+  "ja": "ガラスなしでは、ホイールの下にあるものがぼかされ、不透明度で見え方が決まります。ガラスありでは各セグメントがシステムの Liquid Glass になり、70% 未満は透明、それ以上はすりガラスです。"
  },
  "Бирюзовый": {
   "en": "Teal",
-  "es": "Turquesa"
+  "es": "Turquesa",
+  "de": "Türkis",
+  "fr": "Turquoise",
+  "pt-BR": "Turquesa",
+  "zh-Hans": "青绿",
+  "ja": "ターコイズ"
  },
  "Браузер не отдал картинку. Сохраните её на диск и перетащите файл.": {
   "en": "The browser did not hand over the picture. Save it to disk and drag the file.",
-  "es": "El navegador no entregó la imagen. Guárdala en el disco y arrastra el archivo."
+  "es": "El navegador no entregó la imagen. Guárdala en el disco y arrastra el archivo.",
+  "de": "Der Browser hat das Bild nicht übergeben. Speichern Sie es auf der Festplatte und ziehen Sie die Datei.",
+  "fr": "Le navigateur n’a pas transmis l’image. Enregistrez-la sur le disque et faites glisser le fichier.",
+  "pt-BR": "O navegador não entregou a imagem. Salve-a no disco e arraste o arquivo.",
+  "zh-Hans": "浏览器未提供该图片。请先将其存储到磁盘，再拖移文件。",
+  "ja": "ブラウザが画像を渡しませんでした。ディスクに保存してからファイルをドラッグしてください。"
  },
  "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется.": {
   "en": "Drop the file on a segment. The result appears next to the original file; the original itself is never changed.",
-  "es": "Suelta el archivo en un segmento. El resultado aparece junto al archivo original; el original nunca se modifica."
+  "es": "Suelta el archivo en un segmento. El resultado aparece junto al archivo original; el original nunca se modifica.",
+  "de": "Lassen Sie die Datei auf einem Segment los. Das Ergebnis erscheint neben der Originaldatei; das Original selbst wird nie geändert.",
+  "fr": "Déposez le fichier sur un segment. Le résultat apparaît à côté du fichier d’origine ; l’original n’est jamais modifié.",
+  "pt-BR": "Solte o arquivo em um segmento. O resultado aparece ao lado do arquivo original; o original nunca é alterado.",
+  "zh-Hans": "将文件拖放到一个扇区上。结果会出现在原文件旁边；原文件本身永远不会被更改。",
+  "ja": "ファイルをセグメントにドロップします。結果は元のファイルの隣にでき、元のファイルは変更されません。"
  },
  "Быстро, без перекодирования": {
   "en": "Fast, without re-encoding",
-  "es": "Rápido, sin recodificar"
+  "es": "Rápido, sin recodificar",
+  "de": "Schnell, ohne Neukodierung",
+  "fr": "Rapide, sans réencodage",
+  "pt-BR": "Rápido, sem recodificar",
+  "zh-Hans": "快速，不重新编码",
+  "ja": "高速、再エンコードなし"
  },
  "Быстро, без перекодирования (разрез по ближайшему ключевому кадру)": {
   "en": "Fast, without re-encoding (cut at the nearest keyframe)",
-  "es": "Rápido, sin recodificar (corte en el fotograma clave más cercano)"
+  "es": "Rápido, sin recodificar (corte en el fotograma clave más cercano)",
+  "de": "Schnell, ohne Neukodierung (Schnitt am nächsten Keyframe)",
+  "fr": "Rapide, sans réencodage (coupe à l’image clé la plus proche)",
+  "pt-BR": "Rápido, sem recodificar (corte no quadro-chave mais próximo)",
+  "zh-Hans": "快速，不重新编码（在最近的关键帧处剪切）",
+  "ja": "高速、再エンコードなし（最も近いキーフレームでカット）"
  },
  "В PDF изображения будут пережаты в JPEG экранного разрешения.": {
   "en": "Images inside PDFs will be re-encoded as screen-resolution JPEG.",
-  "es": "Las imágenes de los PDF se recomprimirán en JPEG a resolución de pantalla."
+  "es": "Las imágenes de los PDF se recomprimirán en JPEG a resolución de pantalla.",
+  "de": "Bilder in PDFs werden als JPEG in Bildschirmauflösung neu kodiert.",
+  "fr": "Les images des PDF seront réencodées en JPEG à la résolution de l’écran.",
+  "pt-BR": "As imagens dentro dos PDFs serão recodificadas como JPEG em resolução de tela.",
+  "zh-Hans": "PDF 中的图像将重新编码为屏幕分辨率的 JPEG。",
+  "ja": "PDF 内の画像は画面解像度の JPEG に再エンコードされます。"
  },
  "В «%@» данные не в виде таблицы. Нужен массив записей, например [{\"имя\": \"Чай\", \"цена\": 1.5}].": {
   "en": "The data in “%@” is not a table. It needs to be an array of records, such as [{\"name\": \"Tea\", \"price\": 1.5}].",
-  "es": "Los datos de «%@» no son una tabla. Hace falta una lista de registros, por ejemplo [{\"nombre\": \"Té\", \"precio\": 1.5}]."
+  "es": "Los datos de «%@» no son una tabla. Hace falta una lista de registros, por ejemplo [{\"nombre\": \"Té\", \"precio\": 1.5}].",
+  "de": "Die Daten in „%@“ sind keine Tabelle. Es muss ein Array von Datensätzen sein, z. B. [{\"name\": \"Tee\", \"preis\": 1.5}].",
+  "fr": "Les données de « %@ » ne sont pas un tableau. Il faut un tableau d’enregistrements, par exemple [{\"nom\": \"Thé\", \"prix\": 1.5}].",
+  "pt-BR": "Os dados em “%@” não são uma tabela. É preciso um array de registros, como [{\"nome\": \"Chá\", \"preço\": 1.5}].",
+  "zh-Hans": "“%@”中的数据不是表格。需要是记录数组，例如 [{\"名称\": \"茶\", \"价格\": 1.5}]。",
+  "ja": "「%@」のデータは表ではありません。[{\"名前\": \"お茶\", \"価格\": 1.5}] のようなレコードの配列が必要です。"
  },
  "В «%@» не найден текст.": {
   "en": "No text found in “%@”.",
-  "es": "No se encontró texto en «%@»."
+  "es": "No se encontró texto en «%@».",
+  "de": "Kein Text in „%@“ gefunden.",
+  "fr": "Aucun texte trouvé dans « %@ ».",
+  "pt-BR": "Nenhum texto encontrado em “%@”.",
+  "zh-Hans": "在“%@”中未找到文本。",
+  "ja": "「%@」にテキストが見つかりません。"
  },
  "В «%@» не нашлось файлов, которые можно распаковать. Образы дисков только в формате UDF, например установочные образы Windows, не поддерживаются.": {
   "en": "“%@” has no files that can be extracted. Disc images in UDF format only, such as Windows installation images, are not supported.",
-  "es": "«%@» no tiene archivos que se puedan extraer. Las imágenes de disco solo en formato UDF, como las de instalación de Windows, no son compatibles."
+  "es": "«%@» no tiene archivos que se puedan extraer. Las imágenes de disco solo en formato UDF, como las de instalación de Windows, no son compatibles.",
+  "de": "„%@“ enthält keine Dateien, die entpackt werden können. Disk-Images nur im UDF-Format, etwa Windows-Installationsimages, werden nicht unterstützt.",
+  "fr": "« %@ » ne contient aucun fichier extractible. Les images disque uniquement au format UDF, comme les images d’installation de Windows, ne sont pas prises en charge.",
+  "pt-BR": "“%@” não tem arquivos que possam ser extraídos. Imagens de disco apenas em UDF, como as de instalação do Windows, não são suportadas.",
+  "zh-Hans": "“%@”中没有可解压的文件。不支持仅为 UDF 格式的磁盘映像，例如 Windows 安装映像。",
+  "ja": "「%@」には展開できるファイルがありません。Windows のインストールイメージなど、UDF 形式のみのディスクイメージには対応していません。"
+ },
+ "В «%@» не удалось распознать речь.": {
+  "en": "No speech could be recognised in “%@”.",
+  "es": "No se pudo reconocer voz en «%@».",
+  "de": "In „%@“ konnte keine Sprache erkannt werden.",
+  "fr": "Aucune parole n’a pu être reconnue dans « %@ ».",
+  "pt-BR": "Não foi possível reconhecer fala em “%@”.",
+  "zh-Hans": "无法识别“%@”中的语音。",
+  "ja": "「%@」の音声を認識できませんでした。"
  },
  "В «%@» нет видео.": {
   "en": "“%@” has no video.",
-  "es": "«%@» no tiene vídeo."
+  "es": "«%@» no tiene vídeo.",
+  "de": "„%@“ enthält kein Video.",
+  "fr": "« %@ » ne contient pas de vidéo.",
+  "pt-BR": "“%@” não tem vídeo.",
+  "zh-Hans": "“%@”中没有视频。",
+  "ja": "「%@」にはビデオがありません。"
  },
  "В «%@» нет звуковой дорожки.": {
   "en": "“%@” has no audio track.",
-  "es": "«%@» no tiene pista de audio."
+  "es": "«%@» no tiene pista de audio.",
+  "de": "„%@“ hat keine Tonspur.",
+  "fr": "« %@ » n’a pas de piste audio.",
+  "pt-BR": "“%@” não tem faixa de áudio.",
+  "zh-Hans": "“%@”没有音轨。",
+  "ja": "「%@」にはオーディオトラックがありません。"
  },
  "В «%@» нет субтитров.": {
   "en": "“%@” has no subtitles.",
-  "es": "«%@» no tiene subtítulos."
+  "es": "«%@» no tiene subtítulos.",
+  "de": "„%@“ hat keine Untertitel.",
+  "fr": "« %@ » n’a pas de sous-titres.",
+  "pt-BR": "“%@” não tem legendas.",
+  "zh-Hans": "“%@”没有字幕。",
+  "ja": "「%@」には字幕がありません。"
  },
  "В архив": {
   "en": "Archive",
-  "es": "Archivar"
+  "es": "Archivar",
+  "de": "Archivieren",
+  "fr": "Archiver",
+  "pt-BR": "Compactar",
+  "zh-Hans": "归档",
+  "ja": "アーカイブ"
+ },
+ "В выбранную папку": {
+  "en": "To a chosen folder",
+  "es": "En una carpeta elegida",
+  "de": "In einen gewählten Ordner",
+  "fr": "Dans un dossier choisi",
+  "pt-BR": "Em uma pasta escolhida",
+  "zh-Hans": "存到所选文件夹",
+  "ja": "選んだフォルダへ"
  },
  "Введите координаты в градусах, например 55.7558 и 37.6173": {
   "en": "Enter coordinates in degrees, e.g. 55.7558 and 37.6173",
-  "es": "Introduce las coordenadas en grados, p. ej. 55.7558 y 37.6173"
+  "es": "Introduce las coordenadas en grados, p. ej. 55.7558 y 37.6173",
+  "de": "Koordinaten in Grad eingeben, z. B. 55.7558 und 37.6173",
+  "fr": "Saisissez les coordonnées en degrés, par ex. 55.7558 et 37.6173",
+  "pt-BR": "Digite as coordenadas em graus, por exemplo 55.7558 e 37.6173",
+  "zh-Hans": "以度为单位输入坐标，例如 55.7558 和 37.6173",
+  "ja": "座標を度で入力（例：55.7558 と 37.6173）"
  },
  "Вернуть как было": {
   "en": "Restore Defaults",
-  "es": "Restablecer"
+  "es": "Restablecer",
+  "de": "Standard wiederherstellen",
+  "fr": "Rétablir les réglages par défaut",
+  "pt-BR": "Restaurar Padrões",
+  "zh-Hans": "恢复默认设置",
+  "ja": "デフォルトに戻す"
  },
  "Версия %@": {
   "en": "Version %@",
-  "es": "Versión %@"
+  "es": "Versión %@",
+  "de": "Version %@",
+  "fr": "Version %@",
+  "pt-BR": "Versão %@",
+  "zh-Hans": "版本 %@",
+  "ja": "バージョン %@"
  },
  "Вертикальная 9:16": {
   "en": "Portrait 9:16",
-  "es": "Vertical 9:16"
+  "es": "Vertical 9:16",
+  "de": "Hochformat 9:16",
+  "fr": "Portrait 9:16",
+  "pt-BR": "Retrato 9:16",
+  "zh-Hans": "竖向 9:16",
+  "ja": "縦長 9:16"
  },
  "Весь ролик": {
   "en": "Whole clip",
-  "es": "Todo el vídeo"
+  "es": "Todo el vídeo",
+  "de": "Gesamter Clip",
+  "fr": "Clip entier",
+  "pt-BR": "Clipe inteiro",
+  "zh-Hans": "整个片段",
+  "ja": "クリップ全体"
  },
  "Весь файл": {
   "en": "Whole file",
-  "es": "Archivo completo"
+  "es": "Archivo completo",
+  "de": "Ganze Datei",
+  "fr": "Fichier entier",
+  "pt-BR": "Arquivo inteiro",
+  "zh-Hans": "整个文件",
+  "ja": "ファイル全体"
  },
  "Видео": {
   "en": "Video",
-  "es": "Vídeo"
+  "es": "Vídeo",
+  "de": "Video",
+  "fr": "Vidéo",
+  "pt-BR": "Vídeo",
+  "zh-Hans": "视频",
+  "ja": "ビデオ"
  },
  "Видео MP4 той же длительности, что и запись.": {
   "en": "An MP4 video as long as the recording.",
-  "es": "Un vídeo MP4 con la misma duración que la grabación."
+  "es": "Un vídeo MP4 con la misma duración que la grabación.",
+  "de": "Ein MP4-Video so lang wie die Aufnahme.",
+  "fr": "Une vidéo MP4 aussi longue que l’enregistrement.",
+  "pt-BR": "Um vídeo MP4 com a duração da gravação.",
+  "zh-Hans": "与录音等长的 MP4 视频。",
+  "ja": "録音と同じ長さの MP4 ビデオ。"
  },
  "Видео сохраняется в MP4 (MOV и MKV остаются в своём формате).": {
   "en": "Video is saved as MP4 (MOV and MKV keep their format).",
-  "es": "El vídeo se guarda como MP4 (MOV y MKV mantienen su formato)."
+  "es": "El vídeo se guarda como MP4 (MOV y MKV mantienen su formato).",
+  "de": "Videos werden als MP4 gespeichert (MOV und MKV behalten ihr Format).",
+  "fr": "Les vidéos sont enregistrées en MP4 (MOV et MKV gardent leur format).",
+  "pt-BR": "Os vídeos são salvos como MP4 (MOV e MKV mantêm o formato).",
+  "zh-Hans": "视频保存为 MP4（MOV 和 MKV 保持原格式）。",
+  "ja": "ビデオは MP4 で保存されます（MOV と MKV は形式を保ちます）。"
  },
  "Визуализатор": {
   "en": "Visualizer",
-  "es": "Visualizador"
+  "es": "Visualizador",
+  "de": "Visualisierung",
+  "fr": "Visualisation",
+  "pt-BR": "Visualizador",
+  "zh-Hans": "可视化",
+  "ja": "ビジュアライザ"
  },
  "Визуализация": {
   "en": "Visualizer",
-  "es": "Visualización"
+  "es": "Visualización",
+  "de": "Visualisierung",
+  "fr": "Visualisation",
+  "pt-BR": "Visualizador",
+  "zh-Hans": "可视化",
+  "ja": "ビジュアライザ"
  },
  "Виньетка": {
   "en": "Vignette",
-  "es": "Viñeta"
+  "es": "Viñeta",
+  "de": "Vignette",
+  "fr": "Vignette",
+  "pt-BR": "Vinheta",
+  "zh-Hans": "暗角",
+  "ja": "周辺減光"
  },
  "Влево": {
   "en": "Left",
-  "es": "Izquierda"
+  "es": "Izquierda",
+  "de": "Links",
+  "fr": "Gauche",
+  "pt-BR": "Esquerda",
+  "zh-Hans": "左",
+  "ja": "左"
  },
  "Волна": {
   "en": "Waveform",
-  "es": "Onda"
+  "es": "Onda",
+  "de": "Wellenform",
+  "fr": "Forme d’onde",
+  "pt-BR": "Forma de onda",
+  "zh-Hans": "波形",
+  "ja": "波形"
  },
  "Воспроизведение (пробел)": {
   "en": "Play (Space)",
-  "es": "Reproducir (espacio)"
+  "es": "Reproducir (espacio)",
+  "de": "Abspielen (Leertaste)",
+  "fr": "Lire (Espace)",
+  "pt-BR": "Reproduzir (Espaço)",
+  "zh-Hans": "播放（空格键）",
+  "ja": "再生（スペース）"
  },
  "Вправо": {
   "en": "Right",
-  "es": "Derecha"
+  "es": "Derecha",
+  "de": "Rechts",
+  "fr": "Droite",
+  "pt-BR": "Direita",
+  "zh-Hans": "右",
+  "ja": "右"
+ },
+ "Время": {
+  "en": "Time",
+  "es": "Hora",
+  "de": "Uhrzeit",
+  "fr": "Heure",
+  "pt-BR": "Hora",
+  "zh-Hans": "时间",
+  "ja": "時刻"
  },
  "Все окна на передний план": {
   "en": "Bring All to Front",
-  "es": "Traer todo al frente"
+  "es": "Traer todo al frente",
+  "de": "Alle nach vorne bringen",
+  "fr": "Tout ramener au premier plan",
+  "pt-BR": "Trazer Todas para a Frente",
+  "zh-Hans": "前置全部窗口",
+  "ja": "すべてを手前に移動"
  },
  "Все файлы: %lld × %lld px": {
   "en": "All files: %lld × %lld px",
-  "es": "Todos los archivos: %lld × %lld px"
+  "es": "Todos los archivos: %lld × %lld px",
+  "de": "Alle Dateien: %lld × %lld px",
+  "fr": "Tous les fichiers : %lld × %lld px",
+  "pt-BR": "Todos os arquivos: %lld × %lld px",
+  "zh-Hans": "所有文件：%lld × %lld 像素",
+  "ja": "すべてのファイル：%lld × %lld px"
  },
  "Все файлы: %lld%% от размера": {
   "en": "All files: %lld%% of their size",
-  "es": "Todos los archivos: %lld%% de su tamaño"
+  "es": "Todos los archivos: %lld%% de su tamaño",
+  "de": "Alle Dateien: %lld %% ihrer Größe",
+  "fr": "Tous les fichiers : %lld %% de leur taille",
+  "pt-BR": "Todos os arquivos: %lld%% do tamanho",
+  "zh-Hans": "所有文件：原尺寸的 %lld%%",
+  "ja": "すべてのファイル：元のサイズの %lld%%"
  },
  "Все файлы: высота %lld px, ширина по пропорциям": {
   "en": "All files: %lld px high, width to scale",
-  "es": "Todos los archivos: %lld px de alto, ancho proporcional"
+  "es": "Todos los archivos: %lld px de alto, ancho proporcional",
+  "de": "Alle Dateien: %lld px hoch, Breite proportional",
+  "fr": "Tous les fichiers : %lld px de haut, largeur proportionnelle",
+  "pt-BR": "Todos os arquivos: %lld px de altura, largura proporcional",
+  "zh-Hans": "所有文件：高 %lld 像素，宽度按比例",
+  "ja": "すべてのファイル：高さ %lld px、幅は比率に合わせる"
  },
  "Все файлы: длинная сторона %lld px": {
   "en": "All files: long side %lld px",
-  "es": "Todos los archivos: lado largo de %lld px"
+  "es": "Todos los archivos: lado largo de %lld px",
+  "de": "Alle Dateien: lange Seite %lld px",
+  "fr": "Tous les fichiers : grand côté %lld px",
+  "pt-BR": "Todos os arquivos: lado maior %lld px",
+  "zh-Hans": "所有文件：长边 %lld 像素",
+  "ja": "すべてのファイル：長辺 %lld px"
  },
  "Все файлы: ширина %lld px, высота по пропорциям": {
   "en": "All files: %lld px wide, height to scale",
-  "es": "Todos los archivos: %lld px de ancho, alto proporcional"
+  "es": "Todos los archivos: %lld px de ancho, alto proporcional",
+  "de": "Alle Dateien: %lld px breit, Höhe proportional",
+  "fr": "Tous les fichiers : %lld px de large, hauteur proportionnelle",
+  "pt-BR": "Todos os arquivos: %lld px de largura, altura proporcional",
+  "zh-Hans": "所有文件：宽 %lld 像素，高度按比例",
+  "ja": "すべてのファイル：幅 %lld px、高さは比率に合わせる"
  },
  "Вставить": {
   "en": "Paste",
-  "es": "Pegar"
+  "es": "Pegar",
+  "de": "Einsetzen",
+  "fr": "Coller",
+  "pt-BR": "Colar",
+  "zh-Hans": "粘贴",
+  "ja": "ペースト"
  },
  "Выбор": {
   "en": "Select",
-  "es": "Seleccionar"
+  "es": "Seleccionar",
+  "de": "Auswählen",
+  "fr": "Sélectionner",
+  "pt-BR": "Selecionar",
+  "zh-Hans": "选择",
+  "ja": "選択"
+ },
+ "Выбранный набор действует на все конвертации, пока его не сменить. «Стандартный» берёт качество картинок и метаданные с вкладки «Основные».": {
+  "en": "The chosen preset applies to every conversion until you change it. “Standard” takes picture quality and metadata from the General tab.",
+  "es": "El ajuste elegido se aplica a todas las conversiones hasta que lo cambies. «Estándar» toma la calidad de imagen y los metadatos de la pestaña General.",
+  "de": "Die gewählte Voreinstellung gilt für alle Konvertierungen, bis Sie sie ändern. „Standard“ übernimmt Bildqualität und Metadaten aus dem Tab „Allgemein“.",
+  "fr": "Le préréglage choisi s’applique à toutes les conversions jusqu’à ce que vous le changiez. « Standard » reprend la qualité d’image et les métadonnées de l’onglet Général.",
+  "pt-BR": "O predefinido escolhido vale para todas as conversões até você trocá-lo. “Padrão” usa a qualidade de imagem e os metadados da aba Geral.",
+  "zh-Hans": "所选预设会应用于所有转换，直到你更改它。“标准”使用“通用”标签页中的图片质量和元数据设置。",
+  "ja": "選んだプリセットは、変更するまですべての変換に適用されます。「標準」は「一般」タブの画質とメタデータを使います。"
  },
  "Выбрать": {
   "en": "Choose",
-  "es": "Elegir"
+  "es": "Elegir",
+  "de": "Auswählen",
+  "fr": "Choisir",
+  "pt-BR": "Escolher",
+  "zh-Hans": "选择",
+  "ja": "選択"
  },
  "Выбрать…": {
   "en": "Choose…",
-  "es": "Elegir…"
+  "es": "Elegir…",
+  "de": "Auswählen …",
+  "fr": "Choisir…",
+  "pt-BR": "Escolher…",
+  "zh-Hans": "选取…",
+  "ja": "選択…"
  },
  "Выделить все": {
   "en": "Select All",
-  "es": "Seleccionar todo"
+  "es": "Seleccionar todo",
+  "de": "Alles auswählen",
+  "fr": "Tout sélectionner",
+  "pt-BR": "Selecionar Tudo",
+  "zh-Hans": "全选",
+  "ja": "すべてを選択"
  },
  "Выделить всё": {
   "en": "Select All",
-  "es": "Seleccionar todo"
+  "es": "Seleccionar todo",
+  "de": "Alles auswählen",
+  "fr": "Tout sélectionner",
+  "pt-BR": "Selecionar Tudo",
+  "zh-Hans": "全选",
+  "ja": "すべてを選択"
  },
  "Выйти из Mangosteen": {
   "en": "Quit Mangosteen",
-  "es": "Salir de Mangosteen"
+  "es": "Salir de Mangosteen",
+  "de": "Mangosteen beenden",
+  "fr": "Quitter Mangosteen",
+  "pt-BR": "Encerrar Mangosteen",
+  "zh-Hans": "退出 Mangosteen",
+  "ja": "Mangosteen を終了"
  },
  "Выключено": {
   "en": "Off",
-  "es": "Desactivado"
+  "es": "Desactivado",
+  "de": "Aus",
+  "fr": "Désactivé",
+  "pt-BR": "Desativado",
+  "zh-Hans": "关",
+  "ja": "オフ"
  },
  "Вырезать": {
   "en": "Cut",
-  "es": "Cortar"
+  "es": "Cortar",
+  "de": "Ausschneiden",
+  "fr": "Couper",
+  "pt-BR": "Recortar",
+  "zh-Hans": "剪切",
+  "ja": "カット"
  },
  "Высокое качество": {
   "en": "High quality",
-  "es": "Alta calidad"
+  "es": "Alta calidad",
+  "de": "Hohe Qualität",
+  "fr": "Haute qualité",
+  "pt-BR": "Alta qualidade",
+  "zh-Hans": "高质量",
+  "ja": "高品質"
  },
  "Высота": {
   "en": "Height",
-  "es": "Alto"
+  "es": "Alto",
+  "de": "Höhe",
+  "fr": "Hauteur",
+  "pt-BR": "Altura",
+  "zh-Hans": "高度",
+  "ja": "高さ"
  },
  "Высота кадра": {
   "en": "Frame height",
-  "es": "Altura del fotograma"
+  "es": "Altura del fotograma",
+  "de": "Bildhöhe",
+  "fr": "Hauteur de l’image",
+  "pt-BR": "Altura do quadro",
+  "zh-Hans": "画面高度",
+  "ja": "フレームの高さ"
  },
  "Выцветание": {
   "en": "Fade",
-  "es": "Desvanecido"
+  "es": "Desvanecido",
+  "de": "Ausblenden",
+  "fr": "Fondu",
+  "pt-BR": "Esmaecer",
+  "zh-Hans": "淡入淡出",
+  "ja": "フェード"
  },
  "Геопозиция": {
   "en": "Location",
-  "es": "Ubicación"
+  "es": "Ubicación",
+  "de": "Ort",
+  "fr": "Lieu",
+  "pt-BR": "Localização",
+  "zh-Hans": "位置",
+  "ja": "位置情報"
  },
  "Главное фото": {
   "en": "Featured",
-  "es": "Foto principal"
+  "es": "Foto principal",
+  "de": "Hervorgehoben",
+  "fr": "En vedette",
+  "pt-BR": "Em destaque",
+  "zh-Hans": "精选",
+  "ja": "注目"
  },
  "Голос звучит естественно при любой скорости.": {
   "en": "Voices sound natural at any speed.",
-  "es": "La voz suena natural a cualquier velocidad."
+  "es": "La voz suena natural a cualquier velocidad.",
+  "de": "Stimmen klingen bei jedem Tempo natürlich.",
+  "fr": "Les voix restent naturelles à toute vitesse.",
+  "pt-BR": "As vozes soam naturais em qualquer velocidade.",
+  "zh-Hans": "任何速度下人声都自然。",
+  "ja": "どの速度でも声が自然に聞こえます。"
  },
  "Градиент": {
   "en": "Gradient",
-  "es": "Degradado"
+  "es": "Degradado",
+  "de": "Verlauf",
+  "fr": "Dégradé",
+  "pt-BR": "Gradiente",
+  "zh-Hans": "渐变",
+  "ja": "グラデーション"
  },
  "Графит": {
   "en": "Graphite",
-  "es": "Grafito"
+  "es": "Grafito",
+  "de": "Graphit",
+  "fr": "Graphite",
+  "pt-BR": "Grafite",
+  "zh-Hans": "石墨",
+  "ja": "グラファイト"
  },
  "Громкость": {
   "en": "Loudness",
-  "es": "Volumen"
+  "es": "Volumen",
+  "de": "Lautheit",
+  "fr": "Volume perçu",
+  "pt-BR": "Intensidade",
+  "zh-Hans": "响度",
+  "ja": "ラウドネス"
  },
  "Дата": {
   "en": "Date",
-  "es": "Fecha"
+  "es": "Fecha",
+  "de": "Datum",
+  "fr": "Date",
+  "pt-BR": "Data",
+  "zh-Hans": "日期",
+  "ja": "日付"
  },
  "Дата съёмки": {
   "en": "Date taken",
-  "es": "Fecha de captura"
+  "es": "Fecha de captura",
+  "de": "Aufnahmedatum",
+  "fr": "Date de prise de vue",
+  "pt-BR": "Data da foto",
+  "zh-Hans": "拍摄日期",
+  "ja": "撮影日"
  },
  "Две стороны колеса": {
   "en": "Two sides of the wheel",
-  "es": "Las dos caras de la rueda"
+  "es": "Las dos caras de la rueda",
+  "de": "Zwei Seiten des Rads",
+  "fr": "Deux faces de la roue",
+  "pt-BR": "Dois lados da roda",
+  "zh-Hans": "转盘的两面",
+  "ja": "ホイールの両面"
  },
  "Двойной клик по ползунку сбрасывает его, повторный — возвращает изменённое значение.": {
   "en": "Double-click a slider to reset it; double-click again to bring back your change.",
-  "es": "Haz doble clic en un control para restablecerlo; otro doble clic recupera tu cambio."
+  "es": "Haz doble clic en un control para restablecerlo; otro doble clic recupera tu cambio.",
+  "de": "Doppelklicken Sie auf einen Regler, um ihn zurückzusetzen; ein weiterer Doppelklick stellt Ihre Änderung wieder her.",
+  "fr": "Double-cliquez sur un curseur pour le réinitialiser ; double-cliquez à nouveau pour retrouver votre réglage.",
+  "pt-BR": "Clique duas vezes em um controle para redefini-lo; clique duas vezes de novo para recuperar sua alteração.",
+  "zh-Hans": "连按滑块可将其复位；再次连按可恢复你的更改。",
+  "ja": "スライダをダブルクリックするとリセット、もう一度ダブルクリックすると変更が戻ります。"
  },
  "Действия": {
   "en": "Actions",
-  "es": "Acciones"
+  "es": "Acciones",
+  "de": "Aktionen",
+  "fr": "Actions",
+  "pt-BR": "Ações",
+  "zh-Hans": "操作",
+  "ja": "アクション"
  },
  "Детали": {
   "en": "Detail",
-  "es": "Detalle"
+  "es": "Detalle",
+  "de": "Detail",
+  "fr": "Détail",
+  "pt-BR": "Detalhe",
+  "zh-Hans": "细节",
+  "ja": "ディテール"
  },
  "Диапазон": {
   "en": "Range",
-  "es": "Rango"
+  "es": "Rango",
+  "de": "Bereich",
+  "fr": "Plage",
+  "pt-BR": "Intervalo",
+  "zh-Hans": "范围",
+  "ja": "範囲"
  },
  "Динамический диапазон": {
   "en": "Loudness range",
-  "es": "Rango dinámico"
+  "es": "Rango dinámico",
+  "de": "Lautheitsbereich",
+  "fr": "Plage de volume",
+  "pt-BR": "Faixa de intensidade",
+  "zh-Hans": "响度范围",
+  "ja": "ラウドネスレンジ"
  },
  "Длинная сторона": {
   "en": "Longer side",
-  "es": "Lado mayor"
+  "es": "Lado mayor",
+  "de": "Längere Seite",
+  "fr": "Grand côté",
+  "pt-BR": "Lado maior",
+  "zh-Hans": "长边",
+  "ja": "長辺"
  },
  "Для видео, которое перекодируется в MP4, MOV или MKV. H.264 открывается везде; HEVC даёт файл меньше; AV1 — самый маленький, но кодируется дольше, а MOV с ним сохраняется в H.264. Аппаратное кодирование в разы быстрее, файлы чуть больше; для AV1 его нет. Видео, которое можно скопировать без перекодирования, копируется как есть. У «Сжать» свои настройки.": {
   "en": "For video re-encoded to MP4, MOV or MKV. H.264 plays everywhere; HEVC makes smaller files; AV1 the smallest but takes longer, and MOV is saved as H.264 with it. Hardware encoding is several times faster with slightly larger files; there is none for AV1. Video that can be copied without re-encoding is copied as it is. Compress has its own settings.",
-  "es": "Para el vídeo que se recodifica a MP4, MOV o MKV. H.264 se reproduce en todas partes; HEVC da archivos más pequeños; AV1, los más pequeños, pero tarda más, y con él MOV se guarda en H.264. La codificación por hardware es varias veces más rápida, con archivos algo mayores; no existe para AV1. El vídeo que puede copiarse sin recodificar se copia tal cual. Comprimir tiene sus propios ajustes."
+  "es": "Para el vídeo que se recodifica a MP4, MOV o MKV. H.264 se reproduce en todas partes; HEVC da archivos más pequeños; AV1, los más pequeños, pero tarda más, y con él MOV se guarda en H.264. La codificación por hardware es varias veces más rápida, con archivos algo mayores; no existe para AV1. El vídeo que puede copiarse sin recodificar se copia tal cual. Comprimir tiene sus propios ajustes.",
+  "de": "Für Videos, die in MP4, MOV oder MKV neu kodiert werden. H.264 läuft überall; HEVC ergibt kleinere Dateien; AV1 die kleinsten, braucht aber länger, und MOV wird damit als H.264 gespeichert. Hardware-Kodierung ist um ein Vielfaches schneller, die Dateien etwas größer; für AV1 gibt es sie nicht. Videos, die ohne Neukodierung kopiert werden können, werden unverändert kopiert. „Komprimieren“ hat eigene Einstellungen.",
+  "fr": "Pour les vidéos réencodées en MP4, MOV ou MKV. H.264 se lit partout ; HEVC donne des fichiers plus petits ; AV1 les plus petits mais prend plus de temps, et MOV est alors enregistré en H.264. L’encodage matériel est plusieurs fois plus rapide, avec des fichiers un peu plus gros ; il n’existe pas pour AV1. Les vidéos copiables sans réencodage sont copiées telles quelles. « Compresser » a ses propres réglages.",
+  "pt-BR": "Para vídeos recodificados em MP4, MOV ou MKV. H.264 roda em qualquer lugar; HEVC gera arquivos menores; AV1 os menores, mas demora mais, e com ele o MOV é salvo em H.264. A codificação por hardware é várias vezes mais rápida, com arquivos um pouco maiores; não existe para AV1. Vídeos que podem ser copiados sem recodificar são copiados como estão. “Comprimir” tem ajustes próprios.",
+  "zh-Hans": "用于重新编码为 MP4、MOV 或 MKV 的视频。H.264 处处可播放；HEVC 文件更小；AV1 最小但耗时更长，且此时 MOV 会以 H.264 保存。硬件编码快好几倍，文件稍大；AV1 不支持硬件编码。无需重新编码即可复制的视频将原样复制。“压缩”有自己的设置。",
+  "ja": "MP4、MOV、MKV に再エンコードするビデオ用です。H.264 はどこでも再生でき、HEVC はファイルが小さく、AV1 は最も小さいものの時間がかかり、その場合 MOV は H.264 で保存されます。ハードウェアエンコードは数倍速く、ファイルはやや大きくなります（AV1 にはありません）。再エンコードせずにコピーできるビデオはそのままコピーされます。「圧縮」には独自の設定があります。"
  },
  "Для любых файлов": {
   "en": "For any files",
-  "es": "Para cualquier archivo"
+  "es": "Para cualquier archivo",
+  "de": "Für alle Dateien",
+  "fr": "Pour tous les fichiers",
+  "pt-BR": "Para qualquer arquivo",
+  "zh-Hans": "适用于任何文件",
+  "ja": "すべてのファイル向け"
  },
  "Добавить кадр": {
   "en": "Add frame",
-  "es": "Añadir fotograma"
+  "es": "Añadir fotograma",
+  "de": "Bild hinzufügen",
+  "fr": "Ajouter une image",
+  "pt-BR": "Adicionar quadro",
+  "zh-Hans": "添加帧",
+  "ja": "フレームを追加"
  },
  "Добро пожаловать в Mangosteen": {
   "en": "Welcome to Mangosteen",
-  "es": "Bienvenido a Mangosteen"
+  "es": "Bienvenido a Mangosteen",
+  "de": "Willkommen bei Mangosteen",
+  "fr": "Bienvenue dans Mangosteen",
+  "pt-BR": "Bem-vindo ao Mangosteen",
+  "zh-Hans": "欢迎使用 Mangosteen",
+  "ja": "Mangosteen へようこそ"
  },
  "Документов: %lld": {
   "en": "Documents: %lld",
-  "es": "Documentos: %lld"
+  "es": "Documentos: %lld",
+  "de": "Dokumente: %lld",
+  "fr": "Documents : %lld",
+  "pt-BR": "Documentos: %lld",
+  "zh-Hans": "文稿：%lld",
+  "ja": "書類：%lld"
  },
  "Документы": {
   "en": "Documents",
-  "es": "Documentos"
+  "es": "Documentos",
+  "de": "Dokumente",
+  "fr": "Documents",
+  "pt-BR": "Documentos",
+  "zh-Hans": "文稿",
+  "ja": "書類"
  },
  "Долгота (−180…180)": {
   "en": "Longitude (−180…180)",
-  "es": "Longitud (−180…180)"
+  "es": "Longitud (−180…180)",
+  "de": "Längengrad (−180…180)",
+  "fr": "Longitude (−180…180)",
+  "pt-BR": "Longitude (−180…180)",
+  "zh-Hans": "经度（−180…180）",
+  "ja": "経度（−180…180）"
  },
  "Доступна версия %@": {
   "en": "Version %@ is available",
-  "es": "La versión %@ está disponible"
+  "es": "La versión %@ está disponible",
+  "de": "Version %@ ist verfügbar",
+  "fr": "La version %@ est disponible",
+  "pt-BR": "A versão %@ está disponível",
+  "zh-Hans": "版本 %@ 现已推出",
+  "ja": "バージョン %@ が利用できます"
  },
  "Другая сторона колеса": {
   "en": "Other side of the wheel",
-  "es": "Otra cara de la rueda"
+  "es": "Otra cara de la rueda",
+  "de": "Andere Seite des Rads",
+  "fr": "Autre face de la roue",
+  "pt-BR": "Outro lado da roda",
+  "zh-Hans": "转盘的另一面",
+  "ja": "ホイールの裏面"
  },
  "Другой цвет": {
   "en": "Other colour",
-  "es": "Otro color"
+  "es": "Otro color",
+  "de": "Andere Farbe",
+  "fr": "Autre couleur",
+  "pt-BR": "Outra cor",
+  "zh-Hans": "其他颜色",
+  "ja": "ほかの色"
  },
  "Дублировать": {
   "en": "Duplicate",
-  "es": "Duplicar"
+  "es": "Duplicar",
+  "de": "Duplizieren",
+  "fr": "Dupliquer",
+  "pt-BR": "Duplicar",
+  "zh-Hans": "复制",
+  "ja": "複製"
+ },
+ "Если в папку нельзя записывать, например это образ диска, результат сохраняется в «Загрузки». Оригинал никогда не меняется.": {
+  "en": "If the folder cannot be written to, a disk image for one, the result is saved to Downloads. The original is never changed.",
+  "es": "Si no se puede escribir en la carpeta, por ejemplo una imagen de disco, el resultado se guarda en Descargas. El original nunca cambia.",
+  "de": "Wenn in den Ordner nicht geschrieben werden kann, etwa bei einem Disk-Image, wird das Ergebnis in „Downloads“ gespeichert. Das Original wird nie geändert.",
+  "fr": "Si le dossier n’est pas accessible en écriture, une image disque par exemple, le résultat est enregistré dans Téléchargements. L’original n’est jamais modifié.",
+  "pt-BR": "Se não for possível gravar na pasta, como em uma imagem de disco, o resultado é salvo em Downloads. O original nunca é alterado.",
+  "zh-Hans": "如果文件夹无法写入（例如磁盘映像），结果会存储到“下载”。原文件永远不会被更改。",
+  "ja": "フォルダに書き込めない場合（ディスクイメージなど）、結果は「ダウンロード」に保存されます。元のファイルは変更されません。"
  },
  "Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите над ним колёсико мыши или нажмите Tab, пока держите файл; без файла можно щёлкнуть по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад.": {
   "en": "When a wheel has a back, its centre shows “↻ N more”. To turn the wheel over, scroll the mouse wheel over it or press Tab while holding the file; without a file, click the centre. A slice's side applies to all files: PNG, for one, sits on the same side for photos and for PDF. The face holds up to 10 slices; the rest go to the back.",
-  "es": "Si una rueda tiene reverso, en su centro se ve «↻ N más». Para darle la vuelta, desplaza la rueda del ratón sobre ella o pulsa Tab mientras sostienes el archivo; sin archivo, haz clic en el centro. La cara de cada sector vale para todos los archivos: PNG, por ejemplo, está en la misma cara para fotos y para PDF. En el anverso caben hasta 10 sectores; el resto pasa al reverso."
+  "es": "Si una rueda tiene reverso, en su centro se ve «↻ N más». Para darle la vuelta, desplaza la rueda del ratón sobre ella o pulsa Tab mientras sostienes el archivo; sin archivo, haz clic en el centro. La cara de cada sector vale para todos los archivos: PNG, por ejemplo, está en la misma cara para fotos y para PDF. En el anverso caben hasta 10 sectores; el resto pasa al reverso.",
+  "de": "Hat ein Rad eine Rückseite, zeigt seine Mitte „↻ N weitere“. Um das Rad umzudrehen, scrollen Sie mit dem Mausrad darüber oder drücken Sie die Tabulatortaste, während Sie die Datei halten; ohne Datei klicken Sie auf die Mitte. Die Seite eines Segments gilt für alle Dateien: PNG etwa liegt bei Fotos und PDFs auf derselben Seite. Vorne passen bis zu 10 Segmente; der Rest kommt nach hinten.",
+  "fr": "Quand une roue a un verso, son centre affiche « ↻ N de plus ». Pour retourner la roue, faites défiler la molette de la souris dessus ou appuyez sur Tab en tenant le fichier ; sans fichier, cliquez au centre. La face d’un segment vaut pour tous les fichiers : PNG, par exemple, est sur la même face pour les photos et les PDF. Le recto contient jusqu’à 10 segments ; les autres passent au verso.",
+  "pt-BR": "Quando uma roda tem verso, o centro mostra “↻ mais N”. Para virar a roda, role a roda do mouse sobre ela ou pressione Tab enquanto segura o arquivo; sem arquivo, clique no centro. O lado de um segmento vale para todos os arquivos: o PNG, por exemplo, fica do mesmo lado para fotos e PDFs. A frente comporta até 10 segmentos; o resto vai para o verso.",
+  "zh-Hans": "转盘有背面时，中心会显示“↻ 另有 N 个”。要翻转转盘，可在其上滚动鼠标滚轮，或在按住文件时按 Tab 键；没有文件时点按中心。扇区所在的面对所有文件都相同：例如 PNG 对照片和 PDF 都在同一面。正面最多容纳 10 个扇区，其余放到背面。",
+  "ja": "ホイールに裏面がある場合、中央に「↻ ほか N」と表示されます。ホイールを裏返すには、ファイルを持ったままマウスホイールを回すか Tab キーを押します。ファイルがないときは中央をクリックします。セグメントの面はすべてのファイルで共通です（例：PNG は写真でも PDF でも同じ面）。表面には最大 10 個まで置け、残りは裏面に回ります。"
  },
  "Задать координаты": {
   "en": "Set coordinates",
-  "es": "Definir coordenadas"
+  "es": "Definir coordenadas",
+  "de": "Koordinaten festlegen",
+  "fr": "Définir les coordonnées",
+  "pt-BR": "Definir coordenadas",
+  "zh-Hans": "设定坐标",
+  "ja": "座標を設定"
  },
  "Задач: %lld": {
   "en": "Jobs: %lld",
-  "es": "Tareas: %lld"
+  "es": "Tareas: %lld",
+  "de": "Aufgaben: %lld",
+  "fr": "Tâches : %lld",
+  "pt-BR": "Tarefas: %lld",
+  "zh-Hans": "任务：%lld",
+  "ja": "ジョブ：%lld"
  },
  "Закрыть": {
   "en": "Close",
-  "es": "Cerrar"
+  "es": "Cerrar",
+  "de": "Schließen",
+  "fr": "Fermer",
+  "pt-BR": "Fechar",
+  "zh-Hans": "关闭",
+  "ja": "閉じる"
  },
  "Закрыть Float (файлы не удаляются)": {
   "en": "Close Float (files are not deleted)",
-  "es": "Cerrar Float (los archivos no se eliminan)"
+  "es": "Cerrar Float (los archivos no se eliminan)",
+  "de": "Float schließen (Dateien werden nicht gelöscht)",
+  "fr": "Fermer Float (les fichiers ne sont pas supprimés)",
+  "pt-BR": "Fechar o Float (os arquivos não são apagados)",
+  "zh-Hans": "关闭 Float（文件不会被删除）",
+  "ja": "Float を閉じる（ファイルは削除されません）"
  },
  "Заливка": {
   "en": "Fill",
-  "es": "Relleno"
+  "es": "Relleno",
+  "de": "Füllen",
+  "fr": "Remplir",
+  "pt-BR": "Preencher",
+  "zh-Hans": "填充",
+  "ja": "塗りつぶし"
  },
  "Заметно меньше файл, почти без видимых потерь": {
   "en": "Much smaller file with hardly visible loss",
-  "es": "Archivo mucho más pequeño casi sin pérdida visible"
+  "es": "Archivo mucho más pequeño casi sin pérdida visible",
+  "de": "Viel kleinere Datei mit kaum sichtbarem Verlust",
+  "fr": "Fichier bien plus petit, perte à peine visible",
+  "pt-BR": "Arquivo bem menor com perda quase invisível",
+  "zh-Hans": "文件小得多，几乎看不出损失",
+  "ja": "ほとんど劣化が見えないまま大幅に小さく"
  },
  "Запикать": {
   "en": "Bleep",
-  "es": "Pitido"
+  "es": "Pitido",
+  "de": "Piepton",
+  "fr": "Bip",
+  "pt-BR": "Bipe",
+  "zh-Hans": "哔声",
+  "ja": "ピー音"
  },
  "Запикать (%lld)": {
   "en": "Bleep (%lld)",
-  "es": "Pitido (%lld)"
+  "es": "Pitido (%lld)",
+  "de": "Piepton (%lld)",
+  "fr": "Bip (%lld)",
+  "pt-BR": "Bipe (%lld)",
+  "zh-Hans": "哔声（%lld）",
+  "ja": "ピー音（%lld）"
  },
  "Запикивание": {
   "en": "Bleeping",
-  "es": "Censurando con pitido"
+  "es": "Censurando con pitido",
+  "de": "Überpiepen",
+  "fr": "Bipage",
+  "pt-BR": "Bipagem",
+  "zh-Hans": "哔声遮盖",
+  "ja": "ピー音で消す"
  },
  "Запускать Mangosteen при входе в систему": {
   "en": "Open Mangosteen at login",
-  "es": "Abrir Mangosteen al iniciar sesión"
+  "es": "Abrir Mangosteen al iniciar sesión",
+  "de": "Mangosteen beim Anmelden öffnen",
+  "fr": "Ouvrir Mangosteen à l’ouverture de session",
+  "pt-BR": "Abrir o Mangosteen ao iniciar sessão",
+  "zh-Hans": "登录时打开 Mangosteen",
+  "ja": "ログイン時に Mangosteen を開く"
  },
  "Запускать при входе в систему": {
   "en": "Open at login",
-  "es": "Abrir al iniciar sesión"
+  "es": "Abrir al iniciar sesión",
+  "de": "Beim Anmelden öffnen",
+  "fr": "Ouvrir à l’ouverture de session",
+  "pt-BR": "Abrir ao iniciar sessão",
+  "zh-Hans": "登录时打开",
+  "ja": "ログイン時に開く"
  },
  "Звуки": {
   "en": "Sounds",
-  "es": "Sonidos"
+  "es": "Sonidos",
+  "de": "Töne",
+  "fr": "Sons",
+  "pt-BR": "Sons",
+  "zh-Hans": "声音",
+  "ja": "サウンド"
  },
  "Здесь уже есть пик — он выделен.": {
   "en": "There is already a bleep here — it is selected.",
-  "es": "Aquí ya hay un pitido; está seleccionado."
+  "es": "Aquí ya hay un pitido; está seleccionado.",
+  "de": "Hier gibt es bereits einen Piepton — er ist ausgewählt.",
+  "fr": "Il y a déjà un bip ici — il est sélectionné.",
+  "pt-BR": "Já há um bipe aqui — ele está selecionado.",
+  "zh-Hans": "这里已有一个哔声，已将其选中。",
+  "ja": "ここにはすでにピー音があり、選択されています。"
  },
  "Зелёный": {
   "en": "Green",
-  "es": "Verde"
+  "es": "Verde",
+  "de": "Grün",
+  "fr": "Vert",
+  "pt-BR": "Verde",
+  "zh-Hans": "绿色",
+  "ja": "グリーン"
  },
  "Зерно": {
   "en": "Grain",
-  "es": "Grano"
+  "es": "Grano",
+  "de": "Körnung",
+  "fr": "Grain",
+  "pt-BR": "Granulação",
+  "zh-Hans": "颗粒",
+  "ja": "粒子"
  },
  "Изменение размера": {
   "en": "Resizing",
-  "es": "Cambiando tamaño"
+  "es": "Cambiando tamaño",
+  "de": "Größe ändern",
+  "fr": "Redimensionnement",
+  "pt-BR": "Redimensionamento",
+  "zh-Hans": "调整大小",
+  "ja": "サイズ変更"
  },
  "Изменения применятся ко всем %@. Справа показаны данные первого.": {
   "en": "Changes apply to all %@. The first one is shown on the right.",
-  "es": "Los cambios se aplican a los %@. A la derecha se muestran los datos del primero."
+  "es": "Los cambios se aplican a los %@. A la derecha se muestran los datos del primero.",
+  "de": "Änderungen gelten für alle %@. Die erste Datei wird rechts gezeigt.",
+  "fr": "Les modifications s’appliquent à tous les %@. Le premier est affiché à droite.",
+  "pt-BR": "As alterações valem para todos os %@. O primeiro aparece à direita.",
+  "zh-Hans": "更改将应用于全部 %@。右侧显示第一个。",
+  "ja": "変更はすべての %@ に適用されます。右に最初のものが表示されます。"
  },
  "Изменить дату": {
   "en": "Change date",
-  "es": "Cambiar fecha"
+  "es": "Cambiar fecha",
+  "de": "Datum ändern",
+  "fr": "Modifier la date",
+  "pt-BR": "Alterar data",
+  "zh-Hans": "更改日期",
+  "ja": "日付を変更"
  },
  "Изменить размер": {
   "en": "Resize",
-  "es": "Redimensionar"
+  "es": "Redimensionar",
+  "de": "Größe ändern",
+  "fr": "Redimensionner",
+  "pt-BR": "Redimensionar",
+  "zh-Hans": "调整大小",
+  "ja": "サイズ変更"
  },
  "Изменить скорость": {
   "en": "Change speed",
-  "es": "Cambiar velocidad"
+  "es": "Cambiar velocidad",
+  "de": "Tempo ändern",
+  "fr": "Changer la vitesse",
+  "pt-BR": "Alterar velocidade",
+  "zh-Hans": "更改速度",
+  "ja": "速度を変更"
  },
  "Измеряю…": {
   "en": "Measuring…",
-  "es": "Midiendo…"
+  "es": "Midiendo…",
+  "de": "Wird gemessen …",
+  "fr": "Mesure…",
+  "pt-BR": "Medindo…",
+  "zh-Hans": "正在测量…",
+  "ja": "測定中…"
  },
  "Изображение": {
   "en": "Image",
-  "es": "Imagen"
+  "es": "Imagen",
+  "de": "Bild",
+  "fr": "Image",
+  "pt-BR": "Imagem",
+  "zh-Hans": "图像",
+  "ja": "画像"
  },
  "Изображения, PDF, документы, видео, аудио, субтитры, таблицы и архивы в другие форматы.": {
   "en": "Images, PDF, documents, video, audio, subtitles, spreadsheets and archives into other formats.",
-  "es": "Imágenes, PDF, documentos, vídeo, audio, subtítulos, tablas y archivos comprimidos a otros formatos."
+  "es": "Imágenes, PDF, documentos, vídeo, audio, subtítulos, tablas y archivos comprimidos a otros formatos.",
+  "de": "Bilder, PDF, Dokumente, Video, Audio, Untertitel, Tabellen und Archive in andere Formate.",
+  "fr": "Images, PDF, documents, vidéo, audio, sous-titres, tableaux et archives vers d’autres formats.",
+  "pt-BR": "Imagens, PDF, documentos, vídeo, áudio, legendas, planilhas e arquivos compactados para outros formatos.",
+  "zh-Hans": "将图像、PDF、文稿、视频、音频、字幕、表格和归档转换为其他格式。",
+  "ja": "画像、PDF、書類、ビデオ、オーディオ、字幕、表、アーカイブをほかの形式に。"
+ },
+ "Имя": {
+  "en": "Name",
+  "es": "Nombre",
+  "de": "Name",
+  "fr": "Nom",
+  "pt-BR": "Nome",
+  "zh-Hans": "名称",
+  "ja": "名前"
+ },
+ "Имя результата": {
+  "en": "Result name",
+  "es": "Nombre del resultado",
+  "de": "Name des Ergebnisses",
+  "fr": "Nom du résultat",
+  "pt-BR": "Nome do resultado",
+  "zh-Hans": "结果名称",
+  "ja": "結果の名前"
  },
  "Инструменты": {
   "en": "Tools",
-  "es": "Herramientas"
+  "es": "Herramientas",
+  "de": "Werkzeuge",
+  "fr": "Outils",
+  "pt-BR": "Ferramentas",
+  "zh-Hans": "工具",
+  "ja": "ツール"
  },
  "Исходная запись моно: оба канала получают один и тот же звук.": {
   "en": "The source is mono: both channels get the same sound.",
-  "es": "La grabación original es mono: ambos canales reciben el mismo sonido."
+  "es": "La grabación original es mono: ambos canales reciben el mismo sonido.",
+  "de": "Die Quelle ist mono: Beide Kanäle erhalten denselben Ton.",
+  "fr": "La source est mono : les deux canaux reçoivent le même son.",
+  "pt-BR": "A fonte é mono: os dois canais recebem o mesmo som.",
+  "zh-Hans": "源为单声道：两个声道将得到相同的声音。",
+  "ja": "元がモノラルのため、両チャンネルに同じ音が入ります。"
  },
  "Исходное изображение": {
   "en": "Original image",
-  "es": "Imagen original"
+  "es": "Imagen original",
+  "de": "Originalbild",
+  "fr": "Image d’origine",
+  "pt-BR": "Imagem original",
+  "zh-Hans": "原始图像",
+  "ja": "元の画像"
  },
  "Итого: %@": {
   "en": "Total: %@",
-  "es": "Total: %@"
+  "es": "Total: %@",
+  "de": "Gesamt: %@",
+  "fr": "Total : %@",
+  "pt-BR": "Total: %@",
+  "zh-Hans": "总计：%@",
+  "ja": "合計：%@"
  },
  "Ищем объект…": {
   "en": "Finding the subject…",
-  "es": "Buscando el objeto…"
+  "es": "Buscando el objeto…",
+  "de": "Motiv wird gesucht …",
+  "fr": "Recherche du sujet…",
+  "pt-BR": "Procurando o objeto…",
+  "zh-Hans": "正在查找主体…",
+  "ja": "被写体を探しています…"
  },
  "КБ": {
   "en": "KB",
-  "es": "KB"
+  "es": "KB",
+  "de": "KB",
+  "fr": "Ko",
+  "pt-BR": "KB",
+  "zh-Hans": "KB",
+  "ja": "KB"
  },
  "Кадр вперёд": {
   "en": "Next frame",
-  "es": "Fotograma siguiente"
+  "es": "Fotograma siguiente",
+  "de": "Nächstes Bild",
+  "fr": "Image suivante",
+  "pt-BR": "Próximo quadro",
+  "zh-Hans": "下一帧",
+  "ja": "次のフレーム"
  },
  "Кадр для предпросмотра": {
   "en": "Preview frame",
-  "es": "Fotograma de vista previa"
+  "es": "Fotograma de vista previa",
+  "de": "Vorschaubild",
+  "fr": "Image d’aperçu",
+  "pt-BR": "Quadro de pré-visualização",
+  "zh-Hans": "预览帧",
+  "ja": "プレビューフレーム"
  },
  "Кадр назад": {
   "en": "Previous frame",
-  "es": "Fotograma anterior"
+  "es": "Fotograma anterior",
+  "de": "Vorheriges Bild",
+  "fr": "Image précédente",
+  "pt-BR": "Quadro anterior",
+  "zh-Hans": "上一帧",
+  "ja": "前のフレーム"
  },
  "Кадрирование видео": {
   "en": "Crop Video",
-  "es": "Encuadrar vídeo"
+  "es": "Encuadrar vídeo",
+  "de": "Video zuschneiden",
+  "fr": "Recadrer la vidéo",
+  "pt-BR": "Cortar Vídeo",
+  "zh-Hans": "裁剪视频",
+  "ja": "ビデオを切り抜く"
  },
  "Кадрировать": {
   "en": "Crop video",
-  "es": "Encuadrar"
+  "es": "Encuadrar",
+  "de": "Ausschnitt",
+  "fr": "Recadrer la vidéo",
+  "pt-BR": "Cortar vídeo",
+  "zh-Hans": "裁剪视频",
+  "ja": "クロップ"
  },
  "Кадры": {
   "en": "Frames",
-  "es": "Fotogramas"
+  "es": "Fotogramas",
+  "de": "Bilder",
+  "fr": "Images",
+  "pt-BR": "Quadros",
+  "zh-Hans": "帧",
+  "ja": "フレーム"
  },
  "Кадры из видео": {
   "en": "Frames from Video",
-  "es": "Fotogramas del vídeo"
+  "es": "Fotogramas del vídeo",
+  "de": "Bilder aus Video",
+  "fr": "Images de la vidéo",
+  "pt-BR": "Quadros do Vídeo",
+  "zh-Hans": "视频中的帧",
+  "ja": "ビデオのフレーム"
  },
  "Каждая страница": {
   "en": "Every page",
-  "es": "Cada página"
+  "es": "Cada página",
+  "de": "Jede Seite",
+  "fr": "Chaque page",
+  "pt-BR": "Cada página",
+  "zh-Hans": "每一页",
+  "ja": "各ページ"
  },
  "Как в системе": {
   "en": "System default",
-  "es": "Como en el sistema"
+  "es": "Como en el sistema",
+  "de": "Wie im System",
+  "fr": "Comme le système",
+  "pt-BR": "Padrão do sistema",
+  "zh-Hans": "跟随系统",
+  "ja": "システムと同じ"
  },
  "Как на плёнке: ускорение повышает тон, замедление понижает.": {
   "en": "Like tape: faster raises the pitch, slower lowers it.",
-  "es": "Como en cinta: acelerar sube el tono y ralentizar lo baja."
+  "es": "Como en cinta: acelerar sube el tono y ralentizar lo baja.",
+  "de": "Wie bei einem Tonband: schneller erhöht die Tonhöhe, langsamer senkt sie.",
+  "fr": "Comme une bande : plus vite monte la hauteur, plus lent la baisse.",
+  "pt-BR": "Como fita: mais rápido sobe o tom, mais lento abaixa.",
+  "zh-Hans": "像磁带一样：加快会升高音调，放慢会降低音调。",
+  "ja": "テープのように、速くすると音程が上がり、遅くすると下がります。"
  },
  "Как пользоваться Mangosteen": {
   "en": "How to Use Mangosteen",
-  "es": "Cómo usar Mangosteen"
+  "es": "Cómo usar Mangosteen",
+  "de": "So verwenden Sie Mangosteen",
+  "fr": "Comment utiliser Mangosteen",
+  "pt-BR": "Como Usar o Mangosteen",
+  "zh-Hans": "如何使用 Mangosteen",
+  "ja": "Mangosteen の使い方"
  },
  "Как пользоваться…": {
   "en": "How to Use…",
-  "es": "Cómo usar…"
+  "es": "Cómo usar…",
+  "de": "So geht’s …",
+  "fr": "Mode d’emploi…",
+  "pt-BR": "Como Usar…",
+  "zh-Hans": "使用方法…",
+  "ja": "使い方…"
  },
  "Как у оригинала": {
   "en": "Same as original",
-  "es": "Como el original"
+  "es": "Como el original",
+  "de": "Wie das Original",
+  "fr": "Comme l’original",
+  "pt-BR": "Igual ao original",
+  "zh-Hans": "与原文件相同",
+  "ja": "元と同じ"
  },
  "Как у фото": {
   "en": "Same as photo",
-  "es": "Como la foto"
+  "es": "Como la foto",
+  "de": "Wie das Foto",
+  "fr": "Comme la photo",
+  "pt-BR": "Igual à foto",
+  "zh-Hans": "与照片相同",
+  "ja": "写真と同じ"
  },
  "Каналы": {
   "en": "Channels",
-  "es": "Canales"
+  "es": "Canales",
+  "de": "Kanäle",
+  "fr": "Canaux",
+  "pt-BR": "Canais",
+  "zh-Hans": "声道",
+  "ja": "チャンネル"
  },
  "Карандаш": {
   "en": "Pen",
-  "es": "Lápiz"
+  "es": "Lápiz",
+  "de": "Stift",
+  "fr": "Crayon",
+  "pt-BR": "Caneta",
+  "zh-Hans": "钢笔",
+  "ja": "ペン"
  },
  "Картинка": {
   "en": "Picture",
-  "es": "Imagen fija"
+  "es": "Imagen fija",
+  "de": "Bild",
+  "fr": "Image",
+  "pt-BR": "Imagem",
+  "zh-Hans": "图片",
+  "ja": "画像"
  },
  "Картинка из браузера": {
   "en": "Picture from browser",
-  "es": "Imagen del navegador"
+  "es": "Imagen del navegador",
+  "de": "Bild aus dem Browser",
+  "fr": "Image du navigateur",
+  "pt-BR": "Imagem do navegador",
+  "zh-Hans": "来自浏览器的图片",
+  "ja": "ブラウザからの画像"
+ },
+ "Картинки": {
+  "en": "Pictures",
+  "es": "Imágenes",
+  "de": "Bilder",
+  "fr": "Images",
+  "pt-BR": "Imagens",
+  "zh-Hans": "图片",
+  "ja": "画像"
  },
  "Качество": {
   "en": "Quality",
-  "es": "Calidad"
+  "es": "Calidad",
+  "de": "Qualität",
+  "fr": "Qualité",
+  "pt-BR": "Qualidade",
+  "zh-Hans": "质量",
+  "ja": "品質"
  },
  "Качество изображений": {
   "en": "Image quality",
-  "es": "Calidad de imagen"
+  "es": "Calidad de imagen",
+  "de": "Bildqualität",
+  "fr": "Qualité des images",
+  "pt-BR": "Qualidade das imagens",
+  "zh-Hans": "图像质量",
+  "ja": "画像の品質"
  },
  "Квадрат": {
   "en": "Square",
-  "es": "Cuadrado"
+  "es": "Cuadrado",
+  "de": "Quadrat",
+  "fr": "Carré",
+  "pt-BR": "Quadrado",
+  "zh-Hans": "正方形",
+  "ja": "正方形"
  },
  "Клавиши": {
   "en": "Keys",
-  "es": "Teclas"
+  "es": "Teclas",
+  "de": "Tasten",
+  "fr": "Touches",
+  "pt-BR": "Teclas",
+  "zh-Hans": "按键",
+  "ja": "キー"
  },
  "Клик — выбрать, ⌘-клик — добавить к выбору, перетаскивание — порядок, ⌫ — удалить.": {
   "en": "Click — select, ⌘-click — add to selection, drag — reorder, ⌫ — delete.",
-  "es": "Clic: seleccionar; ⌘-clic: añadir a la selección; arrastrar: reordenar; ⌫: eliminar."
+  "es": "Clic: seleccionar; ⌘-clic: añadir a la selección; arrastrar: reordenar; ⌫: eliminar.",
+  "de": "Klicken — auswählen, ⌘-Klick — zur Auswahl hinzufügen, Ziehen — umsortieren, ⌫ — löschen.",
+  "fr": "Clic — sélectionner, ⌘-clic — ajouter à la sélection, glisser — réordonner, ⌫ — supprimer.",
+  "pt-BR": "Clique — selecionar, ⌘-clique — adicionar à seleção, arrastar — reordenar, ⌫ — apagar.",
+  "zh-Hans": "点按 — 选择，⌘-点按 — 加入所选，拖移 — 重新排列，⌫ — 删除。",
+  "ja": "クリック — 選択、⌘-クリック — 選択に追加、ドラッグ — 並べ替え、⌫ — 削除。"
  },
  "Кодек": {
   "en": "Codec",
-  "es": "Códec"
+  "es": "Códec",
+  "de": "Codec",
+  "fr": "Codec",
+  "pt-BR": "Codec",
+  "zh-Hans": "编解码器",
+  "ja": "コーデック"
  },
  "Колесо": {
   "en": "Wheel",
-  "es": "Rueda"
+  "es": "Rueda",
+  "de": "Rad",
+  "fr": "Roue",
+  "pt-BR": "Roda",
+  "zh-Hans": "转盘",
+  "ja": "ホイール"
  },
  "Коллаж": {
   "en": "Collage",
-  "es": "Collage"
+  "es": "Collage",
+  "de": "Collage",
+  "fr": "Collage",
+  "pt-BR": "Colagem",
+  "zh-Hans": "拼贴",
+  "ja": "コラージュ"
  },
  "Колонка": {
   "en": "Column",
-  "es": "Columna"
+  "es": "Columna",
+  "de": "Spalte",
+  "fr": "Colonne",
+  "pt-BR": "Coluna",
+  "zh-Hans": "列",
+  "ja": "列"
  },
  "Колонки: %lld": {
   "en": "Columns: %lld",
-  "es": "Columnas: %lld"
+  "es": "Columnas: %lld",
+  "de": "Spalten: %lld",
+  "fr": "Colonnes : %lld",
+  "pt-BR": "Colunas: %lld",
+  "zh-Hans": "列数：%lld",
+  "ja": "列：%lld"
  },
  "Колонки: авто": {
   "en": "Columns: auto",
-  "es": "Columnas: auto"
+  "es": "Columnas: auto",
+  "de": "Spalten: automatisch",
+  "fr": "Colonnes : auto",
+  "pt-BR": "Colunas: automático",
+  "zh-Hans": "列数：自动",
+  "ja": "列：自動"
  },
  "Колёса": {
   "en": "Wheels",
-  "es": "Ruedas"
+  "es": "Ruedas",
+  "de": "Räder",
+  "fr": "Roues",
+  "pt-BR": "Rodas",
+  "zh-Hans": "转盘",
+  "ja": "ホイール"
  },
  "Конвертация": {
   "en": "Convert",
-  "es": "Convertir"
+  "es": "Convertir",
+  "de": "Konvertieren",
+  "fr": "Convertir",
+  "pt-BR": "Converter",
+  "zh-Hans": "转换",
+  "ja": "変換"
  },
  "Конвертация %@ → %@ не поддерживается.": {
   "en": "Converting %@ → %@ is not supported.",
-  "es": "La conversión %@ → %@ no está disponible."
+  "es": "La conversión %@ → %@ no está disponible.",
+  "de": "Die Konvertierung %@ → %@ wird nicht unterstützt.",
+  "fr": "La conversion %@ → %@ n’est pas prise en charge.",
+  "pt-BR": "A conversão %@ → %@ não é suportada.",
+  "zh-Hans": "不支持 %@ → %@ 的转换。",
+  "ja": "%@ → %@ の変換には対応していません。"
  },
  "Конвертация в %@": {
   "en": "Converting to %@",
-  "es": "Convirtiendo a %@"
+  "es": "Convirtiendo a %@",
+  "de": "Konvertierung in %@",
+  "fr": "Conversion en %@",
+  "pt-BR": "Convertendo para %@",
+  "zh-Hans": "正在转换为 %@",
+  "ja": "%@ に変換"
  },
  "Конвертация и инструменты для файлов прямо во время перетаскивания. Всё работает локально, без сторонних сервисов, без ограничений.": {
   "en": "Converters and tools for your files, right while you drag. Everything runs locally, with no third-party services and no limits.",
-  "es": "Conversión y herramientas para tus archivos mientras los arrastras. Todo funciona en local, sin servicios de terceros y sin límites."
+  "es": "Conversión y herramientas para tus archivos mientras los arrastras. Todo funciona en local, sin servicios de terceros y sin límites.",
+  "de": "Konverter und Werkzeuge für Ihre Dateien, direkt beim Ziehen. Alles läuft lokal, ohne Dienste Dritter und ohne Limits.",
+  "fr": "Convertisseurs et outils pour vos fichiers, directement pendant le glisser. Tout fonctionne en local, sans services tiers ni limites.",
+  "pt-BR": "Conversores e ferramentas para seus arquivos, enquanto você arrasta. Tudo roda localmente, sem serviços de terceiros e sem limites.",
+  "zh-Hans": "在拖移时即可使用的文件转换器和工具。一切都在本机运行，没有第三方服务，也没有限制。",
+  "ja": "ドラッグしながら使えるファイル変換とツール。すべてこの Mac 上で動き、外部サービスも制限もありません。"
  },
  "Конвертация и инструменты для файлов прямо во время перетаскивания: начните тащить файл, нажмите клавишу и бросьте его на дольку. Всё работает локально, без ограничений.": {
   "en": "Converters and tools for your files, right while you drag: start dragging a file, tap a key and drop it on a segment. Everything runs locally, with no limits.",
-  "es": "Conversión y herramientas para tus archivos mientras los arrastras: empieza a arrastrar un archivo, pulsa una tecla y suéltalo en un segmento. Todo funciona en local, sin límites."
+  "es": "Conversión y herramientas para tus archivos mientras los arrastras: empieza a arrastrar un archivo, pulsa una tecla y suéltalo en un segmento. Todo funciona en local, sin límites.",
+  "de": "Konverter und Werkzeuge für Ihre Dateien, direkt beim Ziehen: Ziehen Sie eine Datei, tippen Sie eine Taste und lassen Sie sie auf einem Segment los. Alles läuft lokal, ohne Limits.",
+  "fr": "Convertisseurs et outils pour vos fichiers, directement pendant le glisser : commencez à glisser un fichier, touchez une touche et déposez-le sur un segment. Tout fonctionne en local, sans limites.",
+  "pt-BR": "Conversores e ferramentas para seus arquivos, enquanto você arrasta: comece a arrastar um arquivo, toque uma tecla e solte-o em um segmento. Tudo roda localmente, sem limites.",
+  "zh-Hans": "在拖移时即可使用的文件转换器和工具：开始拖移文件，轻按一个键，再将它拖放到扇区上。一切都在本机运行，没有限制。",
+  "ja": "ドラッグしながら使えるファイル変換とツール：ファイルをドラッグし始め、キーを軽く押して、セグメントにドロップします。すべてこの Mac 上で動き、制限はありません。"
  },
  "Конец": {
   "en": "End",
-  "es": "Fin"
+  "es": "Fin",
+  "de": "Ende",
+  "fr": "Fin",
+  "pt-BR": "Fim",
+  "zh-Hans": "结束",
+  "ja": "終了"
  },
  "Конец = курсор": {
   "en": "End = playhead",
-  "es": "Fin = cursor"
+  "es": "Fin = cursor",
+  "de": "Ende = Abspielposition",
+  "fr": "Fin = tête de lecture",
+  "pt-BR": "Fim = cursor",
+  "zh-Hans": "结束 = 播放头",
+  "ja": "終了 = 再生ヘッド"
  },
  "Конец = положение курсора": {
   "en": "End = playhead position",
-  "es": "Fin = posición del cursor"
+  "es": "Fin = posición del cursor",
+  "de": "Ende = Position der Abspielmarke",
+  "fr": "Fin = position de la tête de lecture",
+  "pt-BR": "Fim = posição do cursor de reprodução",
+  "zh-Hans": "结束 = 播放头位置",
+  "ja": "終了 = 再生ヘッドの位置"
  },
  "Контраст": {
   "en": "Contrast",
-  "es": "Contraste"
+  "es": "Contraste",
+  "de": "Kontrast",
+  "fr": "Contraste",
+  "pt-BR": "Contraste",
+  "zh-Hans": "对比度",
+  "ja": "コントラスト"
  },
  "Копировать": {
   "en": "Copy",
-  "es": "Copiar"
+  "es": "Copiar",
+  "de": "Kopieren",
+  "fr": "Copier",
+  "pt-BR": "Copiar",
+  "zh-Hans": "拷贝",
+  "ja": "コピー"
  },
  "Круг": {
   "en": "Circle",
-  "es": "Círculo"
+  "es": "Círculo",
+  "de": "Kreis",
+  "fr": "Cercle",
+  "pt-BR": "Círculo",
+  "zh-Hans": "圆形",
+  "ja": "円"
+ },
+ "Куда": {
+  "en": "Where",
+  "es": "Dónde",
+  "de": "Wohin",
+  "fr": "Où",
+  "pt-BR": "Onde",
+  "zh-Hans": "位置",
+  "ja": "保存先"
  },
  "Куда переместить: %@": {
   "en": "Move %@ to:",
-  "es": "Mover %@ a:"
+  "es": "Mover %@ a:",
+  "de": "%@ verschieben nach:",
+  "fr": "Déplacer %@ vers :",
+  "pt-BR": "Mover %@ para:",
+  "zh-Hans": "将 %@ 移到：",
+  "ja": "%@ の移動先："
+ },
+ "Куда сохранить результат?": {
+  "en": "Where should the result be saved?",
+  "es": "¿Dónde guardar el resultado?",
+  "de": "Wo soll das Ergebnis gespeichert werden?",
+  "fr": "Où enregistrer le résultat ?",
+  "pt-BR": "Onde salvar o resultado?",
+  "zh-Hans": "要将结果存储到哪里？",
+  "ja": "結果をどこに保存しますか？"
+ },
+ "Куда сохранять": {
+  "en": "Where to save",
+  "es": "Dónde guardar",
+  "de": "Speicherort",
+  "fr": "Emplacement",
+  "pt-BR": "Onde salvar",
+  "zh-Hans": "存储位置",
+  "ja": "保存場所"
  },
  "Л": {
   "en": "L",
-  "es": "I"
+  "es": "I",
+  "de": "L",
+  "fr": "G",
+  "pt-BR": "E",
+  "zh-Hans": "左",
+  "ja": "左"
  },
  "Левый канал": {
   "en": "Left channel",
-  "es": "Canal izquierdo"
+  "es": "Canal izquierdo",
+  "de": "Linker Kanal",
+  "fr": "Canal gauche",
+  "pt-BR": "Canal esquerdo",
+  "zh-Hans": "左声道",
+  "ja": "左チャンネル"
  },
  "Линия": {
   "en": "Line",
-  "es": "Línea"
+  "es": "Línea",
+  "de": "Linie",
+  "fr": "Ligne",
+  "pt-BR": "Linha",
+  "zh-Hans": "线条",
+  "ja": "線"
  },
  "Лица на этом кадре не найдены.": {
   "en": "No faces found in this frame.",
-  "es": "No se encontraron caras en este fotograma."
+  "es": "No se encontraron caras en este fotograma.",
+  "de": "In diesem Bild wurden keine Gesichter gefunden.",
+  "fr": "Aucun visage trouvé dans cette image.",
+  "pt-BR": "Nenhum rosto encontrado neste quadro.",
+  "zh-Hans": "此帧中未找到人脸。",
+  "ja": "このフレームに顔は見つかりませんでした。"
  },
  "Лица не найдены": {
   "en": "No faces found",
-  "es": "No se encontraron caras"
+  "es": "No se encontraron caras",
+  "de": "Keine Gesichter gefunden",
+  "fr": "Aucun visage trouvé",
+  "pt-BR": "Nenhum rosto encontrado",
+  "zh-Hans": "未找到人脸",
+  "ja": "顔が見つかりません"
  },
  "Лицевая": {
   "en": "Front",
-  "es": "Anverso"
+  "es": "Anverso",
+  "de": "Vorne",
+  "fr": "Recto",
+  "pt-BR": "Frente",
+  "zh-Hans": "正面",
+  "ja": "表"
  },
  "Лупа": {
   "en": "Magnifier",
-  "es": "Lupa"
+  "es": "Lupa",
+  "de": "Lupe",
+  "fr": "Loupe",
+  "pt-BR": "Lupa",
+  "zh-Hans": "放大镜",
+  "ja": "ルーペ"
  },
  "Лучшее качество при умеренной экономии": {
   "en": "Best quality with moderate savings",
-  "es": "La mejor calidad con un ahorro moderado"
+  "es": "La mejor calidad con un ahorro moderado",
+  "de": "Beste Qualität bei moderater Ersparnis",
+  "fr": "Meilleure qualité avec un gain modéré",
+  "pt-BR": "Melhor qualidade com economia moderada",
+  "zh-Hans": "最佳质量，节省适中",
+  "ja": "最高品質で控えめに削減"
  },
  "МБ": {
   "en": "MB",
-  "es": "MB"
+  "es": "MB",
+  "de": "MB",
+  "fr": "Mo",
+  "pt-BR": "MB",
+  "zh-Hans": "MB",
+  "ja": "MB"
  },
  "Максимальный пик": {
   "en": "Maximum peak",
-  "es": "Pico máximo"
+  "es": "Pico máximo",
+  "de": "Maximaler Spitzenpegel",
+  "fr": "Crête maximale",
+  "pt-BR": "Pico máximo",
+  "zh-Hans": "最大峰值",
+  "ja": "最大ピーク"
  },
  "Мангустин": {
   "en": "Mangosteen",
-  "es": "Mangostán"
+  "es": "Mangostán",
+  "de": "Mangosteen",
+  "fr": "Mangosteen",
+  "pt-BR": "Mangosteen",
+  "zh-Hans": "Mangosteen",
+  "ja": "Mangosteen"
  },
  "Маркер": {
   "en": "Highlighter",
-  "es": "Marcador"
+  "es": "Marcador",
+  "de": "Textmarker",
+  "fr": "Surligneur",
+  "pt-BR": "Marca-texto",
+  "zh-Hans": "荧光笔",
+  "ja": "蛍光ペン"
  },
  "Масштаб": {
   "en": "Zoom",
-  "es": "Zoom"
+  "es": "Zoom",
+  "de": "Zoom",
+  "fr": "Zoom",
+  "pt-BR": "Zoom",
+  "zh-Hans": "缩放",
+  "ja": "ズーム"
  },
  "Масштаб: щипок, ⌘ или ⌥ + колёсико; прокрутка — сдвиг": {
   "en": "Zoom: pinch, ⌘ or ⌥ + scroll wheel; scroll to move",
-  "es": "Zoom: pellizca, ⌘ o ⌥ + rueda; desplaza para moverte"
+  "es": "Zoom: pellizca, ⌘ o ⌥ + rueda; desplaza para moverte",
+  "de": "Zoomen: Pinch, ⌘ oder ⌥ + Mausrad; scrollen zum Verschieben",
+  "fr": "Zoom : pincer, ⌘ ou ⌥ + molette ; faire défiler pour déplacer",
+  "pt-BR": "Zoom: pinça, ⌘ ou ⌥ + roda do mouse; role para mover",
+  "zh-Hans": "缩放：双指捏合，或 ⌘/⌥ + 滚轮；滚动以移动",
+  "ja": "ズーム：ピンチ、または ⌘ か ⌥ + スクロールホイール。スクロールで移動"
  },
  "Метаданные": {
   "en": "Metadata",
-  "es": "Metadatos"
+  "es": "Metadatos",
+  "de": "Metadaten",
+  "fr": "Métadonnées",
+  "pt-BR": "Metadados",
+  "zh-Hans": "元数据",
+  "ja": "メタデータ"
  },
  "Метаданных нет": {
   "en": "No metadata",
-  "es": "Sin metadatos"
+  "es": "Sin metadatos",
+  "de": "Keine Metadaten",
+  "fr": "Aucune métadonnée",
+  "pt-BR": "Sem metadados",
+  "zh-Hans": "无元数据",
+  "ja": "メタデータなし"
  },
  "Минимальный размер": {
   "en": "Smallest size",
-  "es": "Tamaño mínimo"
+  "es": "Tamaño mínimo",
+  "de": "Kleinste Größe",
+  "fr": "Taille minimale",
+  "pt-BR": "Menor tamanho",
+  "zh-Hans": "最小尺寸",
+  "ja": "最小サイズ"
  },
  "Модель камеры": {
   "en": "Camera model",
-  "es": "Modelo de cámara"
+  "es": "Modelo de cámara",
+  "de": "Kameramodell",
+  "fr": "Modèle d’appareil",
+  "pt-BR": "Modelo da câmera",
+  "zh-Hans": "相机型号",
+  "ja": "カメラの機種"
  },
  "Моментальный": {
   "en": "Instant",
-  "es": "Instantánea"
+  "es": "Instantánea",
+  "de": "Sofort",
+  "fr": "Instantané",
+  "pt-BR": "Instantâneo",
+  "zh-Hans": "即时",
+  "ja": "インスタント"
  },
  "Моно": {
   "en": "Mono",
-  "es": "Mono"
+  "es": "Mono",
+  "de": "Mono",
+  "fr": "Mono",
+  "pt-BR": "Mono",
+  "zh-Hans": "单声道",
+  "ja": "モノラル"
  },
  "На «%@» не найден объект, от которого можно отделить фон.": {
   "en": "No subject to separate from the background was found in “%@”.",
-  "es": "No se encontró en «%@» un objeto que separar del fondo."
+  "es": "No se encontró en «%@» un objeto que separar del fondo.",
+  "de": "In „%@“ wurde kein Motiv gefunden, das sich vom Hintergrund trennen lässt.",
+  "fr": "Aucun sujet à séparer de l’arrière-plan n’a été trouvé dans « %@ ».",
+  "pt-BR": "Nenhum objeto para separar do fundo foi encontrado em “%@”.",
+  "zh-Hans": "在“%@”中未找到可与背景分离的主体。",
+  "ja": "「%@」に背景から切り離せる被写体が見つかりませんでした。"
  },
  "На фото не найден объект, от которого можно отделить фон.": {
   "en": "No subject to separate from the background was found in the photo.",
-  "es": "No se encontró en la foto un objeto que separar del fondo."
+  "es": "No se encontró en la foto un objeto que separar del fondo.",
+  "de": "Im Foto wurde kein Motiv gefunden, das sich vom Hintergrund trennen lässt.",
+  "fr": "Aucun sujet à séparer de l’arrière-plan n’a été trouvé sur la photo.",
+  "pt-BR": "Nenhum objeto para separar do fundo foi encontrado na foto.",
+  "zh-Hans": "照片中未找到可与背景分离的主体。",
+  "ja": "写真に背景から切り離せる被写体が見つかりませんでした。"
+ },
+ "На этом Mac нет языков для распознавания речи без сети. Добавьте язык в «Системные настройки → Клавиатура → Диктовка».": {
+  "en": "This Mac has no languages for offline speech recognition. Add one in System Settings → Keyboard → Dictation.",
+  "es": "Este Mac no tiene idiomas para reconocer voz sin conexión. Añade uno en Ajustes del Sistema → Teclado → Dictado.",
+  "de": "Auf diesem Mac gibt es keine Sprachen für Spracherkennung ohne Netzwerk. Fügen Sie eine unter Systemeinstellungen → Tastatur → Diktat hinzu.",
+  "fr": "Ce Mac n’a aucune langue pour la reconnaissance vocale hors ligne. Ajoutez-en une dans Réglages Système → Clavier → Dictée.",
+  "pt-BR": "Este Mac não tem idiomas para reconhecimento de fala offline. Adicione um em Ajustes do Sistema → Teclado → Ditado.",
+  "zh-Hans": "此 Mac 没有可离线识别语音的语言。请在“系统设置”→“键盘”→“听写”中添加。",
+  "ja": "この Mac にはオフラインで音声認識できる言語がありません。「システム設定」→「キーボード」→「音声入力」で追加してください。"
+ },
+ "Набор": {
+  "en": "Preset",
+  "es": "Ajuste",
+  "de": "Voreinstellung",
+  "fr": "Préréglage",
+  "pt-BR": "Predefinido",
+  "zh-Hans": "预设",
+  "ja": "プリセット"
+ },
+ "Набор %lld": {
+  "en": "Preset %lld",
+  "es": "Ajuste %lld",
+  "de": "Voreinstellung %lld",
+  "fr": "Préréglage %lld",
+  "pt-BR": "Predefinido %lld",
+  "zh-Hans": "预设 %lld",
+  "ja": "プリセット %lld"
+ },
+ "Набор настроек": {
+  "en": "Preset",
+  "es": "Ajuste predefinido",
+  "de": "Voreinstellung",
+  "fr": "Préréglage",
+  "pt-BR": "Predefinido",
+  "zh-Hans": "预设",
+  "ja": "プリセット"
+ },
+ "Название": {
+  "en": "Name",
+  "es": "Nombre",
+  "de": "Name",
+  "fr": "Nom",
+  "pt-BR": "Nome",
+  "zh-Hans": "名称",
+  "ja": "名前"
  },
  "Найдено областей: %lld": {
   "en": "Areas found: %lld",
-  "es": "Áreas encontradas: %lld"
+  "es": "Áreas encontradas: %lld",
+  "de": "Gefundene Bereiche: %lld",
+  "fr": "Zones trouvées : %lld",
+  "pt-BR": "Áreas encontradas: %lld",
+  "zh-Hans": "找到的区域：%lld",
+  "ja": "見つかった領域：%lld"
  },
  "Найдено областей: %lld. Проверьте их время на таймлайне.": {
   "en": "Areas found: %lld. Check their timing on the timeline.",
-  "es": "Áreas encontradas: %lld. Revisa su tiempo en la línea de tiempo."
+  "es": "Áreas encontradas: %lld. Revisa su tiempo en la línea de tiempo.",
+  "de": "Gefundene Bereiche: %lld. Prüfen Sie ihr Timing in der Zeitleiste.",
+  "fr": "Zones trouvées : %lld. Vérifiez leur minutage sur la timeline.",
+  "pt-BR": "Áreas encontradas: %lld. Confira o tempo delas na linha do tempo.",
+  "zh-Hans": "找到的区域：%lld。请在时间线上检查它们的时间。",
+  "ja": "見つかった領域：%lld。タイムラインでタイミングを確認してください。"
  },
  "Найдите кадр (пробел — воспроизведение, ⏎ — добавить, кнопки ◀︎▶︎ — по одному кадру).": {
   "en": "Find the frame (Space — play, ⏎ — add, ◀︎▶︎ buttons — one frame at a time).",
-  "es": "Busca el fotograma (espacio: reproducir, ⏎: añadir, botones ◀︎▶︎: de uno en uno)."
+  "es": "Busca el fotograma (espacio: reproducir, ⏎: añadir, botones ◀︎▶︎: de uno en uno).",
+  "de": "Suchen Sie das Bild (Leertaste — abspielen, ⏎ — hinzufügen, Tasten ◀︎▶︎ — bildweise).",
+  "fr": "Trouvez l’image (Espace — lire, ⏎ — ajouter, boutons ◀︎▶︎ — image par image).",
+  "pt-BR": "Encontre o quadro (Espaço — reproduzir, ⏎ — adicionar, botões ◀︎▶︎ — quadro a quadro).",
+  "zh-Hans": "找到所需的帧（空格键 — 播放，⏎ — 添加，◀︎▶︎ 按钮 — 逐帧）。",
+  "ja": "フレームを探します（スペース — 再生、⏎ — 追加、◀︎▶︎ ボタン — 1 フレームずつ）。"
  },
  "Найти лица": {
   "en": "Find faces",
-  "es": "Buscar caras"
+  "es": "Buscar caras",
+  "de": "Gesichter finden",
+  "fr": "Trouver les visages",
+  "pt-BR": "Encontrar rostos",
+  "zh-Hans": "查找人脸",
+  "ja": "顔を探す"
  },
  "Найти текст": {
   "en": "Find text",
-  "es": "Buscar texto"
+  "es": "Buscar texto",
+  "de": "Text finden",
+  "fr": "Trouver le texte",
+  "pt-BR": "Encontrar texto",
+  "zh-Hans": "查找文本",
+  "ja": "テキストを探す"
  },
  "Настройки Mangosteen": {
   "en": "Mangosteen Settings",
-  "es": "Ajustes de Mangosteen"
+  "es": "Ajustes de Mangosteen",
+  "de": "Mangosteen-Einstellungen",
+  "fr": "Réglages de Mangosteen",
+  "pt-BR": "Ajustes do Mangosteen",
+  "zh-Hans": "Mangosteen 设置",
+  "ja": "Mangosteen の設定"
  },
  "Настройки…": {
   "en": "Settings…",
-  "es": "Ajustes…"
+  "es": "Ajustes…",
+  "de": "Einstellungen …",
+  "fr": "Réglages…",
+  "pt-BR": "Ajustes…",
+  "zh-Hans": "设置…",
+  "ja": "設定…"
  },
  "Насыщенность": {
   "en": "Saturation",
-  "es": "Saturación"
+  "es": "Saturación",
+  "de": "Sättigung",
+  "fr": "Saturation",
+  "pt-BR": "Saturação",
+  "zh-Hans": "饱和度",
+  "ja": "彩度"
  },
  "Начало": {
   "en": "Start",
-  "es": "Inicio"
+  "es": "Inicio",
+  "de": "Anfang",
+  "fr": "Début",
+  "pt-BR": "Início",
+  "zh-Hans": "开始",
+  "ja": "開始"
  },
  "Начало = курсор": {
   "en": "Start = playhead",
-  "es": "Inicio = cursor"
+  "es": "Inicio = cursor",
+  "de": "Anfang = Abspielposition",
+  "fr": "Début = tête de lecture",
+  "pt-BR": "Início = cursor",
+  "zh-Hans": "开始 = 播放头",
+  "ja": "開始 = 再生ヘッド"
  },
  "Начало = положение курсора": {
   "en": "Start = playhead position",
-  "es": "Inicio = posición del cursor"
+  "es": "Inicio = posición del cursor",
+  "de": "Anfang = Position der Abspielmarke",
+  "fr": "Début = position de la tête de lecture",
+  "pt-BR": "Início = posição do cursor de reprodução",
+  "zh-Hans": "开始 = 播放头位置",
+  "ja": "開始 = 再生ヘッドの位置"
  },
  "Начать": {
   "en": "Start",
-  "es": "Empezar"
+  "es": "Empezar",
+  "de": "Start",
+  "fr": "Démarrer",
+  "pt-BR": "Começar",
+  "zh-Hans": "开始",
+  "ja": "開始"
  },
  "Начните перетаскивать файл и коротко нажмите клавишу. Колесо останется открытым, пока вы не отпустите файл.": {
   "en": "Start dragging a file and briefly press a key. The wheel stays open until you drop the file.",
-  "es": "Empieza a arrastrar un archivo y pulsa brevemente una tecla. La rueda queda abierta hasta que sueltes el archivo."
+  "es": "Empieza a arrastrar un archivo y pulsa brevemente una tecla. La rueda queda abierta hasta que sueltes el archivo.",
+  "de": "Ziehen Sie eine Datei und drücken Sie kurz eine Taste. Das Rad bleibt offen, bis Sie die Datei loslassen.",
+  "fr": "Commencez à glisser un fichier et appuyez brièvement sur une touche. La roue reste ouverte jusqu’à ce que vous déposiez le fichier.",
+  "pt-BR": "Comece a arrastar um arquivo e pressione rapidamente uma tecla. A roda fica aberta até você soltar o arquivo.",
+  "zh-Hans": "开始拖移文件并轻按一个键。转盘会一直打开，直到你松开文件。",
+  "ja": "ファイルをドラッグし始め、キーを軽く押します。ファイルをドロップするまでホイールは開いたままです。"
  },
  "Начните тащить файл — из Finder, с рабочего стола или из любого приложения.": {
   "en": "Start dragging a file — from Finder, the desktop or any app.",
-  "es": "Empieza a arrastrar un archivo desde el Finder, el escritorio o cualquier app."
+  "es": "Empieza a arrastrar un archivo desde el Finder, el escritorio o cualquier app.",
+  "de": "Ziehen Sie eine Datei — aus dem Finder, vom Schreibtisch oder aus einer beliebigen App.",
+  "fr": "Commencez à glisser un fichier — depuis le Finder, le bureau ou n’importe quelle app.",
+  "pt-BR": "Comece a arrastar um arquivo — do Finder, da mesa ou de qualquer app.",
+  "zh-Hans": "开始拖移文件 — 来自访达、桌面或任何 App。",
+  "ja": "ファイルをドラッグし始めます（Finder、デスクトップ、どのアプリからでも）。"
  },
  "Не больше": {
   "en": "At most",
-  "es": "Como máximo"
+  "es": "Como máximo",
+  "de": "Höchstens",
+  "fr": "Au plus",
+  "pt-BR": "No máximo",
+  "zh-Hans": "最多",
+  "ja": "最大"
+ },
+ "Не больше %lld пикс.": {
+  "en": "Up to %lld px",
+  "es": "Hasta %lld px",
+  "de": "Bis %lld px",
+  "fr": "Jusqu’à %lld px",
+  "pt-BR": "Até %lld px",
+  "zh-Hans": "不超过 %lld 像素",
+  "ja": "最大 %lld px"
+ },
+ "Не менять": {
+  "en": "Keep",
+  "es": "Sin cambios",
+  "de": "Beibehalten",
+  "fr": "Conserver",
+  "pt-BR": "Manter",
+  "zh-Hans": "保持不变",
+  "ja": "変更しない"
  },
  "Не найдена утилита «%@». Установите её: brew install %@": {
   "en": "The tool “%@” was not found. Install it with: brew install %@",
-  "es": "No se encontró la herramienta «%@». Instálala con: brew install %@"
+  "es": "No se encontró la herramienta «%@». Instálala con: brew install %@",
+  "de": "Das Werkzeug „%@“ wurde nicht gefunden. Installieren Sie es mit: brew install %@",
+  "fr": "L’outil « %@ » est introuvable. Installez-le avec : brew install %@",
+  "pt-BR": "A ferramenta “%@” não foi encontrada. Instale com: brew install %@",
+  "zh-Hans": "未找到工具“%@”。请使用以下命令安装：brew install %@",
+  "ja": "ツール「%@」が見つかりません。次でインストールしてください：brew install %@"
  },
  "Не отпуская кнопку, коротко нажмите клавишу — у курсора откроется колесо.": {
   "en": "Without releasing the button, briefly press a key — a wheel opens at the pointer.",
-  "es": "Sin soltar el botón, pulsa brevemente una tecla: se abrirá una rueda junto al puntero."
+  "es": "Sin soltar el botón, pulsa brevemente una tecla: se abrirá una rueda junto al puntero.",
+  "de": "Drücken Sie, ohne die Maustaste loszulassen, kurz eine Taste — am Zeiger öffnet sich ein Rad.",
+  "fr": "Sans relâcher le bouton, appuyez brièvement sur une touche — une roue s’ouvre au pointeur.",
+  "pt-BR": "Sem soltar o botão, pressione rapidamente uma tecla — uma roda abre no ponteiro.",
+  "zh-Hans": "不松开按钮，轻按一个键 — 指针处会打开一个转盘。",
+  "ja": "ボタンを押したまま、キーを軽く押すとポインタの位置にホイールが開きます。"
  },
  "Не удалось открыть PDF": {
   "en": "Could not open the PDF",
-  "es": "No se pudo abrir el PDF"
+  "es": "No se pudo abrir el PDF",
+  "de": "Das PDF konnte nicht geöffnet werden",
+  "fr": "Impossible d’ouvrir le PDF",
+  "pt-BR": "Não foi possível abrir o PDF",
+  "zh-Hans": "无法打开 PDF",
+  "ja": "PDF を開けませんでした"
  },
  "Не удалось открыть «%@».": {
   "en": "Could not open “%@”.",
-  "es": "No se pudo abrir «%@»."
+  "es": "No se pudo abrir «%@».",
+  "de": "„%@“ konnte nicht geöffnet werden.",
+  "fr": "Impossible d’ouvrir « %@ ».",
+  "pt-BR": "Não foi possível abrir “%@”.",
+  "zh-Hans": "无法打开“%@”。",
+  "ja": "「%@」を開けませんでした。"
  },
  "Не удалось построить кадр.": {
   "en": "Could not render the frame.",
-  "es": "No se pudo generar el fotograma."
+  "es": "No se pudo generar el fotograma.",
+  "de": "Das Bild konnte nicht gerendert werden.",
+  "fr": "Impossible de rendre l’image.",
+  "pt-BR": "Não foi possível renderizar o quadro.",
+  "zh-Hans": "无法渲染该帧。",
+  "ja": "フレームを描画できませんでした。"
  },
  "Не удалось проверить обновления": {
   "en": "Couldn't check for updates",
-  "es": "No se pudieron buscar actualizaciones"
+  "es": "No se pudieron buscar actualizaciones",
+  "de": "Suche nach Updates fehlgeschlagen",
+  "fr": "Impossible de rechercher des mises à jour",
+  "pt-BR": "Não foi possível verificar atualizações",
+  "zh-Hans": "无法检查更新",
+  "ja": "アップデートを確認できませんでした"
  },
  "Не удалось прочитать «%@».": {
   "en": "Could not read “%@”.",
-  "es": "No se pudo leer «%@»."
+  "es": "No se pudo leer «%@».",
+  "de": "„%@“ konnte nicht gelesen werden.",
+  "fr": "Impossible de lire « %@ ».",
+  "pt-BR": "Não foi possível ler “%@”.",
+  "zh-Hans": "无法读取“%@”。",
+  "ja": "「%@」を読み込めませんでした。"
  },
  "Не удалось прочитать видео": {
   "en": "Could not read the video",
-  "es": "No se pudo leer el vídeo"
+  "es": "No se pudo leer el vídeo",
+  "de": "Das Video konnte nicht gelesen werden",
+  "fr": "Impossible de lire la vidéo",
+  "pt-BR": "Não foi possível ler o vídeo",
+  "zh-Hans": "无法读取视频",
+  "ja": "ビデオを読み込めませんでした"
  },
  "Не удалось прочитать файл": {
   "en": "Could not read the file",
-  "es": "No se pudo leer el archivo"
+  "es": "No se pudo leer el archivo",
+  "de": "Die Datei konnte nicht gelesen werden",
+  "fr": "Impossible de lire le fichier",
+  "pt-BR": "Não foi possível ler o arquivo",
+  "zh-Hans": "无法读取文件",
+  "ja": "ファイルを読み込めませんでした"
  },
  "Не удалось распознать текст в «%@» за минуту, распознавание остановлено.": {
   "en": "Couldn't recognise text in “%@” within a minute, so recognition was stopped.",
-  "es": "No se pudo reconocer el texto de «%@» en un minuto; el reconocimiento se detuvo."
+  "es": "No se pudo reconocer el texto de «%@» en un minuto; el reconocimiento se detuvo.",
+  "de": "Der Text in „%@“ konnte nicht innerhalb einer Minute erkannt werden, daher wurde die Erkennung abgebrochen.",
+  "fr": "Le texte de « %@ » n’a pas pu être reconnu en une minute, la reconnaissance a donc été arrêtée.",
+  "pt-BR": "Não foi possível reconhecer o texto de “%@” em um minuto, então o reconhecimento foi interrompido.",
+  "zh-Hans": "未能在一分钟内识别“%@”中的文本，已停止识别。",
+  "ja": "「%@」のテキストを 1 分以内に認識できなかったため、認識を中止しました。"
  },
  "Не удалось распознать текст за минуту, распознавание остановлено.": {
   "en": "Couldn't recognise text within a minute, so recognition was stopped.",
-  "es": "No se pudo reconocer el texto en un minuto; el reconocimiento se detuvo."
+  "es": "No se pudo reconocer el texto en un minuto; el reconocimiento se detuvo.",
+  "de": "Der Text konnte nicht innerhalb einer Minute erkannt werden, daher wurde die Erkennung abgebrochen.",
+  "fr": "Le texte n’a pas pu être reconnu en une minute, la reconnaissance a donc été arrêtée.",
+  "pt-BR": "Não foi possível reconhecer o texto em um minuto, então o reconhecimento foi interrompido.",
+  "zh-Hans": "未能在一分钟内识别文本，已停止识别。",
+  "ja": "1 分以内にテキストを認識できなかったため、認識を中止しました。"
  },
  "Не удалось сохранить PDF.": {
   "en": "Could not save the PDF.",
-  "es": "No se pudo guardar el PDF."
+  "es": "No se pudo guardar el PDF.",
+  "de": "Das PDF konnte nicht gespeichert werden.",
+  "fr": "Impossible d’enregistrer le PDF.",
+  "pt-BR": "Não foi possível salvar o PDF.",
+  "zh-Hans": "无法存储 PDF。",
+  "ja": "PDF を保存できませんでした。"
  },
  "Не удалось сохранить файл в формате %@.": {
   "en": "Could not save the file as %@.",
-  "es": "No se pudo guardar el archivo en formato %@."
+  "es": "No se pudo guardar el archivo en formato %@.",
+  "de": "Die Datei konnte nicht als %@ gespeichert werden.",
+  "fr": "Impossible d’enregistrer le fichier en %@.",
+  "pt-BR": "Não foi possível salvar o arquivo como %@.",
+  "zh-Hans": "无法将文件存储为 %@。",
+  "ja": "ファイルを %@ として保存できませんでした。"
  },
  "Недавние результаты": {
   "en": "Recent Results",
-  "es": "Resultados recientes"
+  "es": "Resultados recientes",
+  "de": "Letzte Ergebnisse",
+  "fr": "Résultats récents",
+  "pt-BR": "Resultados Recentes",
+  "zh-Hans": "最近的结果",
+  "ja": "最近の結果"
  },
  "Неизвестный формат файла «%@».": {
   "en": "Unknown file format: “%@”.",
-  "es": "Formato de archivo desconocido: «%@»."
+  "es": "Formato de archivo desconocido: «%@».",
+  "de": "Unbekanntes Dateiformat: „%@“.",
+  "fr": "Format de fichier inconnu : « %@ ».",
+  "pt-BR": "Formato de arquivo desconhecido: “%@”.",
+  "zh-Hans": "未知的文件格式：“%@”。",
+  "ja": "不明なファイル形式：「%@」。"
  },
  "Непрозрачность": {
   "en": "Opacity",
-  "es": "Opacidad"
+  "es": "Opacidad",
+  "de": "Deckkraft",
+  "fr": "Opacité",
+  "pt-BR": "Opacidade",
+  "zh-Hans": "不透明度",
+  "ja": "不透明度"
  },
  "Нет": {
   "en": "None",
-  "es": "Ninguno"
+  "es": "Ninguno",
+  "de": "Keine",
+  "fr": "Aucun",
+  "pt-BR": "Nenhum",
+  "zh-Hans": "无",
+  "ja": "なし"
  },
  "Нет вариантов": {
   "en": "No options",
-  "es": "Sin opciones"
+  "es": "Sin opciones",
+  "de": "Keine Optionen",
+  "fr": "Aucune option",
+  "pt-BR": "Nenhuma opção",
+  "zh-Hans": "无选项",
+  "ja": "選択肢がありません"
  },
  "Нет видео": {
   "en": "No video",
-  "es": "No hay vídeo"
+  "es": "No hay vídeo",
+  "de": "Kein Video",
+  "fr": "Aucune vidéo",
+  "pt-BR": "Nenhum vídeo",
+  "zh-Hans": "无视频",
+  "ja": "ビデオなし"
  },
  "Нет изображений": {
   "en": "No images",
-  "es": "No hay imágenes"
+  "es": "No hay imágenes",
+  "de": "Keine Bilder",
+  "fr": "Aucune image",
+  "pt-BR": "Nenhuma imagem",
+  "zh-Hans": "无图像",
+  "ja": "画像なし"
  },
  "Нет подходящих файлов.": {
   "en": "No suitable files.",
-  "es": "No hay archivos adecuados."
+  "es": "No hay archivos adecuados.",
+  "de": "Keine passenden Dateien.",
+  "fr": "Aucun fichier adapté.",
+  "pt-BR": "Nenhum arquivo adequado.",
+  "zh-Hans": "没有合适的文件。",
+  "ja": "対応するファイルがありません。"
  },
  "Ничего не найдено": {
   "en": "Nothing found",
-  "es": "No se encontró nada"
+  "es": "No se encontró nada",
+  "de": "Nichts gefunden",
+  "fr": "Rien trouvé",
+  "pt-BR": "Nada encontrado",
+  "zh-Hans": "未找到任何内容",
+  "ja": "見つかりません"
+ },
+ "Новый набор": {
+  "en": "New preset",
+  "es": "Nuevo ajuste",
+  "de": "Neue Voreinstellung",
+  "fr": "Nouveau préréglage",
+  "pt-BR": "Novo predefinido",
+  "zh-Hans": "新建预设",
+  "ja": "新規プリセット"
  },
  "Ножницы — разрезать после страницы, клик по странице — убрать её.": {
   "en": "Scissors cut after a page; click a page to leave it out.",
-  "es": "Las tijeras cortan tras una página; haz clic en una página para quitarla."
+  "es": "Las tijeras cortan tras una página; haz clic en una página para quitarla.",
+  "de": "Die Schere trennt nach einer Seite; klicken Sie auf eine Seite, um sie auszulassen.",
+  "fr": "Les ciseaux coupent après une page ; cliquez sur une page pour l’exclure.",
+  "pt-BR": "A tesoura corta depois de uma página; clique em uma página para deixá-la de fora.",
+  "zh-Hans": "剪刀会在页面之后分割；点按页面可将其排除。",
+  "ja": "はさみはページの後ろで分割します。ページをクリックすると除外できます。"
  },
  "Номер": {
   "en": "Number",
-  "es": "Número"
+  "es": "Número",
+  "de": "Nummer",
+  "fr": "Numéro",
+  "pt-BR": "Número",
+  "zh-Hans": "编号",
+  "ja": "番号"
  },
  "Нормализовать": {
   "en": "Normalize",
-  "es": "Normalizar"
+  "es": "Normalizar",
+  "de": "Normalisieren",
+  "fr": "Normaliser",
+  "pt-BR": "Normalizar",
+  "zh-Hans": "标准化",
+  "ja": "ノーマライズ"
  },
  "Нуар": {
   "en": "Noir",
-  "es": "Noir"
+  "es": "Noir",
+  "de": "Noir",
+  "fr": "Noir",
+  "pt-BR": "Noir",
+  "zh-Hans": "黑白电影",
+  "ja": "ノワール"
  },
  "О Mangosteen": {
   "en": "About Mangosteen",
-  "es": "Acerca de Mangosteen"
+  "es": "Acerca de Mangosteen",
+  "de": "Über Mangosteen",
+  "fr": "À propos de Mangosteen",
+  "pt-BR": "Sobre o Mangosteen",
+  "zh-Hans": "关于 Mangosteen",
+  "ja": "Mangosteen について"
  },
  "О Mangosteen…": {
   "en": "About Mangosteen…",
-  "es": "Acerca de Mangosteen…"
+  "es": "Acerca de Mangosteen…",
+  "de": "Über Mangosteen …",
+  "fr": "À propos de Mangosteen…",
+  "pt-BR": "Sobre o Mangosteen…",
+  "zh-Hans": "关于 Mangosteen…",
+  "ja": "Mangosteen について…"
  },
  "Обратная": {
   "en": "Back",
-  "es": "Reverso"
+  "es": "Reverso",
+  "de": "Hinten",
+  "fr": "Verso",
+  "pt-BR": "Verso",
+  "zh-Hans": "背面",
+  "ja": "裏"
  },
  "Обрезать": {
   "en": "Trim",
-  "es": "Recortar"
+  "es": "Recortar",
+  "de": "Kürzen",
+  "fr": "Raccourcir",
+  "pt-BR": "Aparar",
+  "zh-Hans": "修剪",
+  "ja": "トリム"
  },
  "Обрезать по объекту": {
   "en": "Crop to subject",
-  "es": "Recortar al objeto"
+  "es": "Recortar al objeto",
+  "de": "Auf Motiv zuschneiden",
+  "fr": "Recadrer sur le sujet",
+  "pt-BR": "Cortar no objeto",
+  "zh-Hans": "裁剪到主体",
+  "ja": "被写体で切り抜く"
  },
  "Обрезать фото до квадрата по центру и сделать круглым": {
   "en": "Crop the photo to a centred square and make it round",
-  "es": "Recortar la foto a un cuadrado centrado y hacerla redonda"
+  "es": "Recortar la foto a un cuadrado centrado y hacerla redonda",
+  "de": "Foto auf ein mittiges Quadrat zuschneiden und rund machen",
+  "fr": "Recadrer la photo en carré centré et la rendre ronde",
+  "pt-BR": "Cortar a foto em um quadrado centralizado e deixá-la redonda",
+  "zh-Hans": "将照片裁剪为居中的正方形并变成圆形",
+  "ja": "写真を中央の正方形に切り抜いて円形にする"
  },
  "Обрезать.изображение": {
   "en": "Crop",
-  "es": "Recortar"
+  "es": "Recortar",
+  "de": "Zuschneiden",
+  "fr": "Recadrer",
+  "pt-BR": "Cortar",
+  "zh-Hans": "裁剪",
+  "ja": "切り抜き"
  },
  "Обрезка": {
   "en": "Trim",
-  "es": "Recorte"
+  "es": "Recorte",
+  "de": "Kürzen",
+  "fr": "Raccourcir",
+  "pt-BR": "Aparar",
+  "zh-Hans": "修剪",
+  "ja": "トリム"
  },
  "Объединение PDF": {
   "en": "Merging PDFs",
-  "es": "Combinando PDF"
+  "es": "Combinando PDF",
+  "de": "PDFs werden zusammengeführt",
+  "fr": "Fusion des PDF",
+  "pt-BR": "Combinando PDFs",
+  "zh-Hans": "正在合并 PDF",
+  "ja": "PDF を結合中"
  },
  "Объединено": {
   "en": "Merged",
-  "es": "Combinado"
+  "es": "Combinado",
+  "de": "Zusammengeführt",
+  "fr": "Fusionné",
+  "pt-BR": "Combinado",
+  "zh-Hans": "已合并",
+  "ja": "結合済み"
  },
  "Объединить": {
   "en": "Merge",
-  "es": "Combinar"
+  "es": "Combinar",
+  "de": "Zusammenführen",
+  "fr": "Fusionner",
+  "pt-BR": "Combinar",
+  "zh-Hans": "合并",
+  "ja": "結合"
  },
  "Овал": {
   "en": "Ellipse",
-  "es": "Óvalo"
+  "es": "Óvalo",
+  "de": "Ellipse",
+  "fr": "Ellipse",
+  "pt-BR": "Elipse",
+  "zh-Hans": "椭圆",
+  "ja": "楕円"
  },
  "Окно": {
   "en": "Window",
-  "es": "Ventana"
+  "es": "Ventana",
+  "de": "Fenster",
+  "fr": "Fenêtre",
+  "pt-BR": "Janela",
+  "zh-Hans": "窗口",
+  "ja": "ウインドウ"
  },
  "Описание": {
   "en": "Description",
-  "es": "Descripción"
+  "es": "Descripción",
+  "de": "Beschreibung",
+  "fr": "Description",
+  "pt-BR": "Descrição",
+  "zh-Hans": "描述",
+  "ja": "説明"
  },
  "Оранжевый": {
   "en": "Orange",
-  "es": "Naranja"
+  "es": "Naranja",
+  "de": "Orange",
+  "fr": "Orange",
+  "pt-BR": "Laranja",
+  "zh-Hans": "橙色",
+  "ja": "オレンジ"
  },
  "Оригинал": {
   "en": "Original",
-  "es": "Original"
+  "es": "Original",
+  "de": "Original",
+  "fr": "Original",
+  "pt-BR": "Original",
+  "zh-Hans": "原件",
+  "ja": "オリジナル"
  },
  "Основное": {
   "en": "General",
-  "es": "General"
+  "es": "General",
+  "de": "Allgemein",
+  "fr": "Général",
+  "pt-BR": "Geral",
+  "zh-Hans": "通用",
+  "ja": "一般"
  },
  "Основные": {
   "en": "General",
-  "es": "General"
+  "es": "General",
+  "de": "Allgemein",
+  "fr": "Général",
+  "pt-BR": "Geral",
+  "zh-Hans": "通用",
+  "ja": "一般"
  },
  "Останавливаю…": {
   "en": "Stopping…",
-  "es": "Deteniendo…"
+  "es": "Deteniendo…",
+  "de": "Wird gestoppt …",
+  "fr": "Arrêt…",
+  "pt-BR": "Parando…",
+  "zh-Hans": "正在停止…",
+  "ja": "停止中…"
  },
  "Останется: %@": {
   "en": "Remaining: %@",
-  "es": "Quedará: %@"
+  "es": "Quedará: %@",
+  "de": "Verbleibend: %@",
+  "fr": "Restant : %@",
+  "pt-BR": "Restante: %@",
+  "zh-Hans": "剩余：%@",
+  "ja": "残り：%@"
  },
  "Остановить": {
   "en": "Stop",
-  "es": "Detener"
+  "es": "Detener",
+  "de": "Stopp",
+  "fr": "Arrêter",
+  "pt-BR": "Parar",
+  "zh-Hans": "停止",
+  "ja": "停止"
  },
  "Отклик": {
   "en": "Feedback",
-  "es": "Respuesta"
+  "es": "Respuesta",
+  "de": "Rückmeldung",
+  "fr": "Retour",
+  "pt-BR": "Resposta",
+  "zh-Hans": "反馈",
+  "ja": "フィードバック"
  },
  "Открытые окна": {
   "en": "Open windows",
-  "es": "Ventanas abiertas"
+  "es": "Ventanas abiertas",
+  "de": "Offene Fenster",
+  "fr": "Fenêtres ouvertes",
+  "pt-BR": "Janelas abertas",
+  "zh-Hans": "打开的窗口",
+  "ja": "開いているウインドウ"
  },
  "Открыть": {
   "en": "Open",
-  "es": "Abrir"
+  "es": "Abrir",
+  "de": "Öffnen",
+  "fr": "Ouvrir",
+  "pt-BR": "Abrir",
+  "zh-Hans": "打开",
+  "ja": "開く"
  },
  "Отмена": {
   "en": "Cancel",
-  "es": "Cancelar"
+  "es": "Cancelar",
+  "de": "Abbrechen",
+  "fr": "Annuler",
+  "pt-BR": "Cancelar",
+  "zh-Hans": "取消",
+  "ja": "キャンセル"
  },
  "Отменить": {
   "en": "Undo",
-  "es": "Deshacer"
+  "es": "Deshacer",
+  "de": "Widerrufen",
+  "fr": "Annuler",
+  "pt-BR": "Desfazer",
+  "zh-Hans": "撤销",
+  "ja": "取り消す"
  },
  "Отразить по вертикали": {
   "en": "Flip vertically",
-  "es": "Voltear verticalmente"
+  "es": "Voltear verticalmente",
+  "de": "Vertikal spiegeln",
+  "fr": "Retourner verticalement",
+  "pt-BR": "Espelhar verticalmente",
+  "zh-Hans": "垂直翻转",
+  "ja": "上下反転"
  },
  "Отразить по горизонтали": {
   "en": "Flip horizontally",
-  "es": "Voltear horizontalmente"
+  "es": "Voltear horizontalmente",
+  "de": "Horizontal spiegeln",
+  "fr": "Retourner horizontalement",
+  "pt-BR": "Espelhar horizontalmente",
+  "zh-Hans": "水平翻转",
+  "ja": "左右反転"
  },
  "Отступ": {
   "en": "Margin",
-  "es": "Margen"
+  "es": "Margen",
+  "de": "Rand",
+  "fr": "Marge",
+  "pt-BR": "Margem",
+  "zh-Hans": "边距",
+  "ja": "余白"
  },
  "Оттенок": {
   "en": "Tint",
-  "es": "Matiz"
+  "es": "Matiz",
+  "de": "Tönung",
+  "fr": "Teinte",
+  "pt-BR": "Tonalidade",
+  "zh-Hans": "色调",
+  "ja": "色合い"
  },
  "Оформление": {
   "en": "Appearance",
-  "es": "Apariencia"
+  "es": "Apariencia",
+  "de": "Erscheinungsbild",
+  "fr": "Apparence",
+  "pt-BR": "Aparência",
+  "zh-Hans": "外观",
+  "ja": "外観"
  },
  "Оцениваю размер…": {
   "en": "Estimating size…",
-  "es": "Calculando tamaño…"
+  "es": "Calculando tamaño…",
+  "de": "Größe wird geschätzt …",
+  "fr": "Estimation de la taille…",
+  "pt-BR": "Estimando o tamanho…",
+  "zh-Hans": "正在估算大小…",
+  "ja": "サイズを見積もり中…"
  },
  "Оценка для первого файла.": {
   "en": "Estimate for the first file.",
-  "es": "Estimación para el primer archivo."
+  "es": "Estimación para el primer archivo.",
+  "de": "Schätzung für die erste Datei.",
+  "fr": "Estimation pour le premier fichier.",
+  "pt-BR": "Estimativa para o primeiro arquivo.",
+  "zh-Hans": "按第一个文件估算。",
+  "ja": "最初のファイルでの見積もりです。"
  },
  "Очистить": {
   "en": "Clear",
-  "es": "Borrar"
+  "es": "Borrar",
+  "de": "Löschen",
+  "fr": "Effacer",
+  "pt-BR": "Limpar",
+  "zh-Hans": "清除",
+  "ja": "消去"
  },
  "Очистить историю": {
   "en": "Clear History",
-  "es": "Borrar historial"
+  "es": "Borrar historial",
+  "de": "Verlauf löschen",
+  "fr": "Effacer l’historique",
+  "pt-BR": "Limpar Histórico",
+  "zh-Hans": "清除历史记录",
+  "ja": "履歴を消去"
  },
  "П": {
   "en": "R",
-  "es": "D"
+  "es": "D",
+  "de": "R",
+  "fr": "D",
+  "pt-BR": "D",
+  "zh-Hans": "右",
+  "ja": "右"
+ },
+ "Папка": {
+  "en": "Folder",
+  "es": "Carpeta",
+  "de": "Ordner",
+  "fr": "Dossier",
+  "pt-BR": "Pasta",
+  "zh-Hans": "文件夹",
+  "ja": "フォルダ"
  },
  "Перезапустить": {
   "en": "Restart",
-  "es": "Reiniciar"
+  "es": "Reiniciar",
+  "de": "Neu starten",
+  "fr": "Relancer",
+  "pt-BR": "Reabrir",
+  "zh-Hans": "重新启动",
+  "ja": "再起動"
  },
  "Переместить": {
   "en": "Move",
-  "es": "Mover"
+  "es": "Mover",
+  "de": "Bewegen",
+  "fr": "Déplacer",
+  "pt-BR": "Mover",
+  "zh-Hans": "移动",
+  "ja": "移動"
  },
  "Перемещение": {
   "en": "Moving",
-  "es": "Moviendo"
+  "es": "Moviendo",
+  "de": "Verschieben",
+  "fr": "Déplacement",
+  "pt-BR": "Movendo",
+  "zh-Hans": "正在移动",
+  "ja": "移動中"
  },
  "Перенос": {
   "en": "Transfer",
-  "es": "Transferencia"
+  "es": "Transferencia",
+  "de": "Übertragen",
+  "fr": "Transférer",
+  "pt-BR": "Transferir",
+  "zh-Hans": "传输",
+  "ja": "転送"
  },
  "Перетащите сюда файлы или бросьте их на «Float» в колесе ⌃": {
   "en": "Drag files here or drop them on “Float” in the ⌃ wheel",
-  "es": "Arrastra archivos aquí o suéltalos en «Float» en la rueda ⌃"
+  "es": "Arrastra archivos aquí o suéltalos en «Float» en la rueda ⌃",
+  "de": "Ziehen Sie Dateien hierher oder legen Sie sie auf „Float“ im ⌃-Rad ab",
+  "fr": "Glissez des fichiers ici ou déposez-les sur « Float » dans la roue ⌃",
+  "pt-BR": "Arraste arquivos para cá ou solte-os em “Float” na roda ⌃",
+  "zh-Hans": "将文件拖到这里，或拖放到 ⌃ 转盘中的“Float”上",
+  "ja": "ここにファイルをドラッグするか、⌃ ホイールの「Float」にドロップします"
  },
  "Перетащить все (%lld)": {
   "en": "Drag all (%lld)",
-  "es": "Arrastrar todo (%lld)"
+  "es": "Arrastrar todo (%lld)",
+  "de": "Alle ziehen (%lld)",
+  "fr": "Tout glisser (%lld)",
+  "pt-BR": "Arrastar todos (%lld)",
+  "zh-Hans": "全部拖移（%lld）",
+  "ja": "すべてドラッグ（%lld）"
  },
  "Пик": {
   "en": "Peak",
-  "es": "Pico"
+  "es": "Pico",
+  "de": "Spitze",
+  "fr": "Crête",
+  "pt-BR": "Pico",
+  "zh-Hans": "峰值",
+  "ja": "ピーク"
  },
  "Пик по курсору": {
   "en": "Bleep at playhead",
-  "es": "Pitido en el cursor"
+  "es": "Pitido en el cursor",
+  "de": "Piepton an der Abspielposition",
+  "fr": "Bip à la tête de lecture",
+  "pt-BR": "Bipe no cursor",
+  "zh-Hans": "在播放头处加哔声",
+  "ja": "再生ヘッドにピー音"
  },
  "Пиксели": {
   "en": "Pixelate",
-  "es": "Píxeles"
+  "es": "Píxeles",
+  "de": "Verpixeln",
+  "fr": "Pixeliser",
+  "pt-BR": "Pixelizar",
+  "zh-Hans": "像素化",
+  "ja": "モザイク"
  },
  "По %lld стр.": {
   "en": "Every %lld pages",
-  "es": "Cada %lld págs."
+  "es": "Cada %lld págs.",
+  "de": "Alle %lld Seiten",
+  "fr": "Toutes les %lld pages",
+  "pt-BR": "A cada %lld páginas",
+  "zh-Hans": "每 %lld 页",
+  "ja": "%lld ページごと"
  },
  "По курсору": {
   "en": "At playhead",
-  "es": "En el cursor"
+  "es": "En el cursor",
+  "de": "An der Abspielposition",
+  "fr": "À la tête de lecture",
+  "pt-BR": "No cursor",
+  "zh-Hans": "在播放头处",
+  "ja": "再生ヘッドの位置"
  },
  "Повернуть влево": {
   "en": "Rotate left",
-  "es": "Girar a la izquierda"
+  "es": "Girar a la izquierda",
+  "de": "Nach links drehen",
+  "fr": "Faire pivoter à gauche",
+  "pt-BR": "Girar à esquerda",
+  "zh-Hans": "向左旋转",
+  "ja": "左に回転"
  },
  "Повернуть вправо": {
   "en": "Rotate right",
-  "es": "Girar a la derecha"
+  "es": "Girar a la derecha",
+  "de": "Nach rechts drehen",
+  "fr": "Faire pivoter à droite",
+  "pt-BR": "Girar à direita",
+  "zh-Hans": "向右旋转",
+  "ja": "右に回転"
  },
  "Повторить": {
   "en": "Redo",
-  "es": "Rehacer"
+  "es": "Rehacer",
+  "de": "Wiederholen",
+  "fr": "Rétablir",
+  "pt-BR": "Refazer",
+  "zh-Hans": "重做",
+  "ja": "やり直す"
  },
  "Подкаст −16": {
   "en": "Podcast −16",
-  "es": "Pódcast −16"
+  "es": "Pódcast −16",
+  "de": "Podcast −16",
+  "fr": "Podcast −16",
+  "pt-BR": "Podcast −16",
+  "zh-Hans": "播客 −16",
+  "ja": "ポッドキャスト −16"
  },
  "Подсветка дольки, строк меню и кнопок в окнах. Текст на нём становится белым или чёрным — каким лучше видно. Уже открытые окна примут цвет после повторного открытия.": {
   "en": "Used for the lit slice, menu rows and buttons in windows. Text on it turns white or black, whichever reads better. Windows already open take the colour when opened again.",
-  "es": "Se usa en el sector resaltado, las filas del menú y los botones de las ventanas. El texto sobre él se vuelve blanco o negro, según se lea mejor. Las ventanas ya abiertas toman el color al volver a abrirlas."
+  "es": "Se usa en el sector resaltado, las filas del menú y los botones de las ventanas. El texto sobre él se vuelve blanco o negro, según se lea mejor. Las ventanas ya abiertas toman el color al volver a abrirlas.",
+  "de": "Für das hervorgehobene Segment, Menüzeilen und Tasten in Fenstern. Text darauf wird weiß oder schwarz — je nachdem, was besser lesbar ist. Bereits geöffnete Fenster übernehmen die Farbe beim erneuten Öffnen.",
+  "fr": "Utilisée pour le segment survolé, les lignes de menu et les boutons des fenêtres. Le texte dessus devient blanc ou noir, selon ce qui se lit le mieux. Les fenêtres déjà ouvertes prennent la couleur à leur réouverture.",
+  "pt-BR": "Usada no segmento destacado, nas linhas de menu e nos botões das janelas. O texto sobre ela fica branco ou preto, o que for mais legível. Janelas já abertas assumem a cor ao serem reabertas.",
+  "zh-Hans": "用于高亮的扇区、菜单行和窗口中的按钮。其上的文字会变为白色或黑色，取更易读的一种。已打开的窗口在重新打开后使用新颜色。",
+  "ja": "強調表示されたセグメント、メニューの行、ウインドウのボタンに使われます。その上の文字は読みやすい方の白か黒になります。すでに開いているウインドウは、開き直すと色が変わります。"
  },
  "Позже": {
   "en": "Later",
-  "es": "Más tarde"
+  "es": "Más tarde",
+  "de": "Später",
+  "fr": "Plus tard",
+  "pt-BR": "Mais tarde",
+  "zh-Hans": "稍后",
+  "ja": "あとで"
  },
  "Поиск по полям": {
   "en": "Search fields",
-  "es": "Buscar campos"
+  "es": "Buscar campos",
+  "de": "Felder durchsuchen",
+  "fr": "Rechercher dans les champs",
+  "pt-BR": "Buscar campos",
+  "zh-Hans": "搜索字段",
+  "ja": "フィールドを検索"
  },
  "Пока пусто": {
   "en": "Nothing yet",
-  "es": "Todavía nada"
+  "es": "Todavía nada",
+  "de": "Noch nichts",
+  "fr": "Rien pour l’instant",
+  "pt-BR": "Nada ainda",
+  "zh-Hans": "暂无内容",
+  "ja": "まだありません"
  },
  "Показать в Finder": {
   "en": "Show in Finder",
-  "es": "Mostrar en el Finder"
+  "es": "Mostrar en el Finder",
+  "de": "Im Finder zeigen",
+  "fr": "Afficher dans le Finder",
+  "pt-BR": "Mostrar no Finder",
+  "zh-Hans": "在访达中显示",
+  "ja": "Finder に表示"
  },
  "Показать или скрыть Float": {
   "en": "Show or Hide Float",
-  "es": "Mostrar u ocultar Float"
+  "es": "Mostrar u ocultar Float",
+  "de": "Float ein- oder ausblenden",
+  "fr": "Afficher ou masquer Float",
+  "pt-BR": "Mostrar ou Ocultar o Float",
+  "zh-Hans": "显示或隐藏 Float",
+  "ja": "Float を表示／非表示"
  },
  "Показывать результат в Finder": {
   "en": "Show the result in Finder",
-  "es": "Mostrar el resultado en el Finder"
+  "es": "Mostrar el resultado en el Finder",
+  "de": "Ergebnis im Finder zeigen",
+  "fr": "Afficher le résultat dans le Finder",
+  "pt-BR": "Mostrar o resultado no Finder",
+  "zh-Hans": "在访达中显示结果",
+  "ja": "結果を Finder に表示"
  },
  "Полка Float, AirDrop, копирование, перемещение, путь к файлу, терминал.": {
   "en": "Float shelf, AirDrop, copy, move, file path, Terminal.",
-  "es": "Estante Float, AirDrop, copiar, mover, ruta del archivo, Terminal."
+  "es": "Estante Float, AirDrop, copiar, mover, ruta del archivo, Terminal.",
+  "de": "Float-Ablage, AirDrop, kopieren, verschieben, Dateipfad, Terminal.",
+  "fr": "Étagère Float, AirDrop, copier, déplacer, chemin du fichier, Terminal.",
+  "pt-BR": "Prateleira Float, AirDrop, copiar, mover, caminho do arquivo, Terminal.",
+  "zh-Hans": "Float 架、隔空投送、拷贝、移动、文件路径、终端。",
+  "ja": "Float シェルフ、AirDrop、コピー、移動、ファイルパス、ターミナル。"
  },
  "Поля": {
   "en": "Fields",
-  "es": "Campos"
+  "es": "Campos",
+  "de": "Felder",
+  "fr": "Champs",
+  "pt-BR": "Campos",
+  "zh-Hans": "字段",
+  "ja": "フィールド"
  },
  "Поменять каналы местами": {
   "en": "Swap channels",
-  "es": "Intercambiar canales"
+  "es": "Intercambiar canales",
+  "de": "Kanäle tauschen",
+  "fr": "Inverser les canaux",
+  "pt-BR": "Trocar canais",
+  "zh-Hans": "交换声道",
+  "ja": "チャンネルを入れ替え"
  },
  "Пометки": {
   "en": "Annotate",
-  "es": "Anotar"
+  "es": "Anotar",
+  "de": "Markieren",
+  "fr": "Annoter",
+  "pt-BR": "Anotar",
+  "zh-Hans": "标注",
+  "ja": "注釈"
  },
  "Пометки добавляются к первому изображению. ": {
   "en": "Annotations are added to the first image. ",
-  "es": "Las anotaciones se añaden a la primera imagen. "
+  "es": "Las anotaciones se añaden a la primera imagen. ",
+  "de": "Markierungen werden zum ersten Bild hinzugefügt. ",
+  "fr": "Les annotations sont ajoutées à la première image. ",
+  "pt-BR": "As anotações são adicionadas à primeira imagem. ",
+  "zh-Hans": "标注会添加到第一张图像。",
+  "ja": "注釈は最初の画像に追加されます。"
  },
  "Пополам": {
   "en": "In half",
-  "es": "Por la mitad"
+  "es": "Por la mitad",
+  "de": "Halbieren",
+  "fr": "En deux",
+  "pt-BR": "Ao meio",
+  "zh-Hans": "对半",
+  "ja": "半分に"
  },
  "Порядок клипов — перетаскивайте строки. Размер кадра и частота берутся у первого клипа, ": {
   "en": "Clip order — drag the rows. Frame size and rate come from the first clip, ",
-  "es": "Orden de los clips: arrastra las filas. El tamaño y la frecuencia se toman del primer clip, "
+  "es": "Orden de los clips: arrastra las filas. El tamaño y la frecuencia se toman del primer clip, ",
+  "de": "Reihenfolge der Clips — ziehen Sie die Zeilen. Bildgröße und Bildrate stammen vom ersten Clip, ",
+  "fr": "Ordre des clips — faites glisser les lignes. Taille et cadence d’image viennent du premier clip, ",
+  "pt-BR": "Ordem dos clipes — arraste as linhas. Tamanho e taxa de quadros vêm do primeiro clipe, ",
+  "zh-Hans": "片段顺序 — 拖移各行。画面大小和帧率取自第一个片段，",
+  "ja": "クリップの順番 — 行をドラッグします。フレームサイズとフレームレートは最初のクリップに合わせ、"
  },
  "Порядок страниц": {
   "en": "Page order",
-  "es": "Orden de páginas"
+  "es": "Orden de páginas",
+  "de": "Seitenreihenfolge",
+  "fr": "Ordre des pages",
+  "pt-BR": "Ordem das páginas",
+  "zh-Hans": "页面顺序",
+  "ja": "ページの順番"
  },
  "Порядок — перетаскивайте строки или фото в превью": {
   "en": "Order — drag the rows or the photos in the preview",
-  "es": "Orden: arrastra las filas o las fotos de la vista previa"
+  "es": "Orden: arrastra las filas o las fotos de la vista previa",
+  "de": "Reihenfolge — ziehen Sie die Zeilen oder die Fotos in der Vorschau",
+  "fr": "Ordre — faites glisser les lignes ou les photos dans l’aperçu",
+  "pt-BR": "Ordem — arraste as linhas ou as fotos na pré-visualização",
+  "zh-Hans": "顺序 — 拖移各行或预览中的照片",
+  "ja": "順番 — 行かプレビューの写真をドラッグします"
  },
  "Правка": {
   "en": "Edit",
-  "es": "Edición"
+  "es": "Edición",
+  "de": "Bearbeiten",
+  "fr": "Édition",
+  "pt-BR": "Editar",
+  "zh-Hans": "编辑",
+  "ja": "編集"
  },
  "Правый канал": {
   "en": "Right channel",
-  "es": "Canal derecho"
+  "es": "Canal derecho",
+  "de": "Rechter Kanal",
+  "fr": "Canal droit",
+  "pt-BR": "Canal direito",
+  "zh-Hans": "右声道",
+  "ja": "右チャンネル"
  },
  "Пресет": {
   "en": "Preset",
-  "es": "Preajuste"
+  "es": "Preajuste",
+  "de": "Voreinstellung",
+  "fr": "Préréglage",
+  "pt-BR": "Predefinido",
+  "zh-Hans": "预设",
+  "ja": "プリセット"
  },
  "Применить": {
   "en": "Apply",
-  "es": "Aplicar"
+  "es": "Aplicar",
+  "de": "Anwenden",
+  "fr": "Appliquer",
+  "pt-BR": "Aplicar",
+  "zh-Hans": "应用",
+  "ja": "適用"
+ },
+ "Пример": {
+  "en": "Example",
+  "es": "Ejemplo",
+  "de": "Beispiel",
+  "fr": "Exemple",
+  "pt-BR": "Exemplo",
+  "zh-Hans": "示例",
+  "ja": "例"
  },
  "Пробел — прослушать с пиками, ⏎ — пик по курсору.": {
   "en": "Space — listen with bleeps, ⏎ — bleep at playhead.",
-  "es": "Espacio: escuchar con pitidos; ⏎: pitido en el cursor."
+  "es": "Espacio: escuchar con pitidos; ⏎: pitido en el cursor.",
+  "de": "Leertaste — mit Pieptönen anhören, ⏎ — Piepton an der Abspielposition.",
+  "fr": "Espace — écouter avec les bips, ⏎ — bip à la tête de lecture.",
+  "pt-BR": "Espaço — ouvir com os bipes, ⏎ — bipe no cursor.",
+  "zh-Hans": "空格键 — 试听含哔声的效果，⏎ — 在播放头处加哔声。",
+  "ja": "スペース — ピー音付きで聴く、⏎ — 再生ヘッドにピー音。"
  },
  "Проверить кадр": {
   "en": "Check frame",
-  "es": "Comprobar fotograma"
+  "es": "Comprobar fotograma",
+  "de": "Bild prüfen",
+  "fr": "Vérifier l’image",
+  "pt-BR": "Conferir quadro",
+  "zh-Hans": "检查帧",
+  "ja": "フレームを確認"
  },
  "Проверить обновления…": {
   "en": "Check for Updates…",
-  "es": "Buscar actualizaciones…"
+  "es": "Buscar actualizaciones…",
+  "de": "Nach Updates suchen …",
+  "fr": "Rechercher des mises à jour…",
+  "pt-BR": "Verificar Atualizações…",
+  "zh-Hans": "检查更新…",
+  "ja": "アップデートを確認…"
  },
  "Проверка": {
   "en": "Check",
-  "es": "Prueba"
+  "es": "Prueba",
+  "de": "Prüfen",
+  "fr": "Vérifier",
+  "pt-BR": "Conferir",
+  "zh-Hans": "检查",
+  "ja": "確認"
  },
  "Проверьте подключение к интернету и попробуйте ещё раз.": {
   "en": "Check your internet connection and try again.",
-  "es": "Comprueba la conexión a internet e inténtalo de nuevo."
+  "es": "Comprueba la conexión a internet e inténtalo de nuevo.",
+  "de": "Prüfen Sie die Internetverbindung und versuchen Sie es erneut.",
+  "fr": "Vérifiez votre connexion Internet et réessayez.",
+  "pt-BR": "Verifique sua conexão com a internet e tente novamente.",
+  "zh-Hans": "请检查互联网连接后重试。",
+  "ja": "インターネット接続を確認して、もう一度お試しください。"
  },
  "Прозрачный": {
   "en": "Transparent",
-  "es": "Transparente"
+  "es": "Transparente",
+  "de": "Transparent",
+  "fr": "Transparent",
+  "pt-BR": "Transparente",
+  "zh-Hans": "透明",
+  "ja": "透明"
  },
  "Производитель камеры": {
   "en": "Camera make",
-  "es": "Fabricante de la cámara"
+  "es": "Fabricante de la cámara",
+  "de": "Kamerahersteller",
+  "fr": "Marque de l’appareil",
+  "pt-BR": "Fabricante da câmera",
+  "zh-Hans": "相机制造商",
+  "ja": "カメラのメーカー"
  },
  "Промежутки": {
   "en": "Spacing",
-  "es": "Separación"
+  "es": "Separación",
+  "de": "Abstand",
+  "fr": "Espacement",
+  "pt-BR": "Espaçamento",
+  "zh-Hans": "间距",
+  "ja": "間隔"
  },
  "Пропорции": {
   "en": "Aspect ratio",
-  "es": "Proporción"
+  "es": "Proporción",
+  "de": "Seitenverhältnis",
+  "fr": "Format",
+  "pt-BR": "Proporção",
+  "zh-Hans": "宽高比",
+  "ja": "縦横比"
  },
  "Процесс": {
   "en": "Process",
-  "es": "Proceso"
+  "es": "Proceso",
+  "de": "Verarbeiten",
+  "fr": "Traiter",
+  "pt-BR": "Processar",
+  "zh-Hans": "处理",
+  "ja": "処理"
  },
  "Прямоугольник": {
   "en": "Rectangle",
-  "es": "Rectángulo"
+  "es": "Rectángulo",
+  "de": "Rechteck",
+  "fr": "Rectangle",
+  "pt-BR": "Retângulo",
+  "zh-Hans": "矩形",
+  "ja": "長方形"
  },
  "Путь": {
   "en": "Path",
-  "es": "Ruta"
+  "es": "Ruta",
+  "de": "Pfad",
+  "fr": "Chemin",
+  "pt-BR": "Caminho",
+  "zh-Hans": "路径",
+  "ja": "パス"
  },
  "Равных частей: %lld": {
   "en": "Equal parts: %lld",
-  "es": "Partes iguales: %lld"
+  "es": "Partes iguales: %lld",
+  "de": "Gleiche Teile: %lld",
+  "fr": "Parties égales : %lld",
+  "pt-BR": "Partes iguais: %lld",
+  "zh-Hans": "等分：%lld",
+  "ja": "均等なパート：%lld"
  },
  "Разделение": {
   "en": "Split",
-  "es": "División"
+  "es": "División",
+  "de": "Teilen",
+  "fr": "Diviser",
+  "pt-BR": "Dividir",
+  "zh-Hans": "拆分",
+  "ja": "分割"
  },
  "Разделение PDF": {
   "en": "Split PDF",
-  "es": "Dividir PDF"
+  "es": "Dividir PDF",
+  "de": "PDF teilen",
+  "fr": "Diviser le PDF",
+  "pt-BR": "Dividir PDF",
+  "zh-Hans": "拆分 PDF",
+  "ja": "PDF を分割"
  },
  "Разделить": {
   "en": "Split",
-  "es": "Dividir"
+  "es": "Dividir",
+  "de": "Teilen",
+  "fr": "Diviser",
+  "pt-BR": "Dividir",
+  "zh-Hans": "拆分",
+  "ja": "分割"
  },
  "Разделить PDF": {
   "en": "Split PDF",
-  "es": "Dividir PDF"
+  "es": "Dividir PDF",
+  "de": "PDF teilen",
+  "fr": "Diviser le PDF",
+  "pt-BR": "Dividir PDF",
+  "zh-Hans": "拆分 PDF",
+  "ja": "PDF を分割"
  },
  "Разделить на %lld": {
   "en": "Split into %lld",
-  "es": "Dividir en %lld"
+  "es": "Dividir en %lld",
+  "de": "In %lld teilen",
+  "fr": "Diviser en %lld",
+  "pt-BR": "Dividir em %lld",
+  "zh-Hans": "拆分为 %lld 份",
+  "ja": "%lld 個に分割"
  },
  "Разделить поровну": {
   "en": "Split evenly",
-  "es": "Dividir en partes iguales"
+  "es": "Dividir en partes iguales",
+  "de": "Gleichmäßig teilen",
+  "fr": "Diviser en parts égales",
+  "pt-BR": "Dividir igualmente",
+  "zh-Hans": "均匀拆分",
+  "ja": "均等に分割"
  },
  "Размер": {
   "en": "Size",
-  "es": "Tamaño"
+  "es": "Tamaño",
+  "de": "Größe",
+  "fr": "Taille",
+  "pt-BR": "Tamanho",
+  "zh-Hans": "大小",
+  "ja": "サイズ"
  },
  "Размер текста и номеров": {
   "en": "Text and number size",
-  "es": "Tamaño del texto y los números"
+  "es": "Tamaño del texto y los números",
+  "de": "Text- und Zahlengröße",
+  "fr": "Taille du texte et des nombres",
+  "pt-BR": "Tamanho de texto e números",
+  "zh-Hans": "文字和数字大小",
+  "ja": "文字と数字のサイズ"
  },
  "Размер файла": {
   "en": "File size",
-  "es": "Tamaño de archivo"
+  "es": "Tamaño de archivo",
+  "de": "Dateigröße",
+  "fr": "Taille du fichier",
+  "pt-BR": "Tamanho do arquivo",
+  "zh-Hans": "文件大小",
+  "ja": "ファイルサイズ"
  },
  "Размытие": {
   "en": "Blur",
-  "es": "Desenfoque"
+  "es": "Desenfoque",
+  "de": "Weichzeichnen",
+  "fr": "Flou",
+  "pt-BR": "Desfoque",
+  "zh-Hans": "模糊",
+  "ja": "ぼかし"
  },
  "Разные файлы": {
   "en": "Mixed files",
-  "es": "Archivos variados"
+  "es": "Archivos variados",
+  "de": "Gemischte Dateien",
+  "fr": "Fichiers mixtes",
+  "pt-BR": "Arquivos variados",
+  "zh-Hans": "混合文件",
+  "ja": "さまざまなファイル"
  },
  "Разрез по курсору": {
   "en": "Cut at playhead",
-  "es": "Cortar en el cursor"
+  "es": "Cortar en el cursor",
+  "de": "An der Abspielposition schneiden",
+  "fr": "Couper à la tête de lecture",
+  "pt-BR": "Cortar no cursor",
+  "zh-Hans": "在播放头处剪切",
+  "ja": "再生ヘッドでカット"
  },
  "Разрезать": {
   "en": "Split",
-  "es": "Dividir"
+  "es": "Dividir",
+  "de": "Teilen",
+  "fr": "Diviser",
+  "pt-BR": "Dividir",
+  "zh-Hans": "拆分",
+  "ja": "分割"
  },
  "Разрезать на части:": {
   "en": "Split into parts:",
-  "es": "Dividir en partes:"
+  "es": "Dividir en partes:",
+  "de": "In Teile teilen:",
+  "fr": "Diviser en parties :",
+  "pt-BR": "Dividir em partes:",
+  "zh-Hans": "拆分为多个部分：",
+  "ja": "パートに分割："
  },
  "Разрезать после этой страницы": {
   "en": "Cut after this page",
-  "es": "Cortar después de esta página"
+  "es": "Cortar después de esta página",
+  "de": "Nach dieser Seite trennen",
+  "fr": "Couper après cette page",
+  "pt-BR": "Cortar depois desta página",
+  "zh-Hans": "在此页后分割",
+  "ja": "このページの後で分割"
  },
  "Раскладка": {
   "en": "Layout",
-  "es": "Disposición"
+  "es": "Disposición",
+  "de": "Layout",
+  "fr": "Disposition",
+  "pt-BR": "Layout",
+  "zh-Hans": "布局",
+  "ja": "レイアウト"
  },
  "Распаковать": {
   "en": "Extract",
-  "es": "Descomprimir"
+  "es": "Descomprimir",
+  "de": "Entpacken",
+  "fr": "Extraire",
+  "pt-BR": "Extrair",
+  "zh-Hans": "解压",
+  "ja": "展開"
  },
  "Распаковка": {
   "en": "Extracting",
-  "es": "Descomprimiendo"
+  "es": "Descomprimiendo",
+  "de": "Wird entpackt",
+  "fr": "Extraction",
+  "pt-BR": "Extraindo",
+  "zh-Hans": "正在解压",
+  "ja": "展開中"
+ },
+ "Распознавание речи на этом Mac не поддерживает язык «%@». Скачайте его в «Системные настройки → Клавиатура → Диктовка».": {
+  "en": "Speech recognition on this Mac does not support “%@”. Download it in System Settings → Keyboard → Dictation.",
+  "es": "El reconocimiento de voz de este Mac no admite «%@». Descárgalo en Ajustes del Sistema → Teclado → Dictado.",
+  "de": "Die Spracherkennung auf diesem Mac unterstützt „%@“ nicht. Laden Sie es unter Systemeinstellungen → Tastatur → Diktat.",
+  "fr": "La reconnaissance vocale de ce Mac ne prend pas en charge « %@ ». Téléchargez-la dans Réglages Système → Clavier → Dictée.",
+  "pt-BR": "O reconhecimento de fala deste Mac não suporta “%@”. Baixe em Ajustes do Sistema → Teclado → Ditado.",
+  "zh-Hans": "此 Mac 的语音识别不支持“%@”。请在“系统设置”→“键盘”→“听写”中下载。",
+  "ja": "この Mac の音声認識は「%@」に対応していません。「システム設定」→「キーボード」→「音声入力」でダウンロードしてください。"
  },
  "Распознавание текста": {
   "en": "Text recognition",
-  "es": "Reconocimiento de texto"
+  "es": "Reconocimiento de texto",
+  "de": "Texterkennung",
+  "fr": "Reconnaissance de texte",
+  "pt-BR": "Reconhecimento de texto",
+  "zh-Hans": "文本识别",
+  "ja": "テキスト認識"
  },
  "Редактирование": {
   "en": "Editing",
-  "es": "Editando"
+  "es": "Editando",
+  "de": "Bearbeitung",
+  "fr": "Modification",
+  "pt-BR": "Edição",
+  "zh-Hans": "编辑",
+  "ja": "編集"
  },
  "Редактор": {
   "en": "Editor",
-  "es": "Editor"
+  "es": "Editor",
+  "de": "Editor",
+  "fr": "Éditeur",
+  "pt-BR": "Editor",
+  "zh-Hans": "编辑器",
+  "ja": "エディタ"
  },
  "Редактор фото": {
   "en": "Photo Editor",
-  "es": "Editor de fotos"
+  "es": "Editor de fotos",
+  "de": "Foto-Editor",
+  "fr": "Éditeur de photos",
+  "pt-BR": "Editor de Fotos",
+  "zh-Hans": "照片编辑器",
+  "ja": "写真エディタ"
  },
  "Режим": {
   "en": "Mode",
-  "es": "Modo"
+  "es": "Modo",
+  "de": "Modus",
+  "fr": "Mode",
+  "pt-BR": "Modo",
+  "zh-Hans": "模式",
+  "ja": "モード"
  },
  "Резкость": {
   "en": "Sharpness",
-  "es": "Nitidez"
+  "es": "Nitidez",
+  "de": "Schärfe",
+  "fr": "Netteté",
+  "pt-BR": "Nitidez",
+  "zh-Hans": "锐度",
+  "ja": "シャープネス"
  },
  "Результат": {
   "en": "Result",
-  "es": "Resultado"
+  "es": "Resultado",
+  "de": "Ergebnis",
+  "fr": "Résultat",
+  "pt-BR": "Resultado",
+  "zh-Hans": "结果",
+  "ja": "結果"
+ },
+ "Речь в текст": {
+  "en": "Speech to text",
+  "es": "Voz a texto",
+  "de": "Sprache zu Text",
+  "fr": "Parole en texte",
+  "pt-BR": "Fala em texto",
+  "zh-Hans": "语音转文字",
+  "ja": "音声をテキストに"
+ },
+ "Речь распознаётся на этом Mac, ничего не отправляется в сеть. Модель языка система может один раз скачать сама. Точность зависит от записи: музыка и шум мешают.": {
+  "en": "Speech is recognised on this Mac; nothing is sent over the network. The system may download the language model once by itself. Accuracy depends on the recording: music and noise get in the way.",
+  "es": "La voz se reconoce en este Mac; no se envía nada por la red. El sistema puede descargar el modelo del idioma una vez por su cuenta. La precisión depende de la grabación: la música y el ruido la empeoran.",
+  "de": "Die Sprache wird auf diesem Mac erkannt; nichts wird über das Netzwerk gesendet. Das System lädt das Sprachmodell eventuell einmal selbst herunter. Die Genauigkeit hängt von der Aufnahme ab: Musik und Lärm stören.",
+  "fr": "La parole est reconnue sur ce Mac ; rien n’est envoyé sur le réseau. Le système peut télécharger une fois le modèle de la langue. La précision dépend de l’enregistrement : la musique et le bruit gênent.",
+  "pt-BR": "A fala é reconhecida neste Mac; nada é enviado pela rede. O sistema pode baixar o modelo do idioma uma vez por conta própria. A precisão depende da gravação: música e ruído atrapalham.",
+  "zh-Hans": "语音在此 Mac 上识别，不会通过网络发送任何内容。系统可能会自行下载一次语言模型。准确度取决于录音：音乐和噪音会有影响。",
+  "ja": "音声はこの Mac 上で認識され、ネットワークには何も送信されません。言語モデルはシステムが一度だけ自動でダウンロードすることがあります。精度は録音によって変わり、音楽や雑音があると下がります。"
  },
  "Розовый": {
   "en": "Pink",
-  "es": "Rosa"
+  "es": "Rosa",
+  "de": "Rosa",
+  "fr": "Rose",
+  "pt-BR": "Rosa",
+  "zh-Hans": "粉色",
+  "ja": "ピンク"
  },
  "Ряд": {
   "en": "Row",
-  "es": "Fila"
+  "es": "Fila",
+  "de": "Zeile",
+  "fr": "Rangée",
+  "pt-BR": "Linha",
+  "zh-Hans": "行",
+  "ja": "行"
+ },
+ "Рядом с оригиналом": {
+  "en": "Next to the original",
+  "es": "Junto al original",
+  "de": "Neben dem Original",
+  "fr": "À côté de l’original",
+  "pt-BR": "Ao lado do original",
+  "zh-Hans": "原文件旁边",
+  "ja": "元のファイルの隣"
  },
  "Самые маленькие файлы, потери качества заметнее": {
   "en": "Smallest files, more visible quality loss",
-  "es": "Archivos más pequeños, pérdida de calidad más visible"
+  "es": "Archivos más pequeños, pérdida de calidad más visible",
+  "de": "Kleinste Dateien, sichtbarerer Qualitätsverlust",
+  "fr": "Fichiers les plus petits, perte de qualité plus visible",
+  "pt-BR": "Menores arquivos, perda de qualidade mais visível",
+  "zh-Hans": "文件最小，画质损失更明显",
+  "ja": "ファイルは最小、画質の劣化は目立ちやすい"
  },
  "Сбалансированно": {
   "en": "Balanced",
-  "es": "Equilibrado"
+  "es": "Equilibrado",
+  "de": "Ausgewogen",
+  "fr": "Équilibré",
+  "pt-BR": "Equilibrado",
+  "zh-Hans": "均衡",
+  "ja": "バランス"
  },
  "Сбросить": {
   "en": "Reset",
-  "es": "Restablecer"
+  "es": "Restablecer",
+  "de": "Zurücksetzen",
+  "fr": "Réinitialiser",
+  "pt-BR": "Redefinir",
+  "zh-Hans": "重置",
+  "ja": "リセット"
  },
  "Сбросить всё": {
   "en": "Reset All",
-  "es": "Restablecer todo"
+  "es": "Restablecer todo",
+  "de": "Alles zurücksetzen",
+  "fr": "Tout réinitialiser",
+  "pt-BR": "Redefinir Tudo",
+  "zh-Hans": "全部重置",
+  "ja": "すべてリセット"
  },
  "Свернуть": {
   "en": "Minimize",
-  "es": "Minimizar"
+  "es": "Minimizar",
+  "de": "Im Dock ablegen",
+  "fr": "Placer dans le Dock",
+  "pt-BR": "Minimizar",
+  "zh-Hans": "最小化",
+  "ja": "しまう"
  },
  "Свет": {
   "en": "Light",
-  "es": "Luz"
+  "es": "Luz",
+  "de": "Hell",
+  "fr": "Clair",
+  "pt-BR": "Claro",
+  "zh-Hans": "浅色",
+  "ja": "ライト"
  },
  "Светлые участки": {
   "en": "Highlights",
-  "es": "Luces"
+  "es": "Luces",
+  "de": "Lichter",
+  "fr": "Hautes lumières",
+  "pt-BR": "Realces",
+  "zh-Hans": "高光",
+  "ja": "ハイライト"
  },
  "Свободно": {
   "en": "Free",
-  "es": "Libre"
+  "es": "Libre",
+  "de": "Frei",
+  "fr": "Libre",
+  "pt-BR": "Livre",
+  "zh-Hans": "自由",
+  "ja": "自由"
  },
  "Свой цвет": {
   "en": "Custom colour",
-  "es": "Color propio"
+  "es": "Color propio",
+  "de": "Eigene Farbe",
+  "fr": "Couleur personnalisée",
+  "pt-BR": "Cor personalizada",
+  "zh-Hans": "自定颜色",
+  "ja": "カスタムカラー"
  },
  "Своя": {
   "en": "Custom",
-  "es": "Personalizado"
+  "es": "Personalizado",
+  "de": "Eigene",
+  "fr": "Personnalisé",
+  "pt-BR": "Personalizado",
+  "zh-Hans": "自定",
+  "ja": "カスタム"
  },
  "Своя длинная сторона": {
   "en": "Custom long side",
-  "es": "Lado largo personalizado"
+  "es": "Lado largo personalizado",
+  "de": "Eigene lange Seite",
+  "fr": "Grand côté personnalisé",
+  "pt-BR": "Lado maior personalizado",
+  "zh-Hans": "自定长边",
+  "ja": "長辺を指定"
  },
  "Своё…": {
   "en": "Custom…",
-  "es": "Personalizado…"
+  "es": "Personalizado…",
+  "de": "Eigene …",
+  "fr": "Personnaliser…",
+  "pt-BR": "Personalizar…",
+  "zh-Hans": "自定…",
+  "ja": "カスタム…"
  },
  "Сейчас": {
   "en": "Now",
-  "es": "Ahora"
+  "es": "Ahora",
+  "de": "Jetzt",
+  "fr": "Maintenant",
+  "pt-BR": "Agora",
+  "zh-Hans": "现在",
+  "ja": "今"
  },
  "Сетка": {
   "en": "Grid",
-  "es": "Cuadrícula"
+  "es": "Cuadrícula",
+  "de": "Raster",
+  "fr": "Grille",
+  "pt-BR": "Grade",
+  "zh-Hans": "网格",
+  "ja": "グリッド"
  },
  "Сжатие": {
   "en": "Compress",
-  "es": "Compresión"
+  "es": "Compresión",
+  "de": "Komprimieren",
+  "fr": "Compresser",
+  "pt-BR": "Comprimir",
+  "zh-Hans": "压缩",
+  "ja": "圧縮"
  },
  "Сжатие, обрезка и размер в пикселях, редактор фото, пометки, скрытие, коллаж, а для видео и аудио — обрезка, скорость, громкость и другое.": {
   "en": "Compress, crop and resize in pixels, photo editor, annotate, redact, collage; for video and audio — trim, speed, loudness and more.",
-  "es": "Comprimir, recortar y cambiar el tamaño en píxeles, editor de fotos, anotar, ocultar, collage; para vídeo y audio: recortar, velocidad, volumen y más."
+  "es": "Comprimir, recortar y cambiar el tamaño en píxeles, editor de fotos, anotar, ocultar, collage; para vídeo y audio: recortar, velocidad, volumen y más.",
+  "de": "Komprimieren, zuschneiden und Größe in Pixeln ändern, Foto-Editor, markieren, schwärzen, Collage; für Video und Audio — kürzen, Tempo, Lautheit und mehr.",
+  "fr": "Compresser, recadrer et redimensionner en pixels, éditeur de photos, annoter, caviarder, collage ; pour la vidéo et l’audio — raccourcir, vitesse, volume et plus.",
+  "pt-BR": "Comprimir, cortar e redimensionar em pixels, editor de fotos, anotar, ocultar, colagem; para vídeo e áudio — aparar, velocidade, intensidade e mais.",
+  "zh-Hans": "压缩、按像素裁剪和调整大小、照片编辑器、标注、遮盖、拼贴；视频和音频可修剪、变速、调整响度等。",
+  "ja": "圧縮、ピクセル単位の切り抜きとサイズ変更、写真エディタ、注釈、墨消し、コラージュ。ビデオとオーディオはトリム、速度、ラウドネスなど。"
  },
  "Сжатый файл (%@) не меньше оригинала ": {
   "en": "The compressed file (%@) is not smaller than the original ",
-  "es": "El archivo comprimido (%@) no es más pequeño que el original "
+  "es": "El archivo comprimido (%@) no es más pequeño que el original ",
+  "de": "Die komprimierte Datei (%@) ist nicht kleiner als das Original ",
+  "fr": "Le fichier compressé (%@) n’est pas plus petit que l’original ",
+  "pt-BR": "O arquivo comprimido (%@) não é menor que o original ",
+  "zh-Hans": "压缩后的文件（%@）不比原文件小",
+  "ja": "圧縮したファイル（%@）は元のファイルより小さくありません"
  },
  "Сжать": {
   "en": "Compress",
-  "es": "Comprimir"
+  "es": "Comprimir",
+  "de": "Komprimieren",
+  "fr": "Compresser",
+  "pt-BR": "Comprimir",
+  "zh-Hans": "压缩",
+  "ja": "圧縮"
  },
  "Синий": {
   "en": "Blue",
-  "es": "Azul"
+  "es": "Azul",
+  "de": "Blau",
+  "fr": "Bleu",
+  "pt-BR": "Azul",
+  "zh-Hans": "蓝色",
+  "ja": "ブルー"
  },
  "Система": {
   "en": "System",
-  "es": "Sistema"
+  "es": "Sistema",
+  "de": "System",
+  "fr": "Système",
+  "pt-BR": "Sistema",
+  "zh-Hans": "系统",
+  "ja": "システム"
  },
  "Скачать": {
   "en": "Download",
-  "es": "Descargar"
+  "es": "Descargar",
+  "de": "Laden",
+  "fr": "Télécharger",
+  "pt-BR": "Baixar",
+  "zh-Hans": "下载",
+  "ja": "ダウンロード"
  },
  "Склеить": {
   "en": "Join",
-  "es": "Unir"
+  "es": "Unir",
+  "de": "Verbinden",
+  "fr": "Joindre",
+  "pt-BR": "Unir",
+  "zh-Hans": "拼接",
+  "ja": "結合"
  },
  "Склейка видео": {
   "en": "Join Videos",
-  "es": "Unir vídeos"
+  "es": "Unir vídeos",
+  "de": "Videos verbinden",
+  "fr": "Joindre des vidéos",
+  "pt-BR": "Unir Vídeos",
+  "zh-Hans": "拼接视频",
+  "ja": "ビデオを結合"
  },
  "Скорость": {
   "en": "Speed",
-  "es": "Velocidad"
+  "es": "Velocidad",
+  "de": "Tempo",
+  "fr": "Vitesse",
+  "pt-BR": "Velocidade",
+  "zh-Hans": "速度",
+  "ja": "速度"
  },
  "Скорость %@": {
   "en": "Speed %@",
-  "es": "Velocidad %@"
+  "es": "Velocidad %@",
+  "de": "Tempo %@",
+  "fr": "Vitesse %@",
+  "pt-BR": "Velocidade %@",
+  "zh-Hans": "速度 %@",
+  "ja": "速度 %@"
  },
  "Скругление": {
   "en": "Corner radius",
-  "es": "Redondeo"
+  "es": "Redondeo",
+  "de": "Eckenradius",
+  "fr": "Rayon des coins",
+  "pt-BR": "Raio dos cantos",
+  "zh-Hans": "圆角半径",
+  "ja": "角の半径"
  },
  "Скрыта": {
   "en": "Hidden",
-  "es": "Oculto"
+  "es": "Oculto",
+  "de": "Ausgeblendet",
+  "fr": "Masqué",
+  "pt-BR": "Oculto",
+  "zh-Hans": "隐藏",
+  "ja": "非表示"
  },
  "Скрытие": {
   "en": "Redacting",
-  "es": "Ocultando"
+  "es": "Ocultando",
+  "de": "Schwärzen",
+  "fr": "Caviardage",
+  "pt-BR": "Ocultação",
+  "zh-Hans": "遮盖",
+  "ja": "墨消し"
  },
  "Скрытие на видео": {
   "en": "Redacting video",
-  "es": "Ocultando en el vídeo"
+  "es": "Ocultando en el vídeo",
+  "de": "Video wird geschwärzt",
+  "fr": "Caviardage de la vidéo",
+  "pt-BR": "Ocultando no vídeo",
+  "zh-Hans": "正在遮盖视频",
+  "ja": "ビデオを墨消し中"
  },
  "Скрыть": {
   "en": "Redact",
-  "es": "Ocultar"
+  "es": "Ocultar",
+  "de": "Schwärzen",
+  "fr": "Caviarder",
+  "pt-BR": "Ocultar",
+  "zh-Hans": "遮盖",
+  "ja": "墨消し"
  },
  "Скрыть Mangosteen": {
   "en": "Hide Mangosteen",
-  "es": "Ocultar Mangosteen"
+  "es": "Ocultar Mangosteen",
+  "de": "Mangosteen ausblenden",
+  "fr": "Masquer Mangosteen",
+  "pt-BR": "Ocultar Mangosteen",
+  "zh-Hans": "隐藏 Mangosteen",
+  "ja": "Mangosteen を隠す"
  },
  "Скрыть лица и текст": {
   "en": "Redact Faces and Text",
-  "es": "Ocultar caras y texto"
+  "es": "Ocultar caras y texto",
+  "de": "Gesichter und Text schwärzen",
+  "fr": "Caviarder visages et texte",
+  "pt-BR": "Ocultar Rostos e Texto",
+  "zh-Hans": "遮盖人脸和文本",
+  "ja": "顔とテキストを墨消し"
  },
  "Скрыть на видео": {
   "en": "Redact Video",
-  "es": "Ocultar en el vídeo"
+  "es": "Ocultar en el vídeo",
+  "de": "Video schwärzen",
+  "fr": "Caviarder la vidéo",
+  "pt-BR": "Ocultar no Vídeo",
+  "zh-Hans": "遮盖视频",
+  "ja": "ビデオを墨消し"
  },
  "Скрыть на видео (%lld)": {
   "en": "Redact video (%lld)",
-  "es": "Ocultar en el vídeo (%lld)"
+  "es": "Ocultar en el vídeo (%lld)",
+  "de": "Video schwärzen (%lld)",
+  "fr": "Caviarder la vidéo (%lld)",
+  "pt-BR": "Ocultar no vídeo (%lld)",
+  "zh-Hans": "遮盖视频（%lld）",
+  "ja": "ビデオを墨消し（%lld）"
  },
  "Слишком близко к соседнему пику.": {
   "en": "Too close to the next bleep.",
-  "es": "Demasiado cerca del pitido siguiente."
+  "es": "Demasiado cerca del pitido siguiente.",
+  "de": "Zu nah am nächsten Piepton.",
+  "fr": "Trop près du bip suivant.",
+  "pt-BR": "Muito perto do próximo bipe.",
+  "zh-Hans": "离下一个哔声太近。",
+  "ja": "次のピー音に近すぎます。"
  },
  "Снять выделение": {
   "en": "Deselect All",
-  "es": "Deseleccionar todo"
+  "es": "Deseleccionar todo",
+  "de": "Auswahl aufheben",
+  "fr": "Tout désélectionner",
+  "pt-BR": "Desmarcar Tudo",
+  "zh-Hans": "取消全选",
+  "ja": "すべての選択を解除"
  },
  "Создание PDF": {
   "en": "Creating PDF",
-  "es": "Creando PDF"
+  "es": "Creando PDF",
+  "de": "PDF wird erstellt",
+  "fr": "Création du PDF",
+  "pt-BR": "Criando PDF",
+  "zh-Hans": "正在创建 PDF",
+  "ja": "PDF を作成中"
  },
  "Создать видео": {
   "en": "Create Video",
-  "es": "Crear vídeo"
+  "es": "Crear vídeo",
+  "de": "Video erstellen",
+  "fr": "Créer la vidéo",
+  "pt-BR": "Criar Vídeo",
+  "zh-Hans": "创建视频",
+  "ja": "ビデオを作成"
  },
  "Создать коллаж": {
   "en": "Create Collage",
-  "es": "Crear collage"
+  "es": "Crear collage",
+  "de": "Collage erstellen",
+  "fr": "Créer le collage",
+  "pt-BR": "Criar Colagem",
+  "zh-Hans": "创建拼贴",
+  "ja": "コラージュを作成"
+ },
+ "Создать субтитры": {
+  "en": "Make subtitles",
+  "es": "Crear subtítulos",
+  "de": "Untertitel erstellen",
+  "fr": "Créer les sous-titres",
+  "pt-BR": "Criar legendas",
+  "zh-Hans": "生成字幕",
+  "ja": "字幕を作成"
+ },
+ "Сохранение": {
+  "en": "Saving",
+  "es": "Guardado",
+  "de": "Speichern",
+  "fr": "Enregistrement",
+  "pt-BR": "Salvamento",
+  "zh-Hans": "存储",
+  "ja": "保存"
  },
  "Сохранение кадров": {
   "en": "Saving frames",
-  "es": "Guardando fotogramas"
+  "es": "Guardando fotogramas",
+  "de": "Bilder werden gespeichert",
+  "fr": "Enregistrement des images",
+  "pt-BR": "Salvando quadros",
+  "zh-Hans": "正在存储帧",
+  "ja": "フレームを保存中"
  },
  "Сохранение картинки": {
   "en": "Saving the picture",
-  "es": "Guardar la imagen"
+  "es": "Guardar la imagen",
+  "de": "Bild wird gespeichert",
+  "fr": "Enregistrement de l’image",
+  "pt-BR": "Salvando a imagem",
+  "zh-Hans": "正在存储图片",
+  "ja": "画像を保存中"
  },
  "Сохранить": {
   "en": "Save",
-  "es": "Guardar"
+  "es": "Guardar",
+  "de": "Sichern",
+  "fr": "Enregistrer",
+  "pt-BR": "Salvar",
+  "zh-Hans": "存储",
+  "ja": "保存"
  },
  "Сохранить PDF": {
   "en": "Save PDF",
-  "es": "Guardar PDF"
+  "es": "Guardar PDF",
+  "de": "PDF sichern",
+  "fr": "Enregistrer le PDF",
+  "pt-BR": "Salvar PDF",
+  "zh-Hans": "存储 PDF",
+  "ja": "PDF を保存"
  },
  "Сохранить кадр": {
   "en": "Save Frame",
-  "es": "Guardar fotograma"
+  "es": "Guardar fotograma",
+  "de": "Bild sichern",
+  "fr": "Enregistrer l’image",
+  "pt-BR": "Salvar Quadro",
+  "zh-Hans": "存储帧",
+  "ja": "フレームを保存"
  },
  "Сохранить кадры (%lld)": {
   "en": "Save Frames (%lld)",
-  "es": "Guardar fotogramas (%lld)"
+  "es": "Guardar fotogramas (%lld)",
+  "de": "Bilder sichern (%lld)",
+  "fr": "Enregistrer les images (%lld)",
+  "pt-BR": "Salvar Quadros (%lld)",
+  "zh-Hans": "存储帧（%lld）",
+  "ja": "フレームを保存（%lld）"
  },
  "Сохранить копию": {
   "en": "Save a Copy",
-  "es": "Guardar una copia"
+  "es": "Guardar una copia",
+  "de": "Kopie sichern",
+  "fr": "Enregistrer une copie",
+  "pt-BR": "Salvar uma Cópia",
+  "zh-Hans": "存储副本",
+  "ja": "コピーを保存"
+ },
+ "Сохранить сюда": {
+  "en": "Save Here",
+  "es": "Guardar aquí",
+  "de": "Hier sichern",
+  "fr": "Enregistrer ici",
+  "pt-BR": "Salvar Aqui",
+  "zh-Hans": "存储到这里",
+  "ja": "ここに保存"
  },
  "Сохранять высоту звука": {
   "en": "Preserve pitch",
-  "es": "Mantener el tono"
+  "es": "Mantener el tono",
+  "de": "Tonhöhe beibehalten",
+  "fr": "Conserver la hauteur",
+  "pt-BR": "Manter o tom",
+  "zh-Hans": "保持音调",
+  "ja": "音程を保つ"
+ },
+ "Сохранять даты создания и изменения оригинала": {
+  "en": "Keep the original's creation and modification dates",
+  "es": "Conservar las fechas de creación y modificación del original",
+  "de": "Erstellungs- und Änderungsdatum des Originals beibehalten",
+  "fr": "Conserver les dates de création et de modification de l’original",
+  "pt-BR": "Manter as datas de criação e modificação do original",
+  "zh-Hans": "保留原文件的创建和修改日期",
+  "ja": "元のファイルの作成日と変更日を保つ"
  },
  "Сохранять метаданные": {
   "en": "Keep metadata",
-  "es": "Conservar metadatos"
+  "es": "Conservar metadatos",
+  "de": "Metadaten beibehalten",
+  "fr": "Conserver les métadonnées",
+  "pt-BR": "Manter metadados",
+  "zh-Hans": "保留元数据",
+  "ja": "メタデータを保持"
  },
  "Сохранять метаданные (EXIF, GPS, цветовой профиль)": {
   "en": "Keep metadata (EXIF, GPS, colour profile)",
-  "es": "Conservar metadatos (EXIF, GPS, perfil de color)"
+  "es": "Conservar metadatos (EXIF, GPS, perfil de color)",
+  "de": "Metadaten beibehalten (EXIF, GPS, Farbprofil)",
+  "fr": "Conserver les métadonnées (EXIF, GPS, profil colorimétrique)",
+  "pt-BR": "Manter metadados (EXIF, GPS, perfil de cor)",
+  "zh-Hans": "保留元数据（EXIF、GPS、颜色描述文件）",
+  "ja": "メタデータを保持（EXIF、GPS、カラープロファイル）"
  },
  "Сохранять пропорции": {
   "en": "Keep proportions",
-  "es": "Mantener proporciones"
+  "es": "Mantener proporciones",
+  "de": "Seitenverhältnis beibehalten",
+  "fr": "Conserver les proportions",
+  "pt-BR": "Manter proporções",
+  "zh-Hans": "保持比例",
+  "ja": "縦横比を保つ"
  },
  "Сочность": {
   "en": "Vibrance",
-  "es": "Intensidad"
+  "es": "Intensidad",
+  "de": "Dynamik",
+  "fr": "Vibrance",
+  "pt-BR": "Vibração",
+  "zh-Hans": "鲜明度",
+  "ja": "自然な彩度"
  },
  "Спектр": {
   "en": "Spectrum",
-  "es": "Espectro"
+  "es": "Espectro",
+  "de": "Spektrum",
+  "fr": "Spectre",
+  "pt-BR": "Espectro",
+  "zh-Hans": "频谱",
+  "ja": "スペクトラム"
  },
  "Способ": {
   "en": "Method",
-  "es": "Método"
+  "es": "Método",
+  "de": "Methode",
+  "fr": "Méthode",
+  "pt-BR": "Método",
+  "zh-Hans": "方法",
+  "ja": "方法"
+ },
+ "Спрашивать каждый раз": {
+  "en": "Ask every time",
+  "es": "Preguntar cada vez",
+  "de": "Jedes Mal fragen",
+  "fr": "Demander à chaque fois",
+  "pt-BR": "Perguntar sempre",
+  "zh-Hans": "每次询问",
+  "ja": "毎回確認"
  },
  "Средняя": {
   "en": "Medium",
-  "es": "Media"
+  "es": "Media",
+  "de": "Mittel",
+  "fr": "Moyen",
+  "pt-BR": "Médio",
+  "zh-Hans": "中",
+  "ja": "中"
+ },
+ "Стандартный": {
+  "en": "Standard",
+  "es": "Estándar",
+  "de": "Standard",
+  "fr": "Standard",
+  "pt-BR": "Padrão",
+  "zh-Hans": "标准",
+  "ja": "標準"
  },
  "Станет": {
   "en": "Target",
-  "es": "Objetivo"
- },
- "Стекло размывает то, что под колесом. С ним колесо можно сделать прозрачнее.": {
-  "en": "Glass blurs what lies under the wheel, so the wheel can be more transparent.",
-  "es": "El cristal desenfoca lo que hay bajo la rueda, así que la rueda puede ser más transparente."
- },
- "Стекло — системное Liquid Glass. С ним колесо можно сделать прозрачнее: то, что под ним, размывается.": {
-  "en": "Glass is the system's Liquid Glass. With it the wheel can be more transparent: what lies under it is blurred.",
-  "es": "El cristal es el Liquid Glass del sistema. Con él la rueda puede ser más transparente: lo que hay debajo se desenfoca."
+  "es": "Objetivo",
+  "de": "Ziel",
+  "fr": "Cible",
+  "pt-BR": "Alvo",
+  "zh-Hans": "目标",
+  "ja": "目標"
  },
  "Стерео": {
   "en": "Stereo",
-  "es": "Estéreo"
+  "es": "Estéreo",
+  "de": "Stereo",
+  "fr": "Stéréo",
+  "pt-BR": "Estéreo",
+  "zh-Hans": "立体声",
+  "ja": "ステレオ"
  },
  "Стиль": {
   "en": "Style",
-  "es": "Estilo"
+  "es": "Estilo",
+  "de": "Stil",
+  "fr": "Style",
+  "pt-BR": "Estilo",
+  "zh-Hans": "样式",
+  "ja": "スタイル"
  },
  "Страницы": {
   "en": "Pages",
-  "es": "Páginas"
+  "es": "Páginas",
+  "de": "Seiten",
+  "fr": "Pages",
+  "pt-BR": "Páginas",
+  "zh-Hans": "页面",
+  "ja": "ページ"
  },
  "Страницы PDF": {
   "en": "PDF Pages",
-  "es": "Páginas del PDF"
+  "es": "Páginas del PDF",
+  "de": "PDF-Seiten",
+  "fr": "Pages du PDF",
+  "pt-BR": "Páginas do PDF",
+  "zh-Hans": "PDF 页面",
+  "ja": "PDF のページ"
  },
  "Стрелка": {
   "en": "Arrow",
-  "es": "Flecha"
+  "es": "Flecha",
+  "de": "Pfeil",
+  "fr": "Flèche",
+  "pt-BR": "Seta",
+  "zh-Hans": "箭头",
+  "ja": "矢印"
  },
  "Стриминг −14": {
   "en": "Streaming −14",
-  "es": "Streaming −14"
+  "es": "Streaming −14",
+  "de": "Streaming −14",
+  "fr": "Streaming −14",
+  "pt-BR": "Streaming −14",
+  "zh-Hans": "流媒体 −14",
+  "ja": "ストリーミング −14"
  },
  "Субтитры": {
   "en": "Subtitles",
-  "es": "Subtítulos"
+  "es": "Subtítulos",
+  "de": "Untertitel",
+  "fr": "Sous-titres",
+  "pt-BR": "Legendas",
+  "zh-Hans": "字幕",
+  "ja": "字幕"
  },
  "Субтитры в «%@» — картинки (как на DVD и Blu-ray), их нельзя сохранить текстом.": {
   "en": "The subtitles in “%@” are pictures (as on DVD and Blu-ray) and cannot be saved as text.",
-  "es": "Los subtítulos de «%@» son imágenes (como en DVD y Blu-ray) y no se pueden guardar como texto."
+  "es": "Los subtítulos de «%@» son imágenes (como en DVD y Blu-ray) y no se pueden guardar como texto.",
+  "de": "Die Untertitel in „%@“ sind Bilder (wie auf DVD und Blu-ray) und können nicht als Text gespeichert werden.",
+  "fr": "Les sous-titres de « %@ » sont des images (comme sur DVD et Blu-ray) et ne peuvent pas être enregistrés en texte.",
+  "pt-BR": "As legendas em “%@” são imagens (como em DVD e Blu-ray) e não podem ser salvas como texto.",
+  "zh-Hans": "“%@”中的字幕是图像（如 DVD 和蓝光），无法存储为文本。",
+  "ja": "「%@」の字幕は画像（DVD や Blu-ray と同じ）のため、テキストとして保存できません。"
  },
  "Субтитры из видео": {
   "en": "Subtitles from video",
-  "es": "Subtítulos del vídeo"
+  "es": "Subtítulos del vídeo",
+  "de": "Untertitel aus Video",
+  "fr": "Sous-titres de la vidéo",
+  "pt-BR": "Legendas do vídeo",
+  "zh-Hans": "视频中的字幕",
+  "ja": "ビデオの字幕"
+ },
+ "Субтитры из речи": {
+  "en": "Subtitles from speech",
+  "es": "Subtítulos desde la voz",
+  "de": "Untertitel aus Sprache",
+  "fr": "Sous-titres à partir de la parole",
+  "pt-BR": "Legendas a partir da fala",
+  "zh-Hans": "从语音生成字幕",
+  "ja": "音声から字幕"
  },
  "ТВ и радио −23": {
   "en": "TV and radio −23",
-  "es": "TV y radio −23"
+  "es": "TV y radio −23",
+  "de": "TV und Radio −23",
+  "fr": "TV et radio −23",
+  "pt-BR": "TV e rádio −23",
+  "zh-Hans": "电视和广播 −23",
+  "ja": "テレビ・ラジオ −23"
  },
  "Таблицы": {
   "en": "Tables",
-  "es": "Tablas"
+  "es": "Tablas",
+  "de": "Tabellen",
+  "fr": "Tableaux",
+  "pt-BR": "Planilhas",
+  "zh-Hans": "表格",
+  "ja": "表"
  },
  "Так будет выглядеть этот кадр. Кадр сбросится при перемотке.": {
   "en": "This is how the frame will look. It resets when you move the playhead.",
-  "es": "Así se verá este fotograma. Se restablece al mover el cursor."
+  "es": "Así se verá este fotograma. Se restablece al mover el cursor.",
+  "de": "So wird das Bild aussehen. Es wird zurückgesetzt, wenn Sie die Abspielposition bewegen.",
+  "fr": "Voici l’aspect de l’image. Il se réinitialise quand vous déplacez la tête de lecture.",
+  "pt-BR": "É assim que o quadro vai ficar. Ele é redefinido quando você move o cursor.",
+  "zh-Hans": "画面将会是这样。移动播放头后会重置。",
+  "ja": "フレームはこのようになります。再生ヘッドを動かすとリセットされます。"
  },
  "Тактильный отклик трекпада": {
   "en": "Trackpad haptic feedback",
-  "es": "Respuesta háptica del trackpad"
+  "es": "Respuesta háptica del trackpad",
+  "de": "Haptisches Feedback des Trackpads",
+  "fr": "Retour haptique du trackpad",
+  "pt-BR": "Resposta tátil do trackpad",
+  "zh-Hans": "触控板触觉反馈",
+  "ja": "トラックパッドの触覚フィードバック"
  },
  "Тащите файл и нажмите %@": {
   "en": "Drag a file and press %@",
-  "es": "Arrastra un archivo y pulsa %@"
+  "es": "Arrastra un archivo y pulsa %@",
+  "de": "Ziehen Sie eine Datei und drücken Sie %@",
+  "fr": "Faites glisser un fichier et appuyez sur %@",
+  "pt-BR": "Arraste um arquivo e pressione %@",
+  "zh-Hans": "拖移文件并按下 %@",
+  "ja": "ファイルをドラッグして %@ を押します"
  },
  "Текст": {
   "en": "Text",
-  "es": "Texto"
+  "es": "Texto",
+  "de": "Text",
+  "fr": "Texte",
+  "pt-BR": "Texto",
+  "zh-Hans": "文本",
+  "ja": "テキスト"
  },
  "Текст на этом кадре не найден.": {
   "en": "No text found in this frame.",
-  "es": "No se encontró texto en este fotograma."
+  "es": "No se encontró texto en este fotograma.",
+  "de": "In diesem Bild wurde kein Text gefunden.",
+  "fr": "Aucun texte trouvé dans cette image.",
+  "pt-BR": "Nenhum texto encontrado neste quadro.",
+  "zh-Hans": "此帧中未找到文本。",
+  "ja": "このフレームにテキストは見つかりませんでした。"
  },
  "Текст не найден": {
   "en": "No text found",
-  "es": "No se encontró texto"
+  "es": "No se encontró texto",
+  "de": "Kein Text gefunden",
+  "fr": "Aucun texte trouvé",
+  "pt-BR": "Nenhum texto encontrado",
+  "zh-Hans": "未找到文本",
+  "ja": "テキストが見つかりません"
  },
  "Температура": {
   "en": "Temperature",
-  "es": "Temperatura"
+  "es": "Temperatura",
+  "de": "Temperatur",
+  "fr": "Température",
+  "pt-BR": "Temperatura",
+  "zh-Hans": "色温",
+  "ja": "色温度"
  },
  "Тени": {
   "en": "Shadows",
-  "es": "Sombras"
+  "es": "Sombras",
+  "de": "Tiefen",
+  "fr": "Ombres",
+  "pt-BR": "Sombras",
+  "zh-Hans": "阴影",
+  "ja": "シャドウ"
  },
  "Тень": {
   "en": "Shadow",
-  "es": "Sombra"
+  "es": "Sombra",
+  "de": "Schatten",
+  "fr": "Ombre",
+  "pt-BR": "Sombra",
+  "zh-Hans": "投影",
+  "ja": "影"
  },
  "Терминал": {
   "en": "Terminal",
-  "es": "Terminal"
+  "es": "Terminal",
+  "de": "Terminal",
+  "fr": "Terminal",
+  "pt-BR": "Terminal",
+  "zh-Hans": "终端",
+  "ja": "ターミナル"
  },
  "То, что под колесом, размывается; чем ниже непрозрачность, тем больше его видно.": {
   "en": "What lies under the wheel is blurred; the lower the opacity, the more of it shows.",
-  "es": "Lo que hay bajo la rueda se desenfoca; cuanto menor es la opacidad, más se ve."
+  "es": "Lo que hay bajo la rueda se desenfoca; cuanto menor es la opacidad, más se ve.",
+  "de": "Was unter dem Rad liegt, wird verwischt; je geringer die Deckkraft, desto mehr ist davon zu sehen.",
+  "fr": "Ce qui est sous la roue est flouté ; plus l’opacité est faible, plus on le voit.",
+  "pt-BR": "O que está sob a roda fica desfocado; quanto menor a opacidade, mais aparece.",
+  "zh-Hans": "转盘下方的内容会被模糊；不透明度越低，看到的越多。",
+  "ja": "ホイールの下にあるものはぼかされ、不透明度が低いほどよく見えます。"
  },
  "Толстая": {
   "en": "Thick",
-  "es": "Gruesa"
+  "es": "Gruesa",
+  "de": "Dick",
+  "fr": "Épais",
+  "pt-BR": "Grosso",
+  "zh-Hans": "粗",
+  "ja": "太い"
  },
  "Только левый": {
   "en": "Left only",
-  "es": "Solo izquierdo"
+  "es": "Solo izquierdo",
+  "de": "Nur links",
+  "fr": "Gauche seulement",
+  "pt-BR": "Só esquerdo",
+  "zh-Hans": "仅左声道",
+  "ja": "左のみ"
  },
  "Только правый": {
   "en": "Right only",
-  "es": "Solo derecho"
+  "es": "Solo derecho",
+  "de": "Nur rechts",
+  "fr": "Droite seulement",
+  "pt-BR": "Só direito",
+  "zh-Hans": "仅右声道",
+  "ja": "右のみ"
  },
  "Тон": {
   "en": "Tone",
-  "es": "Tono"
+  "es": "Tono",
+  "de": "Ton",
+  "fr": "Ton",
+  "pt-BR": "Tom",
+  "zh-Hans": "色调",
+  "ja": "トーン"
  },
  "Тональный": {
   "en": "Tonal",
-  "es": "Tonal"
+  "es": "Tonal",
+  "de": "Tonal",
+  "fr": "Tonal",
+  "pt-BR": "Tonal",
+  "zh-Hans": "色调",
+  "ja": "トーナル"
  },
  "Тонкая": {
   "en": "Thin",
-  "es": "Fina"
+  "es": "Fina",
+  "de": "Dünn",
+  "fr": "Fin",
+  "pt-BR": "Fino",
+  "zh-Hans": "细",
+  "ja": "細い"
  },
  "Точный размер…": {
   "en": "Exact size…",
-  "es": "Tamaño exacto…"
+  "es": "Tamaño exacto…",
+  "de": "Exakte Größe …",
+  "fr": "Taille exacte…",
+  "pt-BR": "Tamanho exato…",
+  "zh-Hans": "精确大小…",
+  "ja": "正確なサイズ…"
  },
  "Тяните по видео, чтобы добавить область. Время выбранной области — жёлтый диапазон на таймлайне.": {
   "en": "Drag on the video to add an area. The selected area's time is the yellow range on the timeline.",
-  "es": "Arrastra sobre el vídeo para añadir un área. El tiempo del área seleccionada es el rango amarillo de la línea de tiempo."
+  "es": "Arrastra sobre el vídeo para añadir un área. El tiempo del área seleccionada es el rango amarillo de la línea de tiempo.",
+  "de": "Ziehen Sie auf dem Video, um einen Bereich hinzuzufügen. Die Zeit des ausgewählten Bereichs ist der gelbe Abschnitt in der Zeitleiste.",
+  "fr": "Faites glisser sur la vidéo pour ajouter une zone. La durée de la zone sélectionnée est la plage jaune sur la timeline.",
+  "pt-BR": "Arraste sobre o vídeo para adicionar uma área. O tempo da área selecionada é o intervalo amarelo na linha do tempo.",
+  "zh-Hans": "在视频上拖移以添加区域。所选区域的时间为时间线上的黄色范围。",
+  "ja": "ビデオ上をドラッグして領域を追加します。選択した領域の時間はタイムラインの黄色の範囲です。"
  },
  "Тяните по фото, чтобы добавить область. Метаданные в результате удаляются.": {
   "en": "Drag on the photo to add an area. Metadata is removed from the result.",
-  "es": "Arrastra sobre la foto para añadir un área. Los metadatos se eliminan del resultado."
+  "es": "Arrastra sobre la foto para añadir un área. Los metadatos se eliminan del resultado.",
+  "de": "Ziehen Sie auf dem Foto, um einen Bereich hinzuzufügen. Metadaten werden aus dem Ergebnis entfernt.",
+  "fr": "Faites glisser sur la photo pour ajouter une zone. Les métadonnées sont retirées du résultat.",
+  "pt-BR": "Arraste sobre a foto para adicionar uma área. Os metadados são removidos do resultado.",
+  "zh-Hans": "在照片上拖移以添加区域。结果中的元数据会被移除。",
+  "ja": "写真上をドラッグして領域を追加します。結果からメタデータは削除されます。"
  },
  "У вас последняя версия": {
   "en": "You're up to date",
-  "es": "Tienes la última versión"
+  "es": "Tienes la última versión",
+  "de": "Sie sind auf dem neuesten Stand",
+  "fr": "Vous êtes à jour",
+  "pt-BR": "Você está atualizado",
+  "zh-Hans": "已是最新版本",
+  "ja": "最新の状態です"
  },
  "У вас установлена версия %@. Скачайте новую со страницы релиза и замените приложение в папке «Программы».": {
   "en": "You have version %@. Download the new one from the release page and replace the app in Applications.",
-  "es": "Tienes la versión %@. Descarga la nueva desde la página de la versión y sustituye la app en Aplicaciones."
+  "es": "Tienes la versión %@. Descarga la nueva desde la página de la versión y sustituye la app en Aplicaciones.",
+  "de": "Sie haben Version %@. Laden Sie die neue von der Release-Seite und ersetzen Sie die App im Ordner „Programme“.",
+  "fr": "Vous avez la version %@. Téléchargez la nouvelle depuis la page de publication et remplacez l’app dans Applications.",
+  "pt-BR": "Você tem a versão %@. Baixe a nova na página de lançamento e substitua o app em Aplicativos.",
+  "zh-Hans": "你的版本为 %@。请从发布页面下载新版本，并替换“应用程序”中的 App。",
+  "ja": "お使いのバージョンは %@ です。リリースページから新しいものをダウンロードし、「アプリケーション」内のアプリと置き換えてください。"
  },
  "Убрать ближайший": {
   "en": "Remove nearest",
-  "es": "Quitar el más cercano"
+  "es": "Quitar el más cercano",
+  "de": "Nächsten entfernen",
+  "fr": "Supprimer le plus proche",
+  "pt-BR": "Remover o mais próximo",
+  "zh-Hans": "删除最近的",
+  "ja": "最も近いものを削除"
  },
  "Убрать дымку": {
   "en": "Dehaze",
-  "es": "Quitar neblina"
+  "es": "Quitar neblina",
+  "de": "Dunst entfernen",
+  "fr": "Supprimer le voile",
+  "pt-BR": "Remover névoa",
+  "zh-Hans": "去雾",
+  "ja": "かすみの除去"
  },
  "Убрать из Float": {
   "en": "Remove from Float",
-  "es": "Quitar de Float"
+  "es": "Quitar de Float",
+  "de": "Aus Float entfernen",
+  "fr": "Retirer de Float",
+  "pt-BR": "Remover do Float",
+  "zh-Hans": "从 Float 中移除",
+  "ja": "Float から取り除く"
  },
  "Убрать разрез": {
   "en": "Remove cut",
-  "es": "Quitar corte"
+  "es": "Quitar corte",
+  "de": "Schnitt entfernen",
+  "fr": "Supprimer la coupe",
+  "pt-BR": "Remover corte",
+  "zh-Hans": "移除剪切点",
+  "ja": "カットを削除"
  },
  "Убрать фон": {
   "en": "Remove bg",
-  "es": "Quitar fondo"
+  "es": "Quitar fondo",
+  "de": "Hintergrund weg",
+  "fr": "Sans fond",
+  "pt-BR": "Sem fundo",
+  "zh-Hans": "去背景",
+  "ja": "背景除去"
  },
  "Угол": {
   "en": "Angle",
-  "es": "Ángulo"
+  "es": "Ángulo",
+  "de": "Winkel",
+  "fr": "Angle",
+  "pt-BR": "Ângulo",
+  "zh-Hans": "角度",
+  "ja": "角度"
  },
  "Удаление фона": {
   "en": "Remove Background",
-  "es": "Quitar fondo"
+  "es": "Quitar fondo",
+  "de": "Hintergrund entfernen",
+  "fr": "Supprimer l’arrière-plan",
+  "pt-BR": "Remover Fundo",
+  "zh-Hans": "移除背景",
+  "ja": "背景を除去"
  },
  "Удалить": {
   "en": "Delete",
-  "es": "Eliminar"
+  "es": "Eliminar",
+  "de": "Löschen",
+  "fr": "Supprimer",
+  "pt-BR": "Apagar",
+  "zh-Hans": "删除",
+  "ja": "削除"
  },
  "Удалить все метаданные": {
   "en": "Remove all metadata",
-  "es": "Eliminar todos los metadatos"
+  "es": "Eliminar todos los metadatos",
+  "de": "Alle Metadaten entfernen",
+  "fr": "Supprimer toutes les métadonnées",
+  "pt-BR": "Remover todos os metadados",
+  "zh-Hans": "移除所有元数据",
+  "ja": "すべてのメタデータを削除"
  },
  "Удалить геопозицию": {
   "en": "Remove location",
-  "es": "Eliminar ubicación"
+  "es": "Eliminar ubicación",
+  "de": "Ort entfernen",
+  "fr": "Supprimer le lieu",
+  "pt-BR": "Remover localização",
+  "zh-Hans": "移除位置",
+  "ja": "位置情報を削除"
+ },
+ "Удалить набор": {
+  "en": "Delete Preset",
+  "es": "Eliminar ajuste",
+  "de": "Voreinstellung löschen",
+  "fr": "Supprimer le préréglage",
+  "pt-BR": "Apagar Predefinido",
+  "zh-Hans": "删除预设",
+  "ja": "プリセットを削除"
  },
  "Удалить область": {
   "en": "Delete area",
-  "es": "Eliminar área"
+  "es": "Eliminar área",
+  "de": "Bereich löschen",
+  "fr": "Supprimer la zone",
+  "pt-BR": "Apagar área",
+  "zh-Hans": "删除区域",
+  "ja": "領域を削除"
  },
  "Удалить пик": {
   "en": "Delete bleep",
-  "es": "Eliminar pitido"
+  "es": "Eliminar pitido",
+  "de": "Piepton löschen",
+  "fr": "Supprimer le bip",
+  "pt-BR": "Apagar bipe",
+  "zh-Hans": "删除哔声",
+  "ja": "ピー音を削除"
  },
  "Удалить результат": {
   "en": "Delete Result",
-  "es": "Eliminar resultado"
+  "es": "Eliminar resultado",
+  "de": "Ergebnis löschen",
+  "fr": "Supprimer le résultat",
+  "pt-BR": "Apagar Resultado",
+  "zh-Hans": "删除结果",
+  "ja": "結果を削除"
  },
  "Удерживайте, чтобы сравнить с оригиналом": {
   "en": "Hold to compare with the original",
-  "es": "Mantén pulsado para comparar con el original"
+  "es": "Mantén pulsado para comparar con el original",
+  "de": "Gedrückt halten, um mit dem Original zu vergleichen",
+  "fr": "Maintenir pour comparer à l’original",
+  "pt-BR": "Mantenha pressionado para comparar com o original",
+  "zh-Hans": "按住以与原图比较",
+  "ja": "押し続けると元の画像と比較"
  },
  "Уложиться в размер файла": {
   "en": "Fit a file size",
-  "es": "Ajustar a un tamaño de archivo"
+  "es": "Ajustar a un tamaño de archivo",
+  "de": "Auf Dateigröße bringen",
+  "fr": "Viser une taille de fichier",
+  "pt-BR": "Ajustar a um tamanho de arquivo",
+  "zh-Hans": "限定文件大小",
+  "ja": "ファイルサイズに合わせる"
  },
  "Утилиты": {
   "en": "Tools",
-  "es": "Utilidades"
+  "es": "Utilidades",
+  "de": "Werkzeuge",
+  "fr": "Outils",
+  "pt-BR": "Ferramentas",
+  "zh-Hans": "工具",
+  "ja": "ツール"
  },
  "Файл остаётся в исходной папке, в другое место попадает копия": {
   "en": "The file stays in its folder; a copy goes to the destination",
-  "es": "El archivo se queda en su carpeta; al destino va una copia"
+  "es": "El archivo se queda en su carpeta; al destino va una copia",
+  "de": "Die Datei bleibt in ihrem Ordner; eine Kopie geht ans Ziel",
+  "fr": "Le fichier reste dans son dossier ; une copie va à la destination",
+  "pt-BR": "O arquivo fica na pasta; uma cópia vai para o destino",
+  "zh-Hans": "文件保留在原文件夹；副本会放到目标位置",
+  "ja": "ファイルは元のフォルダに残り、コピーが移動先に置かれます"
  },
  "Файл переносится из исходной папки туда, куда его перетащили": {
   "en": "The file is moved from its folder to where you drop it",
-  "es": "El archivo se mueve de su carpeta al lugar donde lo sueltes"
+  "es": "El archivo se mueve de su carpeta al lugar donde lo sueltes",
+  "de": "Die Datei wird aus ihrem Ordner dorthin verschoben, wo Sie sie ablegen",
+  "fr": "Le fichier est déplacé de son dossier à l’endroit où vous le déposez",
+  "pt-BR": "O arquivo sai da pasta e vai para onde você soltá-lo",
+  "zh-Hans": "文件会从原文件夹移到你拖放的位置",
+  "ja": "ファイルは元のフォルダからドロップした場所へ移動します"
  },
  "Файла больше нет по адресу %@": {
   "en": "The file is no longer at %@",
-  "es": "El archivo ya no está en %@"
+  "es": "El archivo ya no está en %@",
+  "de": "Die Datei befindet sich nicht mehr unter %@",
+  "fr": "Le fichier n’est plus dans %@",
+  "pt-BR": "O arquivo não está mais em %@",
+  "zh-Hans": "文件已不在 %@",
+  "ja": "ファイルはもう %@ にありません"
  },
  "Фильтр": {
   "en": "Filter",
-  "es": "Filtro"
+  "es": "Filtro",
+  "de": "Filter",
+  "fr": "Filtre",
+  "pt-BR": "Filtro",
+  "zh-Hans": "滤镜",
+  "ja": "フィルタ"
  },
  "Фиолетовый": {
   "en": "Purple",
-  "es": "Morado"
+  "es": "Morado",
+  "de": "Violett",
+  "fr": "Violet",
+  "pt-BR": "Roxo",
+  "zh-Hans": "紫色",
+  "ja": "パープル"
  },
  "Фон": {
   "en": "Background",
-  "es": "Fondo"
+  "es": "Fondo",
+  "de": "Hintergrund",
+  "fr": "Arrière-plan",
+  "pt-BR": "Fundo",
+  "zh-Hans": "背景",
+  "ja": "背景"
  },
  "Фоновое изображение": {
   "en": "Background image",
-  "es": "Imagen de fondo"
+  "es": "Imagen de fondo",
+  "de": "Hintergrundbild",
+  "fr": "Image d’arrière-plan",
+  "pt-BR": "Imagem de fundo",
+  "zh-Hans": "背景图像",
+  "ja": "背景画像"
  },
  "Формат": {
   "en": "Format",
-  "es": "Formato"
+  "es": "Formato",
+  "de": "Format",
+  "fr": "Format",
+  "pt-BR": "Formato",
+  "zh-Hans": "格式",
+  "ja": "形式"
  },
  "Формат видео": {
   "en": "Video format",
-  "es": "Formato de vídeo"
+  "es": "Formato de vídeo",
+  "de": "Videoformat",
+  "fr": "Format vidéo",
+  "pt-BR": "Formato do vídeo",
+  "zh-Hans": "视频格式",
+  "ja": "ビデオの形式"
  },
  "Фото": {
   "en": "Photos",
-  "es": "Fotos"
+  "es": "Fotos",
+  "de": "Fotos",
+  "fr": "Photos",
+  "pt-BR": "Fotos",
+  "zh-Hans": "照片",
+  "ja": "写真"
  },
  "Хром": {
   "en": "Chrome",
-  "es": "Cromo"
+  "es": "Cromo",
+  "de": "Chrom",
+  "fr": "Chrome",
+  "pt-BR": "Cromo",
+  "zh-Hans": "铬黄",
+  "ja": "クローム"
  },
  "Цвет": {
   "en": "Colour",
-  "es": "Color"
+  "es": "Color",
+  "de": "Farbe",
+  "fr": "Couleur",
+  "pt-BR": "Cor",
+  "zh-Hans": "颜色",
+  "ja": "色"
  },
  "Цвет акцента": {
   "en": "Accent colour",
-  "es": "Color de acento"
+  "es": "Color de acento",
+  "de": "Akzentfarbe",
+  "fr": "Couleur d’accentuation",
+  "pt-BR": "Cor de destaque",
+  "zh-Hans": "强调色",
+  "ja": "アクセントカラー"
  },
  "Цвет волны": {
   "en": "Wave colour",
-  "es": "Color de la onda"
+  "es": "Color de la onda",
+  "de": "Wellenfarbe",
+  "fr": "Couleur de l’onde",
+  "pt-BR": "Cor da onda",
+  "zh-Hans": "波形颜色",
+  "ja": "波形の色"
  },
  "Цвет фона": {
   "en": "Background colour",
-  "es": "Color de fondo"
+  "es": "Color de fondo",
+  "de": "Hintergrundfarbe",
+  "fr": "Couleur d’arrière-plan",
+  "pt-BR": "Cor de fundo",
+  "zh-Hans": "背景颜色",
+  "ja": "背景色"
  },
  "Цель": {
   "en": "Target",
-  "es": "Objetivo"
+  "es": "Objetivo",
+  "de": "Ziel",
+  "fr": "Cible",
+  "pt-BR": "Alvo",
+  "zh-Hans": "目标",
+  "ja": "目標"
  },
  "Часть %lld": {
   "en": "Part %lld",
-  "es": "Parte %lld"
+  "es": "Parte %lld",
+  "de": "Teil %lld",
+  "fr": "Partie %lld",
+  "pt-BR": "Parte %lld",
+  "zh-Hans": "第 %lld 部分",
+  "ja": "パート %lld"
  },
  "Чтобы передвинуть или изменить пометку, выберите инструмент «Выбор». ⌫ удаляет выделенное, ⌘Z — отмена.": {
   "en": "To move or change a mark, choose the Select tool. ⌫ deletes the selection, ⌘Z undoes.",
-  "es": "Para mover o cambiar una anotación, elige la herramienta Seleccionar. ⌫ elimina la selección, ⌘Z deshace."
+  "es": "Para mover o cambiar una anotación, elige la herramienta Seleccionar. ⌫ elimina la selección, ⌘Z deshace.",
+  "de": "Um eine Markierung zu bewegen oder zu ändern, wählen Sie das Auswahlwerkzeug. ⌫ löscht die Auswahl, ⌘Z widerruft.",
+  "fr": "Pour déplacer ou modifier une annotation, choisissez l’outil Sélection. ⌫ supprime la sélection, ⌘Z annule.",
+  "pt-BR": "Para mover ou alterar uma marca, escolha a ferramenta Selecionar. ⌫ apaga a seleção, ⌘Z desfaz.",
+  "zh-Hans": "要移动或更改标记，请选择“选择”工具。⌫ 删除所选内容，⌘Z 撤销。",
+  "ja": "注釈を移動・変更するには選択ツールを選びます。⌫ で選択を削除、⌘Z で取り消し。"
  },
  "Чёткость": {
   "en": "Clarity",
-  "es": "Claridad"
+  "es": "Claridad",
+  "de": "Klarheit",
+  "fr": "Clarté",
+  "pt-BR": "Clareza",
+  "zh-Hans": "清晰度",
+  "ja": "明瞭度"
+ },
+ "Шаблон": {
+  "en": "Template",
+  "es": "Plantilla",
+  "de": "Vorlage",
+  "fr": "Modèle",
+  "pt-BR": "Modelo",
+  "zh-Hans": "模板",
+  "ja": "テンプレート"
  },
  "Ширина": {
   "en": "Width",
-  "es": "Ancho"
+  "es": "Ancho",
+  "de": "Breite",
+  "fr": "Largeur",
+  "pt-BR": "Largura",
+  "zh-Hans": "宽度",
+  "ja": "幅"
  },
  "Широта (−90…90)": {
   "en": "Latitude (−90…90)",
-  "es": "Latitud (−90…90)"
+  "es": "Latitud (−90…90)",
+  "de": "Breitengrad (−90…90)",
+  "fr": "Latitude (−90…90)",
+  "pt-BR": "Latitude (−90…90)",
+  "zh-Hans": "纬度（−90…90）",
+  "ja": "緯度（−90…90）"
  },
  "Шумоподавление": {
   "en": "Noise reduction",
-  "es": "Reducción de ruido"
+  "es": "Reducción de ruido",
+  "de": "Rauschreduzierung",
+  "fr": "Réduction du bruit",
+  "pt-BR": "Redução de ruído",
+  "zh-Hans": "降噪",
+  "ja": "ノイズ除去"
  },
  "Экспозиция": {
   "en": "Exposure",
-  "es": "Exposición"
+  "es": "Exposición",
+  "de": "Belichtung",
+  "fr": "Exposition",
+  "pt-BR": "Exposição",
+  "zh-Hans": "曝光",
+  "ja": "露出"
  },
  "Этот формат можно просматривать только по кадрам": {
   "en": "This format can only be viewed frame by frame",
-  "es": "Este formato solo puede verse fotograma a fotograma"
+  "es": "Este formato solo puede verse fotograma a fotograma",
+  "de": "Dieses Format kann nur Bild für Bild angesehen werden",
+  "fr": "Ce format ne peut être vu qu’image par image",
+  "pt-BR": "Este formato só pode ser visto quadro a quadro",
+  "zh-Hans": "此格式只能逐帧查看",
+  "ja": "この形式はフレームごとにしか表示できません"
  },
  "Эффект стекла": {
   "en": "Glass effect",
-  "es": "Efecto cristal"
+  "es": "Efecto cristal",
+  "de": "Glaseffekt",
+  "fr": "Effet verre",
+  "pt-BR": "Efeito vidro",
+  "zh-Hans": "玻璃效果",
+  "ja": "ガラス効果"
  },
  "Эффекты": {
   "en": "Effects",
-  "es": "Efectos"
+  "es": "Efectos",
+  "de": "Effekte",
+  "fr": "Effets",
+  "pt-BR": "Efeitos",
+  "zh-Hans": "效果",
+  "ja": "エフェクト"
  },
  "Язык": {
   "en": "Language",
-  "es": "Idioma"
+  "es": "Idioma",
+  "de": "Sprache",
+  "fr": "Langue",
+  "pt-BR": "Idioma",
+  "zh-Hans": "语言",
+  "ja": "言語"
  },
  "Язык изменится после перезапуска.": {
   "en": "The language changes after a restart.",
-  "es": "El idioma cambiará al reiniciar."
+  "es": "El idioma cambiará al reiniciar.",
+  "de": "Die Sprache wird nach einem Neustart geändert.",
+  "fr": "La langue changera après un redémarrage.",
+  "pt-BR": "O idioma muda depois de reabrir o app.",
+  "zh-Hans": "语言将在重新启动后更改。",
+  "ja": "言語は再起動後に変わります。"
+ },
+ "Язык речи": {
+  "en": "Spoken language",
+  "es": "Idioma hablado",
+  "de": "Gesprochene Sprache",
+  "fr": "Langue parlée",
+  "pt-BR": "Idioma falado",
+  "zh-Hans": "语音语言",
+  "ja": "話されている言語"
  },
  "Яркость": {
   "en": "Brightness",
-  "es": "Brillo"
+  "es": "Brillo",
+  "de": "Helligkeit",
+  "fr": "Luminosité",
+  "pt-BR": "Brilho",
+  "zh-Hans": "亮度",
+  "ja": "明るさ"
  },
  "без звука": {
   "en": "no sound",
-  "es": "sin sonido"
+  "es": "sin sonido",
+  "de": "kein Ton",
+  "fr": "pas de son",
+  "pt-BR": "sem som",
+  "zh-Hans": "无声音",
+  "ja": "音声なし"
  },
  "громкость": {
   "en": "loudness",
-  "es": "volumen"
+  "es": "volumen",
+  "de": "Lautheit",
+  "fr": "volume perçu",
+  "pt-BR": "intensidade",
+  "zh-Hans": "响度",
+  "ja": "ラウドネス"
  },
  "для этих файлов": {
   "en": "for these files",
-  "es": "para estos archivos"
+  "es": "para estos archivos",
+  "de": "für diese Dateien",
+  "fr": "pour ces fichiers",
+  "pt-BR": "para estes arquivos",
+  "zh-Hans": "适用于这些文件",
+  "ja": "これらのファイル向け"
  },
  "до %lld px": {
   "en": "up to %lld px",
-  "es": "hasta %lld px"
+  "es": "hasta %lld px",
+  "de": "bis %lld px",
+  "fr": "jusqu’à %lld px",
+  "pt-BR": "até %lld px",
+  "zh-Hans": "最多 %lld 像素",
+  "ja": "最大 %lld px"
  },
  "ещё %lld": {
   "en": "%lld more",
-  "es": "%lld más"
+  "es": "%lld más",
+  "de": "%lld weitere",
+  "fr": "%lld de plus",
+  "pt-BR": "mais %lld",
+  "zh-Hans": "另有 %lld 个",
+  "ja": "ほか %lld"
  },
  "запикано": {
   "en": "bleeped",
-  "es": "con pitido"
+  "es": "con pitido",
+  "de": "überpiept",
+  "fr": "bipé",
+  "pt-BR": "com bipes",
+  "zh-Hans": "已加哔声",
+  "ja": "ピー音済み"
  },
  "каналы": {
   "en": "channels",
-  "es": "canales"
+  "es": "canales",
+  "de": "Kanäle",
+  "fr": "canaux",
+  "pt-BR": "canais",
+  "zh-Hans": "声道",
+  "ja": "チャンネル"
+ },
+ "не выбрана": {
+  "en": "not chosen",
+  "es": "sin elegir",
+  "de": "nicht gewählt",
+  "fr": "non choisi",
+  "pt-BR": "não escolhida",
+  "zh-Hans": "未选择",
+  "ja": "未選択"
  },
  "не задано": {
   "en": "not set",
-  "es": "sin definir"
+  "es": "sin definir",
+  "de": "nicht festgelegt",
+  "fr": "non défini",
+  "pt-BR": "não definido",
+  "zh-Hans": "未设置",
+  "ja": "未設定"
  },
  "не найдено — brew install %@": {
   "en": "not found — brew install %@",
-  "es": "no encontrado: brew install %@"
+  "es": "no encontrado: brew install %@",
+  "de": "nicht gefunden — brew install %@",
+  "fr": "introuvable — brew install %@",
+  "pt-BR": "não encontrado — brew install %@",
+  "zh-Hans": "未找到 — brew install %@",
+  "ja": "見つかりません — brew install %@"
  },
  "не удалось измерить": {
   "en": "could not measure",
-  "es": "no se pudo medir"
+  "es": "no se pudo medir",
+  "de": "konnte nicht gemessen werden",
+  "fr": "mesure impossible",
+  "pt-BR": "não foi possível medir",
+  "zh-Hans": "无法测量",
+  "ja": "測定できませんでした"
  },
  "оригинал": {
   "en": "original",
-  "es": "original"
+  "es": "original",
+  "de": "Original",
+  "fr": "original",
+  "pt-BR": "original",
+  "zh-Hans": "原件",
+  "ja": "元"
  },
  "остальные вписываются в него с полями.": {
   "en": "the others are fitted inside it with bars.",
-  "es": "los demás se ajustan dentro con bandas."
+  "es": "los demás se ajustan dentro con bandas.",
+  "de": "die anderen werden mit Balken hineingesetzt.",
+  "fr": "les autres y sont ajustés avec des bandes.",
+  "pt-BR": "os outros são encaixados nele com barras.",
+  "zh-Hans": "其他片段会加黑边适配。",
+  "ja": "ほかのクリップは帯を付けて収めます。"
  },
  "с пиками": {
   "en": "with bleeps",
-  "es": "con pitidos"
+  "es": "con pitidos",
+  "de": "mit Pieptönen",
+  "fr": "avec bips",
+  "pt-BR": "com bipes",
+  "zh-Hans": "带哔声",
+  "ja": "ピー音あり"
  },
  "файл": {
   "en": "file",
-  "es": "archivo"
+  "es": "archivo",
+  "de": "Datei",
+  "fr": "fichier",
+  "pt-BR": "arquivo",
+  "zh-Hans": "个文件",
+  "ja": "ファイル"
  },
  "файла": {
   "en": "files",
-  "es": "archivos"
+  "es": "archivos",
+  "de": "Dateien",
+  "fr": "fichiers",
+  "pt-BR": "arquivos",
+  "zh-Hans": "个文件",
+  "ja": "ファイル"
  },
  "файлов": {
   "en": "files",
-  "es": "archivos"
+  "es": "archivos",
+  "de": "Dateien",
+  "fr": "fichiers",
+  "pt-BR": "arquivos",
+  "zh-Hans": "个文件",
+  "ja": "ファイル"
+ },
+ "фото": {
+  "en": "photo",
+  "es": "foto",
+  "de": "Foto",
+  "fr": "photo",
+  "pt-BR": "foto",
+  "zh-Hans": "照片",
+  "ja": "写真"
  },
  "холст": {
   "en": "canvas",
-  "es": "lienzo"
+  "es": "lienzo",
+  "de": "Leinwand",
+  "fr": "toile",
+  "pt-BR": "tela",
+  "zh-Hans": "画布",
+  "ja": "キャンバス"
  }
 }

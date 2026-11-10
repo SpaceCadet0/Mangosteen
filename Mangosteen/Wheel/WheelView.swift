@@ -438,11 +438,17 @@ final class WheelView: NSView {
         hint.draw(at: NSPoint(x: ringCenter.x - hintSize.width / 2, y: ringCenter.y - secondarySize.height - hintSize.height - 4 + lift))
     }
 
-    /// "5 файлов" / "5 files" / "5 archivos": each language has its own plural rule.
+    /// "5 файлов" / "5 files" / "5 Dateien" / "5 个文件": each language has its own plural rule.
     static func filesLabel(_ count: Int) -> String {
         switch Bundle.main.preferredLocalizations.first {
         case "en": return count == 1 ? "1 file" : "\(count) files"
         case "es": return count == 1 ? "1 archivo" : "\(count) archivos"
+        case "de": return count == 1 ? "1 Datei" : "\(count) Dateien"
+        // French counts 0 and 1 as singular.
+        case "fr": return count <= 1 ? "\(count) fichier" : "\(count) fichiers"
+        case "pt-BR": return count == 1 ? "1 arquivo" : "\(count) arquivos"
+        case "zh-Hans": return "\(count) 个文件"
+        case "ja": return "\(count) 個のファイル"
         default: break
         }
         let lastTwo = count % 100

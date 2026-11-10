@@ -13,6 +13,10 @@ enum ImageConverter {
             throw ConversionError.unreadable(input)
         }
         let count = CGImageSourceGetCount(source)
+        if target == .ico || target == .icns {
+            try writeIcon(source, input: input, as: target, output: output)
+            return
+        }
         if target == .webp {
             if count > 1, FileFormat.detect(input) == .gif, ExternalTool.isAvailable("gif2webp") {
                 try ExternalTool.run("gif2webp", ["-quiet", "-mixed", "-q", String(options.webpQuality),
@@ -39,7 +43,7 @@ enum ImageConverter {
         }
 
         for index in indices {
-            guard var image = orientedImage(source, at: index) else {
+            guard var image = orientedImage(source, at: index, maxPixelSize: options.maxPixelSize) else {
                 throw ConversionError.unreadable(input)
             }
             if !target.supportsAlpha, image.hasAlpha {
@@ -201,18 +205,21 @@ enum ImageConverter {
 
     /// Decodes a frame with its EXIF orientation applied, so every output format displays upright
     /// (BMP, GIF and PDF have no orientation tag).
-    static func orientedImage(_ source: CGImageSource, at index: Int) -> CGImage? {
+    /// `maxPixelSize` (a preset's size limit) shrinks larger pictures so their longer side fits; smaller ones stay.
+    static func orientedImage(_ source: CGImageSource, at index: Int, maxPixelSize: Int? = nil) -> CGImage? {
         let properties = CGImageSourceCopyPropertiesAtIndex(source, index, nil) as? [CFString: Any] ?? [:]
         let orientation = properties[kCGImagePropertyOrientation] as? UInt32 ?? 1
-        guard orientation != 1 else {
-            return CGImageSourceCreateImageAtIndex(source, index, nil)
-        }
         let width = properties[kCGImagePropertyPixelWidth] as? Int ?? 0
         let height = properties[kCGImagePropertyPixelHeight] as? Int ?? 0
+        let longest = max(width, height)
+        let limit = maxPixelSize.flatMap { $0 > 0 && $0 < longest ? $0 : nil }
+        guard orientation != 1 || limit != nil else {
+            return CGImageSourceCreateImageAtIndex(source, index, nil)
+        }
         let thumbnailOptions: [CFString: Any] = [
             kCGImageSourceCreateThumbnailFromImageAlways: true,
             kCGImageSourceCreateThumbnailWithTransform: true,
-            kCGImageSourceThumbnailMaxPixelSize: max(width, height),
+            kCGImageSourceThumbnailMaxPixelSize: limit ?? longest,
             kCGImageSourceShouldCacheImmediately: true,
         ]
         return CGImageSourceCreateThumbnailAtIndex(source, index, thumbnailOptions as CFDictionary)
@@ -244,8 +251,10 @@ enum ImageConverter {
            let original = CGImageSourceCopyPropertiesAtIndex(source, index, nil) as? [CFString: Any] {
             properties = original
         }
-        // Pixels are already upright.
+        // Pixels are already upright, and may have been shrunk.
         properties[kCGImagePropertyOrientation] = 1
+        properties[kCGImagePropertyPixelWidth] = nil
+        properties[kCGImagePropertyPixelHeight] = nil
         if var tiff = properties[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
             tiff[kCGImagePropertyTIFFOrientation] = 1
             properties[kCGImagePropertyTIFFDictionary] = tiff
@@ -261,7 +270,9 @@ enum ImageConverter {
     private static func encodeWebP(_ source: CGImageSource, input: URL, output: URL,
                                    options: ConversionOptions) throws {
         let index = CGImageSourceGetPrimaryImageIndex(source)
-        guard let image = orientedImage(source, at: index) else { throw ConversionError.unreadable(input) }
+        guard let image = orientedImage(source, at: index, maxPixelSize: options.maxPixelSize) else {
+            throw ConversionError.unreadable(input)
+        }
 
         // cwebp reads PNG losslessly, so an intermediate PNG keeps full quality and transparency.
         let intermediate = FileManager.default.temporaryDirectory
@@ -279,6 +290,49 @@ enum ImageConverter {
             "-quiet", "-q", String(options.webpQuality), "-metadata", "icc",
             intermediate.path, "-o", output.path,
         ])
+    }
+}
+
+extension ImageConverter {
+    /// Icon sizes written: Windows icons stop at 256, and ImageIO writes at most six images into one; Mac icons go
+    /// up to 1024 (512 at 2x).
+    static func iconSizes(for target: FileFormat, side: Int) -> [Int] {
+        let all = target == .ico ? [16, 32, 48, 64, 128, 256] : [16, 32, 64, 128, 256, 512, 1024]
+        // A small picture is still scaled up to 256 so the icon looks right in lists and on the Dock.
+        return all.filter { $0 <= max(side, 256) }
+    }
+
+    /// An icon holds the picture at several sizes. It must be square, so a wide or tall picture is centred on a
+    /// transparent square instead of being stretched.
+    static func writeIcon(_ source: CGImageSource, input: URL, as target: FileFormat, output: URL) throws {
+        guard let image = orientedImage(source, at: CGImageSourceGetPrimaryImageIndex(source)) else {
+            throw ConversionError.unreadable(input)
+        }
+        let side = max(image.width, image.height)
+        let sizes = iconSizes(for: target, side: side)
+        guard let destination = CGImageDestinationCreateWithURL(
+            output as CFURL, target.utType.identifier as CFString, sizes.count, nil
+        ) else {
+            throw ConversionError.encodeFailed(target)
+        }
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+        for size in sizes {
+            guard let context = CGContext(
+                data: nil, width: size, height: size, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace,
+                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+            ) else {
+                throw ConversionError.encodeFailed(target)
+            }
+            context.interpolationQuality = .high
+            let scale = CGFloat(size) / CGFloat(side)
+            let width = CGFloat(image.width) * scale
+            let height = CGFloat(image.height) * scale
+            context.draw(image, in: CGRect(x: (CGFloat(size) - width) / 2, y: (CGFloat(size) - height) / 2,
+                                           width: width, height: height))
+            guard let icon = context.makeImage() else { throw ConversionError.encodeFailed(target) }
+            CGImageDestinationAddImage(destination, icon, nil)
+        }
+        guard CGImageDestinationFinalize(destination) else { throw ConversionError.encodeFailed(target) }
     }
 }
 

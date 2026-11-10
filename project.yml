@@ -37,6 +37,7 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         INFOPLIST_KEY_NSAccentColorName: AccentColor
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "Mangosteen распознаёт речь на этом Mac, чтобы сделать субтитры. Ничего не отправляется в сеть."
       configs:
         # A separate identity so a development build never collides with the installed app
         # (status icon, drag monitor, settings, launch at login).

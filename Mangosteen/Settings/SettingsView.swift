@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// Settings in three tabs: general options, the wheels (keys and where each slice sits) and their appearance.
+/// Settings in four tabs: general options, saving (folder, names, presets), the wheels (keys and where each slice
+/// sits) and their appearance.
 struct SettingsView: View {
-    enum Tab: String { case general, wheels, appearance }
+    enum Tab: String { case general, saving, wheels, appearance }
 
     @ObservedObject private var settings = AppSettings.shared
     /// The window opens on the tab used last time.
@@ -13,6 +14,9 @@ struct SettingsView: View {
             GeneralSettings(settings: settings)
                 .tabItem { Label(String(localized: "Основные"), systemImage: "gearshape") }
                 .tag(Tab.general)
+            SavingSettings(settings: settings)
+                .tabItem { Label(String(localized: "Сохранение"), systemImage: "square.and.arrow.down") }
+                .tag(Tab.saving)
             WheelSettings(settings: settings)
                 .tabItem { Label(String(localized: "Колёса"), systemImage: "circle.circle") }
                 .tag(Tab.wheels)
@@ -115,6 +119,159 @@ private struct GeneralSettings: View {
                     .frame(width: 44, alignment: .trailing)
             }
         }
+    }
+}
+
+// MARK: - Saving
+
+private struct SavingSettings: View {
+    @ObservedObject var settings: AppSettings
+
+    private var activeIndex: Int? {
+        settings.activePresetID.flatMap { id in settings.presets.firstIndex { $0.id == id } }
+    }
+
+    var body: some View {
+        Form {
+            Section {
+                Picker(String(localized: "Набор"), selection: $settings.activePresetID) {
+                    Text(String(localized: "Стандартный")).tag(UUID?.none)
+                    ForEach(settings.presets) { Text($0.name).tag(UUID?.some($0.id)) }
+                }
+                HStack {
+                    Button(String(localized: "Новый набор")) { addPreset() }
+                    if let index = activeIndex {
+                        Button(String(localized: "Удалить набор"), role: .destructive) {
+                            settings.presets.remove(at: index)
+                        }
+                    }
+                }
+            } header: {
+                Text(String(localized: "Набор настроек"))
+            } footer: {
+                Text(String(localized: "Выбранный набор действует на все конвертации, пока его не сменить. «Стандартный» берёт качество картинок и метаданные с вкладки «Основные»."))
+            }
+
+            if let index = activeIndex {
+                PresetQualitySection(preset: $settings.presets[index])
+                SaveOptionsSections(mode: $settings.presets[index].saveMode, folder: $settings.presets[index].folderPath,
+                                    template: $settings.presets[index].nameTemplate,
+                                    keepDates: $settings.presets[index].keepDates)
+            } else {
+                SaveOptionsSections(mode: $settings.saveMode, folder: $settings.saveFolder,
+                                    template: $settings.nameTemplate, keepDates: $settings.keepDates)
+            }
+        }
+        .formStyle(.grouped)
+    }
+
+    /// A new preset starts from the standard settings, so only what differs needs changing.
+    private func addPreset() {
+        var preset = ConversionPreset(name: String(localized: "Набор \(settings.presets.count + 1)"))
+        preset.quality = settings.jpegQuality
+        preset.preserveMetadata = settings.preserveMetadata
+        preset.saveMode = settings.saveMode
+        preset.folderPath = settings.saveFolder
+        preset.nameTemplate = settings.nameTemplate
+        preset.keepDates = settings.keepDates
+        settings.presets.append(preset)
+        settings.activePresetID = preset.id
+    }
+}
+
+private struct PresetQualitySection: View {
+    @Binding var preset: ConversionPreset
+    private static let sizes = [0, 3840, 2560, 1920, 1280, 1024, 800]
+
+    var body: some View {
+        Section(String(localized: "Картинки")) {
+            TextField(String(localized: "Название"), text: $preset.name)
+            LabeledContent(String(localized: "Качество")) {
+                HStack {
+                    Slider(value: $preset.quality, in: 0.1...1)
+                    Text("\(Int((preset.quality * 100).rounded()))%")
+                        .monospacedDigit()
+                        .frame(width: 44, alignment: .trailing)
+                }
+            }
+            Picker(String(localized: "Размер"), selection: $preset.maxPixelSize) {
+                ForEach(Self.sizes, id: \.self) { size in
+                    Text(size == 0 ? String(localized: "Не менять") : String(localized: "Не больше \(size) пикс.")).tag(size)
+                }
+            }
+            Toggle(String(localized: "Сохранять метаданные (EXIF, GPS, цветовой профиль)"), isOn: $preset.preserveMetadata)
+        }
+    }
+}
+
+/// Where results go, what they are called and whether they keep the original's dates; shared by the standard
+/// settings and every preset.
+private struct SaveOptionsSections: View {
+    @Binding var mode: SaveMode
+    @Binding var folder: String
+    @Binding var template: String
+    @Binding var keepDates: Bool
+
+    var body: some View {
+        Section {
+            Picker(String(localized: "Куда"), selection: $mode) {
+                Text(String(localized: "Рядом с оригиналом")).tag(SaveMode.nextToOriginal)
+                Text(String(localized: "В выбранную папку")).tag(SaveMode.folder)
+                Text(String(localized: "Спрашивать каждый раз")).tag(SaveMode.ask)
+            }
+            if mode == .folder {
+                LabeledContent(String(localized: "Папка")) {
+                    HStack {
+                        Text(folder.isEmpty ? String(localized: "не выбрана")
+                                            : (folder as NSString).abbreviatingWithTildeInPath)
+                            .foregroundStyle(folder.isEmpty ? .orange : .secondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                        Button(String(localized: "Выбрать…")) { chooseFolder() }
+                    }
+                }
+            }
+        } header: {
+            Text(String(localized: "Куда сохранять"))
+        } footer: {
+            Text(String(localized: "Если в папку нельзя записывать, например это образ диска, результат сохраняется в «Загрузки». Оригинал никогда не меняется."))
+        }
+
+        Section {
+            TextField(String(localized: "Шаблон"), text: $template)
+            HStack {
+                tokenButton(String(localized: "Имя"), "{name}")
+                tokenButton(String(localized: "Дата"), "{date}")
+                tokenButton(String(localized: "Время"), "{time}")
+                tokenButton(String(localized: "Формат"), "{format}")
+                Spacer()
+                Button(String(localized: "Сбросить")) { template = OutputLocation.defaultTemplate }
+                    .disabled(template == OutputLocation.defaultTemplate)
+            }
+            LabeledContent(String(localized: "Пример")) {
+                Text(OutputLocation.name(String(localized: "фото"), pathExtension: "jpg", template: template) + ".jpg")
+                    .foregroundStyle(.secondary)
+            }
+            Toggle(String(localized: "Сохранять даты создания и изменения оригинала"), isOn: $keepDates)
+        } header: {
+            Text(String(localized: "Имя результата"))
+        } footer: {
+            Text(String(localized: "{name} — имя оригинала, {date} — дата, {time} — время, {format} — формат результата. Если имя занято, добавляется номер: «фото 2»."))
+        }
+    }
+
+    private func tokenButton(_ title: String, _ token: String) -> some View {
+        Button(title) { template += template.isEmpty || template.hasSuffix(" ") ? token : " " + token }
+    }
+
+    private func chooseFolder() {
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.canCreateDirectories = true
+        panel.prompt = String(localized: "Выбрать")
+        if !folder.isEmpty { panel.directoryURL = URL(fileURLWithPath: folder) }
+        if panel.runModal() == .OK, let url = panel.url { folder = url.path }
     }
 }
 

@@ -11,6 +11,7 @@
 "%@ (метаданные)" = "%@ (metadata)";
 "%@ (обрезано)" = "%@ (trimmed)";
 "%@ (пометки)" = "%@ (annotated)";
+"%@ (речь)" = "%@ (speech)";
 "%@ (сжатый)" = "%@ (compressed)";
 "%@ (скорость %@)" = "%@ (speed %@)";
 "%@ (скрыто)" = "%@ (redacted)";
@@ -40,9 +41,11 @@
 "HEVC (H.265) — меньше файл, сжатие дольше" = "HEVC (H.265) — smaller file, slower to compress";
 "Mangosteen %@ — самая новая версия." = "Mangosteen %@ is the latest version.";
 "Mangosteen на GitHub" = "Mangosteen on GitHub";
+"Mangosteen не разрешено распознавать речь. Разрешите в «Системные настройки → Конфиденциальность и безопасность → Распознавание речи»." = "Mangosteen is not allowed to recognise speech. Allow it in System Settings → Privacy & Security → Speech Recognition.";
 "PDF защищён паролем" = "The PDF is password protected";
 "PNG, TIFF и другие форматы без потерь будут сохранены как %@." = "PNG, TIFF and other lossless formats will be saved as %@.";
 "WAV, FLAC и AIFF сохраняются в M4A (AAC), остальные — в своём формате." = "WAV, FLAC and AIFF are saved as M4A (AAC); other formats stay as they are.";
+"{name} — имя оригинала, {date} — дата, {time} — время, {format} — формат результата. Если имя занято, добавляется номер: «фото 2»." = "{name} is the original's name, {date} the date, {time} the time, {format} the result's format. If the name is taken, a number is added: “photo 2”.";
 "«%@» защищён паролем." = "“%@” is password protected.";
 "«%@» не читается как JSON." = "“%@” cannot be read as JSON.";
 "Авто" = "Auto";
@@ -67,10 +70,12 @@
 "В «%@» данные не в виде таблицы. Нужен массив записей, например [{\"имя\": \"Чай\", \"цена\": 1.5}]." = "The data in “%@” is not a table. It needs to be an array of records, such as [{\"name\": \"Tea\", \"price\": 1.5}].";
 "В «%@» не найден текст." = "No text found in “%@”.";
 "В «%@» не нашлось файлов, которые можно распаковать. Образы дисков только в формате UDF, например установочные образы Windows, не поддерживаются." = "“%@” has no files that can be extracted. Disc images in UDF format only, such as Windows installation images, are not supported.";
+"В «%@» не удалось распознать речь." = "No speech could be recognised in “%@”.";
 "В «%@» нет видео." = "“%@” has no video.";
 "В «%@» нет звуковой дорожки." = "“%@” has no audio track.";
 "В «%@» нет субтитров." = "“%@” has no subtitles.";
 "В архив" = "Archive";
+"В выбранную папку" = "To a chosen folder";
 "Введите координаты в градусах, например 55.7558 и 37.6173" = "Enter coordinates in degrees, e.g. 55.7558 and 37.6173";
 "Вернуть как было" = "Restore Defaults";
 "Версия %@" = "Version %@";
@@ -87,6 +92,7 @@
 "Волна" = "Waveform";
 "Воспроизведение (пробел)" = "Play (Space)";
 "Вправо" = "Right";
+"Время" = "Time";
 "Все окна на передний план" = "Bring All to Front";
 "Все файлы: %lld × %lld px" = "All files: %lld × %lld px";
 "Все файлы: %lld%% от размера" = "All files: %lld%% of their size";
@@ -95,6 +101,7 @@
 "Все файлы: ширина %lld px, высота по пропорциям" = "All files: %lld px wide, height to scale";
 "Вставить" = "Paste";
 "Выбор" = "Select";
+"Выбранный набор действует на все конвертации, пока его не сменить. «Стандартный» берёт качество картинок и метаданные с вкладки «Основные»." = "The chosen preset applies to every conversion until you change it. “Standard” takes picture quality and metadata from the General tab.";
 "Выбрать" = "Choose";
 "Выбрать…" = "Choose…";
 "Выделить все" = "Select All";
@@ -132,6 +139,7 @@
 "Другая сторона колеса" = "Other side of the wheel";
 "Другой цвет" = "Other colour";
 "Дублировать" = "Duplicate";
+"Если в папку нельзя записывать, например это образ диска, результат сохраняется в «Загрузки». Оригинал никогда не меняется." = "If the folder cannot be written to, a disk image for one, the result is saved to Downloads. The original is never changed.";
 "Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите над ним колёсико мыши или нажмите Tab, пока держите файл; без файла можно щёлкнуть по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад." = "When a wheel has a back, its centre shows “↻ N more”. To turn the wheel over, scroll the mouse wheel over it or press Tab while holding the file; without a file, click the centre. A slice's side applies to all files: PNG, for one, sits on the same side for photos and for PDF. The face holds up to 10 slices; the rest go to the back.";
 "Задать координаты" = "Set coordinates";
 "Задач: %lld" = "Jobs: %lld";
@@ -156,6 +164,8 @@
 "Измеряю…" = "Measuring…";
 "Изображение" = "Image";
 "Изображения, PDF, документы, видео, аудио, субтитры, таблицы и архивы в другие форматы." = "Images, PDF, documents, video, audio, subtitles, spreadsheets and archives into other formats.";
+"Имя" = "Name";
+"Имя результата" = "Result name";
 "Инструменты" = "Tools";
 "Исходная запись моно: оба канала получают один и тот же звук." = "The source is mono: both channels get the same sound.";
 "Исходное изображение" = "Original image";
@@ -180,6 +190,7 @@
 "Карандаш" = "Pen";
 "Картинка" = "Picture";
 "Картинка из браузера" = "Picture from browser";
+"Картинки" = "Pictures";
 "Качество" = "Quality";
 "Качество изображений" = "Image quality";
 "Квадрат" = "Square";
@@ -203,7 +214,10 @@
 "Контраст" = "Contrast";
 "Копировать" = "Copy";
 "Круг" = "Circle";
+"Куда" = "Where";
 "Куда переместить: %@" = "Move %@ to:";
+"Куда сохранить результат?" = "Where should the result be saved?";
+"Куда сохранять" = "Where to save";
 "Л" = "L";
 "Левый канал" = "Left channel";
 "Линия" = "Line";
@@ -226,6 +240,11 @@
 "Моно" = "Mono";
 "На «%@» не найден объект, от которого можно отделить фон." = "No subject to separate from the background was found in “%@”.";
 "На фото не найден объект, от которого можно отделить фон." = "No subject to separate from the background was found in the photo.";
+"На этом Mac нет языков для распознавания речи без сети. Добавьте язык в «Системные настройки → Клавиатура → Диктовка»." = "This Mac has no languages for offline speech recognition. Add one in System Settings → Keyboard → Dictation.";
+"Набор" = "Preset";
+"Набор %lld" = "Preset %lld";
+"Набор настроек" = "Preset";
+"Название" = "Name";
 "Найдено областей: %lld" = "Areas found: %lld";
 "Найдено областей: %lld. Проверьте их время на таймлайне." = "Areas found: %lld. Check their timing on the timeline.";
 "Найдите кадр (пробел — воспроизведение, ⏎ — добавить, кнопки ◀︎▶︎ — по одному кадру)." = "Find the frame (Space — play, ⏎ — add, ◀︎▶︎ buttons — one frame at a time).";
@@ -241,6 +260,8 @@
 "Начните перетаскивать файл и коротко нажмите клавишу. Колесо останется открытым, пока вы не отпустите файл." = "Start dragging a file and briefly press a key. The wheel stays open until you drop the file.";
 "Начните тащить файл — из Finder, с рабочего стола или из любого приложения." = "Start dragging a file — from Finder, the desktop or any app.";
 "Не больше" = "At most";
+"Не больше %lld пикс." = "Up to %lld px";
+"Не менять" = "Keep";
 "Не найдена утилита «%@». Установите её: brew install %@" = "The tool “%@” was not found. Install it with: brew install %@";
 "Не отпуская кнопку, коротко нажмите клавишу — у курсора откроется колесо." = "Without releasing the button, briefly press a key — a wheel opens at the pointer.";
 "Не удалось открыть PDF" = "Could not open the PDF";
@@ -263,6 +284,7 @@
 "Нет изображений" = "No images";
 "Нет подходящих файлов." = "No suitable files.";
 "Ничего не найдено" = "Nothing found";
+"Новый набор" = "New preset";
 "Ножницы — разрезать после страницы, клик по странице — убрать её." = "Scissors cut after a page; click a page to leave it out.";
 "Номер" = "Number";
 "Нормализовать" = "Normalize";
@@ -303,6 +325,7 @@
 "Очистить" = "Clear";
 "Очистить историю" = "Clear History";
 "П" = "R";
+"Папка" = "Folder";
 "Перезапустить" = "Restart";
 "Переместить" = "Move";
 "Перемещение" = "Moving";
@@ -338,6 +361,7 @@
 "Правый канал" = "Right channel";
 "Пресет" = "Preset";
 "Применить" = "Apply";
+"Пример" = "Example";
 "Пробел — прослушать с пиками, ⏎ — пик по курсору." = "Space — listen with bleeps, ⏎ — bleep at playhead.";
 "Проверить кадр" = "Check frame";
 "Проверить обновления…" = "Check for Updates…";
@@ -369,6 +393,7 @@
 "Раскладка" = "Layout";
 "Распаковать" = "Extract";
 "Распаковка" = "Extracting";
+"Распознавание речи на этом Mac не поддерживает язык «%@». Скачайте его в «Системные настройки → Клавиатура → Диктовка»." = "Speech recognition on this Mac does not support “%@”. Download it in System Settings → Keyboard → Dictation.";
 "Распознавание текста" = "Text recognition";
 "Редактирование" = "Editing";
 "Редактор" = "Editor";
@@ -376,8 +401,11 @@
 "Режим" = "Mode";
 "Резкость" = "Sharpness";
 "Результат" = "Result";
+"Речь в текст" = "Speech to text";
+"Речь распознаётся на этом Mac, ничего не отправляется в сеть. Модель языка система может один раз скачать сама. Точность зависит от записи: музыка и шум мешают." = "Speech is recognised on this Mac; nothing is sent over the network. The system may download the language model once by itself. Accuracy depends on the recording: music and noise get in the way.";
 "Розовый" = "Pink";
 "Ряд" = "Row";
+"Рядом с оригиналом" = "Next to the original";
 "Самые маленькие файлы, потери качества заметнее" = "Smallest files, more visible quality loss";
 "Сбалансированно" = "Balanced";
 "Сбросить" = "Reset";
@@ -417,6 +445,8 @@
 "Создание PDF" = "Creating PDF";
 "Создать видео" = "Create Video";
 "Создать коллаж" = "Create Collage";
+"Создать субтитры" = "Make subtitles";
+"Сохранение" = "Saving";
 "Сохранение кадров" = "Saving frames";
 "Сохранение картинки" = "Saving the picture";
 "Сохранить" = "Save";
@@ -424,17 +454,19 @@
 "Сохранить кадр" = "Save Frame";
 "Сохранить кадры (%lld)" = "Save Frames (%lld)";
 "Сохранить копию" = "Save a Copy";
+"Сохранить сюда" = "Save Here";
 "Сохранять высоту звука" = "Preserve pitch";
+"Сохранять даты создания и изменения оригинала" = "Keep the original's creation and modification dates";
 "Сохранять метаданные" = "Keep metadata";
 "Сохранять метаданные (EXIF, GPS, цветовой профиль)" = "Keep metadata (EXIF, GPS, colour profile)";
 "Сохранять пропорции" = "Keep proportions";
 "Сочность" = "Vibrance";
 "Спектр" = "Spectrum";
 "Способ" = "Method";
+"Спрашивать каждый раз" = "Ask every time";
 "Средняя" = "Medium";
+"Стандартный" = "Standard";
 "Станет" = "Target";
-"Стекло размывает то, что под колесом. С ним колесо можно сделать прозрачнее." = "Glass blurs what lies under the wheel, so the wheel can be more transparent.";
-"Стекло — системное Liquid Glass. С ним колесо можно сделать прозрачнее: то, что под ним, размывается." = "Glass is the system's Liquid Glass. With it the wheel can be more transparent: what lies under it is blurred.";
 "Стерео" = "Stereo";
 "Стиль" = "Style";
 "Страницы" = "Pages";
@@ -444,6 +476,7 @@
 "Субтитры" = "Subtitles";
 "Субтитры в «%@» — картинки (как на DVD и Blu-ray), их нельзя сохранить текстом." = "The subtitles in “%@” are pictures (as on DVD and Blu-ray) and cannot be saved as text.";
 "Субтитры из видео" = "Subtitles from video";
+"Субтитры из речи" = "Subtitles from speech";
 "ТВ и радио −23" = "TV and radio −23";
 "Таблицы" = "Tables";
 "Так будет выглядеть этот кадр. Кадр сбросится при перемотке." = "This is how the frame will look. It resets when you move the playhead.";
@@ -478,6 +511,7 @@
 "Удалить" = "Delete";
 "Удалить все метаданные" = "Remove all metadata";
 "Удалить геопозицию" = "Remove location";
+"Удалить набор" = "Delete Preset";
 "Удалить область" = "Delete area";
 "Удалить пик" = "Delete bleep";
 "Удалить результат" = "Delete Result";
@@ -503,6 +537,7 @@
 "Часть %lld" = "Part %lld";
 "Чтобы передвинуть или изменить пометку, выберите инструмент «Выбор». ⌫ удаляет выделенное, ⌘Z — отмена." = "To move or change a mark, choose the Select tool. ⌫ deletes the selection, ⌘Z undoes.";
 "Чёткость" = "Clarity";
+"Шаблон" = "Template";
 "Ширина" = "Width";
 "Широта (−90…90)" = "Latitude (−90…90)";
 "Шумоподавление" = "Noise reduction";
@@ -512,6 +547,7 @@
 "Эффекты" = "Effects";
 "Язык" = "Language";
 "Язык изменится после перезапуска." = "The language changes after a restart.";
+"Язык речи" = "Spoken language";
 "Яркость" = "Brightness";
 "без звука" = "no sound";
 "громкость" = "loudness";
@@ -520,6 +556,7 @@
 "ещё %lld" = "%lld more";
 "запикано" = "bleeped";
 "каналы" = "channels";
+"не выбрана" = "not chosen";
 "не задано" = "not set";
 "не найдено — brew install %@" = "not found — brew install %@";
 "не удалось измерить" = "could not measure";
@@ -529,4 +566,5 @@
 "файл" = "file";
 "файла" = "files";
 "файлов" = "files";
+"фото" = "photo";
 "холст" = "canvas";

@@ -46,7 +46,7 @@ final class FormatSupportTests: XCTestCase {
     }
 
     func testReadOnlyFormatsOfferWritableTargets() {
-        XCTAssertEqual(FormatCatalog.targets(for: [directory.appendingPathComponent("a.7z")]), [.zip, .tar, .tgz])
+        XCTAssertEqual(FormatCatalog.targets(for: [directory.appendingPathComponent("a.7z")]), [.zip, .tar, .tgz, .iso])
         XCTAssertEqual(FormatCatalog.targets(for: [directory.appendingPathComponent("a.CR2")]), FormatCatalog.imageOutputs)
         XCTAssertEqual(FormatCatalog.targets(for: [directory.appendingPathComponent("a.flv")]), FormatCatalog.videoOutputs)
         XCTAssertEqual(FormatCatalog.targets(for: [directory.appendingPathComponent("a.ape")]), FormatCatalog.audioOutputs)
