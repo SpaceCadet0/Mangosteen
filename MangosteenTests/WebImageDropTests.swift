@@ -48,6 +48,21 @@ final class WebImageDropTests: XCTestCase {
         XCTAssertEqual(try Data(contentsOf: first), png, "the first file is untouched")
     }
 
+    func testOnlyTheRememberedBrowserOriginalIsDiscarded() throws {
+        let original = directory.appendingPathComponent("from browser.webp")
+        let users = directory.appendingPathComponent("users photo.jpg")
+        try Data([1]).write(to: original)
+        try Data([2]).write(to: users)
+        WebImageDrop.rememberOriginal(original)
+
+        var removed: [URL] = []
+        let remove: (URL) throws -> Void = { removed.append($0); try FileManager.default.removeItem(at: $0) }
+        XCTAssertEqual(WebImageDrop.discardOriginals(of: [users, original], remove: remove), [original])
+        XCTAssertEqual(removed, [original])
+        XCTAssertTrue(FileManager.default.fileExists(atPath: users.path), "a file the user dropped is never touched")
+        XCTAssertEqual(WebImageDrop.discardOriginals(of: [original], remove: remove), [], "forgotten once discarded")
+    }
+
     func testATIFFRenderingIsSavedAsPNG() throws {
         pasteboard.setData(try pictureData(.tiff), forType: .tiff)
         XCTAssertEqual(WebImageDrop.detect(on: pasteboard)?.format, .png)
@@ -88,6 +103,16 @@ final class WebImageDropTests: XCTestCase {
 
     /// Only the detection can be tested: macOS lets a promise be received only inside a real drop
     /// (`performDragOperation`), which is where the wheel receives it.
+    func testABrowserPictureCanBeKeptInItsOwnFormat() {
+        let picture = WebImageDrop(format: .png).placeholder
+        XCTAssertEqual(WebImageDrop.keptFormat(of: [picture]), .png)
+        // The conversion targets leave PNG out, which is why the wheel needs the extra slice.
+        XCTAssertFalse(FormatCatalog.targets(for: [picture]).contains(.png))
+        // An ordinary file on disk gets no such slice.
+        XCTAssertNil(WebImageDrop.keptFormat(of: [URL(fileURLWithPath: "/tmp/picture.png")]))
+        XCTAssertNil(WebImageDrop.keptFormat(of: []))
+    }
+
     func testAFilePromiseIsRecognisedByItsType() throws {
         let promiser = Promiser(data: try pictureData(.jpeg))
         pasteboard.writeObjects([NSFilePromiseProvider(fileType: "public.jpeg", delegate: promiser)])

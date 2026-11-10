@@ -19,11 +19,19 @@ enum WheelItemProvider {
     }
 
     private static func conversionItems(for urls: [URL]) -> [WheelItem] {
-        FormatCatalog.targets(for: urls).map { format in
+        var items = FormatCatalog.targets(for: urls).map { format in
             WheelItem(id: "convert.\(format.rawValue)", title: format.displayName, symbolName: format.symbolName) { urls in
                 ConversionService.shared.convert(urls, to: format)
             }
         }
+        // A picture from a browser may also be kept as it is: dropping it saves it to Downloads in its own format,
+        // and nothing more needs doing. Its id is neither "convert." nor "tool.", so the saved file is kept.
+        if let format = WebImageDrop.keptFormat(of: urls) {
+            items.insert(WheelItem(id: "web.save", title: format.displayName, symbolName: format.symbolName) { saved in
+                Feedback.finished(String(localized: "Сохранение картинки"), outputs: saved, failures: [])
+            }, at: 0)
+        }
+        return items
     }
 
     /// The kinds of item in a selection: format categories, plus "folder" and "other" for the rest.

@@ -57,6 +57,7 @@
 "Аудио" = "Audio";
 "Без изменений" = "Unchanged";
 "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках." = "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.";
+"Без стекла то, что под колесом, размывается, а непрозрачность решает, сколько его видно. Со стеклом каждая долька — системное Liquid Glass: ниже 70% оно прозрачное, выше — матовое." = "Without glass, what lies under the wheel is blurred, and the opacity decides how much of it shows. With glass, every segment is the system's Liquid Glass: clear below 70%, frosted above.";
 "Бирюзовый" = "Teal";
 "Браузер не отдал картинку. Сохраните её на диск и перетащите файл." = "The browser did not hand over the picture. Save it to disk and drag the file.";
 "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется." = "Drop the file on a segment. The result appears next to the original file; the original itself is never changed.";
@@ -131,7 +132,7 @@
 "Другая сторона колеса" = "Other side of the wheel";
 "Другой цвет" = "Other colour";
 "Дублировать" = "Duplicate";
-"Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите колёсико мыши или трекпад над ним, задержите файл над центром или щёлкните по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад." = "When a wheel has a back, its centre shows “↻ N more”. To turn the wheel over, scroll the mouse wheel or trackpad over it, hold the file over the centre, or click the centre. A slice's side applies to all files: PNG, for one, sits on the same side for photos and for PDF. The face holds up to 10 slices; the rest go to the back.";
+"Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите над ним колёсико мыши или нажмите Tab, пока держите файл; без файла можно щёлкнуть по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад." = "When a wheel has a back, its centre shows “↻ N more”. To turn the wheel over, scroll the mouse wheel over it or press Tab while holding the file; without a file, click the centre. A slice's side applies to all files: PNG, for one, sits on the same side for photos and for PDF. The face holds up to 10 slices; the rest go to the back.";
 "Задать координаты" = "Set coordinates";
 "Задач: %lld" = "Jobs: %lld";
 "Закрыть" = "Close";
@@ -417,6 +418,7 @@
 "Создать видео" = "Create Video";
 "Создать коллаж" = "Create Collage";
 "Сохранение кадров" = "Saving frames";
+"Сохранение картинки" = "Saving the picture";
 "Сохранить" = "Save";
 "Сохранить PDF" = "Save PDF";
 "Сохранить кадр" = "Save Frame";
@@ -454,6 +456,7 @@
 "Тени" = "Shadows";
 "Тень" = "Shadow";
 "Терминал" = "Terminal";
+"То, что под колесом, размывается; чем ниже непрозрачность, тем больше его видно." = "What lies under the wheel is blurred; the lower the opacity, the more of it shows.";
 "Толстая" = "Thick";
 "Только левый" = "Left only";
 "Только правый" = "Right only";

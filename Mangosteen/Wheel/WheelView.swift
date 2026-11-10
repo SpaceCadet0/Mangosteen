@@ -14,11 +14,17 @@ final class WheelView: NSView {
     var onHoverChange: (() -> Void)?
     /// Called after the wheel turned to its other side.
     var onFlip: (() -> Void)?
+    /// Called when the lit segment changes, so glass behind the wheel can tint that piece.
+    var onHighlight: ((Int?) -> Void)?
+    /// The lit segment, if any.
+    var highlightedIndex: Int? { highlighted }
 
     /// Opacity of the wheel's background (Settings → Appearance).
     var backgroundOpacity: CGFloat = 0.96 { didSet { needsDisplay = true } }
     /// A glass or blur view lies behind the wheel; the drawn drop shadow would show through it.
     var hasBackdrop = false { didSet { needsDisplay = true } }
+    /// The backdrop is Liquid Glass shaped like the segments (macOS 26), so the wheel paints no background.
+    var glassBehind = false { didSet { needsDisplay = true } }
 
     /// The slices on the side that is showing.
     private(set) var items: [WheelItem] = []
@@ -27,19 +33,19 @@ final class WheelView: NSView {
     var hasBack: Bool { !sides.back.isEmpty }
     private var kind: WheelKind = .convert
     private var fileCount = 0
-    /// Holding a dragged file over the centre turns the wheel once; it has to leave the centre to turn it again.
-    private var dwell: DispatchWorkItem?
-    private var dwellUsed = false
     private var highlighted: Int? {
         didSet {
             guard highlighted != oldValue else { return }
-            needsDisplay = true
+            showLitLayer()
+            onHighlight?(highlighted)
             if highlighted != nil { onHoverChange?() }
         }
     }
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
+        wantsLayer = true
+        layerContentsRedrawPolicy = .onSetNeedsDisplay
         // Files, and pictures dragged out of a browser (file promises or picture data).
         registerForDraggedTypes([.fileURL] + WebImageDrop.draggedTypes)
     }
@@ -58,18 +64,20 @@ final class WheelView: NSView {
         showingBack = false
         items = front
         self.fileCount = fileCount
-        cancelDwell()
-        dwellUsed = false
+        litStale = true
         highlighted = nil
         needsDisplay = true
         rebuildAccessibility()
     }
 
-    /// Turns the wheel to its other side, if it has one.
-    func flip() {
+    /// Turns the wheel to its other side, if it has one. `reason` goes to the log, so an unexpected turn can be
+    /// traced (`log show --predicate 'subsystem == "dev.mangosteen.app"'`).
+    func flip(reason: String = "click") {
         guard hasBack else { return }
+        DragMonitor.log.info("Wheel turned over: \(reason, privacy: .public)")
         showingBack.toggle()
         items = showingBack ? sides.back : sides.front
+        litStale = true
         highlighted = nil
         needsDisplay = true
         rebuildAccessibility()
@@ -83,45 +91,12 @@ final class WheelView: NSView {
         hypot(point.x - ringCenter.x, point.y - ringCenter.y) < Self.innerRadius - 4
     }
 
-    /// Starts the dwell timer while a drag rests over the centre; leaving the centre resets it.
-    private func trackDwell(at point: NSPoint) {
-        guard hasBack, isInCenter(point) else {
-            cancelDwell()
-            dwellUsed = false
-            return
-        }
-        guard dwell == nil, !dwellUsed else { return }
-        let work = DispatchWorkItem { [weak self] in
-            self?.dwell = nil
-            self?.dwellUsed = true
-            self?.flip()
-        }
-        dwell = work
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: work)
-    }
-
-    private func cancelDwell() {
-        dwell?.cancel()
-        dwell = nil
-    }
-
-    /// A glass view (macOS 26) or a blurred backdrop (earlier systems) the size of the ring, for behind the wheel.
-    static func makeBackdrop(in bounds: NSRect) -> NSView {
-        let frame = NSRect(x: bounds.midX - outerRadius, y: bounds.midY - outerRadius, width: outerRadius * 2, height: outerRadius * 2)
-        if #available(macOS 26.0, *) {
-            let glass = NSGlassEffectView(frame: frame)
-            glass.cornerRadius = outerRadius
-            return glass
-        }
-        let blur = NSVisualEffectView(frame: frame)
-        blur.material = .hudWindow
-        blur.blendingMode = .behindWindow
-        blur.state = .active
-        blur.maskImage = NSImage(size: frame.size, flipped: false) { rect in
-            NSBezierPath(ovalIn: rect).fill()
-            return true
-        }
-        return blur
+    /// Follows the pointer while a drag is over the wheel. The drag session's own updates reach a panel that
+    /// appeared mid-drag late and unevenly, so the lit slice is taken from the pointer itself.
+    func followPointer() {
+        guard let window else { return }
+        let point = convert(window.convertPoint(fromScreen: NSEvent.mouseLocation), from: nil)
+        highlighted = segmentIndex(at: point)
     }
 
     // MARK: - Accessibility
@@ -158,7 +133,7 @@ final class WheelView: NSView {
             center.setAccessibilityLabel(String(localized: "Другая сторона колеса"))
             center.setAccessibilityParent(self)
             center.setAccessibilityFrameInParentSpace(circle(radius: Self.innerRadius).bounds)
-            center.press = { [weak self] in self?.flip() }
+            center.press = { [weak self] in self?.flip(reason: "VoiceOver") }
             segmentElements.append(center)
         }
         NSAccessibility.post(element: self, notification: .layoutChanged)
@@ -193,24 +168,95 @@ final class WheelView: NSView {
 
     // MARK: - Drawing
 
+    #if DEBUG
+    static var debugDraws = 0
+    static var debugDrawTime: CFTimeInterval = 0
+    #endif
+
     override func draw(_ dirtyRect: NSRect) {
-        let background = NSColor.windowBackgroundColor.withAlphaComponent(backgroundOpacity)
+        #if DEBUG
+        let drawStart = CACurrentMediaTime()
+        defer {
+            Self.debugDraws += 1
+            Self.debugDrawTime += CACurrentMediaTime() - drawStart
+        }
+        #endif
+        // Over the blur the colour fades out with the opacity setting: none at 40%, where the background shows almost
+        // sharp, the usual 96% at the default.
+        let fill = hasBackdrop ? min(max((backgroundOpacity - 0.4) / 0.56, 0), 1) * 0.96 : backgroundOpacity
+        let background = NSColor.windowBackgroundColor.withAlphaComponent(fill)
         let shadow = NSShadow()
         shadow.shadowBlurRadius = 18
         shadow.shadowOffset = NSSize(width: 0, height: -4)
         shadow.shadowColor = NSColor.black.withAlphaComponent(0.3)
 
-        NSGraphicsContext.saveGraphicsState()
-        // Through a see-through background the shadow would darken the wheel itself.
-        if !hasBackdrop, backgroundOpacity > 0.9 { shadow.set() }
-        background.setFill()
-        circle(radius: Self.outerRadius).fill()
-        NSGraphicsContext.restoreGraphicsState()
+        // Over glass the segments and centre are glass pieces with gaps between them; nothing is painted under them.
+        if !glassBehind {
+            NSGraphicsContext.saveGraphicsState()
+            // Through a see-through background the shadow would darken the wheel itself.
+            if backgroundOpacity > 0.9 { shadow.set() }
+            background.setFill()
+            circle(radius: Self.outerRadius).fill()
+            NSGraphicsContext.restoreGraphicsState()
+        }
 
         for index in items.indices {
-            drawSegment(index)
+            drawSegment(index, lit: false)
         }
         drawCenter()
+        // Whatever made the wheel redraw (another side, light or dark mode, accent, opacity) also changes the lit
+        // slices; they are rendered again on the next hover.
+        litStale = true
+        DispatchQueue.main.async { [weak self] in self?.showLitLayer() }
+    }
+
+    // MARK: - Lit slice
+
+    /// Each lit slice is its own small layer, rendered once and then only shown or hidden. Redrawing the whole wheel
+    /// on every hover cost about 3.5 ms of drawing plus sending the full 744×744 picture to the window server, which
+    /// then recomputed the glass or blur behind it: frames were dropped while the pointer moved.
+    private var litLayers: [Int: CALayer] = [:]
+    private var litStale = false
+
+    private func showLitLayer() {
+        guard let host = layer else { return }
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        if litStale {
+            litLayers.values.forEach { $0.removeFromSuperlayer() }
+            litLayers.removeAll()
+            litStale = false
+        }
+        for (index, lit) in litLayers { lit.isHidden = index != highlighted }
+        if let index = highlighted, items.indices.contains(index), litLayers[index] == nil {
+            let lit = makeLitLayer(index)
+            host.addSublayer(lit)
+            litLayers[index] = lit
+        }
+        CATransaction.commit()
+    }
+
+    private func makeLitLayer(_ index: Int) -> CALayer {
+        let rect = segmentPath(index).bounds.insetBy(dx: -2, dy: -2).integral
+        let appearance = effectiveAppearance
+        let image = NSImage(size: rect.size, flipped: false) { [weak self] _ in
+            appearance.performAsCurrentDrawingAppearance {
+                NSGraphicsContext.current?.cgContext.translateBy(x: -rect.minX, y: -rect.minY)
+                self?.drawSegment(index, lit: true)
+            }
+            return true
+        }
+        let scale = window?.backingScaleFactor ?? NSScreen.main?.backingScaleFactor ?? 2
+        let lit = CALayer()
+        lit.frame = rect
+        lit.contentsScale = scale
+        lit.contents = image.layerContents(forContentsScale: scale)
+        return lit
+    }
+
+    override func viewDidChangeEffectiveAppearance() {
+        super.viewDidChangeEffectiveAppearance()
+        needsDisplay = true
     }
 
     private func circle(radius: CGFloat) -> NSBezierPath {
@@ -225,37 +271,56 @@ final class WheelView: NSView {
             path.windingRule = .evenOdd
             return path
         }
-        // A ring segment with rounded corners, like a mangosteen segment: the shape is shrunk by the
-        // corner radius, then grown back by a round-joined stroke of that radius.
+        return NSBezierPath(cgPath: Self.segmentCGPath(index: index, count: items.count, center: ringCenter))
+    }
+
+    /// Segment `index` of `count` around `center` (y up), shared by the drawing and the glass behind it. A ring
+    /// segment with rounded corners, like a mangosteen segment: the shape is shrunk by the corner radius, then grown
+    /// back by a round-joined stroke of that radius. A single segment is the whole ring's outer disc.
+    static func segmentCGPath(index: Int, count: Int, center: CGPoint) -> CGPath {
+        guard count > 1 else {
+            let radius = outerRadius - 4
+            return CGPath(ellipseIn: CGRect(x: center.x - radius, y: center.y - radius, width: radius * 2, height: radius * 2),
+                          transform: nil)
+        }
+        let span = 2 * .pi / CGFloat(count)
         let corner: CGFloat = 10
         let gap: CGFloat = 6
-        let outer = Self.outerRadius - 4 - corner
-        let inner = Self.innerRadius + 4 + corner
+        let outer = outerRadius - 4 - corner
+        let inner = innerRadius + 4 + corner
         let first = CGFloat(index) * span - span / 2
         let last = CGFloat(index) * span + span / 2
         func inset(at radius: CGFloat) -> CGFloat { (gap / 2 + corner) / radius }
         // Angles here are clockwise from 12 o'clock; Core Graphics measures counter-clockwise from 3.
         func cg(_ clockwiseFromTop: CGFloat) -> CGFloat { .pi / 2 - clockwiseFromTop }
         func point(_ radius: CGFloat, _ angle: CGFloat) -> CGPoint {
-            CGPoint(x: ringCenter.x + radius * sin(angle), y: ringCenter.y + radius * cos(angle))
+            CGPoint(x: center.x + radius * sin(angle), y: center.y + radius * cos(angle))
         }
         let path = CGMutablePath()
         path.move(to: point(outer, first + inset(at: outer)))
-        path.addArc(center: ringCenter, radius: outer, startAngle: cg(first + inset(at: outer)),
+        path.addArc(center: center, radius: outer, startAngle: cg(first + inset(at: outer)),
                     endAngle: cg(last - inset(at: outer)), clockwise: true)
         path.addLine(to: point(inner, last - inset(at: inner)))
-        path.addArc(center: ringCenter, radius: inner, startAngle: cg(last - inset(at: inner)),
+        path.addArc(center: center, radius: inner, startAngle: cg(last - inset(at: inner)),
                     endAngle: cg(first + inset(at: inner)), clockwise: false)
         path.closeSubpath()
         let stroke = path.copy(strokingWithWidth: corner * 2, lineCap: .round, lineJoin: .round, miterLimit: 1)
-        return NSBezierPath(cgPath: path.union(stroke))
+        return path.union(stroke)
     }
 
-    private func drawSegment(_ index: Int) {
-        let isHighlighted = index == highlighted
+    private func drawSegment(_ index: Int, lit isHighlighted: Bool) {
         let path = segmentPath(index)
-        (isHighlighted ? Brand.nsColor : NSColor.labelColor.withAlphaComponent(0.05)).setFill()
-        path.fill()
+        // Over glass every segment is a glass piece, the lit one tinted with the accent; nothing is painted.
+        if isHighlighted {
+            // Over glass the accent stays a little see-through so the glass edge still shows around it.
+            (glassBehind ? Brand.nsColor.withAlphaComponent(0.88) : Brand.nsColor).setFill()
+            path.fill()
+        } else if glassBehind {
+            // Unlit segments are the glass pieces drawn by WheelBackdrop.
+        } else {
+            NSColor.labelColor.withAlphaComponent(0.05).setFill()
+            path.fill()
+        }
 
         let item = items[index]
         let middle = CGFloat(index) * span
@@ -403,14 +468,11 @@ final class WheelView: NSView {
 
     override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
         let point = convert(sender.draggingLocation, from: nil)
-        trackDwell(at: point)
         highlighted = segmentIndex(at: point)
         return highlighted == nil ? [] : .copy
     }
 
     override func draggingExited(_ sender: NSDraggingInfo?) {
-        cancelDwell()
-        dwellUsed = false
         highlighted = nil
     }
 
@@ -423,7 +485,10 @@ final class WheelView: NSView {
             // A browser's picture becomes a file in Downloads first; the slice then works on that file.
             WebImageDrop.receive(from: pasteboard, into: WebImageDrop.downloads) { [weak self] result in
                 switch result {
-                case .success(let url): self?.onSelect?(item, [url])
+                case .success(let url):
+                    // Conversions and tools leave only their result; actions (Float, AirDrop…) keep the picture.
+                    if item.id.hasPrefix("convert.") || item.id.hasPrefix("tool.") { WebImageDrop.rememberOriginal(url) }
+                    self?.onSelect?(item, [url])
                 case .failure(let error): Feedback.showError(String(localized: "Картинка из браузера"), error)
                 }
             }
@@ -455,7 +520,7 @@ final class WheelView: NSView {
     override func mouseUp(with event: NSEvent) {
         let point = convert(event.locationInWindow, from: nil)
         if isInCenter(point) {
-            flip()
+            flip(reason: "click on the centre")
             return
         }
         guard let index = segmentIndex(at: point) else { return }

@@ -44,6 +44,7 @@ final class ConversionService {
             let lock = NSLock()
             var outputs: [URL] = []
             var failures: [(URL, Error)] = []
+            var succeeded: [URL] = []
             // A decoded 50-megapixel camera RAW takes hundreds of megabytes; two at a time keeps memory in check.
             let hasRAW = inputs.contains { FileFormat.detect($0) == .raw }
             let limit = maxConcurrent.map { hasRAW ? min($0, 2) : $0 } ?? (hasRAW ? 2 : inputs.count)
@@ -58,7 +59,12 @@ final class ConversionService {
                     }
                     do {
                         let output = try work(input, report, cancellation)
-                        lock.withLock { if let output { outputs.append(output) } }
+                        lock.withLock {
+                            if let output {
+                                outputs.append(output)
+                                succeeded.append(input)
+                            }
+                        }
                     } catch is CancellationError {
                         // Stopped by the user; nothing to report.
                     } catch {
@@ -67,6 +73,8 @@ final class ConversionService {
                 }
                 DispatchQueue.main.async { ProgressHUD.shared.step(job, item: index) }
             }
+            // A picture saved from a browser only for this job goes to the Trash once its result exists.
+            WebImageDrop.discardOriginals(of: succeeded)
             DispatchQueue.main.async {
                 ProgressHUD.shared.end(job)
                 Feedback.finished(title, outputs: outputs, failures: failures)
@@ -79,6 +87,7 @@ final class ConversionService {
         let job = ProgressHUD.shared.begin(title, total: 1)
         queue.async {
             let result = Result { try work(inputs) }
+            if case .success(let outputs) = result, !outputs.isEmpty { WebImageDrop.discardOriginals(of: inputs) }
             DispatchQueue.main.async {
                 ProgressHUD.shared.end(job)
                 switch result {

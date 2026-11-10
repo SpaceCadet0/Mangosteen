@@ -138,7 +138,7 @@ private struct WheelSettings: View {
             }
 
             Section {
-                Text(String(localized: "Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите колёсико мыши или трекпад над ним, задержите файл над центром или щёлкните по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад."))
+                Text(String(localized: "Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите над ним колёсико мыши или нажмите Tab, пока держите файл; без файла можно щёлкнуть по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад."))
                     .font(.callout)
                     .foregroundStyle(.secondary)
                 Button(String(localized: "Вернуть как было")) { settings.slicePlacements = [:] }
@@ -235,9 +235,9 @@ private struct AppearanceSettings: View {
                 Text(String(localized: "Колесо"))
             } footer: {
                 if #available(macOS 26.0, *) {
-                    Text(String(localized: "Стекло — системное Liquid Glass. С ним колесо можно сделать прозрачнее: то, что под ним, размывается."))
+                    Text(String(localized: "Без стекла то, что под колесом, размывается, а непрозрачность решает, сколько его видно. Со стеклом каждая долька — системное Liquid Glass: ниже 70% оно прозрачное, выше — матовое."))
                 } else {
-                    Text(String(localized: "Стекло размывает то, что под колесом. С ним колесо можно сделать прозрачнее."))
+                    Text(String(localized: "То, что под колесом, размывается; чем ниже непрозрачность, тем больше его видно."))
                 }
             }
 
@@ -279,15 +279,14 @@ private struct WheelPreview: NSViewRepresentable {
 
     final class Container: NSView {
         let wheel = WheelView(frame: NSRect(x: 0, y: 0, width: WheelView.diameter, height: WheelView.diameter))
-        var backdrop: NSView?
+        var backdrop: WheelBackdrop?
 
         /// SwiftUI sizes the view after it is made; keep the wheel and the glass centred in whatever it gets.
         override func layout() {
             super.layout()
             let side = WheelView.diameter
             wheel.frame = NSRect(x: bounds.midX - side / 2, y: bounds.midY - side / 2, width: side, height: side)
-            let ring = WheelView.outerRadius * 2
-            backdrop?.frame = NSRect(x: bounds.midX - ring / 2, y: bounds.midY - ring / 2, width: ring, height: ring)
+            backdrop?.frame = wheel.frame
         }
     }
 
@@ -303,16 +302,17 @@ private struct WheelPreview: NSViewRepresentable {
 
     func updateNSView(_ view: Container, context: Context) {
         view.wheel.backgroundOpacity = opacity
-        if glass, view.backdrop == nil {
-            let backdrop = WheelView.makeBackdrop(in: view.bounds)
+        // As on screen: a blur without the glass effect, shaped glass with it.
+        if view.backdrop == nil || view.backdrop?.isGlass != glass {
+            view.backdrop?.removeFromSuperview()
+            let backdrop = WheelBackdrop(frame: view.wheel.frame, glass: glass)
             view.addSubview(backdrop, positioned: .below, relativeTo: view.wheel)
             view.backdrop = backdrop
-        } else if !glass, let backdrop = view.backdrop {
-            backdrop.removeFromSuperview()
-            view.backdrop = nil
         }
         view.needsLayout = true
-        view.wheel.hasBackdrop = view.backdrop != nil
+        view.wheel.hasBackdrop = true
+        view.wheel.glassBehind = view.backdrop?.isGlass ?? false
+        view.backdrop?.update(segments: view.wheel.items.count, opacity: opacity)
         // The accent is read while drawing.
         view.wheel.needsDisplay = true
     }

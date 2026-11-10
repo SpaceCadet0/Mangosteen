@@ -25,6 +25,13 @@ struct WebImageDrop: Equatable {
 
     static let placeholderFolder = FileManager.default.temporaryDirectory.appendingPathComponent("Mangosteen web drop")
 
+    /// The format to offer a "keep as it is" slice in, when the wheel is for browser pictures only: conversion
+    /// targets never include the source format, yet saving the picture unchanged is often all that is wanted.
+    static func keptFormat(of urls: [URL]) -> FileFormat? {
+        guard !urls.isEmpty, urls.allSatisfy(isPlaceholder) else { return nil }
+        return urls.first.flatMap(FileFormat.detect)
+    }
+
     static func isPlaceholder(_ url: URL) -> Bool {
         // Paths, not URLs: a folder URL may or may not end in "/".
         url.deletingLastPathComponent().standardizedFileURL.path == placeholderFolder.standardizedFileURL.path
@@ -99,6 +106,27 @@ struct WebImageDrop: Equatable {
         } catch {
             finish(.failure(error))
         }
+    }
+
+    // MARK: Keeping only the result
+
+    private static let lock = NSLock()
+    private static var savedOriginals: Set<String> = []
+
+    /// Remembers a picture saved from a browser, so it can go to the Trash once a slice has made a file from it.
+    static func rememberOriginal(_ url: URL) {
+        lock.withLock { _ = savedOriginals.insert(url.standardizedFileURL.path) }
+    }
+
+    /// Moves the browser originals among `inputs` to the Trash: they were saved only so a slice could work on them,
+    /// and the result is what was asked for. Other files are never touched. Returns the originals moved.
+    @discardableResult
+    static func discardOriginals(of inputs: [URL],
+                                 remove: (URL) throws -> Void = { try FileManager.default.trashItem(at: $0, resultingItemURL: nil) }) -> [URL] {
+        let originals = lock.withLock {
+            inputs.filter { savedOriginals.remove($0.standardizedFileURL.path) != nil }
+        }
+        return originals.filter { (try? remove($0)) != nil }
     }
 
     static var downloads: URL {

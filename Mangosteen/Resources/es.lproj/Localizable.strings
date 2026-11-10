@@ -57,6 +57,7 @@
 "Аудио" = "Audio";
 "Без изменений" = "Sin cambios";
 "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках." = "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes.";
+"Без стекла то, что под колесом, размывается, а непрозрачность решает, сколько его видно. Со стеклом каждая долька — системное Liquid Glass: ниже 70% оно прозрачное, выше — матовое." = "Sin cristal, lo que hay bajo la rueda se desenfoca y la opacidad decide cuánto se ve. Con cristal, cada sector es Liquid Glass del sistema: transparente por debajo del 70 %, esmerilado por encima.";
 "Бирюзовый" = "Turquesa";
 "Браузер не отдал картинку. Сохраните её на диск и перетащите файл." = "El navegador no entregó la imagen. Guárdala en el disco y arrastra el archivo.";
 "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется." = "Suelta el archivo en un segmento. El resultado aparece junto al archivo original; el original nunca se modifica.";
@@ -131,7 +132,7 @@
 "Другая сторона колеса" = "Otra cara de la rueda";
 "Другой цвет" = "Otro color";
 "Дублировать" = "Duplicar";
-"Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите колёсико мыши или трекпад над ним, задержите файл над центром или щёлкните по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад." = "Si una rueda tiene reverso, en su centro se ve «↻ N más». Para darle la vuelta, desplaza la rueda del ratón o el trackpad sobre ella, mantén el archivo sobre el centro o haz clic en el centro. La cara de cada sector vale para todos los archivos: PNG, por ejemplo, está en la misma cara para fotos y para PDF. En el anverso caben hasta 10 sectores; el resto pasa al reverso.";
+"Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите над ним колёсико мыши или нажмите Tab, пока держите файл; без файла можно щёлкнуть по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад." = "Si una rueda tiene reverso, en su centro se ve «↻ N más». Para darle la vuelta, desplaza la rueda del ratón sobre ella o pulsa Tab mientras sostienes el archivo; sin archivo, haz clic en el centro. La cara de cada sector vale para todos los archivos: PNG, por ejemplo, está en la misma cara para fotos y para PDF. En el anverso caben hasta 10 sectores; el resto pasa al reverso.";
 "Задать координаты" = "Definir coordenadas";
 "Задач: %lld" = "Tareas: %lld";
 "Закрыть" = "Cerrar";
@@ -417,6 +418,7 @@
 "Создать видео" = "Crear vídeo";
 "Создать коллаж" = "Crear collage";
 "Сохранение кадров" = "Guardando fotogramas";
+"Сохранение картинки" = "Guardar la imagen";
 "Сохранить" = "Guardar";
 "Сохранить PDF" = "Guardar PDF";
 "Сохранить кадр" = "Guardar fotograma";
@@ -454,6 +456,7 @@
 "Тени" = "Sombras";
 "Тень" = "Sombra";
 "Терминал" = "Terminal";
+"То, что под колесом, размывается; чем ниже непрозрачность, тем больше его видно." = "Lo que hay bajo la rueda se desenfoca; cuanto menor es la opacidad, más se ve.";
 "Толстая" = "Gruesa";
 "Только левый" = "Solo izquierdo";
 "Только правый" = "Solo derecho";

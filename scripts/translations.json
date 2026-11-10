@@ -63,6 +63,10 @@
   "en": "%@ (pages)",
   "es": "%@ (páginas)"
  },
+ "%@ (субтитры)": {
+  "en": "%@ (subtitles)",
+  "es": "%@ (subtítulos)"
+ },
  "%@ (текст)": {
   "en": "%@ (text)",
   "es": "%@ (texto)"
@@ -151,6 +155,10 @@
   "en": "HEVC (H.265) — smaller file, slower to compress",
   "es": "HEVC (H.265) — archivo más pequeño, compresión más lenta"
  },
+ "Mangosteen %@ — самая новая версия.": {
+  "en": "Mangosteen %@ is the latest version.",
+  "es": "Mangosteen %@ es la versión más reciente."
+ },
  "Mangosteen на GitHub": {
   "en": "Mangosteen on GitHub",
   "es": "Mangosteen en GitHub"
@@ -170,6 +178,10 @@
  "«%@» защищён паролем.": {
   "en": "“%@” is password protected.",
   "es": "«%@» está protegido con contraseña."
+ },
+ "«%@» не читается как JSON.": {
+  "en": "“%@” cannot be read as JSON.",
+  "es": "«%@» no se puede leer como JSON."
  },
  "Авто": {
   "en": "Auto",
@@ -191,9 +203,25 @@
   "en": "Landscape 16:9",
   "es": "Horizontal 16:9"
  },
+ "Аппаратное кодирование": {
+  "en": "Hardware encoding",
+  "es": "Codificación por hardware"
+ },
+ "Архив «%@» пуст.": {
+  "en": "The archive “%@” is empty.",
+  "es": "El archivo comprimido «%@» está vacío."
+ },
  "Архивация": {
   "en": "Archiving",
   "es": "Archivando"
+ },
+ "Архивы": {
+  "en": "Archives",
+  "es": "Archivos comprimidos"
+ },
+ "Аудио": {
+  "en": "Audio",
+  "es": "Audio"
  },
  "Без изменений": {
   "en": "Unchanged",
@@ -202,6 +230,18 @@
  "Без перетаскивания: значок долек в строке меню → выберите колесо → укажите файлы и кликните по сегменту. Клавиши меняются в настройках.": {
   "en": "Without dragging: click the segments icon in the menu bar → choose a wheel → pick files and click a segment. Keys can be changed in Settings.",
   "es": "Sin arrastrar: haz clic en el icono de gajos de la barra de menús → elige una rueda → selecciona archivos y haz clic en un segmento. Las teclas se cambian en Ajustes."
+ },
+ "Без стекла то, что под колесом, размывается, а непрозрачность решает, сколько его видно. Со стеклом каждая долька — системное Liquid Glass: ниже 70% оно прозрачное, выше — матовое.": {
+  "en": "Without glass, what lies under the wheel is blurred, and the opacity decides how much of it shows. With glass, every segment is the system's Liquid Glass: clear below 70%, frosted above.",
+  "es": "Sin cristal, lo que hay bajo la rueda se desenfoca y la opacidad decide cuánto se ve. Con cristal, cada sector es Liquid Glass del sistema: transparente por debajo del 70 %, esmerilado por encima."
+ },
+ "Бирюзовый": {
+  "en": "Teal",
+  "es": "Turquesa"
+ },
+ "Браузер не отдал картинку. Сохраните её на диск и перетащите файл.": {
+  "en": "The browser did not hand over the picture. Save it to disk and drag the file.",
+  "es": "El navegador no entregó la imagen. Guárdala en el disco y arrastra el archivo."
  },
  "Бросьте файл на нужный сегмент. Результат появится рядом с оригиналом файла, сам оригинал никогда не меняется.": {
   "en": "Drop the file on a segment. The result appears next to the original file; the original itself is never changed.",
@@ -219,9 +259,17 @@
   "en": "Images inside PDFs will be re-encoded as screen-resolution JPEG.",
   "es": "Las imágenes de los PDF se recomprimirán en JPEG a resolución de pantalla."
  },
+ "В «%@» данные не в виде таблицы. Нужен массив записей, например [{\"имя\": \"Чай\", \"цена\": 1.5}].": {
+  "en": "The data in “%@” is not a table. It needs to be an array of records, such as [{\"name\": \"Tea\", \"price\": 1.5}].",
+  "es": "Los datos de «%@» no son una tabla. Hace falta una lista de registros, por ejemplo [{\"nombre\": \"Té\", \"precio\": 1.5}]."
+ },
  "В «%@» не найден текст.": {
   "en": "No text found in “%@”.",
   "es": "No se encontró texto en «%@»."
+ },
+ "В «%@» не нашлось файлов, которые можно распаковать. Образы дисков только в формате UDF, например установочные образы Windows, не поддерживаются.": {
+  "en": "“%@” has no files that can be extracted. Disc images in UDF format only, such as Windows installation images, are not supported.",
+  "es": "«%@» no tiene archivos que se puedan extraer. Las imágenes de disco solo en formato UDF, como las de instalación de Windows, no son compatibles."
  },
  "В «%@» нет видео.": {
   "en": "“%@” has no video.",
@@ -231,6 +279,10 @@
   "en": "“%@” has no audio track.",
   "es": "«%@» no tiene pista de audio."
  },
+ "В «%@» нет субтитров.": {
+  "en": "“%@” has no subtitles.",
+  "es": "«%@» no tiene subtítulos."
+ },
  "В архив": {
   "en": "Archive",
   "es": "Archivar"
@@ -238,6 +290,10 @@
  "Введите координаты в градусах, например 55.7558 и 37.6173": {
   "en": "Enter coordinates in degrees, e.g. 55.7558 and 37.6173",
   "es": "Introduce las coordenadas en grados, p. ej. 55.7558 y 37.6173"
+ },
+ "Вернуть как было": {
+  "en": "Restore Defaults",
+  "es": "Restablecer"
  },
  "Версия %@": {
   "en": "Version %@",
@@ -254,6 +310,10 @@
  "Весь файл": {
   "en": "Whole file",
   "es": "Archivo completo"
+ },
+ "Видео": {
+  "en": "Video",
+  "es": "Vídeo"
  },
  "Видео MP4 той же длительности, что и запись.": {
   "en": "An MP4 video as long as the recording.",
@@ -383,6 +443,10 @@
   "en": "Gradient",
   "es": "Degradado"
  },
+ "Графит": {
+  "en": "Graphite",
+  "es": "Grafito"
+ },
  "Громкость": {
   "en": "Loudness",
   "es": "Volumen"
@@ -394,6 +458,10 @@
  "Дата съёмки": {
   "en": "Date taken",
   "es": "Fecha de captura"
+ },
+ "Две стороны колеса": {
+  "en": "Two sides of the wheel",
+  "es": "Las dos caras de la rueda"
  },
  "Двойной клик по ползунку сбрасывает его, повторный — возвращает изменённое значение.": {
   "en": "Double-click a slider to reset it; double-click again to bring back your change.",
@@ -419,6 +487,14 @@
   "en": "Longer side",
   "es": "Lado mayor"
  },
+ "Для видео, которое перекодируется в MP4, MOV или MKV. H.264 открывается везде; HEVC даёт файл меньше; AV1 — самый маленький, но кодируется дольше, а MOV с ним сохраняется в H.264. Аппаратное кодирование в разы быстрее, файлы чуть больше; для AV1 его нет. Видео, которое можно скопировать без перекодирования, копируется как есть. У «Сжать» свои настройки.": {
+  "en": "For video re-encoded to MP4, MOV or MKV. H.264 plays everywhere; HEVC makes smaller files; AV1 the smallest but takes longer, and MOV is saved as H.264 with it. Hardware encoding is several times faster with slightly larger files; there is none for AV1. Video that can be copied without re-encoding is copied as it is. Compress has its own settings.",
+  "es": "Para el vídeo que se recodifica a MP4, MOV o MKV. H.264 se reproduce en todas partes; HEVC da archivos más pequeños; AV1, los más pequeños, pero tarda más, y con él MOV se guarda en H.264. La codificación por hardware es varias veces más rápida, con archivos algo mayores; no existe para AV1. El vídeo que puede copiarse sin recodificar se copia tal cual. Comprimir tiene sus propios ajustes."
+ },
+ "Для любых файлов": {
+  "en": "For any files",
+  "es": "Para cualquier archivo"
+ },
  "Добавить кадр": {
   "en": "Add frame",
   "es": "Añadir fotograma"
@@ -431,9 +507,21 @@
   "en": "Documents: %lld",
   "es": "Documentos: %lld"
  },
+ "Документы": {
+  "en": "Documents",
+  "es": "Documentos"
+ },
  "Долгота (−180…180)": {
   "en": "Longitude (−180…180)",
   "es": "Longitud (−180…180)"
+ },
+ "Доступна версия %@": {
+  "en": "Version %@ is available",
+  "es": "La versión %@ está disponible"
+ },
+ "Другая сторона колеса": {
+  "en": "Other side of the wheel",
+  "es": "Otra cara de la rueda"
  },
  "Другой цвет": {
   "en": "Other colour",
@@ -442,6 +530,10 @@
  "Дублировать": {
   "en": "Duplicate",
   "es": "Duplicar"
+ },
+ "Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите над ним колёсико мыши или нажмите Tab, пока держите файл; без файла можно щёлкнуть по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад.": {
+  "en": "When a wheel has a back, its centre shows “↻ N more”. To turn the wheel over, scroll the mouse wheel over it or press Tab while holding the file; without a file, click the centre. A slice's side applies to all files: PNG, for one, sits on the same side for photos and for PDF. The face holds up to 10 slices; the rest go to the back.",
+  "es": "Si una rueda tiene reverso, en su centro se ve «↻ N más». Para darle la vuelta, desplaza la rueda del ratón sobre ella o pulsa Tab mientras sostienes el archivo; sin archivo, haz clic en el centro. La cara de cada sector vale para todos los archivos: PNG, por ejemplo, está en la misma cara para fotos y para PDF. En el anverso caben hasta 10 sectores; el resto pasa al reverso."
  },
  "Задать координаты": {
   "en": "Set coordinates",
@@ -494,6 +586,10 @@
  "Здесь уже есть пик — он выделен.": {
   "en": "There is already a bleep here — it is selected.",
   "es": "Aquí ya hay un pitido; está seleccionado."
+ },
+ "Зелёный": {
+  "en": "Green",
+  "es": "Verde"
  },
  "Зерно": {
   "en": "Grain",
@@ -623,6 +719,10 @@
   "en": "Picture",
   "es": "Imagen fija"
  },
+ "Картинка из браузера": {
+  "en": "Picture from browser",
+  "es": "Imagen del navegador"
+ },
  "Качество": {
   "en": "Quality",
   "es": "Calidad"
@@ -635,9 +735,21 @@
   "en": "Square",
   "es": "Cuadrado"
  },
+ "Клавиши": {
+  "en": "Keys",
+  "es": "Teclas"
+ },
  "Клик — выбрать, ⌘-клик — добавить к выбору, перетаскивание — порядок, ⌫ — удалить.": {
   "en": "Click — select, ⌘-click — add to selection, drag — reorder, ⌫ — delete.",
   "es": "Clic: seleccionar; ⌘-clic: añadir a la selección; arrastrar: reordenar; ⌫: eliminar."
+ },
+ "Кодек": {
+  "en": "Codec",
+  "es": "Códec"
+ },
+ "Колесо": {
+  "en": "Wheel",
+  "es": "Rueda"
  },
  "Коллаж": {
   "en": "Collage",
@@ -699,6 +811,10 @@
   "en": "Copy",
   "es": "Copiar"
  },
+ "Круг": {
+  "en": "Circle",
+  "es": "Círculo"
+ },
  "Куда переместить: %@": {
   "en": "Move %@ to:",
   "es": "Mover %@ a:"
@@ -723,6 +839,10 @@
   "en": "No faces found",
   "es": "No se encontraron caras"
  },
+ "Лицевая": {
+  "en": "Front",
+  "es": "Anverso"
+ },
  "Лупа": {
   "en": "Magnifier",
   "es": "Lupa"
@@ -738,6 +858,10 @@
  "Максимальный пик": {
   "en": "Maximum peak",
   "es": "Pico máximo"
+ },
+ "Мангустин": {
+  "en": "Mangosteen",
+  "es": "Mangostán"
  },
  "Маркер": {
   "en": "Highlighter",
@@ -863,6 +987,10 @@
   "en": "Could not render the frame.",
   "es": "No se pudo generar el fotograma."
  },
+ "Не удалось проверить обновления": {
+  "en": "Couldn't check for updates",
+  "es": "No se pudieron buscar actualizaciones"
+ },
  "Не удалось прочитать «%@».": {
   "en": "Could not read “%@”.",
   "es": "No se pudo leer «%@»."
@@ -874,6 +1002,14 @@
  "Не удалось прочитать файл": {
   "en": "Could not read the file",
   "es": "No se pudo leer el archivo"
+ },
+ "Не удалось распознать текст в «%@» за минуту, распознавание остановлено.": {
+  "en": "Couldn't recognise text in “%@” within a minute, so recognition was stopped.",
+  "es": "No se pudo reconocer el texto de «%@» en un minuto; el reconocimiento se detuvo."
+ },
+ "Не удалось распознать текст за минуту, распознавание остановлено.": {
+  "en": "Couldn't recognise text within a minute, so recognition was stopped.",
+  "es": "No se pudo reconocer el texto en un minuto; el reconocimiento se detuvo."
  },
  "Не удалось сохранить PDF.": {
   "en": "Could not save the PDF.",
@@ -890,6 +1026,10 @@
  "Неизвестный формат файла «%@».": {
   "en": "Unknown file format: “%@”.",
   "es": "Formato de archivo desconocido: «%@»."
+ },
+ "Непрозрачность": {
+  "en": "Opacity",
+  "es": "Opacidad"
  },
  "Нет": {
   "en": "None",
@@ -939,6 +1079,10 @@
   "en": "About Mangosteen…",
   "es": "Acerca de Mangosteen…"
  },
+ "Обратная": {
+  "en": "Back",
+  "es": "Reverso"
+ },
  "Обрезать": {
   "en": "Trim",
   "es": "Recortar"
@@ -946,6 +1090,10 @@
  "Обрезать по объекту": {
   "en": "Crop to subject",
   "es": "Recortar al objeto"
+ },
+ "Обрезать фото до квадрата по центру и сделать круглым": {
+  "en": "Crop the photo to a centred square and make it round",
+  "es": "Recortar la foto a un cuadrado centrado y hacerla redonda"
  },
  "Обрезать.изображение": {
   "en": "Crop",
@@ -979,11 +1127,19 @@
   "en": "Description",
   "es": "Descripción"
  },
+ "Оранжевый": {
+  "en": "Orange",
+  "es": "Naranja"
+ },
  "Оригинал": {
   "en": "Original",
   "es": "Original"
  },
  "Основное": {
+  "en": "General",
+  "es": "General"
+ },
+ "Основные": {
   "en": "General",
   "es": "General"
  },
@@ -1034,6 +1190,10 @@
  "Оттенок": {
   "en": "Tint",
   "es": "Matiz"
+ },
+ "Оформление": {
+  "en": "Appearance",
+  "es": "Apariencia"
  },
  "Оцениваю размер…": {
   "en": "Estimating size…",
@@ -1115,6 +1275,14 @@
   "en": "Podcast −16",
   "es": "Pódcast −16"
  },
+ "Подсветка дольки, строк меню и кнопок в окнах. Текст на нём становится белым или чёрным — каким лучше видно. Уже открытые окна примут цвет после повторного открытия.": {
+  "en": "Used for the lit slice, menu rows and buttons in windows. Text on it turns white or black, whichever reads better. Windows already open take the colour when opened again.",
+  "es": "Se usa en el sector resaltado, las filas del menú y los botones de las ventanas. El texto sobre él se vuelve blanco o negro, según se lea mejor. Las ventanas ya abiertas toman el color al volver a abrirlas."
+ },
+ "Позже": {
+  "en": "Later",
+  "es": "Más tarde"
+ },
  "Поиск по полям": {
   "en": "Search fields",
   "es": "Buscar campos"
@@ -1195,9 +1363,17 @@
   "en": "Check frame",
   "es": "Comprobar fotograma"
  },
+ "Проверить обновления…": {
+  "en": "Check for Updates…",
+  "es": "Buscar actualizaciones…"
+ },
  "Проверка": {
   "en": "Check",
   "es": "Prueba"
+ },
+ "Проверьте подключение к интернету и попробуйте ещё раз.": {
+  "en": "Check your internet connection and try again.",
+  "es": "Comprueba la conexión a internet e inténtalo de nuevo."
  },
  "Прозрачный": {
   "en": "Transparent",
@@ -1271,6 +1447,10 @@
   "en": "Blur",
   "es": "Desenfoque"
  },
+ "Разные файлы": {
+  "en": "Mixed files",
+  "es": "Archivos variados"
+ },
  "Разрез по курсору": {
   "en": "Cut at playhead",
   "es": "Cortar en el cursor"
@@ -1327,6 +1507,10 @@
   "en": "Result",
   "es": "Resultado"
  },
+ "Розовый": {
+  "en": "Pink",
+  "es": "Rosa"
+ },
  "Ряд": {
   "en": "Row",
   "es": "Fila"
@@ -1362,6 +1546,10 @@
  "Свободно": {
   "en": "Free",
   "es": "Libre"
+ },
+ "Свой цвет": {
+  "en": "Custom colour",
+  "es": "Color propio"
  },
  "Своя": {
   "en": "Custom",
@@ -1399,9 +1587,17 @@
   "en": "Compress",
   "es": "Comprimir"
  },
+ "Синий": {
+  "en": "Blue",
+  "es": "Azul"
+ },
  "Система": {
   "en": "System",
   "es": "Sistema"
+ },
+ "Скачать": {
+  "en": "Download",
+  "es": "Descargar"
  },
  "Склеить": {
   "en": "Join",
@@ -1422,6 +1618,10 @@
  "Скругление": {
   "en": "Corner radius",
   "es": "Redondeo"
+ },
+ "Скрыта": {
+  "en": "Hidden",
+  "es": "Oculto"
  },
  "Скрытие": {
   "en": "Redacting",
@@ -1474,6 +1674,10 @@
  "Сохранение кадров": {
   "en": "Saving frames",
   "es": "Guardando fotogramas"
+ },
+ "Сохранение картинки": {
+  "en": "Saving the picture",
+  "es": "Guardar la imagen"
  },
  "Сохранить": {
   "en": "Save",
@@ -1531,6 +1735,14 @@
   "en": "Target",
   "es": "Objetivo"
  },
+ "Стекло размывает то, что под колесом. С ним колесо можно сделать прозрачнее.": {
+  "en": "Glass blurs what lies under the wheel, so the wheel can be more transparent.",
+  "es": "El cristal desenfoca lo que hay bajo la rueda, así que la rueda puede ser más transparente."
+ },
+ "Стекло — системное Liquid Glass. С ним колесо можно сделать прозрачнее: то, что под ним, размывается.": {
+  "en": "Glass is the system's Liquid Glass. With it the wheel can be more transparent: what lies under it is blurred.",
+  "es": "El cristal es el Liquid Glass del sistema. Con él la rueda puede ser más transparente: lo que hay debajo se desenfoca."
+ },
  "Стерео": {
   "en": "Stereo",
   "es": "Estéreo"
@@ -1555,9 +1767,25 @@
   "en": "Streaming −14",
   "es": "Streaming −14"
  },
+ "Субтитры": {
+  "en": "Subtitles",
+  "es": "Subtítulos"
+ },
+ "Субтитры в «%@» — картинки (как на DVD и Blu-ray), их нельзя сохранить текстом.": {
+  "en": "The subtitles in “%@” are pictures (as on DVD and Blu-ray) and cannot be saved as text.",
+  "es": "Los subtítulos de «%@» son imágenes (como en DVD y Blu-ray) y no se pueden guardar como texto."
+ },
+ "Субтитры из видео": {
+  "en": "Subtitles from video",
+  "es": "Subtítulos del vídeo"
+ },
  "ТВ и радио −23": {
   "en": "TV and radio −23",
   "es": "TV y radio −23"
+ },
+ "Таблицы": {
+  "en": "Tables",
+  "es": "Tablas"
  },
  "Так будет выглядеть этот кадр. Кадр сбросится при перемотке.": {
   "en": "This is how the frame will look. It resets when you move the playhead.",
@@ -1599,6 +1827,10 @@
   "en": "Terminal",
   "es": "Terminal"
  },
+ "То, что под колесом, размывается; чем ниже непрозрачность, тем больше его видно.": {
+  "en": "What lies under the wheel is blurred; the lower the opacity, the more of it shows.",
+  "es": "Lo que hay bajo la rueda se desenfoca; cuanto menor es la opacidad, más se ve."
+ },
  "Толстая": {
   "en": "Thick",
   "es": "Gruesa"
@@ -1634,6 +1866,14 @@
  "Тяните по фото, чтобы добавить область. Метаданные в результате удаляются.": {
   "en": "Drag on the photo to add an area. Metadata is removed from the result.",
   "es": "Arrastra sobre la foto para añadir un área. Los metadatos se eliminan del resultado."
+ },
+ "У вас последняя версия": {
+  "en": "You're up to date",
+  "es": "Tienes la última versión"
+ },
+ "У вас установлена версия %@. Скачайте новую со страницы релиза и замените приложение в папке «Программы».": {
+  "en": "You have version %@. Download the new one from the release page and replace the app in Applications.",
+  "es": "Tienes la versión %@. Descarga la nueva desde la página de la versión y sustituye la app en Aplicaciones."
  },
  "Убрать ближайший": {
   "en": "Remove nearest",
@@ -1715,6 +1955,10 @@
   "en": "Filter",
   "es": "Filtro"
  },
+ "Фиолетовый": {
+  "en": "Purple",
+  "es": "Morado"
+ },
  "Фон": {
   "en": "Background",
   "es": "Fondo"
@@ -1731,6 +1975,10 @@
   "en": "Video format",
   "es": "Formato de vídeo"
  },
+ "Фото": {
+  "en": "Photos",
+  "es": "Fotos"
+ },
  "Хром": {
   "en": "Chrome",
   "es": "Cromo"
@@ -1738,6 +1986,10 @@
  "Цвет": {
   "en": "Colour",
   "es": "Color"
+ },
+ "Цвет акцента": {
+  "en": "Accent colour",
+  "es": "Color de acento"
  },
  "Цвет волны": {
   "en": "Wave colour",
@@ -1783,6 +2035,10 @@
   "en": "This format can only be viewed frame by frame",
   "es": "Este formato solo puede verse fotograma a fotograma"
  },
+ "Эффект стекла": {
+  "en": "Glass effect",
+  "es": "Efecto cristal"
+ },
  "Эффекты": {
   "en": "Effects",
   "es": "Efectos"
@@ -1814,6 +2070,10 @@
  "до %lld px": {
   "en": "up to %lld px",
   "es": "hasta %lld px"
+ },
+ "ещё %lld": {
+  "en": "%lld more",
+  "es": "%lld más"
  },
  "запикано": {
   "en": "bleeped",
@@ -1862,160 +2122,5 @@
  "холст": {
   "en": "canvas",
   "es": "lienzo"
- },
- "Круг": {
-  "en": "Circle",
-  "es": "Círculo"
- },
- "Обрезать фото до квадрата по центру и сделать круглым": {
-  "en": "Crop the photo to a centred square and make it round",
-  "es": "Recortar la foto a un cuadrado centrado y hacerla redonda"
- },
- "Не удалось распознать текст в «%@» за минуту, распознавание остановлено.": {
-  "en": "Couldn't recognise text in “%@” within a minute, so recognition was stopped.",
-  "es": "No se pudo reconocer el texto de «%@» en un minuto; el reconocimiento se detuvo."
- },
- "Не удалось распознать текст за минуту, распознавание остановлено.": {
-  "en": "Couldn't recognise text within a minute, so recognition was stopped.",
-  "es": "No se pudo reconocer el texto en un minuto; el reconocimiento se detuvo."
- },
- "Mangosteen %@ — самая новая версия.": {
-  "en": "Mangosteen %@ is the latest version.",
-  "es": "Mangosteen %@ es la versión más reciente."
- },
- "Доступна версия %@": {
-  "en": "Version %@ is available",
-  "es": "La versión %@ está disponible"
- },
- "Не удалось проверить обновления": {
-  "en": "Couldn't check for updates",
-  "es": "No se pudieron buscar actualizaciones"
- },
- "Позже": {
-  "en": "Later",
-  "es": "Más tarde"
- },
- "Проверить обновления…": {
-  "en": "Check for Updates…",
-  "es": "Buscar actualizaciones…"
- },
- "Проверьте подключение к интернету и попробуйте ещё раз.": {
-  "en": "Check your internet connection and try again.",
-  "es": "Comprueba la conexión a internet e inténtalo de nuevo."
- },
- "Скачать": {
-  "en": "Download",
-  "es": "Descargar"
- },
- "У вас последняя версия": {
-  "en": "You're up to date",
-  "es": "Tienes la última versión"
- },
- "У вас установлена версия %@. Скачайте новую со страницы релиза и замените приложение в папке «Программы».": {
-  "en": "You have version %@. Download the new one from the release page and replace the app in Applications.",
-  "es": "Tienes la versión %@. Descarga la nueva desde la página de la versión y sustituye la app en Aplicaciones."
- },
- "В «%@» не нашлось файлов, которые можно распаковать. Образы дисков только в формате UDF, например установочные образы Windows, не поддерживаются.": {
-  "en": "“%@” has no files that can be extracted. Disc images in UDF format only, such as Windows installation images, are not supported.",
-  "es": "«%@» no tiene archivos que se puedan extraer. Las imágenes de disco solo en formato UDF, como las de instalación de Windows, no son compatibles."
- },
- "Архив «%@» пуст.": {
-  "en": "The archive “%@” is empty.",
-  "es": "El archivo comprimido «%@» está vacío."
- },
- "Аппаратное кодирование": {
-  "en": "Hardware encoding",
-  "es": "Codificación por hardware"
- },
- "Видео": {
-  "en": "Video",
-  "es": "Vídeo"
- },
- "Кодек": {
-  "en": "Codec",
-  "es": "Códec"
- },
- "%@ (субтитры)": {
-  "en": "%@ (subtitles)",
-  "es": "%@ (subtítulos)"
- },
- "«%@» не читается как JSON.": {
-  "en": "“%@” cannot be read as JSON.",
-  "es": "«%@» no se puede leer como JSON."
- },
- "В «%@» данные не в виде таблицы. Нужен массив записей, например [{\"имя\": \"Чай\", \"цена\": 1.5}].": {
-  "en": "The data in “%@” is not a table. It needs to be an array of records, such as [{\"name\": \"Tea\", \"price\": 1.5}].",
-  "es": "Los datos de «%@» no son una tabla. Hace falta una lista de registros, por ejemplo [{\"nombre\": \"Té\", \"precio\": 1.5}]."
- },
- "В «%@» нет субтитров.": {
-  "en": "“%@” has no subtitles.",
-  "es": "«%@» no tiene subtítulos."
- },
- "Субтитры": {
-  "en": "Subtitles",
-  "es": "Subtítulos"
- },
- "Субтитры в «%@» — картинки (как на DVD и Blu-ray), их нельзя сохранить текстом.": {
-  "en": "The subtitles in “%@” are pictures (as on DVD and Blu-ray) and cannot be saved as text.",
-  "es": "Los subtítulos de «%@» son imágenes (como en DVD y Blu-ray) y no se pueden guardar como texto."
- },
- "Субтитры из видео": {
-  "en": "Subtitles from video",
-  "es": "Subtítulos del vídeo"
- },
- "Архивы": {"en": "Archives", "es": "Archivos comprimidos"},
- "Аудио": {"en": "Audio", "es": "Audio"},
- "Бирюзовый": {"en": "Teal", "es": "Turquesa"},
- "Вернуть как было": {"en": "Restore Defaults", "es": "Restablecer"},
- "Графит": {"en": "Graphite", "es": "Grafito"},
- "Две стороны колеса": {"en": "Two sides of the wheel", "es": "Las dos caras de la rueda"},
- "Для любых файлов": {"en": "For any files", "es": "Para cualquier archivo"},
- "Документы": {"en": "Documents", "es": "Documentos"},
- "Другая сторона колеса": {"en": "Other side of the wheel", "es": "Otra cara de la rueda"},
- "Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите колёсико мыши или трекпад над ним, задержите файл над центром или щёлкните по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад.": {
-  "en": "When a wheel has a back, its centre shows “↻ N more”. To turn the wheel over, scroll the mouse wheel or trackpad over it, hold the file over the centre, or click the centre. A slice's side applies to all files: PNG, for one, sits on the same side for photos and for PDF. The face holds up to 10 slices; the rest go to the back.",
-  "es": "Si una rueda tiene reverso, en su centro se ve «↻ N más». Para darle la vuelta, desplaza la rueda del ratón o el trackpad sobre ella, mantén el archivo sobre el centro o haz clic en el centro. La cara de cada sector vale para todos los archivos: PNG, por ejemplo, está en la misma cara para fotos y para PDF. En el anverso caben hasta 10 sectores; el resto pasa al reverso."
- },
- "Зелёный": {"en": "Green", "es": "Verde"},
- "Клавиши": {"en": "Keys", "es": "Teclas"},
- "Колесо": {"en": "Wheel", "es": "Rueda"},
- "Лицевая": {"en": "Front", "es": "Anverso"},
- "Мангустин": {"en": "Mangosteen", "es": "Mangostán"},
- "Непрозрачность": {"en": "Opacity", "es": "Opacidad"},
- "Обратная": {"en": "Back", "es": "Reverso"},
- "Оранжевый": {"en": "Orange", "es": "Naranja"},
- "Основные": {"en": "General", "es": "General"},
- "Оформление": {"en": "Appearance", "es": "Apariencia"},
- "Подсветка дольки, строк меню и кнопок в окнах. Текст на нём становится белым или чёрным — каким лучше видно. Уже открытые окна примут цвет после повторного открытия.": {
-  "en": "Used for the lit slice, menu rows and buttons in windows. Text on it turns white or black, whichever reads better. Windows already open take the colour when opened again.",
-  "es": "Se usa en el sector resaltado, las filas del menú y los botones de las ventanas. El texto sobre él se vuelve blanco o negro, según se lea mejor. Las ventanas ya abiertas toman el color al volver a abrirlas."
- },
- "Разные файлы": {"en": "Mixed files", "es": "Archivos variados"},
- "Розовый": {"en": "Pink", "es": "Rosa"},
- "Свой цвет": {"en": "Custom colour", "es": "Color propio"},
- "Синий": {"en": "Blue", "es": "Azul"},
- "Скрыта": {"en": "Hidden", "es": "Oculto"},
- "Стекло размывает то, что под колесом. С ним колесо можно сделать прозрачнее.": {
-  "en": "Glass blurs what lies under the wheel, so the wheel can be more transparent.",
-  "es": "El cristal desenfoca lo que hay bajo la rueda, así que la rueda puede ser más transparente."
- },
- "Стекло — системное Liquid Glass. С ним колесо можно сделать прозрачнее: то, что под ним, размывается.": {
-  "en": "Glass is the system's Liquid Glass. With it the wheel can be more transparent: what lies under it is blurred.",
-  "es": "El cristal es el Liquid Glass del sistema. Con él la rueda puede ser más transparente: lo que hay debajo se desenfoca."
- },
- "Таблицы": {"en": "Tables", "es": "Tablas"},
- "Фиолетовый": {"en": "Purple", "es": "Morado"},
- "Фото": {"en": "Photos", "es": "Fotos"},
- "Цвет акцента": {"en": "Accent colour", "es": "Color de acento"},
- "Эффект стекла": {"en": "Glass effect", "es": "Efecto cristal"},
- "ещё %lld": {"en": "%lld more", "es": "%lld más"},
- "Браузер не отдал картинку. Сохраните её на диск и перетащите файл.": {
-  "en": "The browser did not hand over the picture. Save it to disk and drag the file.",
-  "es": "El navegador no entregó la imagen. Guárdala en el disco y arrastra el archivo."
- },
- "Картинка из браузера": {"en": "Picture from browser", "es": "Imagen del navegador"},
- "Для видео, которое перекодируется в MP4, MOV или MKV. H.264 открывается везде; HEVC даёт файл меньше; AV1 — самый маленький, но кодируется дольше, а MOV с ним сохраняется в H.264. Аппаратное кодирование в разы быстрее, файлы чуть больше; для AV1 его нет. Видео, которое можно скопировать без перекодирования, копируется как есть. У «Сжать» свои настройки.": {
-  "en": "For video re-encoded to MP4, MOV or MKV. H.264 plays everywhere; HEVC makes smaller files; AV1 the smallest but takes longer, and MOV is saved as H.264 with it. Hardware encoding is several times faster with slightly larger files; there is none for AV1. Video that can be copied without re-encoding is copied as it is. Compress has its own settings.",
-  "es": "Para el vídeo que se recodifica a MP4, MOV o MKV. H.264 se reproduce en todas partes; HEVC da archivos más pequeños; AV1, los más pequeños, pero tarda más, y con él MOV se guarda en H.264. La codificación por hardware es varias veces más rápida, con archivos algo mayores; no existe para AV1. El vídeo que puede copiarse sin recodificar se copia tal cual. Comprimir tiene sus propios ajustes."
  }
 }

@@ -118,6 +118,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             if wheelParts.last == "back" { wheel.debugFlip() }
             wheel.debugHighlight(1)
             print("snapshot: accessibility \(wheel.debugAccessibilitySummary)")
+            let environment = ProcessInfo.processInfo.environment
+            if let seconds = Double(environment["MANGOSTEEN_BENCH"] ?? "") {
+                wheel.debugBench(seconds: seconds, sweep: environment["MANGOSTEEN_BENCH_IDLE"] == nil)
+                return
+            }
             finishSnapshot(window: wheel.debugWindow)
             return
         }
