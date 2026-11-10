@@ -89,7 +89,7 @@ enum MediaEffects {
         let arguments = inputs.flatMap { ["-i", $0.path] } + [
             "-filter_complex", graph.joined(separator: ";"),
             "-map", "[v]", "-map", "[a]",
-            "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
+        ] + VideoEncoding.current.arguments(for: .mp4) + [
             "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart",
         ]
         let total = infos.compactMap(\.duration).reduce(0, +)

@@ -276,7 +276,7 @@ enum AudioTools {
         let info = try MediaConverter.probe(input)
         guard info.hasAudio, let duration = info.duration else { throw MediaError.noAudio(input) }
         let arguments = visualizerArguments(input, settings: settings, duration: duration) + [
-            "-map", "0:a:0", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
+            "-map", "0:a:0"] + VideoEncoding.current.arguments(for: .mp4) + [
             "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart",
         ]
         return try OutputNaming.writeAtomically(

@@ -53,6 +53,13 @@ segment and the result appears next to the original. No windows to open, no save
 The keys can be changed in Settings. Without dragging, the same wheels are in the menu bar menu: pick the files,
 then click a segment.
 
+A wheel can have a back side: its centre then shows “↻ N more”. Scroll over the wheel, hold the file over the centre
+or click the centre to turn it over. Settings → Wheels puts any segment on the front, on the back or out of sight;
+Settings → Appearance sets the accent colour, the wheel's opacity and a glass effect.
+
+A picture can also be dragged straight out of a web browser: it is saved to Downloads and the segment works on that
+file. Only the picture the browser hands over is used; links are not downloaded.
+
 ## Highlights
 
 - **Zero clicks.** The wheel shows only what makes sense for the files you are holding.
@@ -73,13 +80,14 @@ then click a segment.
 | PDF | to images, text or DOCX |
 | Video | MP4, MOV, MKV, WebM, AVI, WMV — into each other, GIF and MP3 · also reads FLV, MPEG, VOB, TS, M2TS, 3GP, OGV |
 | Audio | MP3, M4A, WAV, FLAC, OGG, Opus, AIFF, WMA · also reads APE, WavPack, AMR, AC3, DTS |
-| Subtitles | SRT ⇄ VTT |
-| Tables | CSV, TSV, XLSX — into each other; a workbook with several sheets becomes a folder of tables |
+| Subtitles | SRT, VTT, ASS/SSA — into each other and into text; Tools → Subtitles saves the text subtitle tracks of a video |
+| Tables | CSV, TSV, XLSX, JSON — into each other (CSV with commas, semicolons or tabs); a workbook with several sheets becomes a folder of tables |
 | Archives | ZIP, TAR, TAR.GZ — and folders into archives · also unpacks 7Z, RAR, ISO, TAR.XZ, TAR.BZ2 and single GZ files |
 | Documents | DOCX, ODT, RTF, RTFD, TXT, Markdown, HTML — into each other and into PDF / Soon |
 
 When the target container accepts the original streams, video is copied without re-encoding, so it is instant and
-lossless.
+lossless. Otherwise it is encoded as H.264, HEVC or AV1, as chosen in Settings, optionally on Apple's hardware
+encoders, which are several times faster.
 
 ## Tools
 

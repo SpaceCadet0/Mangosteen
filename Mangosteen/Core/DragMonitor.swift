@@ -64,8 +64,29 @@ final class DragMonitor {
         // The drag pasteboard is only rewritten when a real drag session starts.
         guard pasteboard.changeCount != baselineChangeCount else { return }
         let urls = Self.fileURLs(on: pasteboard)
-        if !urls.isEmpty { Self.log.info("Drag start: \(urls.count) files") }
-        beginDrag(urls: urls)
+        if !urls.isEmpty {
+            Self.log.info("Drag start: \(urls.count) files")
+            beginDrag(urls: urls)
+            return
+        }
+        // A picture dragged out of a browser has no file yet; the wheel is built for a placeholder of its format.
+        if let picture = WebImageDrop.detect(on: pasteboard) {
+            // Pasteboard types are not personal data; public, so `log show` reveals what a browser handed over.
+            Self.log.info("Drag start: browser picture as \(picture.format.rawValue, privacy: .public); types \(Self.typeList(pasteboard), privacy: .public)")
+            beginDrag(urls: [picture.placeholder])
+            return
+        }
+        if loggedChangeCount != pasteboard.changeCount {
+            loggedChangeCount = pasteboard.changeCount
+            Self.log.info("Drag without files or pictures; types \(Self.typeList(pasteboard), privacy: .public)")
+        }
+    }
+
+    /// The last drag whose pasteboard types were logged, so a drag of text logs once, not on every mouse move.
+    private var loggedChangeCount = -1
+
+    private static func typeList(_ pasteboard: NSPasteboard) -> String {
+        (pasteboard.types ?? []).map(\.rawValue).joined(separator: ", ")
     }
 
     /// Called directly by Mangosteen's own drag sources (the Float shelf), whose drags the event

@@ -25,9 +25,9 @@ enum FileFormat: String, CaseIterable, Identifiable {
     // Documents
     case docx, doc, odt, rtf, rtfd, txt, md, html
     // Subtitles
-    case srt, vtt
-    // Tables
-    case csv, tsv, xlsx
+    case srt, vtt, ass
+    // Tables (JSON as an array of objects)
+    case csv, tsv, xlsx, json
     // Archives (7z, rar, iso, tar.xz, tar.bz2 and a single gzipped file are read only)
     case zip, tar, tgz
     case sevenZip = "7z"
@@ -73,8 +73,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
         switch self {
         case .pdf: .pdf
         case .docx, .doc, .odt, .rtf, .rtfd, .txt, .md, .html: .document
-        case .srt, .vtt: .subtitle
-        case .csv, .tsv, .xlsx: .table
+        case .srt, .vtt, .ass: .subtitle
+        case .csv, .tsv, .xlsx, .json: .table
         case .zip, .tar, .tgz, .sevenZip, .rar, .iso, .txz, .tbz, .gz: .archive
         case .mp4, .mov, .mkv, .webm, .avi, .wmv, .m4v, .flv, .mpg, .ts, .m2ts, .vob, .ogv, .threeGP: .video
         case .mp3, .m4a, .wav, .flac, .ogg, .opus, .aiff, .wma, .aac, .ape, .wv, .amr, .ac3, .dts: .audio
@@ -112,6 +112,8 @@ enum FileFormat: String, CaseIterable, Identifiable {
         case .html: .html
         case .srt: UTType(filenameExtension: "srt") ?? .plainText
         case .vtt: UTType(filenameExtension: "vtt") ?? .plainText
+        case .ass: Self.byExtension("ass")
+        case .json: .json
         case .csv: .commaSeparatedText
         case .tsv: .tabSeparatedText
         case .xlsx: UTType("org.openxmlformats.spreadsheetml.sheet") ?? Self.byExtension("xlsx")
@@ -179,7 +181,7 @@ enum FileFormat: String, CaseIterable, Identifiable {
         "dib": .bmp,
         "markdown": .md, "mdown": .md, "text": .txt,
         "htm": .html, "xhtml": .html,
-        "webvtt": .vtt,
+        "webvtt": .vtt, "ssa": .ass,
         "tab": .tsv,
         "qt": .mov, "mpeg4": .mp4,
         "mpeg": .mpg, "mpe": .mpg, "m1v": .mpg, "m2v": .mpg, "mts": .m2ts, "3g2": .threeGP,

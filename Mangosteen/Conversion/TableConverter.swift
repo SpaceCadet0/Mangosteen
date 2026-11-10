@@ -7,6 +7,8 @@ enum TableConverter {
         let rows: [[String]]
         if source == .xlsx {
             rows = try XLSX.read(input).first { !$0.rows.isEmpty }?.rows ?? []
+        } else if source == .json {
+            rows = try JSONTable.rows(from: DocumentConverter.readText(input), source: input)
         } else {
             let text = try DocumentConverter.readText(input)
             rows = parse(text, separator: source == .csv ? detectedSeparator(in: text) : separator(for: source))
@@ -38,6 +40,8 @@ enum TableConverter {
     static func write(_ rows: [[String]], as target: FileFormat, sheetName: String, to output: URL) throws {
         if target == .xlsx {
             try XLSX.write(rows: rows, sheetName: sheetName).write(to: output)
+        } else if target == .json {
+            try JSONTable.json(from: rows).write(to: output, atomically: false, encoding: .utf8)
         } else {
             try serialize(rows, separator: separator(for: target)).write(to: output, atomically: false, encoding: .utf8)
         }

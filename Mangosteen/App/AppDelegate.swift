@@ -22,6 +22,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.applicationIconImage = MangosteenArt.appIcon()
+        _ = AppLanguage.atLaunch // fix the starting language before Settings can change it
         let services = FinderServices { [weak self] kind, urls in self?.wheel.show(kind: kind, urls: urls) }
         finderServices = services
         NSApp.servicesProvider = services
@@ -99,10 +100,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             save(MangosteenArt.menuBarIcon(size: 18), pixels: 36, name: "menubar@2x.png")
             exit(0)
         }
-        // "wheel.convert" / "wheel.tools" / "wheel.actions" show the wheel itself at the centre of the screen.
-        if itemID.hasPrefix("wheel."), let kind = WheelKind(rawValue: String(itemID.dropFirst("wheel.".count))) {
+        // "settings" opens Settings on the tab named by MANGOSTEEN_SETTINGS_TAB (general, wheels, appearance).
+        if itemID == "settings" {
+            if let tab = ProcessInfo.processInfo.environment["MANGOSTEEN_SETTINGS_TAB"] {
+                UserDefaults.standard.set(tab, forKey: "settingsTab")
+            }
+            showSettings()
+            finishSnapshot(window: settingsWindow)
+            return
+        }
+        // "wheel.convert" / "wheel.tools" / "wheel.actions" show the wheel itself at the centre of the screen;
+        // a ".back" suffix turns it over first.
+        let wheelParts = itemID.split(separator: ".").map(String.init)
+        if wheelParts.first == "wheel", wheelParts.count >= 2, let kind = WheelKind(rawValue: wheelParts[1]) {
             let center = NSScreen.main.map { NSPoint(x: $0.frame.midX, y: $0.frame.midY) } ?? .zero
             wheel.show(kind: kind, urls: inputs, at: center)
+            if wheelParts.last == "back" { wheel.debugFlip() }
             wheel.debugHighlight(1)
             print("snapshot: accessibility \(wheel.debugAccessibilitySummary)")
             finishSnapshot(window: wheel.debugWindow)

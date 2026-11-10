@@ -12,10 +12,24 @@ final class WheelView: NSView {
     /// The item and, for a drop, the files that were dropped.
     var onSelect: ((WheelItem, [URL]?) -> Void)?
     var onHoverChange: (() -> Void)?
+    /// Called after the wheel turned to its other side.
+    var onFlip: (() -> Void)?
 
+    /// Opacity of the wheel's background (Settings → Appearance).
+    var backgroundOpacity: CGFloat = 0.96 { didSet { needsDisplay = true } }
+    /// A glass or blur view lies behind the wheel; the drawn drop shadow would show through it.
+    var hasBackdrop = false { didSet { needsDisplay = true } }
+
+    /// The slices on the side that is showing.
     private(set) var items: [WheelItem] = []
+    private var sides: (front: [WheelItem], back: [WheelItem]) = ([], [])
+    private(set) var showingBack = false
+    var hasBack: Bool { !sides.back.isEmpty }
     private var kind: WheelKind = .convert
     private var fileCount = 0
+    /// Holding a dragged file over the centre turns the wheel once; it has to leave the centre to turn it again.
+    private var dwell: DispatchWorkItem?
+    private var dwellUsed = false
     private var highlighted: Int? {
         didSet {
             guard highlighted != oldValue else { return }
@@ -26,7 +40,8 @@ final class WheelView: NSView {
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        registerForDraggedTypes([.fileURL])
+        // Files, and pictures dragged out of a browser (file promises or picture data).
+        registerForDraggedTypes([.fileURL] + WebImageDrop.draggedTypes)
     }
 
     required init?(coder: NSCoder) {
@@ -37,13 +52,76 @@ final class WheelView: NSView {
     func debugHighlight(_ index: Int) { highlighted = index }
     #endif
 
-    func configure(kind: WheelKind, items: [WheelItem], fileCount: Int) {
+    func configure(kind: WheelKind, front: [WheelItem], back: [WheelItem] = [], fileCount: Int) {
         self.kind = kind
-        self.items = items
+        sides = (front, back)
+        showingBack = false
+        items = front
         self.fileCount = fileCount
+        cancelDwell()
+        dwellUsed = false
         highlighted = nil
         needsDisplay = true
         rebuildAccessibility()
+    }
+
+    /// Turns the wheel to its other side, if it has one.
+    func flip() {
+        guard hasBack else { return }
+        showingBack.toggle()
+        items = showingBack ? sides.back : sides.front
+        highlighted = nil
+        needsDisplay = true
+        rebuildAccessibility()
+        onFlip?()
+    }
+
+    /// Lights one slice, as the pointer would (the preview in Settings).
+    func showHighlight(_ index: Int?) { highlighted = index }
+
+    private func isInCenter(_ point: NSPoint) -> Bool {
+        hypot(point.x - ringCenter.x, point.y - ringCenter.y) < Self.innerRadius - 4
+    }
+
+    /// Starts the dwell timer while a drag rests over the centre; leaving the centre resets it.
+    private func trackDwell(at point: NSPoint) {
+        guard hasBack, isInCenter(point) else {
+            cancelDwell()
+            dwellUsed = false
+            return
+        }
+        guard dwell == nil, !dwellUsed else { return }
+        let work = DispatchWorkItem { [weak self] in
+            self?.dwell = nil
+            self?.dwellUsed = true
+            self?.flip()
+        }
+        dwell = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: work)
+    }
+
+    private func cancelDwell() {
+        dwell?.cancel()
+        dwell = nil
+    }
+
+    /// A glass view (macOS 26) or a blurred backdrop (earlier systems) the size of the ring, for behind the wheel.
+    static func makeBackdrop(in bounds: NSRect) -> NSView {
+        let frame = NSRect(x: bounds.midX - outerRadius, y: bounds.midY - outerRadius, width: outerRadius * 2, height: outerRadius * 2)
+        if #available(macOS 26.0, *) {
+            let glass = NSGlassEffectView(frame: frame)
+            glass.cornerRadius = outerRadius
+            return glass
+        }
+        let blur = NSVisualEffectView(frame: frame)
+        blur.material = .hudWindow
+        blur.blendingMode = .behindWindow
+        blur.state = .active
+        blur.maskImage = NSImage(size: frame.size, flipped: false) { rect in
+            NSBezierPath(ovalIn: rect).fill()
+            return true
+        }
+        return blur
     }
 
     // MARK: - Accessibility
@@ -72,6 +150,16 @@ final class WheelView: NSView {
                 self.onSelect?(self.items[index], nil)
             }
             return element
+        }
+        if hasBack {
+            // The centre turns the wheel; VoiceOver reaches it as a button after the slices.
+            let center = SegmentElement()
+            center.setAccessibilityRole(.button)
+            center.setAccessibilityLabel(String(localized: "Другая сторона колеса"))
+            center.setAccessibilityParent(self)
+            center.setAccessibilityFrameInParentSpace(circle(radius: Self.innerRadius).bounds)
+            center.press = { [weak self] in self?.flip() }
+            segmentElements.append(center)
         }
         NSAccessibility.post(element: self, notification: .layoutChanged)
     }
@@ -106,14 +194,15 @@ final class WheelView: NSView {
     // MARK: - Drawing
 
     override func draw(_ dirtyRect: NSRect) {
-        let background = NSColor.windowBackgroundColor.withAlphaComponent(0.96)
+        let background = NSColor.windowBackgroundColor.withAlphaComponent(backgroundOpacity)
         let shadow = NSShadow()
         shadow.shadowBlurRadius = 18
         shadow.shadowOffset = NSSize(width: 0, height: -4)
         shadow.shadowColor = NSColor.black.withAlphaComponent(0.3)
 
         NSGraphicsContext.saveGraphicsState()
-        shadow.set()
+        // Through a see-through background the shadow would darken the wheel itself.
+        if !hasBackdrop, backgroundOpacity > 0.9 { shadow.set() }
         background.setFill()
         circle(radius: Self.outerRadius).fill()
         NSGraphicsContext.restoreGraphicsState()
@@ -170,7 +259,7 @@ final class WheelView: NSView {
 
         let item = items[index]
         let middle = CGFloat(index) * span
-        let tint: NSColor = isHighlighted ? .white : .labelColor
+        let tint: NSColor = isHighlighted ? Brand.onAccent : .labelColor
         let baseRadius = (Self.innerRadius + Self.outerRadius) / 2
 
         // Dense wheels (10+ segments) use a slightly smaller icon so the title has room.
@@ -271,8 +360,17 @@ final class WheelView: NSView {
         ])
         let primarySize = primaryText.size()
         let secondarySize = secondaryText.size()
-        primaryText.draw(at: NSPoint(x: ringCenter.x - primarySize.width / 2, y: ringCenter.y + 1))
-        secondaryText.draw(at: NSPoint(x: ringCenter.x - secondarySize.width / 2, y: ringCenter.y - secondarySize.height - 1))
+        // With a back side the block moves up to make room for "↻ 3 more" under it.
+        let lift: CGFloat = hasBack ? 7 : 0
+        primaryText.draw(at: NSPoint(x: ringCenter.x - primarySize.width / 2, y: ringCenter.y + 1 + lift))
+        secondaryText.draw(at: NSPoint(x: ringCenter.x - secondarySize.width / 2, y: ringCenter.y - secondarySize.height - 1 + lift))
+        guard hasBack else { return }
+        let other = showingBack ? sides.front.count : sides.back.count
+        let hint = NSAttributedString(string: "↻ " + String(localized: "ещё \(other)"), attributes: [
+            .font: NSFont.systemFont(ofSize: 10.5, weight: .semibold), .foregroundColor: NSColor.secondaryLabelColor,
+        ])
+        let hintSize = hint.size()
+        hint.draw(at: NSPoint(x: ringCenter.x - hintSize.width / 2, y: ringCenter.y - secondarySize.height - hintSize.height - 4 + lift))
     }
 
     /// "5 файлов" / "5 files" / "5 archivos": each language has its own plural rule.
@@ -304,17 +402,34 @@ final class WheelView: NSView {
     }
 
     override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
-        highlighted = segmentIndex(at: convert(sender.draggingLocation, from: nil))
+        let point = convert(sender.draggingLocation, from: nil)
+        trackDwell(at: point)
+        highlighted = segmentIndex(at: point)
         return highlighted == nil ? [] : .copy
     }
 
     override func draggingExited(_ sender: NSDraggingInfo?) {
+        cancelDwell()
+        dwellUsed = false
         highlighted = nil
     }
 
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         guard let index = segmentIndex(at: convert(sender.draggingLocation, from: nil)) else { return false }
-        onSelect?(items[index], DragMonitor.fileURLs(on: sender.draggingPasteboard))
+        let item = items[index]
+        let pasteboard = sender.draggingPasteboard
+        let urls = DragMonitor.fileURLs(on: pasteboard)
+        if urls.isEmpty, WebImageDrop.detect(on: pasteboard) != nil {
+            // A browser's picture becomes a file in Downloads first; the slice then works on that file.
+            WebImageDrop.receive(from: pasteboard, into: WebImageDrop.downloads) { [weak self] result in
+                switch result {
+                case .success(let url): self?.onSelect?(item, [url])
+                case .failure(let error): Feedback.showError(String(localized: "Картинка из браузера"), error)
+                }
+            }
+            return true
+        }
+        onSelect?(item, urls)
         return true
     }
 
@@ -338,7 +453,12 @@ final class WheelView: NSView {
     }
 
     override func mouseUp(with event: NSEvent) {
-        guard let index = segmentIndex(at: convert(event.locationInWindow, from: nil)) else { return }
+        let point = convert(event.locationInWindow, from: nil)
+        if isInCenter(point) {
+            flip()
+            return
+        }
+        guard let index = segmentIndex(at: point) else { return }
         onSelect?(items[index], nil)
     }
 }

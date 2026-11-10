@@ -163,7 +163,7 @@ final class XLSXTests: XCTestCase {
     }
 
     func testOffersXLSXForTables() {
-        XCTAssertEqual(FormatCatalog.targets(for: .csv), [.tsv, .xlsx])
-        XCTAssertEqual(FormatCatalog.targets(for: .xlsx), [.csv, .tsv])
+        XCTAssertEqual(FormatCatalog.targets(for: .csv), [.tsv, .xlsx, .json])
+        XCTAssertEqual(FormatCatalog.targets(for: .xlsx), [.csv, .tsv, .json])
     }
 }

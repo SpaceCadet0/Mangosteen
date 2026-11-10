@@ -115,6 +115,51 @@ enum MediaTools {
         }
     }
 
+    // MARK: - Subtitles
+
+    enum SubtitleError: LocalizedError {
+        case none(URL)
+        case picturesOnly(URL)
+
+        var errorDescription: String? {
+            switch self {
+            case .none(let url): String(localized: "В «\(url.lastPathComponent)» нет субтитров.")
+            case .picturesOnly(let url):
+                String(localized: "Субтитры в «\(url.lastPathComponent)» — картинки (как на DVD и Blu-ray), их нельзя сохранить текстом.")
+            }
+        }
+    }
+
+    /// Saves the text subtitle tracks of a video: one as `<name> (субтитры).srt`, several into a `<name> (субтитры)`
+    /// folder with the language in each name. ASS tracks stay ASS so their styling survives; the rest become SRT.
+    static func extractSubtitles(_ input: URL, progress: ((Double) -> Void)? = nil,
+                                 cancellation: CancellationToken? = nil) throws -> URL {
+        let info = try MediaConverter.probe(input)
+        guard !info.subtitles.isEmpty else { throw SubtitleError.none(input) }
+        let tracks = info.subtitles.filter(\.isText)
+        guard !tracks.isEmpty else { throw SubtitleError.picturesOnly(input) }
+        let baseName = OutputNaming.baseName(of: input)
+        let title = String(localized: "\(baseName) (субтитры)")
+        func format(_ track: MediaInfo.SubtitleTrack) -> FileFormat { ["ass", "ssa"].contains(track.codec) ? .ass : .srt }
+        func save(_ track: MediaInfo.SubtitleTrack, to output: URL) throws {
+            let codec = format(track) == .ass ? "ass" : "srt"
+            try MediaConverter.runFFmpeg(["-i", input.path, "-map", "0:\(track.index)", "-c:s", codec],
+                                         output: output, duration: nil, progress: nil, cancellation: cancellation)
+        }
+        if tracks.count == 1 {
+            return try OutputNaming.writeAtomically(directory: input.deletingLastPathComponent(), baseName: title,
+                                                    pathExtension: format(tracks[0]).fileExtension) { try save(tracks[0], to: $0) }
+        }
+        return try OutputNaming.writeAtomically(directory: input.deletingLastPathComponent(), baseName: title, pathExtension: "") { folder in
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+            for (number, track) in tracks.enumerated() {
+                let name = "\(baseName) \(OutputNaming.partNumber(number, of: tracks.count))" + (track.language.map { " \($0)" } ?? "")
+                try save(track, to: OutputNaming.uniqueURL(in: folder, baseName: name, pathExtension: format(track).fileExtension))
+                progress?(Double(number + 1) / Double(tracks.count))
+            }
+        }
+    }
+
     // MARK: - Frames
 
     /// Seeks the input to `time`. Nothing at the very start: seeking an FLV to 0 lands after its first keyframe and

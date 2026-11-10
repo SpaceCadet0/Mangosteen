@@ -37,8 +37,9 @@ final class MenuRowView: NSView {
             Brand.nsColor.setFill()
             NSBezierPath(roundedRect: bounds.insetBy(dx: 5, dy: 0), xRadius: 4, yRadius: 4).fill()
         }
-        let text: NSColor = !item.isEnabled ? .disabledControlTextColor : lit ? .white : .labelColor
-        let secondary: NSColor = lit ? NSColor.white.withAlphaComponent(0.8) : .secondaryLabelColor
+        // White or black on the accent, whichever reads better (a light custom accent needs black).
+        let text: NSColor = !item.isEnabled ? .disabledControlTextColor : lit ? Brand.onAccent : .labelColor
+        let secondary: NSColor = lit ? Brand.onAccent.withAlphaComponent(0.8) : .secondaryLabelColor
 
         if let image = item.image {
             let size = NSSize(width: min(image.size.width, 16), height: min(image.size.height, 16))

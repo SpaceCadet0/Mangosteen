@@ -47,7 +47,8 @@ enum VideoRedactor {
         case .webm: ["-c:v", "libvpx-vp9", "-crf", "30", "-b:v", "0", "-row-mt", "1", "-deadline", "good", "-cpu-used", "4"]
         case .avi: ["-c:v", "mpeg4", "-q:v", "2"]
         case .wmv: ["-c:v", "wmv2", "-q:v", "2"]
-        default: ["-c:v", "libx264", "-preset", "medium", "-crf", "18"]
+        // Slightly higher quality than conversion: the rest of the picture should look untouched.
+        default: VideoEncoding.current.arguments(for: format, crf: 18)
         }
     }
 

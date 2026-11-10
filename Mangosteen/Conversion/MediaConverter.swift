@@ -10,6 +10,17 @@ struct MediaInfo {
     var audioChannels: Int?
     var frameRate: Double?
     var sampleRate: Int?
+    var subtitles: [SubtitleTrack] = []
+
+    struct SubtitleTrack: Equatable {
+        /// The stream's index in the file, for `-map 0:<index>`.
+        var index: Int
+        var codec: String
+        var language: String?
+
+        /// Text subtitles can be saved as SRT or ASS; DVD and Blu-ray ones are pictures.
+        var isText: Bool { ["subrip", "ass", "ssa", "mov_text", "webvtt", "text"].contains(codec) }
+    }
 
     var hasVideo: Bool { videoCodec != nil }
     var hasAudio: Bool { audioCodec != nil }
@@ -38,6 +49,8 @@ enum MediaConverter {
         ])
         struct Output: Decodable {
             struct Stream: Decodable {
+                let index: Int?
+                let tags: [String: String]?
                 let codec_type: String?
                 let codec_name: String?
                 let width: Int?
@@ -81,7 +94,12 @@ enum MediaConverter {
             height: turned ? video?.width : video?.height,
             audioChannels: audio?.channels,
             frameRate: rate(video?.avg_frame_rate) ?? rate(video?.r_frame_rate),
-            sampleRate: audio?.sample_rate.flatMap { Int($0) }
+            sampleRate: audio?.sample_rate.flatMap { Int($0) },
+            subtitles: streams.compactMap { stream in
+                guard stream.codec_type == "subtitle", let index = stream.index else { return nil }
+                let language = stream.tags?["language"].flatMap { $0 == "und" ? nil : $0 }
+                return MediaInfo.SubtitleTrack(index: index, codec: stream.codec_name ?? "", language: language)
+            }
         )
     }
 
@@ -175,13 +193,14 @@ enum MediaConverter {
     private static func videoCodecArguments(for target: FileFormat, info: MediaInfo, videoFilters: [String]) -> [String] {
         // H.264 and the other 4:2:0 encoders need even dimensions.
         let evenSize = ["-vf", (videoFilters + ["scale=trunc(iw/2)*2:trunc(ih/2)*2"]).joined(separator: ",")]
-        let h264 = ["-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p"] + evenSize
+        // H.264 by default; HEVC, AV1 or Apple's hardware encoders when chosen in Settings.
+        let picture = VideoEncoding.current.arguments(for: target) + evenSize
         let aac = ["-c:a", "aac", "-b:a", "192k"]
         switch target {
         case .mp4:
-            return ["-map", "0:v:0", "-map", "0:a?"] + h264 + aac + ["-movflags", "+faststart"]
+            return ["-map", "0:v:0", "-map", "0:a?"] + picture + aac + ["-movflags", "+faststart"]
         case .mov, .mkv:
-            return ["-map", "0:v:0", "-map", "0:a?"] + h264 + aac
+            return ["-map", "0:v:0", "-map", "0:a?"] + picture + aac
         case .webm:
             return ["-map", "0:v:0", "-map", "0:a?", "-c:v", "libvpx-vp9", "-crf", "32", "-b:v", "0",
                     "-row-mt", "1", "-deadline", "good", "-cpu-used", "4", "-pix_fmt", "yuv420p",

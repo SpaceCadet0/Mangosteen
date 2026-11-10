@@ -92,6 +92,12 @@ enum WheelItemProvider {
             items.append(WheelItem(id: "tool.frames", title: String(localized: "Кадры"), symbolName: "photo.on.rectangle") { urls in
                 ToolWindow.present(title: String(localized: "Кадры из видео"), files: urls) { FramesView(urls: urls, close: $0) }
             })
+            items.append(WheelItem(id: "tool.extractSubtitles", title: String(localized: "Субтитры"), symbolName: "captions.bubble") { urls in
+                let videos = urls.filter { FileFormat.detect($0)?.category == .video }
+                ConversionService.shared.runEach(String(localized: "Субтитры из видео"), inputs: videos, maxConcurrent: 2) {
+                    try MediaTools.extractSubtitles($0, progress: $1, cancellation: $2)
+                }
+            })
         }
         let hasImages = formats.contains { $0.category == .image }
         if hasImages || formats.contains(.pdf) {
@@ -213,6 +219,30 @@ enum WheelItemProvider {
             ConversionService.shared.runBatch(String(localized: "Архивация"), inputs: urls) { [try ArchiveConverter.archiveSelection($0)] }
         })
         return items
+    }
+
+    /// Every slice a wheel can show, grouped by the kind of files that bring it first, for the layout settings.
+    /// A slice is listed once; its side applies to every kind of file (PNG is placed the same for photos and PDF).
+    static func catalog(for kind: WheelKind) -> [(group: String, items: [WheelItem])] {
+        if kind == .actions { return [(String(localized: "Для любых файлов"), actionItems)] }
+        let folder = URL(fileURLWithPath: NSTemporaryDirectory())
+        func files(_ names: String...) -> [URL] { names.map { folder.appendingPathComponent($0) } }
+        let samples: [(String, [URL])] = [
+            (String(localized: "Фото"), files("a.jpg", "b.jpg")),
+            ("PDF", files("a.pdf", "b.pdf")),
+            (String(localized: "Видео"), files("a.mp4", "b.mp4")),
+            (String(localized: "Аудио"), files("a.mp3")),
+            (String(localized: "Документы"), files("a.docx")),
+            (String(localized: "Субтитры"), files("a.srt")),
+            (String(localized: "Таблицы"), files("a.csv")),
+            (String(localized: "Архивы"), files("a.zip")),
+            (String(localized: "Разные файлы"), files("a.jpg", "b.mp3")),
+        ]
+        var seen: Set<String> = []
+        return samples.compactMap { group, urls in
+            let fresh = items(for: kind, urls: urls).filter { seen.insert($0.id).inserted }
+            return fresh.isEmpty ? nil : (group, fresh)
+        }
     }
 
     private static let actionItems: [WheelItem] = [

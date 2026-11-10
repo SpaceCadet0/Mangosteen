@@ -1922,5 +1922,100 @@
  "Архив «%@» пуст.": {
   "en": "The archive “%@” is empty.",
   "es": "El archivo comprimido «%@» está vacío."
+ },
+ "Аппаратное кодирование": {
+  "en": "Hardware encoding",
+  "es": "Codificación por hardware"
+ },
+ "Видео": {
+  "en": "Video",
+  "es": "Vídeo"
+ },
+ "Кодек": {
+  "en": "Codec",
+  "es": "Códec"
+ },
+ "%@ (субтитры)": {
+  "en": "%@ (subtitles)",
+  "es": "%@ (subtítulos)"
+ },
+ "«%@» не читается как JSON.": {
+  "en": "“%@” cannot be read as JSON.",
+  "es": "«%@» no se puede leer como JSON."
+ },
+ "В «%@» данные не в виде таблицы. Нужен массив записей, например [{\"имя\": \"Чай\", \"цена\": 1.5}].": {
+  "en": "The data in “%@” is not a table. It needs to be an array of records, such as [{\"name\": \"Tea\", \"price\": 1.5}].",
+  "es": "Los datos de «%@» no son una tabla. Hace falta una lista de registros, por ejemplo [{\"nombre\": \"Té\", \"precio\": 1.5}]."
+ },
+ "В «%@» нет субтитров.": {
+  "en": "“%@” has no subtitles.",
+  "es": "«%@» no tiene subtítulos."
+ },
+ "Субтитры": {
+  "en": "Subtitles",
+  "es": "Subtítulos"
+ },
+ "Субтитры в «%@» — картинки (как на DVD и Blu-ray), их нельзя сохранить текстом.": {
+  "en": "The subtitles in “%@” are pictures (as on DVD and Blu-ray) and cannot be saved as text.",
+  "es": "Los subtítulos de «%@» son imágenes (como en DVD y Blu-ray) y no se pueden guardar como texto."
+ },
+ "Субтитры из видео": {
+  "en": "Subtitles from video",
+  "es": "Subtítulos del vídeo"
+ },
+ "Архивы": {"en": "Archives", "es": "Archivos comprimidos"},
+ "Аудио": {"en": "Audio", "es": "Audio"},
+ "Бирюзовый": {"en": "Teal", "es": "Turquesa"},
+ "Вернуть как было": {"en": "Restore Defaults", "es": "Restablecer"},
+ "Графит": {"en": "Graphite", "es": "Grafito"},
+ "Две стороны колеса": {"en": "Two sides of the wheel", "es": "Las dos caras de la rueda"},
+ "Для любых файлов": {"en": "For any files", "es": "Para cualquier archivo"},
+ "Документы": {"en": "Documents", "es": "Documentos"},
+ "Другая сторона колеса": {"en": "Other side of the wheel", "es": "Otra cara de la rueda"},
+ "Если у колеса есть обратная сторона, в его центре видно «↻ ещё N». Чтобы перевернуть колесо, прокрутите колёсико мыши или трекпад над ним, задержите файл над центром или щёлкните по центру. Сторона дольки общая для всех файлов: например, PNG стоит одинаково для фото и для PDF. На лицевой стороне помещается до 10 долек, остальные уходят назад.": {
+  "en": "When a wheel has a back, its centre shows “↻ N more”. To turn the wheel over, scroll the mouse wheel or trackpad over it, hold the file over the centre, or click the centre. A slice's side applies to all files: PNG, for one, sits on the same side for photos and for PDF. The face holds up to 10 slices; the rest go to the back.",
+  "es": "Si una rueda tiene reverso, en su centro se ve «↻ N más». Para darle la vuelta, desplaza la rueda del ratón o el trackpad sobre ella, mantén el archivo sobre el centro o haz clic en el centro. La cara de cada sector vale para todos los archivos: PNG, por ejemplo, está en la misma cara para fotos y para PDF. En el anverso caben hasta 10 sectores; el resto pasa al reverso."
+ },
+ "Зелёный": {"en": "Green", "es": "Verde"},
+ "Клавиши": {"en": "Keys", "es": "Teclas"},
+ "Колесо": {"en": "Wheel", "es": "Rueda"},
+ "Лицевая": {"en": "Front", "es": "Anverso"},
+ "Мангустин": {"en": "Mangosteen", "es": "Mangostán"},
+ "Непрозрачность": {"en": "Opacity", "es": "Opacidad"},
+ "Обратная": {"en": "Back", "es": "Reverso"},
+ "Оранжевый": {"en": "Orange", "es": "Naranja"},
+ "Основные": {"en": "General", "es": "General"},
+ "Оформление": {"en": "Appearance", "es": "Apariencia"},
+ "Подсветка дольки, строк меню и кнопок в окнах. Текст на нём становится белым или чёрным — каким лучше видно. Уже открытые окна примут цвет после повторного открытия.": {
+  "en": "Used for the lit slice, menu rows and buttons in windows. Text on it turns white or black, whichever reads better. Windows already open take the colour when opened again.",
+  "es": "Se usa en el sector resaltado, las filas del menú y los botones de las ventanas. El texto sobre él se vuelve blanco o negro, según se lea mejor. Las ventanas ya abiertas toman el color al volver a abrirlas."
+ },
+ "Разные файлы": {"en": "Mixed files", "es": "Archivos variados"},
+ "Розовый": {"en": "Pink", "es": "Rosa"},
+ "Свой цвет": {"en": "Custom colour", "es": "Color propio"},
+ "Синий": {"en": "Blue", "es": "Azul"},
+ "Скрыта": {"en": "Hidden", "es": "Oculto"},
+ "Стекло размывает то, что под колесом. С ним колесо можно сделать прозрачнее.": {
+  "en": "Glass blurs what lies under the wheel, so the wheel can be more transparent.",
+  "es": "El cristal desenfoca lo que hay bajo la rueda, así que la rueda puede ser más transparente."
+ },
+ "Стекло — системное Liquid Glass. С ним колесо можно сделать прозрачнее: то, что под ним, размывается.": {
+  "en": "Glass is the system's Liquid Glass. With it the wheel can be more transparent: what lies under it is blurred.",
+  "es": "El cristal es el Liquid Glass del sistema. Con él la rueda puede ser más transparente: lo que hay debajo se desenfoca."
+ },
+ "Таблицы": {"en": "Tables", "es": "Tablas"},
+ "Фиолетовый": {"en": "Purple", "es": "Morado"},
+ "Фото": {"en": "Photos", "es": "Fotos"},
+ "Цвет акцента": {"en": "Accent colour", "es": "Color de acento"},
+ "Эффект стекла": {"en": "Glass effect", "es": "Efecto cristal"},
+ "ещё %lld": {"en": "%lld more", "es": "%lld más"},
+ "Браузер не отдал картинку. Сохраните её на диск и перетащите файл.": {
+  "en": "The browser did not hand over the picture. Save it to disk and drag the file.",
+  "es": "El navegador no entregó la imagen. Guárdala en el disco y arrastra el archivo."
+ },
+ "Картинка из браузера": {"en": "Picture from browser", "es": "Imagen del navegador"},
+ "Для видео, которое перекодируется в MP4, MOV или MKV. H.264 открывается везде; HEVC даёт файл меньше; AV1 — самый маленький, но кодируется дольше, а MOV с ним сохраняется в H.264. Аппаратное кодирование в разы быстрее, файлы чуть больше; для AV1 его нет. Видео, которое можно скопировать без перекодирования, копируется как есть. У «Сжать» свои настройки.": {
+  "en": "For video re-encoded to MP4, MOV or MKV. H.264 plays everywhere; HEVC makes smaller files; AV1 the smallest but takes longer, and MOV is saved as H.264 with it. Hardware encoding is several times faster with slightly larger files; there is none for AV1. Video that can be copied without re-encoding is copied as it is. Compress has its own settings.",
+  "es": "Para el vídeo que se recodifica a MP4, MOV o MKV. H.264 se reproduce en todas partes; HEVC da archivos más pequeños; AV1, los más pequeños, pero tarda más, y con él MOV se guarda en H.264. La codificación por hardware es varias veces más rápida, con archivos algo mayores; no existe para AV1. El vídeo que puede copiarse sin recodificar se copia tal cual. Comprimir tiene sus propios ajustes."
  }
 }
