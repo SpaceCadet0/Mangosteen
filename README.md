@@ -193,6 +193,14 @@ The roadmap is in [docs/PLAN.md](docs/PLAN.md) (in Russian).
 
 The app is not sandboxed and is signed ad hoc. It is made for personal use.
 
+## Donate
+
+Mangosteen is free and open source. If it saves you time, you can support its development:
+
+- [Ko-fi](https://ko-fi.com/igorrusakov)
+- [Patreon](https://www.patreon.com/IgorRusakov)
+- [PayPal](https://paypal.me/IgorRusakov1505)
+
 ## License
 
 Mangosteen is released under the [MIT License](LICENSE). The release build bundles [FFmpeg](https://ffmpeg.org)

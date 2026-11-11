@@ -195,6 +195,14 @@ xcodebuild -scheme Mangosteen -derivedDataPath build.noindex test
 
 Приложение не использует песочницу и подписывается ad-hoc. Оно предназначено для личного использования.
 
+## Поддержать проект
+
+Mangosteen бесплатна и с открытым кодом. Если она экономит вам время, можно поддержать разработку:
+
+- [Ko-fi](https://ko-fi.com/igorrusakov)
+- [Patreon](https://www.patreon.com/IgorRusakov)
+- [PayPal](https://paypal.me/IgorRusakov1505)
+
 ## Лицензия
 
 Mangosteen распространяется по [лицензии MIT](LICENSE). В релизную сборку встроены [FFmpeg](https://ffmpeg.org)
