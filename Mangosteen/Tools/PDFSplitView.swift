@@ -12,6 +12,9 @@ struct PDFSplitView: View {
     @State private var cuts: Set<Int> = []
     @State private var excluded: Set<Int> = []
     @State private var groupSize = 2
+    /// Pages typed as ranges, "1-3, 8, 12-": one document per range.
+    @State private var rangesText = ""
+    @State private var rangesInvalid = false
     @State private var loadError: String?
 
     private var pdf: URL? { urls.first { FileFormat.detect($0) == .pdf } }
@@ -52,6 +55,38 @@ struct PDFSplitView: View {
     }
 
     private var presets: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            presetButtons
+            HStack(spacing: 8) {
+                TextField(String(localized: "Страницы, например 1-3, 8, 12-"), text: $rangesText)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 260)
+                    .onSubmit(applyRanges)
+                Button(String(localized: "По диапазонам"), action: applyRanges)
+                    .disabled(rangesText.trimmingCharacters(in: .whitespaces).isEmpty)
+                if rangesInvalid {
+                    Text(String(localized: "Не понял диапазоны: нужны номера по возрастанию, например 1-3, 8, 12-"))
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                }
+                Spacer()
+            }
+            .disabled(pageCount < 1)
+        }
+    }
+
+    /// Each typed range becomes a document; the pages between ranges are left out.
+    private func applyRanges() {
+        guard let selection = PDFSplitter.selection(fromRanges: rangesText, pageCount: pageCount) else {
+            rangesInvalid = true
+            return
+        }
+        rangesInvalid = false
+        cuts = selection.cuts
+        excluded = selection.excluded
+    }
+
+    private var presetButtons: some View {
         HStack(spacing: 8) {
             Button(String(localized: "Каждая страница")) { cuts = PDFSplitter.cuts(every: 1, pageCount: pageCount) }
             Button(String(localized: "Пополам")) { cuts = PDFSplitter.halfCut(pageCount: pageCount) }

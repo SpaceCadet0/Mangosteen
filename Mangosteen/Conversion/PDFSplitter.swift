@@ -28,6 +28,35 @@ enum PDFSplitter {
         pageCount > 1 ? [(pageCount + 1) / 2 - 1] : []
     }
 
+    /// Pages typed as ranges — "1-3, 8, 12-" (a dash, an en dash or a space-separated list; "12-" runs to the end,
+    /// "-3" from the start) — become one document per range, the pages in between left out. Ranges must go up and not
+    /// overlap; nil when the text cannot be read that way.
+    static func selection(fromRanges text: String, pageCount: Int) -> (cuts: Set<Int>, excluded: Set<Int>)? {
+        let items = text.replacingOccurrences(of: "–", with: "-").replacingOccurrences(of: "—", with: "-")
+            .split(whereSeparator: { $0 == "," || $0 == ";" })
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+        guard !items.isEmpty, pageCount > 0 else { return nil }
+        var ranges: [ClosedRange<Int>] = []
+        for item in items {
+            let parts = item.split(separator: "-", maxSplits: 1, omittingEmptySubsequences: false)
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+            let first: Int?, last: Int?
+            if parts.count == 1 {
+                first = Int(parts[0]); last = first
+            } else {
+                first = parts[0].isEmpty ? 1 : Int(parts[0])
+                last = parts[1].isEmpty ? pageCount : Int(parts[1])
+            }
+            guard let first, let last, first >= 1, last <= pageCount, first <= last else { return nil }
+            if let previous = ranges.last, first <= previous.upperBound { return nil }
+            ranges.append(first...last)
+        }
+        let kept = Set(ranges.flatMap { $0 }.map { $0 - 1 })
+        let cuts = Set(ranges.dropLast().map { $0.upperBound - 1 })
+        return (cuts, Set(0..<pageCount).subtracting(kept))
+    }
+
     /// 1-based page ranges, e.g. "1–3, 5".
     static func rangesText(_ pages: [Int]) -> String {
         var parts: [String] = []

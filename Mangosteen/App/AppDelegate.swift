@@ -47,9 +47,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         runSnapshotIfRequested()
         if ProcessInfo.processInfo.arguments.contains("--snapshot") { return }
         #endif
-        if !UserDefaults.standard.bool(forKey: WelcomeView.shownKey) {
+        let defaults = UserDefaults.standard
+        let current = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0"
+        if !defaults.bool(forKey: WelcomeView.shownKey) {
+            // A new install starts with how to use it; what is new would be everything.
             showWelcome()
+            defaults.set(current, forKey: WhatsNew.seenKey)
+        } else if WhatsNew.shouldShow(current: current, seen: defaults.string(forKey: WhatsNew.seenKey)) {
+            showWhatsNew()
         }
+    }
+
+    @objc func showWhatsNew() {
+        let current = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? WhatsNew.version
+        UserDefaults.standard.set(current, forKey: WhatsNew.seenKey)
+        ToolWindow.present(title: String(localized: "Что нового")) { WhatsNewView(close: $0) }
     }
 
     @objc func showAbout() {
@@ -144,6 +156,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         if itemID == "about" {
             showAbout()
+            finishSnapshot(window: nil)
+            return
+        }
+        if itemID == "whatsnew" {
+            showWhatsNew()
             finishSnapshot(window: nil)
             return
         }

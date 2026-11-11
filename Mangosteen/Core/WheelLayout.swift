@@ -22,7 +22,8 @@ enum WheelLayout {
     static let maxFront = 10
     /// Slices added after the wheels were settled; they start on the back so the familiar faces stay as they were.
     static let defaultBack: Set<String> = [
-        "tool.extractSubtitles", "tool.speechSubtitles",
+        "tool.extractSubtitles", "tool.speechSubtitles", "tool.trace", "tool.removeBars", "tool.hdrToSDR",
+        "tool.pagesPerSheet", "tool.livePhoto",
         "convert.ico", "convert.icns", "convert.psd", "convert.tga", "convert.exr", "convert.7z", "convert.iso",
     ]
 

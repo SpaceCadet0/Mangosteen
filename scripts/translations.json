@@ -35,6 +35,24 @@
   "zh-Hans": " — 不比原文件小，不会保存",
   "ja": " — 元のファイルより小さくならないため保存しません"
  },
+ "%@ (%lld на листе)": {
+  "en": "%@ (%lld per sheet)",
+  "es": "%@ (%lld por hoja)",
+  "de": "%@ (%lld pro Blatt)",
+  "fr": "%@ (%lld par feuille)",
+  "pt-BR": "%@ (%lld por folha)",
+  "zh-Hans": "%@（每页 %lld 个）",
+  "ja": "%@（1 枚に %lld）"
+ },
+ "%@ (без полос)": {
+  "en": "%@ (no bars)",
+  "es": "%@ (sin franjas)",
+  "de": "%@ (ohne Balken)",
+  "fr": "%@ (sans bandes)",
+  "pt-BR": "%@ (sem faixas)",
+  "zh-Hans": "%@（无黑边）",
+  "ja": "%@（黒帯なし）"
+ },
  "%@ (без фона)": {
   "en": "%@ (no background)",
   "es": "%@ (sin fondo)",
@@ -359,6 +377,15 @@
   "zh-Hans": "HEVC (H.265) — 文件更小，压缩更慢",
   "ja": "HEVC（H.265）— ファイルは小さく、圧縮は遅め"
  },
+ "Live → видео": {
+  "en": "Live → video",
+  "es": "Live → vídeo",
+  "de": "Live → Video",
+  "fr": "Live → vidéo",
+  "pt-BR": "Live → vídeo",
+  "zh-Hans": "实况 → 视频",
+  "ja": "Live → ビデオ"
+ },
  "Mangosteen %@ — самая новая версия.": {
   "en": "Mangosteen %@ is the latest version.",
   "es": "Mangosteen %@ es la versión más reciente.",
@@ -440,6 +467,33 @@
   "zh-Hans": "无法将“%@”读取为 JSON。",
   "ja": "「%@」を JSON として読み込めません。"
  },
+ "«%@» снято не в HDR — переводить нечего.": {
+  "en": "“%@” is not HDR, so there is nothing to convert.",
+  "es": "«%@» no está en HDR, no hay nada que convertir.",
+  "de": "„%@“ ist kein HDR-Video – es gibt nichts umzuwandeln.",
+  "fr": "« %@ » n’est pas en HDR, il n’y a rien à convertir.",
+  "pt-BR": "“%@” não está em HDR, não há o que converter.",
+  "zh-Hans": "“%@”不是 HDR 视频，无需转换。",
+  "ja": "「%@」は HDR ではないため、変換するものがありません。"
+ },
+ "«В вектор» превращает логотип, рисунок или скан в SVG — чёрно-белый или до 16 цветов, с белым фоном или без него. В предпросмотре оригинал и результат рядом: колёсико приближает, перетаскивание двигает, чтобы сравнить детали.": {
+  "en": "“To vector” turns a logo, drawing or scan into SVG — black and white or up to 16 colours, with or without a white background. The preview shows the original and the result side by side: the scroll wheel zooms and dragging moves, to compare the details.",
+  "es": "«A vector» convierte un logotipo, dibujo o escaneo en SVG: en blanco y negro o hasta 16 colores, con o sin fondo blanco. La vista previa muestra el original y el resultado lado a lado: la rueda amplía y arrastrar desplaza, para comparar los detalles.",
+  "de": "„In Vektor“ macht aus einem Logo, einer Zeichnung oder einem Scan ein SVG — schwarzweiß oder mit bis zu 16 Farben, mit oder ohne weißen Hintergrund. Die Vorschau zeigt Original und Ergebnis nebeneinander: Mausrad zoomt, Ziehen verschiebt, um die Details zu vergleichen.",
+  "fr": "« En vecteur » transforme un logo, un dessin ou un scan en SVG — noir et blanc ou jusqu’à 16 couleurs, avec ou sans fond blanc. L’aperçu montre l’original et le résultat côte à côte : la molette zoome et glisser déplace, pour comparer les détails.",
+  "pt-BR": "“Para vetor” transforma um logotipo, desenho ou digitalização em SVG — preto e branco ou até 16 cores, com ou sem fundo branco. A pré-visualização mostra o original e o resultado lado a lado: a roda do mouse aproxima e arrastar move, para comparar os detalhes.",
+  "zh-Hans": "“转为矢量”可将标志、绘图或扫描件转为 SVG — 黑白或最多 16 种颜色，可带或不带白色背景。预览中原图和结果并排显示：滚轮缩放，拖移平移，便于比较细节。",
+  "ja": "「ベクターに」はロゴ、イラスト、スキャンを SVG に変換します。白黒または最大 16 色で、白い背景の有無も選べます。プレビューでは元の画像と結果が並び、ホイールでズーム、ドラッグで移動して細部を比べられます。"
+ },
+ "«Речь в текст» на колесе инструментов делает SRT, VTT или ASS из того, что говорят в видео и аудио. Речь распознаётся на этом Mac, ничего не отправляется в сеть.": {
+  "en": "“Speech to text” on the Tools wheel makes SRT, VTT or ASS from what is said in video and audio. Speech is recognised on this Mac; nothing is sent over the network.",
+  "es": "«Voz a texto» en la rueda de herramientas crea SRT, VTT o ASS a partir de lo que se dice en vídeos y audios. La voz se reconoce en este Mac; no se envía nada por la red.",
+  "de": "„Sprache zu Text“ im Werkzeug-Rad erstellt SRT, VTT oder ASS aus dem, was in Video und Audio gesprochen wird. Die Sprache wird auf diesem Mac erkannt; nichts wird über das Netzwerk gesendet.",
+  "fr": "« Parole en texte » sur la roue des outils crée des SRT, VTT ou ASS à partir de ce qui est dit dans les vidéos et l’audio. La parole est reconnue sur ce Mac ; rien n’est envoyé sur le réseau.",
+  "pt-BR": "“Fala em texto” na roda de ferramentas cria SRT, VTT ou ASS a partir do que é dito em vídeos e áudios. A fala é reconhecida neste Mac; nada é enviado pela rede.",
+  "zh-Hans": "工具转盘上的“语音转文字”可根据视频和音频中的语音生成 SRT、VTT 或 ASS。语音在此 Mac 上识别，不会通过网络发送任何内容。",
+  "ja": "ツールホイールの「音声をテキストに」は、ビデオやオーディオで話されている内容から SRT、VTT、ASS を作成します。音声はこの Mac 上で認識され、ネットワークには何も送信されません。"
+ },
  "Авто": {
   "en": "Auto",
   "es": "Auto",
@@ -475,6 +529,15 @@
   "pt-BR": "Direitos autorais",
   "zh-Hans": "版权",
   "ja": "著作権"
+ },
+ "Альбом": {
+  "en": "Album",
+  "es": "Álbum",
+  "de": "Album",
+  "fr": "Album",
+  "pt-BR": "Álbum",
+  "zh-Hans": "专辑",
+  "ja": "アルバム"
  },
  "Альбомная 16:9": {
   "en": "Landscape 16:9",
@@ -556,6 +619,24 @@
   "pt-BR": "Sem vidro, o que está sob a roda fica desfocado, e a opacidade define o quanto aparece. Com vidro, cada segmento é o Liquid Glass do sistema: transparente abaixo de 70%, fosco acima.",
   "zh-Hans": "不使用玻璃时，转盘下方的内容会被模糊，不透明度决定能看到多少。使用玻璃时，每个扇区都是系统的 Liquid Glass：低于 70% 为透明，高于则为磨砂。",
   "ja": "ガラスなしでは、ホイールの下にあるものがぼかされ、不透明度で見え方が決まります。ガラスありでは各セグメントがシステムの Liquid Glass になり、70% 未満は透明、それ以上はすりガラスです。"
+ },
+ "Без фона": {
+  "en": "No background",
+  "es": "Sin fondo",
+  "de": "Ohne Hintergrund",
+  "fr": "Sans arrière-plan",
+  "pt-BR": "Sem fundo",
+  "zh-Hans": "无背景",
+  "ja": "背景なし"
+ },
+ "Без цвета, которого больше всего по краям картинки": {
+  "en": "Without the colour that covers most of the picture's edges",
+  "es": "Sin el color que más ocupa los bordes de la imagen",
+  "de": "Ohne die Farbe, die an den Bildrändern überwiegt",
+  "fr": "Sans la couleur la plus présente sur les bords de l’image",
+  "pt-BR": "Sem a cor que mais aparece nas bordas da imagem",
+  "zh-Hans": "去掉图片边缘占比最多的颜色",
+  "ja": "画像の端で最も多い色を除く"
  },
  "Бирюзовый": {
   "en": "Teal",
@@ -674,6 +755,15 @@
   "zh-Hans": "“%@”没有字幕。",
   "ja": "「%@」には字幕がありません。"
  },
+ "В «%@» нет чёрных полос.": {
+  "en": "“%@” has no black bars.",
+  "es": "«%@» no tiene franjas negras.",
+  "de": "„%@“ hat keine schwarzen Balken.",
+  "fr": "« %@ » n’a pas de bandes noires.",
+  "pt-BR": "“%@” não tem faixas pretas.",
+  "zh-Hans": "“%@”没有黑边。",
+  "ja": "「%@」に黒帯はありません。"
+ },
  "В архив": {
   "en": "Archive",
   "es": "Archivar",
@@ -682,6 +772,15 @@
   "pt-BR": "Compactar",
   "zh-Hans": "归档",
   "ja": "アーカイブ"
+ },
+ "В вектор": {
+  "en": "To vector",
+  "es": "A vector",
+  "de": "In Vektor",
+  "fr": "En vecteur",
+  "pt-BR": "Para vetor",
+  "zh-Hans": "转为矢量",
+  "ja": "ベクターに"
  },
  "В выбранную папку": {
   "en": "To a chosen folder",
@@ -700,6 +799,24 @@
   "pt-BR": "Digite as coordenadas em graus, por exemplo 55.7558 e 37.6173",
   "zh-Hans": "以度为单位输入坐标，例如 55.7558 和 37.6173",
   "ja": "座標を度で入力（例：55.7558 と 37.6173）"
+ },
+ "Вектор": {
+  "en": "Vector",
+  "es": "Vector",
+  "de": "Vektor",
+  "fr": "Vecteur",
+  "pt-BR": "Vetor",
+  "zh-Hans": "矢量",
+  "ja": "ベクター"
+ },
+ "Векторизация": {
+  "en": "Tracing to Vector",
+  "es": "Vectorización",
+  "de": "Vektorisieren",
+  "fr": "Vectorisation",
+  "pt-BR": "Vetorização",
+  "zh-Hans": "矢量化",
+  "ja": "ベクター化"
  },
  "Вернуть как было": {
   "en": "Restore Defaults",
@@ -764,6 +881,15 @@
   "zh-Hans": "与录音等长的 MP4 视频。",
   "ja": "録音と同じ長さの MP4 ビデオ。"
  },
+ "Видео из Live Photo": {
+  "en": "Video from Live Photo",
+  "es": "Vídeo de Live Photo",
+  "de": "Video aus Live Photo",
+  "fr": "Vidéo de Live Photo",
+  "pt-BR": "Vídeo de Live Photo",
+  "zh-Hans": "实况照片中的视频",
+  "ja": "Live Photo のビデオ"
+ },
  "Видео сохраняется в MP4 (MOV и MKV остаются в своём формате).": {
   "en": "Video is saved as MP4 (MOV and MKV keep their format).",
   "es": "El vídeo se guarda como MP4 (MOV y MKV mantienen su formato).",
@@ -826,6 +952,15 @@
   "pt-BR": "Reproduzir (Espaço)",
   "zh-Hans": "播放（空格键）",
   "ja": "再生（スペース）"
+ },
+ "Вписать": {
+  "en": "Fit",
+  "es": "Ajustar",
+  "de": "Einpassen",
+  "fr": "Ajuster",
+  "pt-BR": "Ajustar",
+  "zh-Hans": "适合窗口",
+  "ja": "全体を表示"
  },
  "Вправо": {
   "en": "Right",
@@ -1043,6 +1178,15 @@
   "zh-Hans": "精选",
   "ja": "注目"
  },
+ "Год": {
+  "en": "Year",
+  "es": "Año",
+  "de": "Jahr",
+  "fr": "Année",
+  "pt-BR": "Ano",
+  "zh-Hans": "年份",
+  "ja": "年"
+ },
  "Голос звучит естественно при любой скорости.": {
   "en": "Voices sound natural at any speed.",
   "es": "La voz suena natural a cualquier velocidad.",
@@ -1051,6 +1195,15 @@
   "pt-BR": "As vozes soam naturais em qualquer velocidade.",
   "zh-Hans": "任何速度下人声都自然。",
   "ja": "どの速度でも声が自然に聞こえます。"
+ },
+ "Готово": {
+  "en": "Done",
+  "es": "Listo",
+  "de": "Fertig",
+  "fr": "Terminé",
+  "pt-BR": "OK",
+  "zh-Hans": "完成",
+  "ja": "完了"
  },
  "Градиент": {
   "en": "Gradient",
@@ -1078,6 +1231,15 @@
   "pt-BR": "Intensidade",
   "zh-Hans": "响度",
   "ja": "ラウドネス"
+ },
+ "Далее": {
+  "en": "Next",
+  "es": "Siguiente",
+  "de": "Weiter",
+  "fr": "Suivant",
+  "pt-BR": "Seguinte",
+  "zh-Hans": "下一步",
+  "ja": "次へ"
  },
  "Дата": {
   "en": "Date",
@@ -1130,6 +1292,15 @@
   "de": "Detail",
   "fr": "Détail",
   "pt-BR": "Detalhe",
+  "zh-Hans": "细节",
+  "ja": "ディテール"
+ },
+ "Детализация": {
+  "en": "Detail",
+  "es": "Detalle",
+  "de": "Detailgrad",
+  "fr": "Niveau de détail",
+  "pt-BR": "Detalhamento",
   "zh-Hans": "细节",
   "ja": "ディテール"
  },
@@ -1276,6 +1447,15 @@
   "pt-BR": "Quando uma roda tem verso, o centro mostra “↻ mais N”. Para virar a roda, role a roda do mouse sobre ela ou pressione Tab enquanto segura o arquivo; sem arquivo, clique no centro. O lado de um segmento vale para todos os arquivos: o PNG, por exemplo, fica do mesmo lado para fotos e PDFs. A frente comporta até 10 segmentos; o resto vai para o verso.",
   "zh-Hans": "转盘有背面时，中心会显示“↻ 另有 N 个”。要翻转转盘，可在其上滚动鼠标滚轮，或在按住文件时按 Tab 键；没有文件时点按中心。扇区所在的面对所有文件都相同：例如 PNG 对照片和 PDF 都在同一面。正面最多容纳 10 个扇区，其余放到背面。",
   "ja": "ホイールに裏面がある場合、中央に「↻ ほか N」と表示されます。ホイールを裏返すには、ファイルを持ったままマウスホイールを回すか Tab キーを押します。ファイルがないときは中央をクリックします。セグメントの面はすべてのファイルで共通です（例：PNG は写真でも PDF でも同じ面）。表面には最大 10 個まで置け、残りは裏面に回ります。"
+ },
+ "Жанр": {
+  "en": "Genre",
+  "es": "Género",
+  "de": "Genre",
+  "fr": "Genre",
+  "pt-BR": "Gênero",
+  "zh-Hans": "风格",
+  "ja": "ジャンル"
  },
  "Задать координаты": {
   "en": "Set coordinates",
@@ -1709,6 +1889,15 @@
   "zh-Hans": "图片",
   "ja": "画像"
  },
+ "Картинка в вектор": {
+  "en": "Picture to vector",
+  "es": "Imagen a vector",
+  "de": "Bild in Vektor",
+  "fr": "Image en vecteur",
+  "pt-BR": "Imagem em vetor",
+  "zh-Hans": "图片转矢量",
+  "ja": "画像をベクターに"
+ },
  "Картинка из браузера": {
   "en": "Picture from browser",
   "es": "Imagen del navegador",
@@ -1772,6 +1961,15 @@
   "zh-Hans": "点按 — 选择，⌘-点按 — 加入所选，拖移 — 重新排列，⌫ — 删除。",
   "ja": "クリック — 選択、⌘-クリック — 選択に追加、ドラッグ — 並べ替え、⌫ — 削除。"
  },
+ "Ключевые слова": {
+  "en": "Keywords",
+  "es": "Palabras clave",
+  "de": "Stichwörter",
+  "fr": "Mots-clés",
+  "pt-BR": "Palavras-chave",
+  "zh-Hans": "关键词",
+  "ja": "キーワード"
+ },
  "Кодек": {
   "en": "Codec",
   "es": "Códec",
@@ -1834,6 +2032,24 @@
   "pt-BR": "Rodas",
   "zh-Hans": "转盘",
   "ja": "ホイール"
+ },
+ "Колёсико — масштаб, перетаскивание — сдвиг. Оба окна двигаются вместе.": {
+  "en": "Scroll wheel zooms, dragging moves. Both panes move together.",
+  "es": "La rueda amplía, arrastrar desplaza. Ambos paneles se mueven juntos.",
+  "de": "Mausrad zoomt, Ziehen verschiebt. Beide Bereiche bewegen sich gemeinsam.",
+  "fr": "La molette zoome, glisser déplace. Les deux volets bougent ensemble.",
+  "pt-BR": "A roda do mouse aproxima, arrastar move. Os dois painéis se movem juntos.",
+  "zh-Hans": "滚轮缩放，拖移平移。两个窗格同步移动。",
+  "ja": "ホイールでズーム、ドラッグで移動。両方の表示が一緒に動きます。"
+ },
+ "Комментарий": {
+  "en": "Comment",
+  "es": "Comentario",
+  "de": "Kommentar",
+  "fr": "Commentaire",
+  "pt-BR": "Comentário",
+  "zh-Hans": "注释",
+  "ja": "コメント"
  },
  "Конвертация": {
   "en": "Convert",
@@ -1970,6 +2186,15 @@
   "zh-Hans": "存储位置",
   "ja": "保存場所"
  },
+ "Куда сохранять и как называть": {
+  "en": "Where to save and what to call it",
+  "es": "Dónde guardar y cómo llamarlo",
+  "de": "Wo speichern und wie benennen",
+  "fr": "Où enregistrer et comment nommer",
+  "pt-BR": "Onde salvar e como nomear",
+  "zh-Hans": "存储位置与命名",
+  "ja": "保存先と名前の付け方"
+ },
  "Л": {
   "en": "L",
   "es": "I",
@@ -2032,6 +2257,15 @@
   "pt-BR": "Lupa",
   "zh-Hans": "放大镜",
   "ja": "ルーペ"
+ },
+ "Лучше всего для логотипов, иконок, рисунков и сканов текста. Фото превращается в плакат из цветных пятен.": {
+  "en": "Best for logos, icons, drawings and scanned text. A photo becomes a poster of colour patches.",
+  "es": "Ideal para logotipos, iconos, dibujos y textos escaneados. Una foto se convierte en un póster de manchas de color.",
+  "de": "Am besten für Logos, Symbole, Zeichnungen und gescannten Text. Ein Foto wird zu einem Plakat aus Farbflächen.",
+  "fr": "Idéal pour les logos, icônes, dessins et textes scannés. Une photo devient une affiche en aplats de couleur.",
+  "pt-BR": "Ideal para logotipos, ícones, desenhos e textos digitalizados. Uma foto vira um pôster de manchas de cor.",
+  "zh-Hans": "最适合标志、图标、绘图和扫描的文字。照片会变成由色块组成的海报。",
+  "ja": "ロゴ、アイコン、イラスト、文字のスキャンに最適です。写真は色の面でできたポスターになります。"
  },
  "Лучшее качество при умеренной экономии": {
   "en": "Best quality with moderate savings",
@@ -2096,6 +2330,15 @@
   "zh-Hans": "缩放：双指捏合，或 ⌘/⌥ + 滚轮；滚动以移动",
   "ja": "ズーム：ピンチ、または ⌘ か ⌥ + スクロールホイール。スクロールで移動"
  },
+ "Мелкие инструменты": {
+  "en": "Small tools",
+  "es": "Pequeñas herramientas",
+  "de": "Kleine Werkzeuge",
+  "fr": "Petits outils",
+  "pt-BR": "Pequenas ferramentas",
+  "zh-Hans": "小工具",
+  "ja": "小さなツール"
+ },
  "Метаданные": {
   "en": "Metadata",
   "es": "Metadatos",
@@ -2159,6 +2402,15 @@
   "zh-Hans": "在“%@”中未找到可与背景分离的主体。",
   "ja": "「%@」に背景から切り離せる被写体が見つかりませんでした。"
  },
+ "На листе": {
+  "en": "Per sheet",
+  "es": "Por hoja",
+  "de": "Pro Blatt",
+  "fr": "Par feuille",
+  "pt-BR": "Por folha",
+  "zh-Hans": "多页合一",
+  "ja": "まとめて印刷"
+ },
  "На фото не найден объект, от которого можно отделить фон.": {
   "en": "No subject to separate from the background was found in the photo.",
   "es": "No se encontró en la foto un objeto que separar del fondo.",
@@ -2203,6 +2455,15 @@
   "pt-BR": "Predefinido",
   "zh-Hans": "预设",
   "ja": "プリセット"
+ },
+ "Назад": {
+  "en": "Back",
+  "es": "Atrás",
+  "de": "Zurück",
+  "fr": "Précédent",
+  "pt-BR": "Voltar",
+  "zh-Hans": "上一步",
+  "ja": "戻る"
  },
  "Название": {
   "en": "Name",
@@ -2384,6 +2645,15 @@
   "zh-Hans": "不松开按钮，轻按一个键 — 指针处会打开一个转盘。",
   "ja": "ボタンを押したまま、キーを軽く押すとポインタの位置にホイールが開きます。"
  },
+ "Не понял диапазоны: нужны номера по возрастанию, например 1-3, 8, 12-": {
+  "en": "These ranges don't make sense: use page numbers in increasing order, such as 1-3, 8, 12-",
+  "es": "No se entienden los intervalos: usa números de página en orden creciente, por ejemplo 1-3, 8, 12-",
+  "de": "Bereiche nicht verstanden: Seitenzahlen aufsteigend angeben, z. B. 1-3, 8, 12-",
+  "fr": "Plages incomprises : indiquez les pages par ordre croissant, par ex. 1-3, 8, 12-",
+  "pt-BR": "Intervalos não entendidos: use números de página em ordem crescente, como 1-3, 8, 12-",
+  "zh-Hans": "无法识别页码范围：请按升序填写页码，例如 1-3, 8, 12-",
+  "ja": "範囲を読み取れません：1-3, 8, 12- のようにページ番号を昇順で入力してください"
+ },
  "Не удалось открыть PDF": {
   "en": "Could not open the PDF",
   "es": "No se pudo abrir el PDF",
@@ -2474,6 +2744,15 @@
   "zh-Hans": "无法存储 PDF。",
   "ja": "PDF を保存できませんでした。"
  },
+ "Не удалось сохранить видео: %@": {
+  "en": "Could not save the video: %@",
+  "es": "No se pudo guardar el vídeo: %@",
+  "de": "Das Video konnte nicht gespeichert werden: %@",
+  "fr": "Impossible d’enregistrer la vidéo : %@",
+  "pt-BR": "Não foi possível salvar o vídeo: %@",
+  "zh-Hans": "无法存储视频：%@",
+  "ja": "ビデオを保存できませんでした：%@"
+ },
  "Не удалось сохранить файл в формате %@.": {
   "en": "Could not save the file as %@.",
   "es": "No se pudo guardar el archivo en formato %@.",
@@ -2509,6 +2788,15 @@
   "pt-BR": "Opacidade",
   "zh-Hans": "不透明度",
   "ja": "不透明度"
+ },
+ "Несколько страниц PDF на листе и деление по диапазонам «1-3, 8, 12-»; видео без чёрных полос и HDR → SDR; метаданные видео, аудио и PDF; видео из Live Photo; миниатюры и «Открыть в» в недавних результатах.": {
+  "en": "Several PDF pages per sheet and splitting by ranges like “1-3, 8, 12-”; video without black bars and HDR → SDR; metadata for video, audio and PDF; video from Live Photos; thumbnails and “Open With” in recent results.",
+  "es": "Varias páginas de PDF por hoja y división por intervalos como «1-3, 8, 12-»; vídeo sin franjas negras y HDR → SDR; metadatos de vídeo, audio y PDF; vídeo de Live Photos; miniaturas y «Abrir con» en los resultados recientes.",
+  "de": "Mehrere PDF-Seiten pro Blatt und Teilen nach Bereichen wie „1-3, 8, 12-“; Video ohne schwarze Balken und HDR → SDR; Metadaten für Video, Audio und PDF; Video aus Live Photos; Miniaturen und „Öffnen in“ bei den letzten Ergebnissen.",
+  "fr": "Plusieurs pages PDF par feuille et découpe par plages comme « 1-3, 8, 12- » ; vidéo sans bandes noires et HDR → SDR ; métadonnées des vidéos, de l’audio et des PDF ; vidéo des Live Photos ; vignettes et « Ouvrir avec » dans les résultats récents.",
+  "pt-BR": "Várias páginas de PDF por folha e divisão por intervalos como “1-3, 8, 12-”; vídeo sem faixas pretas e HDR → SDR; metadados de vídeo, áudio e PDF; vídeo de Live Photos; miniaturas e “Abrir com” nos resultados recentes.",
+  "zh-Hans": "多个 PDF 页面合到一页，以及按“1-3, 8, 12-”这样的范围拆分；去除视频黑边和 HDR → SDR；视频、音频和 PDF 的元数据；实况照片中的视频；最近结果中的缩略图和“打开方式”。",
+  "ja": "PDF の複数ページを 1 枚にまとめる機能と「1-3, 8, 12-」のような範囲での分割、ビデオの黒帯除去と HDR → SDR、ビデオ・オーディオ・PDF のメタデータ、Live Photo のビデオ、最近の結果のサムネールと「このアプリで開く」。"
  },
  "Нет": {
   "en": "None",
@@ -2563,6 +2851,24 @@
   "pt-BR": "Nada encontrado",
   "zh-Hans": "未找到任何内容",
   "ja": "見つかりません"
+ },
+ "Новая вкладка «Сохранение» в настройках: рядом с оригиналом, в выбранную папку или спрашивать каждый раз; шаблон имени с датой и временем; даты оригинала. Наборы настроек запоминают качество, размер и папку.": {
+  "en": "A new Saving tab in Settings: next to the original, to a chosen folder or ask every time; a name template with the date and time; the original's dates. Presets remember quality, size and folder.",
+  "es": "Nueva pestaña Guardado en Ajustes: junto al original, en una carpeta elegida o preguntar cada vez; plantilla de nombre con fecha y hora; fechas del original. Los ajustes predefinidos recuerdan calidad, tamaño y carpeta.",
+  "de": "Neuer Tab „Speichern“ in den Einstellungen: neben dem Original, in einen gewählten Ordner oder jedes Mal fragen; eine Namensvorlage mit Datum und Uhrzeit; die Daten des Originals. Voreinstellungen merken sich Qualität, Größe und Ordner.",
+  "fr": "Nouvel onglet Enregistrement dans les Réglages : à côté de l’original, dans un dossier choisi ou demander à chaque fois ; modèle de nom avec date et heure ; dates de l’original. Les préréglages retiennent qualité, taille et dossier.",
+  "pt-BR": "Nova aba Salvamento nos Ajustes: ao lado do original, em uma pasta escolhida ou perguntar sempre; modelo de nome com data e hora; datas do original. Os predefinidos guardam qualidade, tamanho e pasta.",
+  "zh-Hans": "设置中新增“存储”标签页：存到原文件旁、所选文件夹或每次询问；带日期和时间的命名模板；保留原文件日期。预设会记住质量、大小和文件夹。",
+  "ja": "設定に新しい「保存」タブ：元のファイルの隣、選んだフォルダ、または毎回確認。日付と時刻を含む名前のテンプレート、元のファイルの日付。プリセットは品質、サイズ、フォルダを記憶します。"
+ },
+ "Новые форматы и языки": {
+  "en": "New formats and languages",
+  "es": "Nuevos formatos e idiomas",
+  "de": "Neue Formate und Sprachen",
+  "fr": "Nouveaux formats et langues",
+  "pt-BR": "Novos formatos e idiomas",
+  "zh-Hans": "新格式和语言",
+  "ja": "新しい形式と言語"
  },
  "Новый набор": {
   "en": "New preset",
@@ -2825,6 +3131,15 @@
   "zh-Hans": "打开",
   "ja": "開く"
  },
+ "Открыть в": {
+  "en": "Open With",
+  "es": "Abrir con",
+  "de": "Öffnen mit",
+  "fr": "Ouvrir avec",
+  "pt-BR": "Abrir com",
+  "zh-Hans": "打开方式",
+  "ja": "このアプリで開く"
+ },
  "Отмена": {
   "en": "Cancel",
   "es": "Cancelar",
@@ -2942,6 +3257,15 @@
   "zh-Hans": "文件夹",
   "ja": "フォルダ"
  },
+ "Перевод HDR в SDR": {
+  "en": "Converting HDR to SDR",
+  "es": "Conversión de HDR a SDR",
+  "de": "HDR in SDR umwandeln",
+  "fr": "Conversion HDR en SDR",
+  "pt-BR": "Convertendo HDR em SDR",
+  "zh-Hans": "HDR 转 SDR",
+  "ja": "HDR を SDR に変換"
+ },
  "Перезапустить": {
   "en": "Restart",
   "es": "Reiniciar",
@@ -3023,6 +3347,24 @@
   "zh-Hans": "像素化",
   "ja": "モザイク"
  },
+ "Пиксель в пиксель": {
+  "en": "Actual pixels",
+  "es": "Tamaño real",
+  "de": "Originalgröße",
+  "fr": "Taille réelle",
+  "pt-BR": "Tamanho real",
+  "zh-Hans": "实际像素",
+  "ja": "実際のピクセル"
+ },
+ "Плавные кривые": {
+  "en": "Smooth curves",
+  "es": "Curvas suaves",
+  "de": "Glatte Kurven",
+  "fr": "Courbes lisses",
+  "pt-BR": "Curvas suaves",
+  "zh-Hans": "平滑曲线",
+  "ja": "滑らかな曲線"
+ },
  "По %lld стр.": {
   "en": "Every %lld pages",
   "es": "Cada %lld págs.",
@@ -3031,6 +3373,15 @@
   "pt-BR": "A cada %lld páginas",
   "zh-Hans": "每 %lld 页",
   "ja": "%lld ページごと"
+ },
+ "По диапазонам": {
+  "en": "By ranges",
+  "es": "Por intervalos",
+  "de": "Nach Bereichen",
+  "fr": "Par plages",
+  "pt-BR": "Por intervalos",
+  "zh-Hans": "按范围",
+  "ja": "範囲で分割"
  },
  "По курсору": {
   "en": "At playhead",
@@ -3653,6 +4004,15 @@
   "zh-Hans": "行",
   "ja": "行"
  },
+ "Рядом с «%@» нет видео Live Photo (файла .mov с тем же именем).": {
+  "en": "There is no Live Photo video next to “%@” (a .mov file with the same name).",
+  "es": "No hay vídeo de Live Photo junto a «%@» (un archivo .mov con el mismo nombre).",
+  "de": "Neben „%@“ gibt es kein Live-Photo-Video (eine .mov-Datei mit demselben Namen).",
+  "fr": "Il n’y a pas de vidéo Live Photo à côté de « %@ » (un fichier .mov du même nom).",
+  "pt-BR": "Não há vídeo de Live Photo ao lado de “%@” (um arquivo .mov com o mesmo nome).",
+  "zh-Hans": "“%@”旁边没有实况照片视频（同名的 .mov 文件）。",
+  "ja": "「%@」の隣に Live Photo のビデオ（同じ名前の .mov ファイル）がありません。"
+ },
  "Рядом с оригиналом": {
   "en": "Next to the original",
   "es": "Junto al original",
@@ -4067,6 +4427,15 @@
   "zh-Hans": "存储 PDF",
   "ja": "PDF を保存"
  },
+ "Сохранить SVG": {
+  "en": "Save SVG",
+  "es": "Guardar SVG",
+  "de": "SVG sichern",
+  "fr": "Enregistrer en SVG",
+  "pt-BR": "Salvar SVG",
+  "zh-Hans": "存储 SVG",
+  "ja": "SVG を保存"
+ },
  "Сохранить кадр": {
   "en": "Save Frame",
   "es": "Guardar fotograma",
@@ -4102,6 +4471,15 @@
   "pt-BR": "Salvar Aqui",
   "zh-Hans": "存储到这里",
   "ja": "ここに保存"
+ },
+ "Сохраняется копия «(метаданные)». Видео и звук копируются без перекодирования, качество не меняется.": {
+  "en": "A “(metadata)” copy is saved. Video and sound are copied without re-encoding, so quality does not change.",
+  "es": "Se guarda una copia «(metadatos)». El vídeo y el sonido se copian sin recodificar, la calidad no cambia.",
+  "de": "Es wird eine Kopie „(Metadaten)“ gesichert. Video und Ton werden ohne Neukodierung kopiert, die Qualität bleibt gleich.",
+  "fr": "Une copie « (métadonnées) » est enregistrée. La vidéo et le son sont copiés sans réencodage, la qualité ne change pas.",
+  "pt-BR": "Uma cópia “(metadados)” é salva. Vídeo e som são copiados sem recodificar, a qualidade não muda.",
+  "zh-Hans": "会存储一个“（元数据）”副本。视频和声音不重新编码，质量不变。",
+  "ja": "「（メタデータ）」のコピーが保存されます。ビデオと音声は再エンコードせずにコピーされるため、品質は変わりません。"
  },
  "Сохранять высоту звука": {
   "en": "Preserve pitch",
@@ -4229,6 +4607,15 @@
   "zh-Hans": "样式",
   "ja": "スタイル"
  },
+ "Страниц на листе": {
+  "en": "Pages per Sheet",
+  "es": "Páginas por hoja",
+  "de": "Seiten pro Blatt",
+  "fr": "Pages par feuille",
+  "pt-BR": "Páginas por Folha",
+  "zh-Hans": "每张纸的页数",
+  "ja": "1 枚あたりのページ数"
+ },
  "Страницы": {
   "en": "Pages",
   "es": "Páginas",
@@ -4246,6 +4633,24 @@
   "pt-BR": "Páginas do PDF",
   "zh-Hans": "PDF 页面",
   "ja": "PDF のページ"
+ },
+ "Страницы идут по порядку слева направо и сверху вниз. Текст остаётся текстом, линии — чёткими. Лист — размера первой страницы; для 2 и 6 он поворачивается горизонтально.": {
+  "en": "Pages go in order, left to right and top to bottom. Text stays text and lines stay sharp. The sheet is the size of the first page; for 2 and 6 it turns to landscape.",
+  "es": "Las páginas van en orden, de izquierda a derecha y de arriba abajo. El texto sigue siendo texto y las líneas quedan nítidas. La hoja tiene el tamaño de la primera página; para 2 y 6 se pone en horizontal.",
+  "de": "Die Seiten folgen der Reihe nach von links nach rechts und von oben nach unten. Text bleibt Text, Linien bleiben scharf. Das Blatt hat die Größe der ersten Seite; bei 2 und 6 wird es quer gelegt.",
+  "fr": "Les pages se suivent de gauche à droite et de haut en bas. Le texte reste du texte et les lignes restent nettes. La feuille a la taille de la première page ; pour 2 et 6 elle passe en paysage.",
+  "pt-BR": "As páginas seguem em ordem, da esquerda para a direita e de cima para baixo. O texto continua texto e as linhas ficam nítidas. A folha tem o tamanho da primeira página; para 2 e 6 ela fica na horizontal.",
+  "zh-Hans": "页面按从左到右、从上到下的顺序排列。文字仍是文字，线条保持清晰。纸张与第一页大小相同；2 页和 6 页时改为横向。",
+  "ja": "ページは左から右、上から下の順に並びます。文字は文字のまま、線はくっきりのままです。用紙は最初のページと同じサイズで、2 と 6 では横向きになります。"
+ },
+ "Страницы, например 1-3, 8, 12-": {
+  "en": "Pages, e.g. 1-3, 8, 12-",
+  "es": "Páginas, p. ej. 1-3, 8, 12-",
+  "de": "Seiten, z. B. 1-3, 8, 12-",
+  "fr": "Pages, par ex. 1-3, 8, 12-",
+  "pt-BR": "Páginas, ex.: 1-3, 8, 12-",
+  "zh-Hans": "页码，例如 1-3, 8, 12-",
+  "ja": "ページ（例：1-3, 8, 12-）"
  },
  "Стрелка": {
   "en": "Arrow",
@@ -4373,6 +4778,15 @@
   "zh-Hans": "未找到文本",
   "ja": "テキストが見つかりません"
  },
+ "Тема": {
+  "en": "Subject",
+  "es": "Asunto",
+  "de": "Thema",
+  "fr": "Sujet",
+  "pt-BR": "Assunto",
+  "zh-Hans": "主题",
+  "ja": "件名"
+ },
  "Температура": {
   "en": "Temperature",
   "es": "Temperatura",
@@ -4444,6 +4858,15 @@
   "pt-BR": "Só direito",
   "zh-Hans": "仅右声道",
   "ja": "右のみ"
+ },
+ "Только чёрное, без белой бумаги под ним": {
+  "en": "Only the black, without the white paper under it",
+  "es": "Solo el negro, sin el papel blanco debajo",
+  "de": "Nur das Schwarz, ohne das weiße Papier darunter",
+  "fr": "Seulement le noir, sans le papier blanc dessous",
+  "pt-BR": "Só o preto, sem o papel branco por baixo",
+  "zh-Hans": "只保留黑色，不要下面的白纸",
+  "ja": "黒だけで、下の白い紙はなし"
  },
  "Тон": {
   "en": "Tone",
@@ -4544,6 +4967,15 @@
   "zh-Hans": "从 Float 中移除",
   "ja": "Float から取り除く"
  },
+ "Убрать полосы": {
+  "en": "Remove bars",
+  "es": "Quitar franjas",
+  "de": "Balken entfernen",
+  "fr": "Ôter les bandes",
+  "pt-BR": "Tirar faixas",
+  "zh-Hans": "去黑边",
+  "ja": "黒帯除去"
+ },
  "Убрать разрез": {
   "en": "Remove cut",
   "es": "Quitar corte",
@@ -4562,6 +4994,15 @@
   "zh-Hans": "去背景",
   "ja": "背景除去"
  },
+ "Увеличить": {
+  "en": "Zoom In",
+  "es": "Ampliar",
+  "de": "Vergrößern",
+  "fr": "Agrandir",
+  "pt-BR": "Ampliar",
+  "zh-Hans": "放大",
+  "ja": "拡大"
+ },
  "Угол": {
   "en": "Angle",
   "es": "Ángulo",
@@ -4579,6 +5020,15 @@
   "pt-BR": "Remover Fundo",
   "zh-Hans": "移除背景",
   "ja": "背景を除去"
+ },
+ "Удаление чёрных полос": {
+  "en": "Removing Black Bars",
+  "es": "Eliminando franjas negras",
+  "de": "Schwarze Balken entfernen",
+  "fr": "Suppression des bandes noires",
+  "pt-BR": "Removendo faixas pretas",
+  "zh-Hans": "正在去除黑边",
+  "ja": "黒帯を除去中"
  },
  "Удалить": {
   "en": "Delete",
@@ -4661,6 +5111,15 @@
   "zh-Hans": "限定文件大小",
   "ja": "ファイルサイズに合わせる"
  },
+ "Уменьшить": {
+  "en": "Zoom Out",
+  "es": "Reducir",
+  "de": "Verkleinern",
+  "fr": "Réduire",
+  "pt-BR": "Reduzir",
+  "zh-Hans": "缩小",
+  "ja": "縮小"
+ },
  "Утилиты": {
   "en": "Tools",
   "es": "Utilidades",
@@ -4696,6 +5155,15 @@
   "pt-BR": "O arquivo não está mais em %@",
   "zh-Hans": "文件已不在 %@",
   "ja": "ファイルはもう %@ にありません"
+ },
+ "Фигур: %lld": {
+  "en": "Shapes: %lld",
+  "es": "Formas: %lld",
+  "de": "Formen: %lld",
+  "fr": "Formes : %lld",
+  "pt-BR": "Formas: %lld",
+  "zh-Hans": "形状：%lld",
+  "ja": "図形：%lld"
  },
  "Фильтр": {
   "en": "Filter",
@@ -4805,6 +5273,24 @@
   "zh-Hans": "背景颜色",
   "ja": "背景色"
  },
+ "Цвета": {
+  "en": "Colours",
+  "es": "Colores",
+  "de": "Farben",
+  "fr": "Couleurs",
+  "pt-BR": "Cores",
+  "zh-Hans": "彩色",
+  "ja": "カラー"
+ },
+ "Цветов: %lld": {
+  "en": "Colours: %lld",
+  "es": "Colores: %lld",
+  "de": "Farben: %lld",
+  "fr": "Couleurs : %lld",
+  "pt-BR": "Cores: %lld",
+  "zh-Hans": "颜色：%lld",
+  "ja": "色数：%lld"
+ },
  "Цель": {
   "en": "Target",
   "es": "Objetivo",
@@ -4823,6 +5309,42 @@
   "zh-Hans": "第 %lld 部分",
   "ja": "パート %lld"
  },
+ "Чтение DDS, DICOM, CAB и DMG; запись ICO, ICNS, PSD, TGA, EXR, 7Z и ISO. Интерфейс теперь ещё и на немецком, французском, португальском, китайском и японском.": {
+  "en": "Reading DDS, DICOM, CAB and DMG; writing ICO, ICNS, PSD, TGA, EXR, 7Z and ISO. The interface now also comes in German, French, Portuguese, Chinese and Japanese.",
+  "es": "Lectura de DDS, DICOM, CAB y DMG; escritura de ICO, ICNS, PSD, TGA, EXR, 7Z e ISO. La interfaz ahora también está en alemán, francés, portugués, chino y japonés.",
+  "de": "Lesen von DDS, DICOM, CAB und DMG; Schreiben von ICO, ICNS, PSD, TGA, EXR, 7Z und ISO. Die Oberfläche gibt es jetzt auch auf Deutsch, Französisch, Portugiesisch, Chinesisch und Japanisch.",
+  "fr": "Lecture des DDS, DICOM, CAB et DMG ; écriture en ICO, ICNS, PSD, TGA, EXR, 7Z et ISO. L’interface existe désormais aussi en allemand, français, portugais, chinois et japonais.",
+  "pt-BR": "Leitura de DDS, DICOM, CAB e DMG; gravação de ICO, ICNS, PSD, TGA, EXR, 7Z e ISO. A interface agora também está em alemão, francês, português, chinês e japonês.",
+  "zh-Hans": "可读取 DDS、DICOM、CAB 和 DMG；可写入 ICO、ICNS、PSD、TGA、EXR、7Z 和 ISO。界面现在还支持德语、法语、葡萄牙语、中文和日语。",
+  "ja": "DDS、DICOM、CAB、DMG の読み込み、ICO、ICNS、PSD、TGA、EXR、7Z、ISO の書き出しに対応。インターフェイスはドイツ語、フランス語、ポルトガル語、中国語、日本語にも対応しました。"
+ },
+ "Что нового": {
+  "en": "What's New",
+  "es": "Novedades",
+  "de": "Neuigkeiten",
+  "fr": "Nouveautés",
+  "pt-BR": "Novidades",
+  "zh-Hans": "新功能",
+  "ja": "新機能"
+ },
+ "Что нового в Mangosteen %@": {
+  "en": "What's new in Mangosteen %@",
+  "es": "Novedades de Mangosteen %@",
+  "de": "Neu in Mangosteen %@",
+  "fr": "Nouveautés de Mangosteen %@",
+  "pt-BR": "Novidades do Mangosteen %@",
+  "zh-Hans": "Mangosteen %@ 的新功能",
+  "ja": "Mangosteen %@ の新機能"
+ },
+ "Что нового…": {
+  "en": "What's New…",
+  "es": "Novedades…",
+  "de": "Neuigkeiten …",
+  "fr": "Nouveautés…",
+  "pt-BR": "Novidades…",
+  "zh-Hans": "新功能…",
+  "ja": "新機能…"
+ },
  "Чтобы передвинуть или изменить пометку, выберите инструмент «Выбор». ⌫ удаляет выделенное, ⌘Z — отмена.": {
   "en": "To move or change a mark, choose the Select tool. ⌫ deletes the selection, ⌘Z undoes.",
   "es": "Para mover o cambiar una anotación, elige la herramienta Seleccionar. ⌫ elimina la selección, ⌘Z deshace.",
@@ -4831,6 +5353,15 @@
   "pt-BR": "Para mover ou alterar uma marca, escolha a ferramenta Selecionar. ⌫ apaga a seleção, ⌘Z desfaz.",
   "zh-Hans": "要移动或更改标记，请选择“选择”工具。⌫ 删除所选内容，⌘Z 撤销。",
   "ja": "注釈を移動・変更するには選択ツールを選びます。⌫ で選択を削除、⌘Z で取り消し。"
+ },
+ "Чёрно-белый": {
+  "en": "Black and white",
+  "es": "Blanco y negro",
+  "de": "Schwarzweiß",
+  "fr": "Noir et blanc",
+  "pt-BR": "Preto e branco",
+  "zh-Hans": "黑白",
+  "ja": "白黒"
  },
  "Чёткость": {
   "en": "Clarity",
@@ -5065,6 +5596,15 @@
   "pt-BR": "os outros são encaixados nele com barras.",
   "zh-Hans": "其他片段会加黑边适配。",
   "ja": "ほかのクリップは帯を付けて収めます。"
+ },
+ "разные значения": {
+  "en": "different values",
+  "es": "valores distintos",
+  "de": "verschiedene Werte",
+  "fr": "valeurs différentes",
+  "pt-BR": "valores diferentes",
+  "zh-Hans": "不同的值",
+  "ja": "異なる値"
  },
  "с пиками": {
   "en": "with bleeps",

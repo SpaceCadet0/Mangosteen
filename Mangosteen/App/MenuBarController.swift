@@ -1,4 +1,5 @@
 import AppKit
+import QuickLookThumbnailing
 import SwiftUI
 
 /// The status-bar icon and its menu.
@@ -45,6 +46,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         menu.addItem(historyItem)
         menu.addItem(.separator())
         menu.addItem(makeItem(String(localized: "Как пользоваться…"), symbol: "questionmark.circle", action: #selector(welcomeSelected)))
+        menu.addItem(makeItem(String(localized: "Что нового…"), symbol: "sparkles", action: #selector(whatsNewSelected)))
         menu.addItem(makeItem(String(localized: "О Mangosteen…"), symbol: "info.circle", action: #selector(aboutSelected)))
         menu.addItem(makeItem(String(localized: "Проверить обновления…"), symbol: "arrow.down.circle", action: #selector(checkForUpdatesSelected)))
         menu.addItem(makeItem(String(localized: "Настройки…"), symbol: "gearshape", action: #selector(settingsSelected), key: ","))
@@ -135,13 +137,13 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             let first = entry.outputs[0].lastPathComponent
             let more = entry.outputs.count > 1 ? String(localized: " и ещё \(entry.outputs.count - 1)") : ""
             let item = NSMenuItem(title: "\(first)\(more)", action: nil, keyEquivalent: "")
-            item.image = NSWorkspace.shared.icon(forFile: entry.outputs[0].path)
-            item.image?.size = NSSize(width: 16, height: 16)
+            item.image = thumbnail(for: entry.outputs[0], side: 16) { [weak item] in item?.image = $0 }
             item.toolTip = "\(entry.title) · \(Self.timeFormatter.string(from: entry.date))"
             let actions = NSMenu()
             let header = NSMenuItem(title: "\(entry.title) · \(Self.timeFormatter.string(from: entry.date))", action: nil, keyEquivalent: "")
             header.isEnabled = false
             actions.addItem(header)
+            actions.addItem(previewItem(for: entry.outputs[0]))
             actions.addItem(.separator())
             for (title, symbol, selector) in [
                 (String(localized: "Показать в Finder"), "folder", #selector(revealResult(_:))),
@@ -151,6 +153,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
                 action.representedObject = entry.id
                 actions.addItem(action)
             }
+            if let openWith = openWithItem(for: entry) { actions.addItem(openWith) }
             actions.addItem(.separator())
             let delete = makeItem(String(localized: "Удалить результат"), symbol: "trash", action: #selector(deleteResult(_:)))
             delete.representedObject = entry.id
@@ -161,6 +164,83 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         }
         submenu.addItem(.separator())
         submenu.addItem(makeItem(String(localized: "Очистить историю"), symbol: "xmark.circle", action: #selector(clearHistory)))
+    }
+
+    // MARK: Thumbnails and Open With
+
+    /// Quick Look thumbnails already made, by file path and side.
+    private var thumbnails: [String: NSImage] = [:]
+
+    /// The file's thumbnail when one is ready, else its icon; `update` gets the thumbnail once Quick Look makes it.
+    private func thumbnail(for url: URL, side: CGFloat, update: @escaping (NSImage) -> Void) -> NSImage {
+        let key = "\(url.path)#\(Int(side))"
+        if let cached = thumbnails[key] { return cached }
+        let icon = NSWorkspace.shared.icon(forFile: url.path)
+        icon.size = NSSize(width: side, height: side)
+        let scale = NSScreen.main?.backingScaleFactor ?? 2
+        let request = QLThumbnailGenerator.Request(fileAt: url, size: CGSize(width: side, height: side), scale: scale,
+                                                   representationTypes: .thumbnail)
+        QLThumbnailGenerator.shared.generateBestRepresentation(for: request) { [weak self] representation, _ in
+            guard let representation else { return }
+            DispatchQueue.main.async {
+                let image = representation.nsImage
+                self?.thumbnails[key] = image
+                update(image)
+            }
+        }
+        return icon
+    }
+
+    /// A large preview of the first result at the top of its submenu.
+    private func previewItem(for url: URL) -> NSMenuItem {
+        let side: CGFloat = 160
+        let imageView = NSImageView(frame: NSRect(x: 14, y: 6, width: side + 60, height: side))
+        imageView.imageScaling = .scaleProportionallyDown
+        imageView.imageAlignment = .alignLeft
+        imageView.image = thumbnail(for: url, side: side) { [weak imageView] in imageView?.image = $0 }
+        let container = NSView(frame: NSRect(x: 0, y: 0, width: side + 88, height: side + 12))
+        container.addSubview(imageView)
+        let item = NSMenuItem()
+        item.view = container
+        return item
+    }
+
+    /// "Open With" and the apps that can open the result, the default one first.
+    private func openWithItem(for entry: OperationHistory.Entry) -> NSMenuItem? {
+        let url = entry.outputs[0]
+        let workspace = NSWorkspace.shared
+        let preferred = workspace.urlForApplication(toOpen: url)
+        var apps = workspace.urlsForApplications(toOpen: url)
+        if let preferred { apps = [preferred] + apps.filter { $0 != preferred } }
+        // The same app installed twice (a beta, a copy in Downloads) shows once.
+        var seen = Set<String>()
+        apps = apps.filter { seen.insert(FileManager.default.displayName(atPath: $0.path)).inserted }
+        guard !apps.isEmpty else { return nil }
+        let item = makeItem(String(localized: "Открыть в"), symbol: "square.and.arrow.up.on.square", action: #selector(noAction))
+        item.action = nil
+        let menu = NSMenu()
+        for app in apps.prefix(12) {
+            let name = FileManager.default.displayName(atPath: app.path).replacingOccurrences(of: ".app", with: "")
+            let row = NSMenuItem(title: name, action: #selector(openResultWith(_:)), keyEquivalent: "")
+            row.target = self
+            row.image = workspace.icon(forFile: app.path)
+            row.image?.size = NSSize(width: 16, height: 16)
+            row.representedObject = [entry.id.uuidString, app.path]
+            menu.addItem(row.withBrandRow())
+        }
+        menu.delegate = self
+        item.submenu = menu
+        return item
+    }
+
+    @objc private func noAction() {}
+
+    @objc private func openResultWith(_ sender: NSMenuItem) {
+        guard let pair = sender.representedObject as? [String], pair.count == 2, let id = UUID(uuidString: pair[0]),
+              let entry = OperationHistory.shared.entries.first(where: { $0.id == id }) else { return }
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.activates = true
+        NSWorkspace.shared.open(entry.outputs, withApplicationAt: URL(fileURLWithPath: pair[1]), configuration: configuration)
     }
 
     private func entry(for sender: NSMenuItem) -> OperationHistory.Entry? {
@@ -223,6 +303,10 @@ final class MenuBarController: NSObject, NSMenuDelegate {
 
     @objc private func floatSelected() {
         FloatShelf.shared.toggle()
+    }
+
+    @objc private func whatsNewSelected() {
+        (NSApp.delegate as? AppDelegate)?.showWhatsNew()
     }
 
     @objc private func welcomeSelected() {

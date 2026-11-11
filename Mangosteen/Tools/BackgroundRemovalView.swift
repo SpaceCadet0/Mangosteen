@@ -118,7 +118,7 @@ struct BackgroundRemovalView: View {
 }
 
 /// The grey-and-white squares that show transparency.
-private struct Checkerboard: View {
+struct Checkerboard: View {
     var body: some View {
         Canvas { context, size in
             let side: CGFloat = 10

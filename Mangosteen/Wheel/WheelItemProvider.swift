@@ -106,6 +106,18 @@ enum WheelItemProvider {
                     try MediaTools.extractSubtitles($0, progress: $1, cancellation: $2)
                 }
             })
+            items.append(WheelItem(id: "tool.removeBars", title: String(localized: "Убрать полосы"), symbolName: "rectangle.center.inset.filled") { urls in
+                let videos = urls.filter { FileFormat.detect($0)?.category == .video }
+                ConversionService.shared.runEach(String(localized: "Удаление чёрных полос"), inputs: videos, maxConcurrent: 2) {
+                    try VideoFixes.removeBlackBars($0, progress: $1, cancellation: $2)
+                }
+            })
+            items.append(WheelItem(id: "tool.hdrToSDR", title: "HDR → SDR", symbolName: "sun.max") { urls in
+                let videos = urls.filter { FileFormat.detect($0)?.category == .video }
+                ConversionService.shared.runEach(String(localized: "Перевод HDR в SDR"), inputs: videos, maxConcurrent: 1) {
+                    try VideoFixes.hdrToSDR($0, progress: $1, cancellation: $2)
+                }
+            })
         }
         if formats.contains(where: { $0.category.isMedia }) {
             items.append(WheelItem(id: "tool.speechSubtitles", title: String(localized: "Речь в текст"), symbolName: "waveform.and.mic") { urls in
@@ -131,6 +143,11 @@ enum WheelItemProvider {
             })
         }
         if hasImages {
+            items.append(WheelItem(id: "tool.trace", title: String(localized: "В вектор"), symbolName: "scribble.variable") { urls in
+                ToolWindow.present(title: String(localized: "Векторизация"), files: urls) { VectorTraceView(urls: urls, close: $0) }
+            })
+        }
+        if hasImages {
             items.append(WheelItem(id: "tool.annotate", title: String(localized: "Пометки"), symbolName: "pencil.and.outline") { urls in
                 ToolWindow.present(title: String(localized: "Пометки"), files: urls) { AnnotateView(urls: urls, close: $0) }
             })
@@ -146,6 +163,9 @@ enum WheelItemProvider {
             })
             items.append(WheelItem(id: "tool.organizePDF", title: String(localized: "Порядок страниц"), symbolName: "list.number") { urls in
                 ToolWindow.present(title: String(localized: "Порядок страниц"), files: urls) { PDFOrganizeView(urls: urls, close: $0) }
+            })
+            items.append(WheelItem(id: "tool.pagesPerSheet", title: String(localized: "На листе"), symbolName: "rectangle.split.2x2") { urls in
+                ToolWindow.present(title: String(localized: "Страниц на листе"), files: urls) { PDFSheetView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { ($0.category == .image && $0 != .svg) || $0 == .pdf }) {
@@ -166,6 +186,15 @@ enum WheelItemProvider {
                 ToolWindow.present(title: String(localized: "Удаление фона"), files: urls) { BackgroundRemovalView(urls: urls, close: $0) }
             })
         }
+        // A Live Photo saved from Photos is a picture and a .mov of the same name.
+        if urls.contains(where: { FileFormat.detect($0)?.category == .image && VideoFixes.livePhotoMovie(for: $0) != nil }) {
+            items.append(WheelItem(id: "tool.livePhoto", title: String(localized: "Live → видео"), symbolName: "livephoto") { urls in
+                let pictures = urls.filter { FileFormat.detect($0)?.category == .image && VideoFixes.livePhotoMovie(for: $0) != nil }
+                ConversionService.shared.runEach(String(localized: "Видео из Live Photo"), inputs: pictures, maxConcurrent: 2) {
+                    try VideoFixes.livePhotoVideo($0, progress: $1, cancellation: $2)
+                }
+            })
+        }
         if formats.filter({ $0.category == .image }).count >= 2 {
             items.append(WheelItem(id: "tool.collage", title: String(localized: "Коллаж"), symbolName: "square.grid.2x2") { urls in
                 ToolWindow.present(title: String(localized: "Коллаж"), files: urls) { CollageView(urls: urls, close: $0) }
@@ -175,6 +204,12 @@ enum WheelItemProvider {
         if formats.contains(where: \.canRewriteImageMetadata) {
             items.append(WheelItem(id: "tool.metadata", title: String(localized: "Метаданные"), symbolName: "info.circle") { urls in
                 ToolWindow.present(title: String(localized: "Метаданные"), files: urls) { MetadataView(urls: urls, close: $0) }
+            })
+        }
+        // Video, audio and PDF have their own tags; "Metadata" opens the editor for them.
+        if !formats.contains(where: \.canRewriteImageMetadata), formats.contains(where: FileTags.supports) {
+            items.append(WheelItem(id: "tool.metadata", title: String(localized: "Метаданные"), symbolName: "info.circle") { urls in
+                ToolWindow.present(title: String(localized: "Метаданные"), files: urls) { FileTagsView(urls: urls, close: $0) }
             })
         }
         if formats.contains(where: { $0.category == .archive }) {
