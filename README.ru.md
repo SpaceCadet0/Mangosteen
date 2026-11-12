@@ -202,6 +202,7 @@ Mangosteen бесплатна и с открытым кодом. Если она
 - [Ko-fi](https://ko-fi.com/igorrusakov)
 - [Patreon](https://www.patreon.com/IgorRusakov)
 - [PayPal](https://paypal.me/IgorRusakov1505)
+- [Boosty](https://boosty.to/igor.rusakov)
 
 ## Лицензия
 

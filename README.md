@@ -200,6 +200,7 @@ Mangosteen is free and open source. If it saves you time, you can support its de
 - [Ko-fi](https://ko-fi.com/igorrusakov)
 - [Patreon](https://www.patreon.com/IgorRusakov)
 - [PayPal](https://paypal.me/IgorRusakov1505)
+- [Boosty](https://boosty.to/igor.rusakov)
 
 ## License
 
